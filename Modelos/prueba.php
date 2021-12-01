@@ -4,13 +4,8 @@ require_once 'usuariosDao.php';
 
 $ud =  new UsuariosDao();
 
-$accion = $ud->validarUsuario();
+$accion = $ud->validarUsuario("Douglas Miguel Figueroa", "Douglas97");
 
-if($accion){
-    echo "funciona";
-}else{
-    echo "no funciona";
-}
 
 
 ?>

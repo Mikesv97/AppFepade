@@ -11,19 +11,14 @@ class UsuariosDao{
 
     public function conectar(){
         $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
-        $connectionInfo = array( "Database"=>"ACTIVO");
+        $basedatos="ACTIVO";
         try{
-    
-            $this->con = sqlsrv_connect( $serverName, $connectionInfo);
-        
+            //DECLARANDO CANEDA DE CONEXION
+            $this->con = new PDO("sqlsrv:Server=$serverName;Database=$basedatos","","");
 
-            if(!$this->con){
-                die( print_r( sqlsrv_errors(), true));
-            }
-
-            return $this->con;
-        }catch(Exception $error){
-            echo $error->getTraceAsString();
+        }catch(PDOException $error){
+            //MOSTRANDO ERROR
+            echo $error->getMessage();
         }
     
     }
@@ -36,13 +31,33 @@ class UsuariosDao{
         }
     }
 
-    Public function validarUsuario(){
-       return $this->conectar();
-       
-       $sql = "select * from usuario 
-       where usuario_nombre=? AND usuario_clave=?";
-        
+    /*
+    
+    Funcion que valida al usuario al hacer click en iniciar sesion
+    recibe su nombre de usuario y su contraseña para prosesar y
+    validar contra la base de datos
+    
+    */
+    Public function validarUsuario($nombre,$clave){
+        //establecemos la coneccion
+        $this->conectar();
+        //establecemos la consulta
+        $sql="Select * from usuario where usuario_nombre=? and usuario_clave=?";
+        //preparamos la consulta
+        $respuesta = $this->con->prepare($sql);
+        //ejecutamos la consulta y seteamos parametros ?
+        $respuesta->execute([$nombre, $clave]);
+        //convertimos a un arrreglo 
+        $datos = $respuesta->fetchall();
 
+        //consultamos el tamaño del arreglo para controlar si hay resultados o no
+        if(sizeof($datos)>0){
+            //si es mayor a 0, es que si hay
+            echo "hay datos we";
+        }else{
+            //caso contrario no hay, mandamos respuesta error
+            return json_encode("Usuario No Encontrado");
+        }
     }
 
 
