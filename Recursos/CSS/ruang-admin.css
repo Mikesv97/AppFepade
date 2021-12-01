@@ -9,6 +9,12 @@
 
 }
 
+.gold{
+  color: red !important;
+
+ text-shadow: 0 0 0.1px black;
+  text-align: center;
+}
 .tittleModal{
   color: #b0191e;
   display: inline-block;

@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
   <link href="recursos/css/ruang-admin.min.css" rel="stylesheet">
   <link href="recursos/css/ruang-admin.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 
 </head>
 
@@ -29,21 +30,23 @@
                   <div class="text-center">
                     <img src="recursos/multimedia/imagenes/logo.jpg" alt="logoFepade"><h1 class="h4 text-gray-900 my-2 mb-4">IDENTIFICATE</h1>
                   </div>
-                  <form class="user">
+                  <form id="frmLogin"class="user">
                     <div class="form-group">
-                      <input type="text" class="form-control"  placeholder="Ingresa Nombre De Usuario">
+                      <input type="text" class="form-control" name="txtUsuario" placeholder="Ingresa Nombre De Usuario">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control" placeholder="Contraseña">
+                      <input type="password" class="form-control" name="txtContraseña" placeholder="Contraseña">
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small" style="line-height: 1.5rem;">
                         <input type="checkbox" class="custom-control-input" id="customCheck">
                         <label class="custom-control-label" for="customCheck">Recordarme</label>
                       </div>
+                      <p class="my-2 p-1 gold" id="labelError">
+                      </p>
                     </div>
                     <div class="form-group">
-                      <a href="index.html" class="btn btnLogin btn-block">Login</a>
+                      <button class="btn btnLogin btn-block" type="submit" id="btnLogin">Login</button>
                     </div>
                     <hr>
                   </form>
@@ -62,7 +65,6 @@
   </div>
   <!-- Login Content -->
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
   <script src="recursos/js/loginjs.js" ></script>
 

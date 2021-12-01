@@ -32,7 +32,7 @@ class UsuariosDao{
     }
 
     /*
-    
+
     Funcion que valida al usuario al hacer click en iniciar sesion
     recibe su nombre de usuario y su contraseña para prosesar y
     validar contra la base de datos
@@ -53,10 +53,10 @@ class UsuariosDao{
         //consultamos el tamaño del arreglo para controlar si hay resultados o no
         if(sizeof($datos)>0){
             //si es mayor a 0, es que si hay
-            echo "hay datos we";
+            return true;
         }else{
             //caso contrario no hay, mandamos respuesta error
-            return json_encode("Usuario No Encontrado");
+            return false;
         }
     }
 
