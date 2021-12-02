@@ -33,7 +33,6 @@
     <script src="../Recursos/JS/quixnav-init.js"></script>
     <script src="../Recursos/JS/custom.min.js"></script>
 
-    <script src="../Recursos/vendor/chartist/js/chartist.min.js"></script>
 
     <script src="../Recursos/vendor/moment/moment.min.js"></script>
     <script src="../Recursos/vendor/pg-calendar/js/pignose.calendar.min.js"></script>
