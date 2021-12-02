@@ -1,6 +1,6 @@
  <?php
-    include('header.php');
-    include('navbar.php');
+    include('layout/header.php');
+    include('layout/navbar.php');
  ?>
  <!--**********************************
             Content body start
@@ -207,5 +207,5 @@
             Content body end
         ***********************************-->
         <?php
-    include('footer.php');
+    include('layout/footer.php');
  ?>
