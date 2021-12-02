@@ -15,8 +15,12 @@ if($_POST){
                 $nombre = $data["txtUsuario"];
                 $contraseña = $data["txtContraseña"];
 
-                $resp= $usDao->validarUsuario($nombre,$contraseña);
-                echo json_encode($resp);
+                if($usDao->validarUsuario($nombre,$contraseña)){
+                    echo json_encode(true);
+                }else{
+                    echo json_encode(false);
+                }
+                
             break;
             case "cerrarSesion":
                 session_destroy();

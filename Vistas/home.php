@@ -12,6 +12,7 @@ if(!isset($_SESSION["usuario"]["nombre"])){
     tu nombre: <?=$_SESSION["usuario"]["nombre"];?><br>
     tu id: <?=$_SESSION["usuario"]["id"];?><br>
     tu correo: <?=$_SESSION["usuario"]["correo"];?><br>
+    tu rol: <?=$_SESSION["usuario"]["rol"];?><br>
 
     <a id="cerrarLog" href="#">SALIR</a>
 </p>

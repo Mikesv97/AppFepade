@@ -43,7 +43,8 @@ class UsuariosDao{
         //establecemos la coneccion
         $this->conectar();
         //establecemos la consulta
-        $sql="Select * from usuario where usuario_nombre=? and usuario_clave=?";
+        $sql="select a.usuario_nombre, a.usuario_id, a.correo_electronico, b.rol_nombre
+        from usuario a inner join roles b on a.id_rol = b.id_rol where usuario_nombre=? and usuario_clave=?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
         //ejecutamos la consulta y seteamos parametros ?
@@ -58,7 +59,8 @@ class UsuariosDao{
 
                 $_SESSION["usuario"]["nombre"]= $d["usuario_nombre"];
                 $_SESSION["usuario"]["id"]= $d["usuario_id"];
-                $_SESSION["usuario"]["correo"]= $d["correo_Electronico"];
+                $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
+                $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
 
 
   
