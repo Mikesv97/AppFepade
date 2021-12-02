@@ -1,3 +1,11 @@
+<?php
+
+session_start();
+if(!isset($_SESSION["usuario"]["nombre"])){
+    header("Location: ../index.php");
+}
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -12,6 +20,8 @@
     <link href="../Recursos/vendor/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
     <link href="../Recursos/vendor/chartist/css/chartist.min.css" rel="stylesheet">
     <link href="../Recursos/CSS/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="../recursos/js/homejs.js" ></script>
 
 </head>
 
