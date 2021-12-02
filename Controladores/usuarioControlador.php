@@ -12,12 +12,15 @@ if($_POST){
             case "validarUser":
                 parse_str($_POST["data"],$data);
                 
-                $usuario = $data["txtUsuario"];
+                $nombre = $data["txtUsuario"];
                 $contraseña = $data["txtContraseña"];
 
-               $resp= $usDao->validarUsuario($usuario,$contraseña);
+                $resp= $usDao->validarUsuario($nombre,$contraseña);
                 echo json_encode($resp);
             break;
+            case "cerrarSesion":
+                session_destroy();
+                echo json_encode(true);
         }
     }
 

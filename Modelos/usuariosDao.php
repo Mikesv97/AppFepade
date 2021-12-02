@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'usuarios.php';
 
 class UsuariosDao{
@@ -49,10 +50,20 @@ class UsuariosDao{
         $respuesta->execute([$nombre, $clave]);
         //convertimos a un arrreglo 
         $datos = $respuesta->fetchall();
-
+   
         //consultamos el tamaño del arreglo para controlar si hay resultados o no
         if(sizeof($datos)>0){
-            //si es mayor a 0, es que si hay
+            //si es mayor a 0, es que si hay, recorremos los datos
+            foreach($datos as $d){
+
+                $_SESSION["usuario"]["nombre"]= $d["usuario_nombre"];
+                $_SESSION["usuario"]["id"]= $d["usuario_id"];
+                $_SESSION["usuario"]["correo"]= $d["correo_Electronico"];
+
+
+  
+            }
+
             return true;
         }else{
             //caso contrario no hay, mandamos respuesta error
@@ -64,5 +75,5 @@ class UsuariosDao{
 
 
 }
-    
+
 ?>
