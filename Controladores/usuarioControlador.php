@@ -25,6 +25,7 @@ if($_POST){
             case "cerrarSesion":
                 session_destroy();
                 echo json_encode(true);
+            break;
         }
     }
 
