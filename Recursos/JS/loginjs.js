@@ -1,19 +1,30 @@
 $(document).ready(function(){
     $("#codeContent").hide();
     $("#labelError").hide();
+    
+    comprobarCokieRememberme();
 
     //cuando hace click en btnLogin 
     $("#btnLogin").on("click", function(e){
-        //se evita el envio del form
+        //se evita el evento envio del form
         e.preventDefault();
+
         //obtenemos los datos del form
         var data = $("#frmLogin").serialize();
+        
+        //obtenemos el valor del ckeckbox recordarme
+        var rem= 0;
+        if ($('#customCheck').is(":checked"))
+        {
+            rem= 1;
+        }
+
         //se envia la información mediante ajax
         $.ajax({
             url: "Controladores/usuarioControlador.php",
             method: "post",
             dataType: "json",
-            data: { "key": "validarUser","data": data },
+            data: { "key": "validarUser","data": data,"valor": rem },
             success: function (r) {
                 //en caso de comunicación exitosa, comprobamos valor booleano de respuesta
                 //que viene del servidor
@@ -35,15 +46,46 @@ $(document).ready(function(){
                     $('input[name="txtUsuario"]').keypress(function(){
                         $("#labelError").hide();
                     });
-                }
+                }   
             },
             error: function () {
-               console.log(r);
+                //si falla algo se muestra error de conexión en el servidor
+               console.log("No Se Pudo Comunicar Al Servidor");
+
             }
+            
         });
     });
 
+    /*Esta funcion se ejecuta cada que carga el login, manda solicitud al servidor mediante ajax
+    para pedir ver si hay cookies que se generan cuando el usuario se loguea con recuerdame,
+    si hay cookies correctas devuelve un arreglo con datos para cargar controles, si no hay cookies,
+    o si no son validos los datos de la cookie retorna falso*/
+    function comprobarCokieRememberme(){
+        $.ajax({
+            url:"Controladores/usuarioControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "validarRemember"},
+            success: function (r) {
+                        //si hay cookies, y si son correctos los datos
+                        if(r){
+                           //seteamos controles
+                           $("input[name='txtUsuario']").val(r["nombre"]);
+                           $("input[name='txtContraseña']").val(r["token"]);
+                           $('#customCheck').attr("checked",true);
+                                                    
+                        }else{
+                            $('#customCheck').attr("checked",false);
+                        }
 
+            },
+            error: function () {
+                console.log("No se pudo conectar al servidor");
+               
+            }
+        });
+    }
 });
 
 /*

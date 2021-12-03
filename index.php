@@ -1,8 +1,10 @@
 <?php
 session_start();
-if(isset($_SESSION["usuario"]["nombre"])){
+/*if(isset($_SESSION["usuario"]["nombre"])){
     header("Location: vistas/home.php");
-}
+}*/
+
+
 ?>
 
 <!DOCTYPE html>
@@ -45,8 +47,8 @@ if(isset($_SESSION["usuario"]["nombre"])){
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small" style="line-height: 1.5rem;">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Recordarme</label>
+                        <input type="checkbox" class="custom-control-input" id="customCheck" value="1">
+                        <label  class="custom-control-label" for="customCheck">Recordarme</label>
                       </div>
                       <p class="my-2 p-1 gold" id="labelError">
                       </p>
