@@ -1,9 +1,16 @@
 $(document).ready(function(){
+    var rem= 0;
     $("#codeContent").hide();
     $("#labelError").hide();
-    
-    comprobarCokieRememberme();
 
+    comprobarCokieRememberme();
+    $('#customCheck').change(function(){
+        if(!$('#customCheck').is(":checked")){
+            $('#customCheck').attr("checked",false);
+            rem=0;
+        }
+
+    });
     //cuando hace click en btnLogin 
     $("#btnLogin").on("click", function(e){
         //se evita el evento envio del form
@@ -13,7 +20,7 @@ $(document).ready(function(){
         var data = $("#frmLogin").serialize();
         
         //obtenemos el valor del ckeckbox recordarme
-        var rem= 0;
+        
         if ($('#customCheck').is(":checked"))
         {
             rem= 1;
@@ -29,7 +36,7 @@ $(document).ready(function(){
                 console.log(r);
                 //en caso de comunicación exitosa, comprobamos valor booleano de respuesta
                 //que viene del servidor
-                if(r){
+         /*      if(r){
                     //si todo esta correcto, redireccionamos al inicio
                     $(location).attr('href',"vistas/home.php");
                 }else{
@@ -47,7 +54,7 @@ $(document).ready(function(){
                     $('input[name="txtUsuario"]').keypress(function(){
                         $("#labelError").hide();
                     });
-                } 
+                }*/
             },
             error: function (r) {
                 //si falla algo se muestra error de conexión en el servidor
