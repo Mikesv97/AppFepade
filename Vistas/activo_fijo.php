@@ -10,8 +10,8 @@ include('layout/navbar.php');
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome back!</h4>
-                    <p class="mb-0">Your business dashboard template</p>
+                    <h4>Bienvenido <?= $_SESSION["usuario"]["nombre"]; ?>!</h4>
+                    <p class="mb-0">Rol: <?= $_SESSION["usuario"]["rol"]; ?></p>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -105,95 +105,119 @@ include('layout/navbar.php');
                                 </section>
                                 <h4>Descripcion del activo</h4>
                                 <section>
-                                <div class="row">
+                                    <div class="row">
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Referencia*</label>
-                                                <input type="number" name="referencia" class="form-control" placeholder="12345678" required>
+                                                <label class="text-label">Usuario*</label>
+                                                <input type="number" name="usuario" class="form-control" placeholder="12345678" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Codigo Contabilidad*</label>
-                                                <input type="text" name="codContabilidad" class="form-control" placeholder="123456">
+                                                <label class="text-label">Modelo*</label>
+                                                <input type="text" name="modelo" class="form-control" placeholder="123456" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 mb-4">
+                                            <div class="form-group">
+                                                <label class="text-label">Departamento*</label>
+                                                <select class="form-control" name="departamento" required>
+                                                    <option selected></option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12 mb-4">
+                                            <div class="form-group">
+                                                <label class="text-label">F.F.</label>
+                                                <select class="form-control" name="ff" required>
+                                                    <option selected></option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 mb-4">
+                                            <div class="form-group">
+                                                <label class="text-label">Area</label>
+                                                <select class="form-control" name="area" required>
+                                                    <option selected></option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12 mb-4">
+                                            <div class="form-group">
+                                                <label class="text-label">Descripcion de activo*</label>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </section>
-                                <h4>Business Hours</h4>
+                                <h4>Equipo de computo</h4>
                                 <section>
-                                    <div class="row">
-                                        <div class="col-4 col-sm-3 mb-4">
-                                            <h4>Monday *</h4>
-                                        </div>
-                                        <div class="col-4 col-sm-3 mb-4">
+                                <div class="row">
+                                        <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <input class="form-control" value="9.00" type="number" name="input1" id="input1">
+                                                <label class="text-label">Procesador*</label>
+                                                <input type="number" name="procesador" class="form-control" placeholder="12345678" required>
                                             </div>
                                         </div>
-                                        <div class="col-4 col-sm-3 mb-4">
+                                        <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <input class="form-control" value="6.00" type="number" name="input2" id="input2">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-4 col-sm-3 mb-4">
-                                            <h4>Tuesday *</h4>
-                                        </div>
-                                        <div class="col-4 col-sm-3 mb-4">
-                                            <div class="form-group">
-                                                <input class="form-control" value="9.00" type="number" name="input3" id="input3">
-                                            </div>
-                                        </div>
-                                        <div class="col-4 col-sm-3 mb-4">
-                                            <div class="form-group">
-                                                <input class="form-control" value="6.00" type="number" name="input4" id="input4">
+                                                <label class="text-label">Generacion*</label>
+                                                <input type="text" name="generacion" class="form-control" placeholder="123456" required>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4 col-sm-3 mb-4">
-                                            <h4>Wednesday *</h4>
-                                        </div>
-                                        <div class="col-4 col-sm-3 mb-4">
+                                        <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <input class="form-control" value="9.00" type="number" name="input5" id="input5">
+                                                <label class="text-label">RAM*</label>
+                                                <input type="number" name="ram" class="form-control" placeholder="12345678" required>
                                             </div>
                                         </div>
-                                        <div class="col-4 col-sm-3 mb-4">
+                                        <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <input class="form-control" value="6.00" type="number" name="input6" id="input6">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-4 col-sm-3 mb-4">
-                                            <h4>Thrusday *</h4>
-                                        </div>
-                                        <div class="col-4 col-sm-3 mb-4">
-                                            <div class="form-group">
-                                                <input class="form-control" value="9.00" type="number" name="input7" id="input7">
-                                            </div>
-                                        </div>
-                                        <div class="col-4 col-sm-3 mb-4">
-                                            <div class="form-group">
-                                                <input class="form-control" value="6.00" type="number" name="input8" id="input8">
+                                                <label class="text-label">Tipo de RAM*</label>
+                                                <input type="text" name="tipoRam" class="form-control" placeholder="123456" required>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4 col-sm-3 mb-4">
-                                            <h4>Friday *</h4>
-                                        </div>
-                                        <div class="col-4 col-sm-3 mb-4">
+                                        <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <input class="form-control" value="9.00" type="number" name="input9" id="input9">
+                                                <label class="text-label">Disco Duro*</label>
+                                                <input type="number" name="disco" class="form-control" placeholder="12345678" required>
                                             </div>
                                         </div>
-                                        <div class="col-4 col-sm-3 mb-4">
+                                        <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <input class="form-control" value="6.00" type="number" name="input10" id="input10">
+                                                <label class="text-label">Sistema Operativo*</label>
+                                                <input type="text" name="sistema" class="form-control" placeholder="123456" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 mb-4">
+                                            <div class="form-group">
+                                                <label class="text-label">Office*</label>
+                                                <input type="number" name="office" class="form-control" placeholder="12345678" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 mb-4">
+                                            <div class="form-group">
+                                                <label class="text-label">Otros datos*</label>
+                                                <input type="text" name="otros" class="form-control" placeholder="123456" required>
                                             </div>
                                         </div>
                                     </div>
