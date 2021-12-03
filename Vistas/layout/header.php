@@ -17,10 +17,15 @@ if(!isset($_SESSION["usuario"]["nombre"])){
     <title>Focus - Bootstrap Admin Dashboard </title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../Recursos/Multimedia/Imagenes/favicon.png">
+    <!-- Calendario -->
     <link href="../Recursos/vendor/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
-    <link href="../Recursos/vendor/chartist/css/chartist.min.css" rel="stylesheet">
+    <!-- Form step activo_fijo -->
+    <link href="../Recursos/vendor/jquery-steps/css/jquery.steps.css" rel="stylesheet">
+    <!-- Estilos de las paginas -->
     <link href="../Recursos/CSS/style.css" rel="stylesheet">
+    <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <!-- Script Creados -->
     <script src="../recursos/js/homejs.js" ></script>
 
 </head>
