@@ -38,7 +38,7 @@ $(document).ready(function(){
                 //que viene del servidor
           if(r){
                     //si todo esta correcto, redireccionamos al inicio
-                    $(location).attr('href',"vistas/activo_fijo.php");
+                    $(location).attr('href',"vistas/home.php");
                 }else{
                     //caso contrario mandamos un mensaje de error
                     $("#btnLogin").blur();
