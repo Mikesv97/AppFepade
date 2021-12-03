@@ -11,7 +11,7 @@ class UsuariosDao{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-DLGTVHJ\SQLEXPRESS";
+        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
             //DECLARANDO CANEDA DE CONEXION
