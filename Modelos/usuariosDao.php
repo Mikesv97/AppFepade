@@ -122,7 +122,40 @@ class UsuariosDao{
     }
 
 
-
+    /*
+    Funcion que valida al usuario al hacer click en iniciar sesion
+    cuando hay cookies de recuerdame
+    */
+    public function validarUsuarioCookie($nombre,$clave){
+        //establecemos la coneccion
+        $this->conectar();
+        //establecemos la consulta
+        $sql="select a.usuario_nombre, a.usuario_id, a.correo_electronico, b.rol_nombre
+        from usuario a inner join roles b on a.id_rol = b.id_rol where usuario_nombre=? and token=?";
+        //preparamos la consulta
+        $respuesta = $this->con->prepare($sql);
+        //ejecutamos la consulta y seteamos parametros
+        $respuesta->execute([$nombre, $clave]);
+        //convertimos a un arrreglo 
+        $datos = $respuesta->fetchall();
+   
+        //consultamos el tamaño del arreglo para controlar si hay resultados o no
+        if(sizeof($datos)>0){
+            //si es mayor a 0, es que si hay, recorremos los datos
+            foreach($datos as $d){
+                //creamos sesion
+                $_SESSION["usuario"]["nombre"]= $d["usuario_nombre"];
+                $_SESSION["usuario"]["id"]= $d["usuario_id"];
+                $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
+                $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
+            }
+            //retornamos verdadero
+            return true;
+        }else{
+            //caso contrario no hay, retornamos false
+            return false;
+        }
+    }
 
 
 

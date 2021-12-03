@@ -26,6 +26,7 @@ $(document).ready(function(){
             dataType: "json",
             data: { "key": "validarUser","data": data,"valor": rem },
             success: function (r) {
+                console.log(r);
                 //en caso de comunicación exitosa, comprobamos valor booleano de respuesta
                 //que viene del servidor
                 if(r){
@@ -46,11 +47,11 @@ $(document).ready(function(){
                     $('input[name="txtUsuario"]').keypress(function(){
                         $("#labelError").hide();
                     });
-                }   
+                } 
             },
-            error: function () {
+            error: function (r) {
                 //si falla algo se muestra error de conexión en el servidor
-               console.log("No Se Pudo Comunicar Al Servidor");
+               console.log(r);
 
             }
             
