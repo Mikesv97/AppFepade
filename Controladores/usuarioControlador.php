@@ -26,23 +26,21 @@ if($_POST){
                         //destruyo las cookies
                         setcookie("usuario", "", time()-60);
                         setcookie("token", "", time()-60);
-                        //actualizo a null el valor del token del usuario en BD
-                        $updateToken= $usDao->setUserToken($nombre,null);
-                        if($updateToken){
+
                             //si se actualizo correctamente el campo
                             //comprobamos datos de las cookies
                             $userValid= $usDao->validarUsuarioCookie($nombre,$contraseña);
+
                             if($userValid){
+                                //actualizo a null el valor del token del usuario en BD
+                                $updateToken= $usDao->setUserToken($nombre,null);
                                 //si esta todo bien con lso datos de la cookie retornamos true
                                 echo json_encode(true);
                             }else{
                                 // si fallo con los datos de la cookie
                                 echo json_encode(false);
                             }
-                        }else{
-                            //si no se actualizo el campo
-                            echo json_encode(false);
-                        }
+                        
                     }else{
                         //si el checkbox de recuerdame esta seleccionado compruebo datos
                         $usuarioValidoCok= $usDao->validarUsuarioCookie($nombre,$contraseña);
