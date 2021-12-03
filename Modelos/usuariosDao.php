@@ -11,12 +11,19 @@ class UsuariosDao{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-DLGTVHJ\SQLEXPRESS";
+        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
+           
             //DECLARANDO CANEDA DE CONEXION
             $this->con = new PDO("sqlsrv:Server=$serverName;Database=$basedatos","","");
-
+            
+            //preparamos a la libreria PDO para mandar
+            //excepsiones en caso de errores
+            $this->con->setAttribute(
+                PDO::ATTR_ERRMODE,
+                PDO::ERRMODE_EXCEPTION
+            );
         }catch(PDOException $error){
             //MOSTRANDO ERROR
             echo $error->getMessage();
@@ -24,12 +31,11 @@ class UsuariosDao{
     
     }
 
-    public function desconectar(){
-        if(sqlsrv_close($this->con)){
-            return true;
-        }else{
-            return false;
-        }
+    public function desconectar($respuesta){
+        $this->con=null;
+        $respuesta->closeCursor();//dependiendo de la lib es obligatorio o no.
+        $respuesta=null;
+
     }
 
     /*
@@ -45,27 +51,33 @@ class UsuariosDao{
         from usuario a inner join roles b on a.id_rol = b.id_rol where usuario_nombre=? and usuario_clave=?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
-        //ejecutamos la consulta y seteamos parametros
-        $respuesta->execute([$nombre, $clave]);
-        //convertimos a un arrreglo 
-        $datos = $respuesta->fetchall();
-   
-        //consultamos el tamaño del arreglo para controlar si hay resultados o no
-        if(sizeof($datos)>0){
-            //si es mayor a 0, es que si hay, recorremos los datos
-            foreach($datos as $d){
-                //creamos sesion
-                $_SESSION["usuario"]["nombre"]= $d["usuario_nombre"];
-                $_SESSION["usuario"]["id"]= $d["usuario_id"];
-                $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
-                $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
+        try{
+            //ejecutamos la consulta y seteamos parametros
+            $respuesta->execute([$nombre, $clave]);
+            //convertimos a un arrreglo 
+            $datos = $respuesta->fetchall();
+    
+            //consultamos el tamaño del arreglo para controlar si hay resultados o no
+            if(sizeof($datos)>0){
+                //si es mayor a 0, es que si hay, recorremos los datos
+                foreach($datos as $d){
+                    //creamos sesion
+                    $_SESSION["usuario"]["nombre"]= $d["usuario_nombre"];
+                    $_SESSION["usuario"]["id"]= $d["usuario_id"];
+                    $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
+                    $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
+                }
+                //cerramos conexion
+                $this->desconectar($respuesta);
+                //retornamos verdadero
+                return true;
+
             }
-            //retornamos verdadero
-            return true;
-        }else{
-            //caso contrario no hay, retornamos false
-            return false;
+
+        }catch(PDOException $error){
+            return $error->getMessage();
         }
+        
     }
 
     //funcion para actualizar el token de cada usuario en cada login
@@ -77,21 +89,20 @@ class UsuariosDao{
         $sql="update usuario set token = ? where usuario_nombre = ?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
-        //ejecutamos la consulta y seteamos parametros 
-        $respuesta->execute([$token,$nombre]);
+        try{
 
-        //evaluamos cuantas filas fueron afectadas
-        if($respuesta->rowCount() > 0)
-            {
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([$token,$nombre]);
+            //evaluamos cuantas filas fueron afectadas
+            if($respuesta->rowCount() > 0){
+                //cerramos conexion
+                $this->desconectar($respuesta);
                 //si se afectaron más de 0
-                return true;
-            
-            }else{
-               //caso contrario algo fallo
-                print_r($respuesta->errorInfo());
-                return false;
+                return true;                 
             }
-
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
     }
 
     //funcion para validar que los datos de las cookies sean correctos
@@ -102,21 +113,27 @@ class UsuariosDao{
         $sql="select usuario_nombre, token from usuario where usuario_nombre=? and token=?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
-        //ejecutamos la consulta y seteamos parametros ?
-        $respuesta->execute([$nombre, $token]);
-        $datosValidos=$respuesta->execute([$nombre, $token]);
-        //vemos si tiene filas la consulta
-        if($datosValidos){
-            //si tiene fila es que son validos los datos de la cookie
-            //regresamos los datos en un array
-            $data= array(
-                "nombre" => $nombre,
-                "token" => $token,
-            );
-            echo json_encode($data);
-        }else{
-            echo json_encode(false);
+        try{
+            //ejecutamos la consulta y seteamos parametros
+            $datosValidos=$respuesta->execute([$nombre, $token]);
+            //vemos si tiene filas la consulta
+            if($datosValidos){
+                //si tiene fila es que son validos los datos de la cookie
+                //regresamos los datos en un array
+                $data= array(
+                    "nombre" => $nombre,
+                    "token" => $token,
+                );
+                //cerramos conexion
+                $this->desconectar($respuesta);
+                echo json_encode($data);
+            }else{
+                echo json_encode(false);
+            }
+        }catch(PDOException $error){
+            return $error->getMessage();
         }
+
       
 
     }
@@ -134,30 +151,44 @@ class UsuariosDao{
         from usuario a inner join roles b on a.id_rol = b.id_rol where usuario_nombre=? and token=?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
-        //ejecutamos la consulta y seteamos parametros
-        $respuesta->execute([$nombre, $clave]);
-        //convertimos a un arrreglo 
-        $datos = $respuesta->fetchall();
+        try{
+            //ejecutamos la consulta y seteamos parametros
+            $respuesta->execute([$nombre, $clave]);
+            //convertimos a un arrreglo 
+            $datos = $respuesta->fetchall();
    
-        //consultamos el tamaño del arreglo para controlar si hay resultados o no
-        if(sizeof($datos)>0){
-            //si es mayor a 0, es que si hay, recorremos los datos
-            foreach($datos as $d){
+            //consultamos el tamaño del arreglo para controlar si hay resultados o no
+            if(sizeof($datos)>0){
+                //si es mayor a 0, es que si hay, recorremos los datos
+                foreach($datos as $d){
                 //creamos sesion
-                $_SESSION["usuario"]["nombre"]= $d["usuario_nombre"];
-                $_SESSION["usuario"]["id"]= $d["usuario_id"];
-                $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
-                $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
+                    $_SESSION["usuario"]["nombre"]= $d["usuario_nombre"];
+                    $_SESSION["usuario"]["id"]= $d["usuario_id"];
+                    $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
+                    $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
+                }
+                
+                //cerramos conexion
+                $this->desconectar($respuesta);
+                //retornamos verdadero
+                return true;
             }
-            //retornamos verdadero
-            return true;
-        }else{
-            //caso contrario no hay, retornamos false
-            return false;
+
+        }catch(PDOException $error){
+            return $error->getMessage();
         }
+
+        
+        
     }
 
+    //funcion para generar "token" numero al azar
+    public function generarToken(){
+        $numero_aleatorio = mt_rand(1000000,999999999);
+        $token = ($numero_aleatorio +1);
 
+        return $token;
+    }
 
 }
 
