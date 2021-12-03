@@ -17,7 +17,27 @@ if($_POST){
                 $nombre = $data["txtUsuario"];
                 $contraseña = $data["txtContraseña"];
                 $rem = $_POST["valor"];
+                //vemos si ya hay cookies de recuerdame
+                if(isset($_COOKIE["usuario"]) && isset($_COOKIE["token"])){
+                    $usuarioValidoCok= $usDao->validarUsuarioCookie($nombre,$contraseña);
+                    if($usuarioValidoCok){
+                        $numero_aleatorio = mt_rand(1000000,999999999);
+                        $token = ($numero_aleatorio +1);
 
+                        $actualizarToken= $usDao->setUserToken($nombre,$token);
+                        if($actualizarToken){
+                            setcookie("token", $token, time()+30*24*60*60);
+                            echo json_encode(true);
+                        }else{
+                            echo json_encode(false);
+                        }
+                        
+                    }else{
+                        echo json_encode(false);
+                    }
+                    die;
+                   
+                }
                 //validamos si hay usuario con los datos ingresados
                 $usuarioExiste= $usDao->validarUsuario($nombre,$contraseña);
 
