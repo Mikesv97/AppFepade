@@ -101,12 +101,14 @@ session_start();
               <label for="txtCorreo" class="text-muted h6">Correo Electronico</label>
               <input type="email" class="form-control" id="txtCorreo" required>
               <small id="emailHelp" class="form-text text-muted">Debes ingresar tu correo electronico con el que te registraste en el sistema.</small>
+              <p class="my-2 p-1 gold" id="labelErrorEmail"></p>
             </div>
               <button id="btnCodigo" type="submit" class="btn btnLogin">Solicitar Código</button>
               <div id="codeContent" class="my-3 form-group my-3">
-              <small id="txtCodRecPass" class="text-muted h6">Ingresa El Código:</small>
-              <input class="form-control m-0" placeholder="Código" type="text" id="txtCodRecPass">
-              <button id="btnValidCodigo" type="button" class="mx-3 btn btnLogin">Validar</button>
+              <small id="labelInfoEmail" class="h6"></small>
+              <small id="txtCodRecPass" class="my-2 text-muted h6">Ingresa El Código:</small>
+              <input class="form-control my-2 m-0" placeholder="Código" type="text" id="txtCodRecPass">
+              <button id="btnValidCodigo" type="button" class="mx-3 my-2 btn btnLogin">Validar</button>
               <p id="error"></p>
             </div>
           </form>

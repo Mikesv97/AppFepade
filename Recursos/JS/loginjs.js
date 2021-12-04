@@ -1,12 +1,17 @@
 $(document).ready(function(){
     var rem;
     var uschange;
-
+    
+    //ocultamos label del error, y el input de codigo de
+    //cambio de contraseña
     $("#codeContent").hide();
     $("#labelError").hide();
+    $("#labelErrorEmail").hide();
 
     comprobarCokieRememberme();
-
+    
+    //cuando se clickea en el check box variamos valor
+    //para manejar desde el servidor si esta seleccionado o no
     $('#customCheck').on("click",function(){
         if(rem==1){
             rem =0;
@@ -15,14 +20,17 @@ $(document).ready(function(){
         }
     });
 
+    //cuando escribe otro usuario diferente al que esta cargado por el
+    //recuerdame
     $("input[name='txtUsuario']").keypress(function(){
-
+        //si es 1 esta seleccionado recuerdame
         if(rem ==1){
-
+            //lo pasamos a 0 para que no este seleccionado
             rem=0;
         }
-
+        //activamos que hubo cambio de usuario
         uschange=true;
+        //limpiamos controles
         $("input[name='txtContraseña']").val("");
         $('#customCheck').attr("checked",false);
     });
@@ -81,10 +89,52 @@ $(document).ready(function(){
         });
     });
 
-    /*Esta funcion se ejecuta cada que carga el login, manda solicitud al servidor mediante ajax
-    para pedir ver si hay cookies que se generan cuando el usuario se loguea con recuerdame,
-    si hay cookies correctas devuelve un arreglo con datos para cargar controles, si no hay cookies,
-    o si no son validos los datos de la cookie retorna falso*/
+    $("#btnCodigo").on("click",function(e){
+        var correo = $("#txtCorreo").val();
+        if(correo != ""){
+            e.preventDefault();
+            $.ajax({
+                url: "Controladores/usuarioControlador.php" ,
+                method: "post",
+                dataType: "json",
+                data: { "key": "validarCorreo","correo": correo },
+                success: function (r) {
+                    switch(r){
+                        case "invalidMail":
+                            //si el correo es invalido mostramos error
+                            $("#labelErrorEmail").text("Correo No Encontrado, Intenta De Nuevo");
+                            $("#labelErrorEmail").show();
+                            //hacemos focus en el inut y lo limpiamos
+                            $("#txtCorreo").focus();
+                            $("#txtCorreo").val("");
+                            //al digitar que se oculte el error
+                            $("#txtCorreo").keypress(function(){
+                                $("#labelErrorEmail").text("");
+                                $("#labelErrorEmail").hide();
+                            });
+                        break;
+                        case true:
+                            //si el correo existe ocultamos el error del correo invalido si estuviera mostrado
+                            $("#labelErrorEmail").hide();
+                            //desabilitamos el input con el correo
+                            $("#txtCorreo").attr("disabled",true);
+                            //mostramo mensaje que el codigo fue enviado
+                            $("#labelInfoEmail").attr("class","text-muted");
+                            $("#labelInfoEmail").text("Enviamos un código a tu correo, por favor verifica e ingresalo");
+                            //mostramos el campo para el codigo
+                            $("#codeContent").show();
+                        break;
+                    }
+                },
+                error: function (r) {
+                    console.log(r);
+                }
+            });
+        }
+    });
+
+    /*funcion que solicita comprobacion  de datos de las cookies para ver si son validos y cargar los 
+    controles*/
     function comprobarCokieRememberme(){
         $.ajax({
             url:"Controladores/usuarioControlador.php",
@@ -92,7 +142,6 @@ $(document).ready(function(){
             dataType: "json",
             data: { "key": "validarRemember"},
             success: function (r) {
-                console.log("cookies existen: "+r);
                 //si hay cookies, y si son correctos los datos
                 if(r){
                     //seteamos controles
@@ -106,8 +155,9 @@ $(document).ready(function(){
                     $('#customCheck').attr("checked",false);
                 }
              },
-            error: function () {
+            error: function (r) {
                 console.log("No se pudo conectar al servidor");
+                console.log(r);
 
                
             }

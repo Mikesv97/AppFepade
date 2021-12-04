@@ -190,6 +190,28 @@ class UsuariosDao{
         return $token;
     }
 
+    //funcion para validar correo cambio contraseña
+    public function validarCorreo($correo){
+
+        //establecemos la coneccion
+        $this->conectar();
+        //establecemos la consulta
+        $sql="select count(correo_Electronico) from usuario where correo_electronico = ?";
+        //preparamos la consulta
+        $respuesta = $this->con->prepare($sql);
+        try{
+
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([$correo]);
+            //retornamos la cantidad de registro con el correo ingresado
+            //solo puede ser 1 si hay o 0 si no hay
+            return $respuesta->fetchColumn();
+
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
+
 }
 
 ?>

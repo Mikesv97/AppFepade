@@ -166,6 +166,21 @@ if($_POST){
                     echo json_encode(false);
                 }
             break;
+            case "validarCorreo":
+                $correoValido=$usDao->validarCorreo($_POST["correo"]);
+                if($correoValido==1){
+                    $senCorreo = mail($_POST["correo"], "Yo soy el asunto del correo", "Yo soy el mensaje");
+                    if($senCorreo){
+                        echo json_encode(true);
+                    }else{
+                        echo json_encode("problemas al enviar correo");
+                    }
+                    
+                }else{
+                    echo json_encode("invalidMail");
+                }
+
+            break;
         }
     }
 
