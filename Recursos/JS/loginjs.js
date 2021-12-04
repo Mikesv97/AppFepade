@@ -99,6 +99,7 @@ $(document).ready(function(){
                 dataType: "json",
                 data: { "key": "validarCorreo","correo": correo },
                 success: function (r) {
+                    console.log(r)
                     switch(r){
                         case "invalidMail":
                             //si el correo es invalido mostramos error

@@ -5,7 +5,8 @@ $nombre="douglas miguel figueroa";
 $contraseña="douglas97";
 $token="592647152";
 $usDao = new UsuariosDao();
+$code= $usDao->generarToken();
+$senCorreo = mail("kimichisv@gmail.com", "Yo soy el asunto del correo, tu codigo es: ", "Yo soy el mensaje, tú codigo es:".$code);
 
-$senCorreo = mail("douglas.figuroa20@itca.edu.sv", "Yo soy el asunto del correo", "Yo soy el mensaje");
-echo $senCorreo;
+var_dump($senCorreo);
 ?>

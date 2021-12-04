@@ -169,8 +169,10 @@ if($_POST){
             case "validarCorreo":
                 $correoValido=$usDao->validarCorreo($_POST["correo"]);
                 if($correoValido==1){
-                    $senCorreo = mail($_POST["correo"], "Yo soy el asunto del correo", "Yo soy el mensaje");
+                    $code= $usDao->generarToken();
+                    $senCorreo = mail($_POST["correo"], "Yo soy el asunto del correo, tu codigo es: ".$code, "Yo soy el mensaje");
                     if($senCorreo){
+                        return $code;
                         echo json_encode(true);
                     }else{
                         echo json_encode("problemas al enviar correo");
