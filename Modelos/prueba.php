@@ -1,12 +1,15 @@
 <?php
-
+include_once 'sendMail.php';
 include_once '../Modelos/usuariosDao.php';
-$nombre="douglas miguel figueroa";
+$nombre="raidenprueba75@gmail.com";
 $contraseña="douglas97";
 $token="592647152";
 $usDao = new UsuariosDao();
 $code= $usDao->generarToken();
-$senCorreo = mail("kimichisv@gmail.com", "Yo soy el asunto del correo, tu codigo es: ", "Yo soy el mensaje, tú codigo es:".$code);
+if(SendMail::enviarCodCorreo($nombre,$code)){
+    echo "enviado";
+}else{
+    echo "no enviado";
+}
 
-var_dump($senCorreo);
 ?>
