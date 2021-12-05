@@ -125,6 +125,9 @@ $(document).ready(function(){
                             //mostramos el campo para el codigo
                             $("#codeContent").show();
                         break;
+                        case "failSendMail":
+                            alert("Vaya! Parece que tenemos dificultades tecnicas para enviar el correo, intenta más tarde")
+                        break;
                     }
                 },
                 error: function (r) {

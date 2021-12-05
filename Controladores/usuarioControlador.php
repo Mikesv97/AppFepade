@@ -1,9 +1,9 @@
 <?php
 
 include_once '../Modelos/usuariosDao.php';
-
+include_once '../Modelos/sendMail.php';
 $usDao = new UsuariosDao();
-
+$code=0;
 if($_POST){
     if(isset($_POST["key"])){
         
@@ -170,12 +170,10 @@ if($_POST){
                 $correoValido=$usDao->validarCorreo($_POST["correo"]);
                 if($correoValido==1){
                     $code= $usDao->generarToken();
-                    $senCorreo = mail($_POST["correo"], "Yo soy el asunto del correo, tu codigo es: ".$code, "Yo soy el mensaje");
-                    if($senCorreo){
-                        return $code;
+                    if(SendMail::enviarCodCorreo($_POST["correo"],$code)){
                         echo json_encode(true);
                     }else{
-                        echo json_encode("problemas al enviar correo");
+                        echo json_encode("failSendMail");
                     }
                     
                 }else{
