@@ -51,9 +51,94 @@ class activoFijoDAO{
             }
         }catch(PDOException $error){
             return $error->getMessage();
-        }
-        
+        }   
     }
+
+    public function comboTipoActivo(){
+        $this->conectar();
+        $sql = "SELECT tipo_activo_id, tipo_activo_nombre FROM Tipo_activo";
+        $respuesta = $this->con->prepare($sql);
+        try{
+            $respuesta->execute();
+            $data = array();
+            while($fila = $respuesta->fetch(PDO::FETCH_ASSOC)){
+                $data[$fila["tipo_activo_id"]]=$fila["tipo_activo_nombre"];
+            }
+            return $data;
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
+
+    public function comboDapartamento(){
+        $this->conectar();
+        $sql = "SELECT estructura11_id, estructura11_nombre FROM Estructura11";
+        $respuesta = $this->con->prepare($sql);
+        try{
+            $respuesta->execute();
+            $data = array();
+            while($fila = $respuesta->fetch(PDO::FETCH_ASSOC)){
+                $data[$fila["estructura11_id"]]=$fila["estructura11_nombre"];
+            }
+            return $data;
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
+
+    public function comboFondos(){
+        $this->conectar();
+        $sql = "SELECT estructura21_id, estructura21_nombre FROM Estructura21";
+        $respuesta = $this->con->prepare($sql);
+        try{
+            $respuesta->execute();
+            $data = array();
+            while($fila = $respuesta->fetch(PDO::FETCH_ASSOC)){
+                $data[$fila["estructura21_id"]]=$fila["estructura21_nombre"];
+            }
+            return $data;
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
+
+    public function comboArea(){
+        $this->conectar();
+        $sql = "SELECT estructura31_id, estructura31_nombre FROM Estructura31";
+        $respuesta = $this->con->prepare($sql);
+        try{
+            $respuesta->execute();
+            $data = array();
+            while($fila = $respuesta->fetch(PDO::FETCH_ASSOC)){
+                $data[$fila["estructura31_id"]]=$fila["estructura31_nombre"];
+            }
+            return $data;
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
+
+    public function comboUsuario(){
+        $this->conectar();
+        $sql = "SELECT usuario_id, usuario_nombre FROM Usuario";
+        $respuesta = $this->con->prepare($sql);
+        try{
+            $respuesta->execute();
+            $data = array();
+            while($fila = $respuesta->fetch(PDO::FETCH_ASSOC)){
+                $data[$fila["usuario_id"]]=$fila["usuario_nombre"];
+            }
+            return $data;
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
+
+
+
+
+
+
 }
 
 ?>

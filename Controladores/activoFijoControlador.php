@@ -14,13 +14,13 @@ if($_POST){
                 $numSerie = $data['numSerie'];
                 $fechaAdq = $data['fechaAdq'];
                 $numFactura = $data['numFactura'];
-                $tipo = $data['tipo'];
+                $tipo = $data['comboTipoActivo'];
                 $ip = $data['ip'];
-                $usuario = $data['usuario'];
+                $usuario = $data['comboUsuario'];
                 $modelo = $data['modelo'];
-                $departamento = $data['departamento'];
-                $ff = $data['ff'];
-                $area = $data['area'];
+                $departamento = $data['comboDepartamento'];
+                $ff = $data['comboFondos'];
+                $area = $data['comboArea'];
                 $descripcion = $data['descripcion'];
 
                 $resultado = $obj->insertarActivoFijo($referencia,$codContabilidad,$codProyectos,$numSerie,$fechaAdq,$numFactura,

@@ -1,12 +1,20 @@
 <?php
 include('layout/header.php');
 include('layout/navbar.php');
+include_once '../Modelos/activoFijoDao.php';
+$obj = new activoFijoDAO();
 ?>
+<<<<<<< HEAD
 <script>
     $(document).ready(function(){
         $("#ocultar").hide();
     });    
 </script>
+=======
+
+<!-- script para mostrar o ocultar los campos segun, el tiepo de activo que se ingresara -->
+<script src="../Recursos/JS/tipoActivo.js"></script></script>
+>>>>>>> ac78e6a423931faf52b263318f0230e351140af7
 <!--**********************************
             Content body start
         ***********************************-->
@@ -42,13 +50,13 @@ include('layout/navbar.php');
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Referencia*</label>
-                                                <input type="number" name="referencia" class="form-control" placeholder="12345678" required>
+                                                <input type="number" name="referencia" class="form-control" placeholder="12345678" maxlength="30" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Codigo Contabilidad*</label>
-                                                <input type="text" name="codContabilidad" class="form-control" placeholder="123456">
+                                                <input type="text" name="codContabilidad" class="form-control" placeholder="123456" maxlength="10">
                                             </div>
                                         </div>
                                     </div>
@@ -56,13 +64,13 @@ include('layout/navbar.php');
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Codigo para proyectos*</label>
-                                                <input type="text" name="codProyectos" class="form-control" placeholder="123456">
+                                                <input type="text" name="codProyectos" class="form-control" placeholder="123456" maxlength="4">
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Numero de serie*</label>
-                                                <input type="text" name="numSerie" class="form-control" placeholder="123456">
+                                                <input type="text" name="numSerie" class="form-control" placeholder="123456" maxlength="50">
                                             </div>
                                         </div>
                                     </div>
@@ -84,17 +92,19 @@ include('layout/navbar.php');
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Numero de factura*</label>
-                                                <input type="text" name="numFactura" class="form-control" placeholder="123456">
+                                                <input type="text" name="numFactura" class="form-control" placeholder="123456" maxlength="15">
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Tipo de activo*</label>
-                                                <select class="form-control" name="tipo" required>
-                                                    <option selected></option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                <select name="comboTipoActivo" id="comboTipoActivo" class="form-control">
+                                                    <?php
+                                                    $data = $obj->comboTipoActivo();
+                                                    foreach ($data as $indice => $valor) {
+                                                        echo ' <option value="' . $indice . '">' . $valor . ' </option>';
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -103,7 +113,7 @@ include('layout/navbar.php');
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">IP*</label>
-                                                <input type="text" name="ip" class="form-control" placeholder="192.168.137.1" required>
+                                                <input type="text" name="ip" class="form-control" placeholder="192.168.137.1" required maxlength="50">
                                             </div>
                                         </div>
                                     </div>
@@ -114,13 +124,20 @@ include('layout/navbar.php');
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Usuario*</label>
-                                                <input type="text" name="usuario" class="form-control" placeholder="12345678" required>
+                                                <<select name="comboUsuario" id="comboUsuario" class="form-control">
+                                                    <?php
+                                                    $data = $obj->comboUsuario();
+                                                    foreach ($data as $indice => $valor) {
+                                                        echo ' <option value="' . $indice . '">' . $valor . ' </option>';
+                                                    }
+                                                    ?>
+                                                    </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Modelo*</label>
-                                                <input type="text" name="modelo" class="form-control" placeholder="123456" required>
+                                                <input type="text" name="modelo" class="form-control" placeholder="123456" required maxlength="50">
                                             </div>
                                         </div>
                                     </div>
@@ -128,22 +145,26 @@ include('layout/navbar.php');
                                         <div class="col-lg-6 col-sm-12 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Departamento*</label>
-                                                <select class="form-control" name="departamento" required>
-                                                    <option selected></option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                <select name="comboDepartamento" id="comboDepartamento" class="form-control">
+                                                    <?php
+                                                    $data = $obj->comboDapartamento();
+                                                    foreach ($data as $indice => $valor) {
+                                                        echo ' <option value="' . $indice . '">' . $valor . ' </option>';
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-12 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">F.F.</label>
-                                                <select class="form-control" name="ff" required>
-                                                    <option selected></option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                <select name="comboFondos" id="comboFondos" class="form-control">
+                                                    <?php
+                                                    $data = $obj->comboFondos();
+                                                    foreach ($data as $indice => $valor) {
+                                                        echo ' <option value="' . $indice . '">' . $valor . ' </option>';
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -152,22 +173,25 @@ include('layout/navbar.php');
                                         <div class="col-lg-6 col-sm-12 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Area</label>
-                                                <select class="form-control" name="area" required>
-                                                    <option selected></option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                <select name="comboArea" id="comboArea" class="form-control">
+                                                    <?php
+                                                    $data = $obj->comboFondos();
+                                                    foreach ($data as $indice => $valor) {
+                                                        echo ' <option value="' . $indice . '">' . $valor . ' </option>';
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-12 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Descripcion de activo*</label>
-                                                <textarea class="form-control" name="descripcion" rows="3" required></textarea>
+                                                <textarea class="form-control" name="descripcion" rows="3" required maxlength="1000"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </section>
+<<<<<<< HEAD
                                 <h4>Equipo de computo</h4>
                                 
                                 <section>
@@ -177,12 +201,25 @@ include('layout/navbar.php');
                                                 <div class="form-group">
                                                     <label class="text-label">Procesador*</label>
                                                     <input type="number" name="procesador" class="form-control" placeholder="12345678" required>
+=======
+                                <h4>Informacion de activo</h4>
+                                <section>
+                                    <div id="computadora">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Procesador*</label>
+                                                    <input type="text" name="procesador" class="form-control" placeholder="Inter I3" required maxlength="50">
+>>>>>>> ac78e6a423931faf52b263318f0230e351140af7
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
                                                     <label class="text-label">Generacion*</label>
+<<<<<<< HEAD
                                                     <input type="text" name="generacion" class="form-control" placeholder="123456" required>
+=======
+                                                    <input type="text" name="generacion" class="form-control" placeholder="Tercera" required maxlength="50">
                                                 </div>
                                             </div>
                                         </div>
@@ -190,11 +227,76 @@ include('layout/navbar.php');
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
                                                     <label class="text-label">RAM*</label>
-                                                    <input type="number" name="ram" class="form-control" placeholder="12345678" required>
+                                                    <input type="text" name="ram" class="form-control" placeholder="4GB" required maxlength="50">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
+                                                    <label class="text-label">Tipo de RAM*</label>
+                                                    <input type="text" name="tipoRam" class="form-control" placeholder="DDR3" required maxlength="50">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Disco Duro*</label>
+                                                    <input type="text" name="disco" class="form-control" placeholder="100GB" required maxlength="50">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Sistema Operativo*</label>
+                                                    <input type="text" name="sistema" class="form-control" placeholder="Winwdows 10" required maxlength="50">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Office*</label>
+                                                    <input type="text" name="office" class="form-control" placeholder="2019" required maxlength="50">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Otros datos*</label>
+                                                    <input type="text" name="otros" class="form-control" placeholder="otros datos" required maxlength="50">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="impresora">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Toner Negro*</label>
+                                                    <input type="text" name="tonerNegro" class="form-control" placeholder="CE1234" required maxlength="50">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Toner Magenta*</label>
+                                                    <input type="text" name="tonerMagenta" class="form-control" placeholder="CE1234" required maxlength="50">
+>>>>>>> ac78e6a423931faf52b263318f0230e351140af7
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+<<<<<<< HEAD
+                                                    <label class="text-label">RAM*</label>
+                                                    <input type="number" name="ram" class="form-control" placeholder="12345678" required>
+=======
+                                                    <label class="text-label">Toner Cyan*</label>
+                                                    <input type="text" name="tonerCyan" class="form-control" placeholder="CE1234" required maxlength="50">
+>>>>>>> ac78e6a423931faf52b263318f0230e351140af7
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+<<<<<<< HEAD
                                                     <label class="text-label">Tipo de RAM*</label>
                                                     <input type="text" name="tipoRam" class="form-control" placeholder="123456" required>
                                                 </div>
@@ -225,6 +327,40 @@ include('layout/navbar.php');
                                                 <div class="form-group">
                                                     <label class="text-label">Otros datos*</label>
                                                     <input type="text" name="otros" class="form-control" placeholder="123456" required>
+=======
+                                                    <label class="text-label">Toner Amarillo*</label>
+                                                    <input type="text" name="tonerAmarillo" class="form-control" placeholder="CE1234" required maxlength="50">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Tambor*</label>
+                                                    <input type="text" name="tonerCyan" class="form-control" placeholder="" maxlength="50">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Fusor*</label>
+                                                    <input type="text" name="Fusor" class="form-control" placeholder="" maxlength="50">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="proyector">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Horas de uso*</label>
+                                                    <input type="number" name="horasUso" class="form-control" placeholder="12345678" required maxlength="50">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Horas economicas*</label>
+                                                    <input type="number" name="horasEco" class="form-control" placeholder="123456" required maxlength="50">
+>>>>>>> ac78e6a423931faf52b263318f0230e351140af7
                                                 </div>
                                             </div>
                                         </div>
