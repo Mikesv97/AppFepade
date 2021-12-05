@@ -4,6 +4,20 @@ include('layout/navbar.php');
 include_once '../Modelos/activoFijoDao.php';
 $obj = new activoFijoDAO();
 ?>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<script>
+    $(document).ready(function(){
+        $("#ocultar").hide();
+    });    
+</script>
+=======
+
+<!-- script para mostrar o ocultar los campos segun, el tiepo de activo que se ingresara -->
+<script src="../Recursos/JS/tipoActivo.js"></script></script>
+>>>>>>> ac78e6a423931faf52b263318f0230e351140af7
+>>>>>>> 8cd2abae049148a1dfd9e823b100879743a69dde
 <!--**********************************
             Content body start
         ***********************************-->
@@ -180,6 +194,17 @@ $obj = new activoFijoDAO();
                                         </div>
                                     </div>
                                 </section>
+<<<<<<< HEAD
+                                <h4>Equipo de computo</h4>
+                                
+                                <section>
+                                <div id="ocultar">    
+                                    <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Procesador*</label>
+                                                    <input type="number" name="procesador" class="form-control" placeholder="12345678" required>
+=======
                                 <h4>Informacion de activo</h4>
                                 <section>
                                     <div id="computadora">
@@ -188,11 +213,15 @@ $obj = new activoFijoDAO();
                                                 <div class="form-group">
                                                     <label class="text-label">Procesador*</label>
                                                     <input type="text" name="procesador" class="form-control" placeholder="Inter I3" required maxlength="50">
+>>>>>>> ac78e6a423931faf52b263318f0230e351140af7
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
                                                     <label class="text-label">Generacion*</label>
+<<<<<<< HEAD
+                                                    <input type="text" name="generacion" class="form-control" placeholder="123456" required>
+=======
                                                     <input type="text" name="generacion" class="form-control" placeholder="Tercera" required maxlength="50">
                                                 </div>
                                             </div>
@@ -252,18 +281,56 @@ $obj = new activoFijoDAO();
                                                 <div class="form-group">
                                                     <label class="text-label">Toner Magenta*</label>
                                                     <input type="text" name="tonerMagenta" class="form-control" placeholder="CE1234" required maxlength="50">
+>>>>>>> ac78e6a423931faf52b263318f0230e351140af7
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
+<<<<<<< HEAD
+                                                    <label class="text-label">RAM*</label>
+                                                    <input type="number" name="ram" class="form-control" placeholder="12345678" required>
+=======
                                                     <label class="text-label">Toner Cyan*</label>
                                                     <input type="text" name="tonerCyan" class="form-control" placeholder="CE1234" required maxlength="50">
+>>>>>>> ac78e6a423931faf52b263318f0230e351140af7
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
+<<<<<<< HEAD
+                                                    <label class="text-label">Tipo de RAM*</label>
+                                                    <input type="text" name="tipoRam" class="form-control" placeholder="123456" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Disco Duro*</label>
+                                                    <input type="number" name="disco" class="form-control" placeholder="12345678" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Sistema Operativo*</label>
+                                                    <input type="text" name="sistema" class="form-control" placeholder="123456" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Office*</label>
+                                                    <input type="number" name="office" class="form-control" placeholder="12345678" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Otros datos*</label>
+                                                    <input type="text" name="otros" class="form-control" placeholder="123456" required>
+=======
                                                     <label class="text-label">Toner Amarillo*</label>
                                                     <input type="text" name="tonerAmarillo" class="form-control" placeholder="CE1234" required maxlength="50">
                                                 </div>
@@ -296,11 +363,13 @@ $obj = new activoFijoDAO();
                                                 <div class="form-group">
                                                     <label class="text-label">Horas economicas*</label>
                                                     <input type="number" name="horasEco" class="form-control" placeholder="123456" required maxlength="50">
+>>>>>>> ac78e6a423931faf52b263318f0230e351140af7
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </section>
+                            
                             </div>
                         </form>
                     </div>
