@@ -1,12 +1,10 @@
 <?php
 
 include_once '../Modelos/usuariosDao.php';
-$nombre="douglas miguel figueroa";
-$contraseña="douglas97";
-$token="592647152";
-$usDao = new UsuariosDao();
-$code= $usDao->generarToken();
-$senCorreo = mail("kimichisv@gmail.com", "Yo soy el asunto del correo, tu codigo es: ", "Yo soy el mensaje, tú codigo es:".$code);
+include_once '../Modelos/activoFijoDao.php';
 
-var_dump($senCorreo);
+$obj = new activoFijoDAO();
+$obj->insertarActivoFijo(1,1,1,1,'01/12/2021',1,1,'prueba2',1,1,1,'AEC','02/12/2021','02/12/2021');
+
+
 ?>
