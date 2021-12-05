@@ -4,9 +4,6 @@ include('layout/navbar.php');
 include_once '../Modelos/activoFijoDao.php';
 $obj = new activoFijoDAO();
 ?>
-
-<!-- script para mostrar o ocultar los campos segun, el tiepo de activo que se ingresara -->
-<script src="../Recursos/JS/tipoActivo.js"></script></script>
 <!--**********************************
             Content body start
         ***********************************-->
@@ -313,7 +310,8 @@ $obj = new activoFijoDAO();
     </div>
 </div>
 
-<script src="../Recursos/JS/scriptPlantilla/activoFijo.js"></script>
+<!-- script para mostrar o ocultar los campos segun, el tiepo de activo que se ingresara -->
+<script src="../Recursos/JS/tipoActivo.js"></script></script>
 <!--**********************************
             Content body end
         ***********************************-->

@@ -30,8 +30,8 @@
     ***********************************-->
     <!-- Required vendors -->
     <script src="../Recursos/vendor/global/global.min.js"></script>
-    <script src="../Recursos/JS/quixnav-init.js"></script>
-    <script src="../Recursos/JS/custom.min.js"></script>
+    <script src="../Recursos/JS/scriptPlantilla/quixnav-init.js"></script>
+    <script src="../Recursos/JS/scriptPlantilla/custom.min.js"></script>
 
 
     <script src="../Recursos/vendor/moment/moment.min.js"></script>
