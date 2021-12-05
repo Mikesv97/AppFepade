@@ -1,6 +1,8 @@
 $(document).ready(function(){
     var rem;
     var uschange;
+    var codigo;
+    var error =parseInt(0);;
     
     //ocultamos label del error, y el input de codigo de
     //cambio de contraseña
@@ -89,6 +91,7 @@ $(document).ready(function(){
         });
     });
 
+    //cuando hace click en solicitar código
     $("#btnCodigo").on("click",function(e){
         var correo = $("#txtCorreo").val();
         if(correo != ""){
@@ -97,9 +100,10 @@ $(document).ready(function(){
                 url: "Controladores/usuarioControlador.php" ,
                 method: "post",
                 dataType: "json",
-                data: { "key": "validarCorreo","correo": correo },
+                data: { "key": "validarCorreo","correo": correo},
                 success: function (r) {
                     console.log(r)
+
                     switch(r){
                         case "invalidMail":
                             //si el correo es invalido mostramos error
@@ -115,10 +119,13 @@ $(document).ready(function(){
                             });
                         break;
                         case true:
+                            //enviamos cod al correo
+                            enviarCodigo();   
                             //si el correo existe ocultamos el error del correo invalido si estuviera mostrado
                             $("#labelErrorEmail").hide();
                             //desabilitamos el input con el correo
                             $("#txtCorreo").attr("disabled",true);
+                            $("#btnCodigo").attr("disabled",true);
                             //mostramo mensaje que el codigo fue enviado
                             $("#labelInfoEmail").attr("class","text-muted");
                             $("#labelInfoEmail").text("Enviamos un código a tu correo, por favor verifica e ingresalo");
@@ -137,37 +144,76 @@ $(document).ready(function(){
         }
     });
 
-    /*funcion que solicita comprobacion  de datos de las cookies para ver si son validos y cargar los 
+    //cuando hace click en validar código
+    $("#btnValidCodigo").on("click",function(){
+        
+        var codIng= $("#txtCodCorreo").val();
+        if(codigo == codIng){
+            alert("codigo correcto");
+        }else{
+            $("#lbCoderror").text("Código incorrecto");
+            if(error<0){
+                error += parseInt(1);
+            }
+            if(error==3){
+                alert("lo sentimos parece que no eres quien dices ser.")
+            }
+           
+            console.log("errro: "+error)
+        }
+
+
+    });
+        /*funcion que solicita comprobacion  de datos de las cookies para ver si son validos y cargar los 
     controles*/
     function comprobarCokieRememberme(){
-        $.ajax({
-            url:"Controladores/usuarioControlador.php",
-            method: "post",
-            dataType: "json",
-            data: { "key": "validarRemember"},
-            success: function (r) {
-                //si hay cookies, y si son correctos los datos
-                if(r){
-                    //seteamos controles
-                    $("input[name='txtUsuario']").val(r["nombre"]);
-                    $("input[name='txtContraseña']").val(r["token"]);
-                    rem=1;
-                    uschange=false;
-                    $('#customCheck').attr("checked",true);
-                }else{
-                    rem=0;
-                    $('#customCheck').attr("checked",false);
-                }
-             },
-            error: function (r) {
-                console.log("No se pudo conectar al servidor");
-                console.log(r);
+    $.ajax({
+        url:"Controladores/usuarioControlador.php",
+        method: "post",
+        dataType: "json",
+        data: { "key": "validarRemember"},
+        success: function (r) {
+            //si hay cookies, y si son correctos los datos
+            if(r){
+                //seteamos controles
+                $("input[name='txtUsuario']").val(r["nombre"]);
+                $("input[name='txtContraseña']").val(r["token"]);
+                rem=1;
+                uschange=false;
+                $('#customCheck').attr("checked",true);
+            }else{
+                rem=0;
+                $('#customCheck').attr("checked",false);
+            }
+         },
+        error: function (r) {
+            console.log("No se pudo conectar al servidor");
+            console.log(r);  
+        }
+    });
+    }
 
-               
+    function enviarCodigo(){
+        var correo = $("#txtCorreo").val();
+        $.ajax({
+            url: "Controladores/usuarioControlador.php",
+            method: "post",
+            //dataType: "json",
+            data: { "key":"enviarCodigo","correo": correo},
+            success: function (r) {
+                   codigo = r;
+            
+            },
+            error: function (r) {
+                console.log(r);
             }
         });
     }
 });
+
+
+
+
 
 /*
 $.ajax({

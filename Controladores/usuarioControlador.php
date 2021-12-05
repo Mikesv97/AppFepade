@@ -3,12 +3,8 @@
 include_once '../Modelos/usuariosDao.php';
 include_once '../Modelos/sendMail.php';
 $usDao = new UsuariosDao();
-$code=0;
-if($_POST){
-    if(isset($_POST["key"])){
-        
+if(isset($_POST["key"])){   
         $key=$_POST["key"];
-        
         switch($key){
             case "validarUser":
                 //descerializamos los datos que envia ajax
@@ -102,12 +98,8 @@ if($_POST){
                             }else{//si es invalido los datos, mandamos llave de error
                                 echo json_encode("datosLogNull");
                             }
-                            
-                            
                         break;
                     }
-                    
-                
                 }else{//si no hay cookies
                     
                     //validamos al usuario con los datos ingresados
@@ -146,8 +138,7 @@ if($_POST){
                         
                     }else{//si son incorrectos los datos del usuario
                         echo json_encode("datosLogNull");
-                    }
-                    
+                    }    
                 }
             break;
             case "cerrarSesion":
@@ -167,22 +158,23 @@ if($_POST){
                 }
             break;
             case "validarCorreo":
+
                 $correoValido=$usDao->validarCorreo($_POST["correo"]);
                 if($correoValido==1){
-                    $code= $usDao->generarToken();
-                    if(SendMail::enviarCodCorreo($_POST["correo"],$code)){
-                        echo json_encode(true);
-                    }else{
-                        echo json_encode("failSendMail");
-                    }
-                    
+                    echo json_encode(true);
                 }else{
                     echo json_encode("invalidMail");
                 }
-
+            break;
+            case "enviarCodigo":
+                $code=$usDao->generarToken();
+                if(SendMail::enviarCodCorreo($_POST["correo"],$code)){
+                    echo json_encode($code);
+                }else{
+                    echo json_encode("invalidMail");
+                }
+                
             break;
         }
-    }
-
 }
 ?>

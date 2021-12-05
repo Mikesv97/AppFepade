@@ -4,6 +4,7 @@ include 'usuarios.php';
 
 class UsuariosDao{
     private $con;
+    private $codGenerado;
 
     public function __construct(){
 
@@ -33,7 +34,7 @@ class UsuariosDao{
 
     public function desconectar($respuesta){
         $this->con=null;
-        $respuesta->closeCursor();//dependiendo de la lib es obligatorio o no.
+        $respuesta->closeCursor();//dependiendo del driver es obligatorio o no.
         $respuesta=null;
 
     }
@@ -186,10 +187,12 @@ class UsuariosDao{
     public function generarToken(){
         $numero_aleatorio = mt_rand(1000000,999999999);
         $token = ($numero_aleatorio +1);
-
+        $this->codGenerado = $token;
         return $token;
     }
-
+    public function getTokenGenerado(){
+        return $this->codGenerado;
+    }
     //funcion para validar correo cambio contraseña
     public function validarCorreo($correo){
 

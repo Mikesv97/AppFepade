@@ -49,9 +49,14 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
   display: inline-block;
 }
 
-
+#txtCodCorreo{
+  width: 140px;
+  margin-right: 0;
+  display: inline-block;
+}
 #codeContent{
   width: 100%;
+
 }
 html {
   position: relative;

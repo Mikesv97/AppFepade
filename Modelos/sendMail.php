@@ -23,7 +23,7 @@ class SendMail {
     
         //Recipients
         $mail->setFrom('noreply@gmail.com', 'Sistema FEPADE');
-        $mail->addAddress($correo);     //Add a recipient
+        $mail->addAddress("$correo");     //Add a recipient
         //$mail->addAddress('ellen@example.com');               //Name is optional
         //$mail->addReplyTo('info@example.com', 'Information');
         //$mail->addCC('cc@example.com');
@@ -74,14 +74,14 @@ class SendMail {
             margin-bottom: 2em;
         }
         .spanClas{
-            background-color: rgba(226, 13, 13, 0.8);
+            
             text-shadow:0 1px 1px hsla(0, 0%, 0%, 0.5);
-            color:white;
+            color:red;
             border-radius: 10px;
             padding: 5px;
         }
         .spanCodigo{
-            background-color:#f1b72f;
+            background-color:rgba(218, 8, 8, 0.822);
             color: whitesmoke;
             border-radius: 10px;
             padding: 5px;
@@ -136,7 +136,11 @@ class SendMail {
         $mail->Body    = $mensaje;
         //$mail->AltBody = 'ADICIONAL MENSAJE';
     
-        return $mail->send();
+        if($mail->send()){
+            return true;
+        }else{
+            return false;
+        }
         
     } catch (Exception $e) {
         echo "ERROR: {$mail->ErrorInfo}";
