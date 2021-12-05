@@ -45,9 +45,9 @@ class activoFijoDAO{
             die;
             $datos = $respuesta->rowCount();
             if($datos > 0){
-                echo "datos ingresados";
+                return true;
             }else{
-                echo "error";
+                return false;
             }
         }catch(PDOException $error){
             return $error->getMessage();

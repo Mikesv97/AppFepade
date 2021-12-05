@@ -71,7 +71,7 @@ include('layout/navbar.php');
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label for="party">Fecha de adquisicion</label>
-                                                <input id="party" type="datetime-local" name="fechaAdq" class="form-control" required>
+                                                <input id="party" type="date" name="fechaAdq" class="form-control" required>
                                             </div>
                                         </div>
                                     </div>
@@ -109,7 +109,7 @@ include('layout/navbar.php');
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Usuario*</label>
-                                                <input type="number" name="usuario" class="form-control" placeholder="12345678" required>
+                                                <input type="text" name="usuario" class="form-control" placeholder="12345678" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
@@ -223,7 +223,6 @@ include('layout/navbar.php');
                                     </div>
                                 </section>
                             </div>
-                            <button type="submit" value="MANDAR"></button>
                         </form>
                     </div>
                 </div>
