@@ -50,7 +50,7 @@ $obj = new activoFijoDAO();
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Codigo Contabilidad*</label>
-                                                <input type="text" name="codContabilidad" class="form-control" placeholder="123456" maxlength="10">
+                                                <input type="text" name="codContabilidad" class="form-control" placeholder="123456" maxlength="10" value="1" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -58,7 +58,7 @@ $obj = new activoFijoDAO();
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Codigo para proyectos*</label>
-                                                <input type="text" name="codProyectos" class="form-control" placeholder="123456" maxlength="4">
+                                                <input type="text" name="codProyectos" class="form-control" placeholder="123456" maxlength="4" value="1" readonly>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
@@ -118,14 +118,14 @@ $obj = new activoFijoDAO();
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Usuario*</label>
-                                                <<select name="comboUsuario" id="comboUsuario" class="form-control">
+                                                <select name="comboUsuario" id="comboUsuario" class="form-control">
                                                     <?php
                                                     $data = $obj->comboUsuario();
                                                     foreach ($data as $indice => $valor) {
                                                         echo ' <option value="' . $indice . '">' . $valor . ' </option>';
                                                     }
                                                     ?>
-                                                    </select>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
@@ -169,7 +169,7 @@ $obj = new activoFijoDAO();
                                                 <label class="text-label">Area</label>
                                                 <select name="comboArea" id="comboArea" class="form-control">
                                                     <?php
-                                                    $data = $obj->comboFondos();
+                                                    $data = $obj->comboArea();
                                                     foreach ($data as $indice => $valor) {
                                                         echo ' <option value="' . $indice . '">' . $valor . ' </option>';
                                                     }

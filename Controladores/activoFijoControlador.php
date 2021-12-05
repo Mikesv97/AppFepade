@@ -7,24 +7,25 @@ if($_POST){
         $activo = $_POST['key'];
         switch($activo){
             case "insertar":
+                $var = new Activo_Fijo();
                 parse_str($_POST["data"],$data);
-                $referencia = $data['referencia'];
-                $codContabilidad = $data['codContabilidad'];
-                $codProyectos = $data['codProyectos'];
-                $numSerie = $data['numSerie'];
-                $fechaAdq = $data['fechaAdq'];
-                $numFactura = $data['numFactura'];
-                $tipo = $data['comboTipoActivo'];
-                $ip = $data['ip'];
-                $usuario = $data['comboUsuario'];
-                $modelo = $data['modelo'];
-                $departamento = $data['comboDepartamento'];
-                $ff = $data['comboFondos'];
-                $area = $data['comboArea'];
-                $descripcion = $data['descripcion'];
 
-                $resultado = $obj->insertarActivoFijo($referencia,$codContabilidad,$codProyectos,$numSerie,$fechaAdq,$numFactura,
-                $tipo,$descripcion,$departamento,$ff,$area,$usuario,'01/12/2021','01/12/2021');
+                $var->setActivoReferencia($data['referencia']);
+                $var->setPartidaCta($data['codContabilidad']);
+                $var->setEmpresaId($data['codProyectos']);
+                $var->setNumeroSerie($data['numSerie']);
+                $var->setActivoFechaAdq($data['fechaAdq']);
+                $var->setActivoFactura($data['numFactura']);
+                $var->setActivoTipo($data['comboTipoActivo']);
+                $var->setUsuarioId($data['comboUsuario']);
+                $var->setEstructura1Id($data['comboDepartamento']);
+                $var->setEstructura2Id($data['comboFondos']);
+                $var->setEstructura3Id($data['comboArea']);
+                $var->setActivoDescripcion($data['descripcion']);
+
+                $resultado = $obj->insertarActivoFijo($var->getActivoReferencia(),$var->getPartidaCta(),$var->getEmpresaId(),$var->getNumeroSerie(),$var->getActivoFechaAdq(),
+                                                      $var->getActivoFactura(),$var->getActivoTipo(),$var->getActivoDescripcion(),$var->getEstructura1Id(),$var->getEstructura2Id(),
+                                                      $var->getEstructura3Id(),$var->getUsuarioId(),'01/12/2021','01/12/2021');
 
                 echo json_encode($resultado);
                 if($resultado){
