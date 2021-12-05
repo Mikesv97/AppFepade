@@ -27,7 +27,7 @@ if(isset($_POST["key"])){
 
                             if($usuarioExiste){//si existe
                                 if($rem==1){//vemos si desea ser recordado
-                                                                    //generamos token para su futuro acceso con recuerdame
+                                    //generamos token para su futuro acceso con recuerdame
                                     $token = $usDao->generarToken();
 
                                     //actualizamos el campo token en BD del usuario
@@ -37,7 +37,7 @@ if(isset($_POST["key"])){
                                     if($saveToken){//si es correcto 
                                     
                                     //creamos las cookies
-                                    setcookie("usuario", $_SESSION["usuario"]["nombre"], time()+30*24*60*60 );
+                                    setcookie("usuario", $nombre, time()+30*24*60*60 );
                                     setcookie("token", $token, time()+30*24*60*60);
 
                                     //regresamos verdadero para un proceso exitoso
@@ -75,7 +75,7 @@ if(isset($_POST["key"])){
                                     if($saveToken){//si es correcto 
                                     
                                     //actualizamos cookies
-                                    setcookie("usuario", $_SESSION["usuario"]["nombre"], time()+30*24*60*60 );
+                                    setcookie("usuario", $nombre, time()+30*24*60*60 );
                                     setcookie("token", $token, time()+30*24*60*60);
 
                                     //regresamos verdadero para un proceso exitoso
@@ -120,7 +120,7 @@ if(isset($_POST["key"])){
                             //comprobamos resultado de la actualización de token
                             if($saveToken){//si es correcto 
                                 //creamos las cookies
-                                setcookie("usuario", $_SESSION["usuario"]["nombre"], time()+30*24*60*60 );
+                                setcookie("usuario", $nombre, time()+30*24*60*60 );
                                 setcookie("token", $token, time()+30*24*60*60);
 
                                 //regresamos verdadero para un proceso exitoso

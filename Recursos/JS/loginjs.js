@@ -10,6 +10,8 @@ $(document).ready(function(){
     $("#labelError").hide();
     $("#labelErrorEmail").hide();
 
+
+
     comprobarCokieRememberme();
     
     //cuando se clickea en el check box variamos valor
@@ -102,7 +104,6 @@ $(document).ready(function(){
                 dataType: "json",
                 data: { "key": "validarCorreo","correo": correo},
                 success: function (r) {
-                    console.log(r)
 
                     switch(r){
                         case "invalidMail":
@@ -146,25 +147,52 @@ $(document).ready(function(){
 
     //cuando hace click en validar código
     $("#btnValidCodigo").on("click",function(){
-        
+        console.log(error);
         var codIng= $("#txtCodCorreo").val();
         if(codigo == codIng){
             alert("codigo correcto");
         }else{
-            $("#lbCoderror").text("Código incorrecto");
-            if(error<0){
-                error += parseInt(1);
-            }
+            $("#lbCoderror").text("El código ingresado es incorrecto");
+            $("#lbCoderror").show();
+            error += parseInt(1);
             if(error==3){
-                alert("lo sentimos parece que no eres quien dices ser.")
+                error = parseInt(0);
+                Swal.fire({
+                    title: 'Código Invalido!',
+                    text: 'Has ingresado un código incorrecto varias veces, por seguridad solicita uno nuevo',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                  })
+
+                  //ocultamos errores y campo codigo
+                  $("#codeContent").hide();
+                  $("#labelError").hide();
+                  $("#labelErrorEmail").hide();
+                  $("#lbCoderror").hide();
+
+                  //limpiamos inputs y errores
+                  $("#lbCoderror").val("");
+                  $("#txtCodCorreo").val("");
+                  $("#txtCorreo").val("");
+
+                  //habilitamos el input con el correo
+                  $("#txtCorreo").attr("disabled",false);
+                  $("#btnCodigo").attr("disabled",false);
+                
+                  //cerramos modal
+                  $("#staticBackdrop").modal("hide");
             }
-           
-            console.log("errro: "+error)
-        }
 
-
+            $("#txtCodCorreo").keypress(function(){
+   
+                    $("#lbCoderror").text("");
+                    $("#lbCoderror").hide();
+        
+            });
+       }
     });
-        /*funcion que solicita comprobacion  de datos de las cookies para ver si son validos y cargar los 
+    
+    /*funcion que solicita comprobacion  de datos de las cookies para ver si son validos y cargar los 
     controles*/
     function comprobarCokieRememberme(){
     $.ajax({

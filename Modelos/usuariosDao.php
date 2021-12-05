@@ -12,7 +12,7 @@ class UsuariosDao{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
+        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            
@@ -49,7 +49,7 @@ class UsuariosDao{
         $this->conectar();
         //establecemos la consulta
         $sql="select a.usuario_nombre, a.usuario_id, a.correo_electronico, b.rol_nombre
-        from usuario a inner join roles b on a.id_rol = b.id_rol where usuario_nombre=? and usuario_clave=?";
+        from usuario a inner join roles b on a.id_rol = b.id_rol where  a.usuario_user=? and a.usuario_clave=?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
         try{
@@ -87,7 +87,7 @@ class UsuariosDao{
         //establecemos la coneccion
         $this->conectar();
         //establecemos la consulta
-        $sql="update usuario set token = ? where usuario_nombre = ?";
+        $sql="update usuario set token = ? where  usuario_user=?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
         try{
@@ -111,7 +111,7 @@ class UsuariosDao{
         //establecemos la coneccion
         $this->conectar();
         //establecemos la consulta
-        $sql="select usuario_nombre, token from usuario where usuario_nombre=? and token=?";
+        $sql="select usuario_nombre, token from usuario where  usuario_user=? and token=?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
         try{
@@ -148,13 +148,13 @@ class UsuariosDao{
         //establecemos la coneccion
         $this->conectar();
         //establecemos la consulta
-        $sql="select a.usuario_nombre, a.usuario_id, a.correo_electronico, b.rol_nombre
-        from usuario a inner join roles b on a.id_rol = b.id_rol where usuario_nombre=? and token=?";
+        $sql="select  a.usuario_nombre, a.usuario_id, a.correo_electronico, b.rol_nombre
+        from usuario a inner join roles b on a.id_rol = b.id_rol where  a.usuario_user=? and a.token=? or a.usuario_clave=?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros
-            $respuesta->execute([$nombre, $clave]);
+            $respuesta->execute([$nombre, $clave,$clave]);
             //convertimos a un arrreglo 
             $datos = $respuesta->fetchall();
    
