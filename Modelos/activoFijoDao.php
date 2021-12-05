@@ -41,8 +41,7 @@ class activoFijoDAO{
         Estructura1_id,Estructura2_id,Estructura3_id,Usuario_id,fecha,Activo_fecha_caduc) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $respuesta = $this->con->prepare($sql);
         try{
-            var_dump($respuesta->execute([$referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat]));
-            die;
+            $respuesta->execute([$referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat]);
             $datos = $respuesta->rowCount();
             if($datos > 0){
                 return true;
@@ -134,7 +133,11 @@ class activoFijoDAO{
         }
     }
 
-    
+    public function mostrarActivoFijo(){
+        $this->conectar();
+        $sql = "SELECT * FROM Activo";
+        $respuesta = $this->con->prepare($sql);
+    }
 
 
 

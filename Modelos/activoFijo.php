@@ -21,29 +21,8 @@ class Activo_Fijo{
     private $Usuario_id;
     private $fecha;
 
-    public function __construct($Activo_id,$Empresa_id,$Estructura1_id,$Estructura2_id,$Estructura3_id,$Activo_tipo,$Activo_referencia,$Activo_descripcion,
-                                $Responsable_codigo,$Activo_factura,$Activo_fecha_adq,$Activo_fecha_caduc,$Activo_eliminado,$PartidaCta,$fecha_compra,
-                                $Estado,$numero_serie,$Usuario_id,$fecha)
+    public function __construct()
     {
-        $this->Activo_id = $Activo_id;
-        $this->Empresa_id = $Empresa_id;
-        $this->Estructura1_id = $Estructura1_id;
-        $this->Estructura2_id = $Estructura2_id;
-        $this->Estructura3_id = $Estructura3_id;
-        $this->Activo_tipo = $Activo_tipo;
-        $this->Activo_referencia = $Activo_referencia;
-        $this->Activo_descripcion = $Activo_descripcion;
-        $this->Responsable_codigo = $Responsable_codigo;
-        $this->Activo_factura = $Activo_factura;
-        $this->Activo_fecha_adq = $Activo_fecha_adq;
-        $this->Activo_fecha_caduc = $Activo_fecha_caduc;
-        $this->Activo_eliminado = $Activo_eliminado;
-        $this->PartidaCta = $PartidaCta;
-        $this->fecha_compra = $fecha_compra;
-        $this->Estado = $Estado;
-        $this->numero_serie = $numero_serie;
-        $this->Usuario_id = $Usuario_id;
-        $this->fecha = $fecha;
     }
 
     public function getActivoId()
