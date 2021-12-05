@@ -2,6 +2,11 @@
 include('layout/header.php');
 include('layout/navbar.php');
 ?>
+<script>
+    $(document).ready(function(){
+        $("#ocultar").hide();
+    });    
+</script>
 <!--**********************************
             Content body start
         ***********************************-->
@@ -164,64 +169,68 @@ include('layout/navbar.php');
                                     </div>
                                 </section>
                                 <h4>Equipo de computo</h4>
+                                
                                 <section>
-                                <div class="row">
-                                        <div class="col-lg-6 col-sm-6 mb-4">
-                                            <div class="form-group">
-                                                <label class="text-label">Procesador*</label>
-                                                <input type="number" name="procesador" class="form-control" placeholder="12345678" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6 mb-4">
-                                            <div class="form-group">
-                                                <label class="text-label">Generacion*</label>
-                                                <input type="text" name="generacion" class="form-control" placeholder="123456" required>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div id="ocultar">    
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-6 mb-4">
-                                            <div class="form-group">
-                                                <label class="text-label">RAM*</label>
-                                                <input type="number" name="ram" class="form-control" placeholder="12345678" required>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Procesador*</label>
+                                                    <input type="number" name="procesador" class="form-control" placeholder="12345678" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Generacion*</label>
+                                                    <input type="text" name="generacion" class="form-control" placeholder="123456" required>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-sm-6 mb-4">
-                                            <div class="form-group">
-                                                <label class="text-label">Tipo de RAM*</label>
-                                                <input type="text" name="tipoRam" class="form-control" placeholder="123456" required>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">RAM*</label>
+                                                    <input type="number" name="ram" class="form-control" placeholder="12345678" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Tipo de RAM*</label>
+                                                    <input type="text" name="tipoRam" class="form-control" placeholder="123456" required>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-sm-6 mb-4">
-                                            <div class="form-group">
-                                                <label class="text-label">Disco Duro*</label>
-                                                <input type="number" name="disco" class="form-control" placeholder="12345678" required>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Disco Duro*</label>
+                                                    <input type="number" name="disco" class="form-control" placeholder="12345678" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Sistema Operativo*</label>
+                                                    <input type="text" name="sistema" class="form-control" placeholder="123456" required>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-sm-6 mb-4">
-                                            <div class="form-group">
-                                                <label class="text-label">Sistema Operativo*</label>
-                                                <input type="text" name="sistema" class="form-control" placeholder="123456" required>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Office*</label>
+                                                    <input type="number" name="office" class="form-control" placeholder="12345678" required>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-sm-6 mb-4">
-                                            <div class="form-group">
-                                                <label class="text-label">Office*</label>
-                                                <input type="number" name="office" class="form-control" placeholder="12345678" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6 mb-4">
-                                            <div class="form-group">
-                                                <label class="text-label">Otros datos*</label>
-                                                <input type="text" name="otros" class="form-control" placeholder="123456" required>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Otros datos*</label>
+                                                    <input type="text" name="otros" class="form-control" placeholder="123456" required>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </section>
+                            
                             </div>
                         </form>
                     </div>

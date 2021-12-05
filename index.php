@@ -41,10 +41,10 @@ session_start();
                   </div>
                   <form id="frmLogin"class="user">
                     <div class="form-group">
-                      <input type="text" class="form-control" name="txtUsuario" placeholder="Ingresa Nombre De Usuario">
+                      <input type="text" class="form-control" name="txtUsuario" maxlength="12" placeholder="Ingresa Usuario">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control" name="txtContraseña" placeholder="Contraseña">
+                      <input type="password" class="form-control" name="txtContraseña" maxlength="10" placeholder="Contraseña">
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small" style="line-height: 1.5rem;">
@@ -100,17 +100,24 @@ session_start();
           <form id="frmRecPass">
             <div class="form-group">
               <label for="txtCorreo" class="text-muted h6">Correo Electronico</label>
-              <input type="email" class="form-control" id="txtCorreo" required>
+              <input type="email" class="form-control" id="txtCorreo" maxlength="50" required>
               <small id="emailHelp" class="form-text text-muted">Debes ingresar tu correo electronico con el que te registraste en el sistema.</small>
               <p class="my-2 p-1 gold" id="labelErrorEmail"></p>
             </div>
               <button id="btnCodigo" type="submit" class="btn btnLogin">Solicitar Código</button>
               <div id="codeContent" class="my-3 form-group my-3">
-              <small id="labelInfoEmail" class="h6"></small>
-              <small id="txtCodRecPass" class="my-2 text-muted h6">Ingresa El Código:</small>
-              <input class="form-control my-2 m-0" maxlength="9" placeholder="Código" type="text" id="txtCodCorreo">
-              <button id="btnValidCodigo" type="button" class="mx-3 my-2 btn btnLogin">Validar</button>
-              <p class="my-2 p-1 gold" id="lbCoderror"></p>
+                <small id="labelInfoEmail" class="h6"></small>
+                <small id="txtCodRecPass" class="my-2 text-muted h6">Ingresa El Código:</small>
+                <input class="form-control my-2 m-0" maxlength="9" placeholder="Código" type="number" id="txtCodCorreo">
+                <button id="btnValidCodigo" type="button" class="mx-3 my-2 btn btnLogin">Validar</button>
+                <p class="my-2 p-1 gold" id="lbCoderror"></p>
+            </div>
+            <div id="newPasContent" class="my-3 form-group my-3">
+                <small id="txtCodRecPass" class="my-2 text-muted h6">Ingresa La Nueva Contraseña:</small>
+                <input class="form-control my-2 m-0"  maxlength="10" placeholder="Código" type="text" id="txtNewPas1">
+                <small id="txtCodRecPass" class="my-2 text-muted h6">Repite La Contraseña:</small>
+                <input class="form-control my-2 m-0"  maxlength="10" placeholder="Código" type="text" id="txtNewPas2">
+                <p class="my-2 p-1 gold" id="lbCoderror"></p>
             </div>
           </form>
         </div>
