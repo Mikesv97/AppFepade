@@ -12,7 +12,7 @@ class UsuariosDao{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
+        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            
@@ -193,6 +193,7 @@ class UsuariosDao{
     public function getTokenGenerado(){
         return $this->codGenerado;
     }
+    
     //funcion para validar correo cambio contraseña
     public function validarCorreo($correo){
 
@@ -210,6 +211,31 @@ class UsuariosDao{
             //solo puede ser 1 si hay o 0 si no hay
             return $respuesta->fetchColumn();
 
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
+    
+
+    public function actualizarPassUser($pass,$correo){
+
+        //establecemos la coneccion
+        $this->conectar();
+        //establecemos la consulta
+        $sql="update usuario set usuario_clave = ? where  correo_electronico=?";
+        //preparamos la consulta
+        $respuesta = $this->con->prepare($sql);
+        try{
+
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([$pass,$correo]);
+            //evaluamos cuantas filas fueron afectadas
+            if($respuesta->rowCount() > 0){
+                //cerramos conexion
+                $this->desconectar($respuesta);
+                //si se afectaron más de 0
+                return true;                 
+            }
         }catch(PDOException $error){
             return $error->getMessage();
         }

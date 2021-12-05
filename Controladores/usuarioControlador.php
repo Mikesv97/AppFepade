@@ -175,6 +175,11 @@ if(isset($_POST["key"])){
                 }
                 
             break;
+            case "cambiarPass":
+                $pass= $_POST["pass"];
+                $mail = $_POST["mail"];
+                echo json_encode("contraseña");
+            break;
         }
 }
 ?>

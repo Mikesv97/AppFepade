@@ -108,16 +108,17 @@ session_start();
               <div id="codeContent" class="my-3 form-group my-3">
                 <small id="labelInfoEmail" class="h6"></small>
                 <small id="txtCodRecPass" class="my-2 text-muted h6">Ingresa El Código:</small>
-                <input class="form-control my-2 m-0" maxlength="9" placeholder="Código" type="number" id="txtCodCorreo">
+                <input class="form-control my-2 m-0"  placeholder="Código" type="number" min="0" id="txtCodCorreo">
                 <button id="btnValidCodigo" type="button" class="mx-3 my-2 btn btnLogin">Validar</button>
                 <p class="my-2 p-1 gold" id="lbCoderror"></p>
             </div>
             <div id="newPasContent" class="my-3 form-group my-3">
-                <small id="txtCodRecPass" class="my-2 text-muted h6">Ingresa La Nueva Contraseña:</small>
+                <p id="labelInfoPass" class="my-2 text-muted h6">Ingresa La Nueva Contraseña:</p>
                 <input class="form-control my-2 m-0"  maxlength="10" placeholder="Código" type="text" id="txtNewPas1">
-                <small id="txtCodRecPass" class="my-2 text-muted h6">Repite La Contraseña:</small>
+                <small id="labelInfoPass" class="my-2 text-muted h6">Repite La Contraseña:</small>
                 <input class="form-control my-2 m-0"  maxlength="10" placeholder="Código" type="text" id="txtNewPas2">
-                <p class="my-2 p-1 gold" id="lbCoderror"></p>
+                <p class="my-2 p-1 gold" id="lbFailNewPass"></p>
+                <button id="btnChangPass" type="button" class="btn btnLogin">Cambiar Contraseña</button>
             </div>
           </form>
         </div>

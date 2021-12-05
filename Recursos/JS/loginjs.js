@@ -4,16 +4,26 @@ $(document).ready(function(){
     var codigo;
     var error =parseInt(0);;
     
-    //ocultamos label del error, y el input de codigo de
-    //cambio de contraseña
+    //ocultamos controles que no deben ser visibles al cargar pag
     $("#codeContent").hide();
     $("#labelError").hide();
     $("#labelErrorEmail").hide();
-
+    $("#newPasContent").hide();
+    $("#lbFailNewPass").hide();
 
 
     comprobarCokieRememberme();
-    
+    $("#txtNewPas1").keypress(function(){
+        $("#lbFailNewPass").val("");
+        $("#lbFailNewPass").hide();
+    });
+
+    $("#txtNewPas2").keypress(function(){
+        $("#lbFailNewPass").val("");
+        $("#lbFailNewPass").hide();
+    });
+
+
     //cuando se clickea en el check box variamos valor
     //para manejar desde el servidor si esta seleccionado o no
     $('#customCheck').on("click",function(){
@@ -150,7 +160,11 @@ $(document).ready(function(){
         console.log(error);
         var codIng= $("#txtCodCorreo").val();
         if(codigo == codIng){
-            alert("codigo correcto");
+            $("#btnValidCodigo").attr("disabled",true);
+            $("#txtCodCorreo").attr("disabled",true);
+            $("#lbCoderror").val("");
+            $("#lbCoderror").hide();
+            $("#newPasContent").show();
         }else{
             $("#lbCoderror").text("El código ingresado es incorrecto");
             $("#lbCoderror").show();
@@ -190,6 +204,38 @@ $(document).ready(function(){
         
             });
        }
+    });
+
+    //cuando hace click en btn cambiar contraseña
+    $("#btnChangPass").on("click",function(e){
+        $("#lbFailNewPass").hide();
+        var pass1 = $("#txtNewPas1").val();
+        var pass2 =  $("#txtNewPas2").val();
+        var mail = $("#txtCorreo").val();
+        if(pass1=="" || pass2==""){
+            $("#lbFailNewPass").text("No puedes dejar ninguno de los campos vacios");
+            $("#lbFailNewPass").show();
+            $("#txtNewPas1").focus();
+        }else{
+            if(pass1 != pass2){
+                $("#lbFailNewPass").text("Las contraseñas no coinciden");
+                $("#lbFailNewPass").show();
+            }else{
+                $.ajax({
+                    url: "Controladores/usuarioControlador.php",
+                    method: "post",
+                    dataType: "json",
+                    data: { "key": "cambiarPass","pass": pass1,"correo": mail },
+                    success: function (r) {
+                        console.log(r);
+                    },
+                    error: function (r) {
+                        console.log(r);
+                    }
+                });
+            }
+        }
+        
     });
     
     /*funcion que solicita comprobacion  de datos de las cookies para ver si son validos y cargar los 
