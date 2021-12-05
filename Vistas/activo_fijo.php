@@ -57,7 +57,7 @@ include('layout/navbar.php');
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Numero de serie*</label>
-                                                <input type="text" name="serie" class="form-control" placeholder="123456">
+                                                <input type="text" name="numSerie" class="form-control" placeholder="123456">
                                             </div>
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@ include('layout/navbar.php');
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label for="party">Fecha de adquisicion</label>
-                                                <input id="party" type="datetime-local" name="fecha" class="form-control" required>
+                                                <input id="party" type="datetime-local" name="fechaAdq" class="form-control" required>
                                             </div>
                                         </div>
                                     </div>
@@ -158,7 +158,7 @@ include('layout/navbar.php');
                                         <div class="col-lg-6 col-sm-12 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Descripcion de activo*</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                                                <textarea class="form-control" name="descripcion" rows="3" required></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -222,65 +222,8 @@ include('layout/navbar.php');
                                         </div>
                                     </div>
                                 </section>
-                                <h4>Email Setup</h4>
-                                <section>
-                                    <div class="row emial-setup">
-                                        <div class="col-sm-3 col-6">
-                                            <div class="form-group">
-                                                <label for="mailclient11" class="mailclinet mailclinet-gmail">
-                                                    <input type="radio" name="emailclient" id="mailclient11">
-                                                    <span class="mail-icon">
-                                                        <i class="mdi mdi-google-plus" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="mail-text">I'm using Gmail</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3 col-6">
-                                            <div class="form-group">
-                                                <label for="mailclient12" class="mailclinet mailclinet-office">
-                                                    <input type="radio" name="emailclient" id="mailclient12">
-                                                    <span class="mail-icon">
-                                                        <i class="mdi mdi-office" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="mail-text">I'm using Office</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3 col-6">
-                                            <div class="form-group">
-                                                <label for="mailclient13" class="mailclinet mailclinet-drive">
-                                                    <input type="radio" name="emailclient" id="mailclient13">
-                                                    <span class="mail-icon">
-                                                        <i class="mdi mdi-google-drive" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="mail-text">I'm using Drive</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3 col-6">
-                                            <div class="form-group">
-                                                <label for="mailclient14" class="mailclinet mailclinet-another">
-                                                    <input type="radio" name="emailclient" id="mailclient14">
-                                                    <span class="mail-icon">
-                                                        <i class="fa fa-question-circle-o" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="mail-text">Another Service</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="skip-email text-center">
-                                                <p>Or if want skip this step entirely and setup it later</p>
-                                                <a href="javascript:void()">Skip step</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
                             </div>
+                            <button type="submit" value="MANDAR"></button>
                         </form>
                     </div>
                 </div>
@@ -288,6 +231,8 @@ include('layout/navbar.php');
         </div>
     </div>
 </div>
+
+<script src="../Recursos/JS/scriptPlantilla/activoFijo.js"></script>
 <!--**********************************
             Content body end
         ***********************************-->
