@@ -2,7 +2,7 @@ $(document).ready(function(){
     $("#cerrarLog").on("click",function(e){
         e.preventDefault();
          $.ajax({
-            url: "../Controladores/usuarioControlador.php",
+            url: "../Controladores/loginControlador.php",
             method: "post",
             dataType: "json",
             data: { "key": "cerrarSesion"},

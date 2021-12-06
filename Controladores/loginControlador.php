@@ -1,8 +1,8 @@
 <?php
 
-include_once '../Modelos/usuariosDao.php';
+include_once '../Modelos/loginDao.php';
 include_once '../Modelos/sendMail.php';
-$usDao = new UsuariosDao();
+$usDao = new LoginDao();
 if(isset($_POST["key"])){   
         $key=$_POST["key"];
         switch($key){
@@ -113,6 +113,7 @@ if(isset($_POST["key"])){
 
                             //generamos token para su futuro acceso con recuerdame
                             $token = $usDao->generarToken();
+                  
 
                             //actualizamos el campo token en BD del usuario
                             $saveToken= $usDao->setUserToken($nombre,$token);
