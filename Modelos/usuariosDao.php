@@ -193,7 +193,7 @@ class UsuariosDao{
     public function getTokenGenerado(){
         return $this->codGenerado;
     }
-    
+
     //funcion para validar correo cambio contraseña
     public function validarCorreo($correo){
 

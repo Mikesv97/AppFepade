@@ -114,9 +114,9 @@ session_start();
             </div>
             <div id="newPasContent" class="my-3 form-group my-3">
                 <p id="labelInfoPass" class="my-2 text-muted h6">Ingresa La Nueva Contraseña:</p>
-                <input class="form-control my-2 m-0"  maxlength="10" placeholder="Código" type="text" id="txtNewPas1">
+                <input class="form-control my-2 m-0"  maxlength="10" placeholder="contraseña nueva" type="password" id="txtNewPas1">
                 <small id="labelInfoPass" class="my-2 text-muted h6">Repite La Contraseña:</small>
-                <input class="form-control my-2 m-0"  maxlength="10" placeholder="Código" type="text" id="txtNewPas2">
+                <input class="form-control my-2 m-0"  maxlength="10" placeholder="contraseña nueva" type="password" id="txtNewPas2">
                 <p class="my-2 p-1 gold" id="lbFailNewPass"></p>
                 <button id="btnChangPass" type="button" class="btn btnLogin">Cambiar Contraseña</button>
             </div>
