@@ -16,15 +16,17 @@
         onFinished: function(event, currentIndex)
         {
             var data = $(form).serialize();
+            var tipoactivo = $('#tipoactivo').val();
             $.ajax({
                 url: '../Controladores/activoFijoControlador.php',
                 method: "post",
                 dataType: "json",
-                data: { "key": "insertar", "data": data },
+                data: { "key": "insertar", "data": data, "tipoActivo": tipoactivo },
                 success: function (r) {
                     console.log(r);
                     if(r){
-                        alert ('INSERTADO');
+                        
+                        // $(location).attr('href',"../vistas/activo_fijo.php");
                     }
                 },
                 error: function (r) {
