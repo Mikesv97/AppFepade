@@ -87,7 +87,13 @@ $(document).ready(function(){
                         });
                     break;
                     case "falloToken":
-                        alert("hubo un problema al comunicarse con el servidor, intenta de nuevo");
+                        Swal.fire({
+                            title: 'WOOPS!',
+                            text: 'Hubo un problema al comunicarse con el servidor, intenta de nuevo, ErrorCod: 0-ToKnSET',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar'
+                          })
+                        
                     break;
                     case true:
                         $(location).attr('href',"vistas/activo_fijo.php");
@@ -96,8 +102,12 @@ $(document).ready(function(){
             },
             error: function () {
                 //si falla algo se muestra error de conexión en el servidor
-               console.log("Hubo problemas al intentar comunicarse con el servidor, intenta de nuevo");
-
+                Swal.fire({
+                    title: 'WOOPS!',
+                    text: 'Hubo problemas al intentar comunicarse con el servidor, intenta de nuevo',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                  })
             }
             
         });
@@ -140,6 +150,12 @@ $(document).ready(function(){
                             //mostramo mensaje que el codigo fue enviado
                             $("#labelInfoEmail").attr("class","text-muted");
                             $("#labelInfoEmail").text("Enviamos un código a tu correo, por favor verifica e ingresalo");
+                            Swal.fire({
+                                title: 'CÓDIGO ENVIADO!',
+                                text: 'Se envio correctamente el código de validación al correo proporcionado',
+                                icon: 'success',
+                                confirmButtonText: 'Aceptar'
+                              })
                             //mostramos el campo para el codigo
                             $("#codeContent").show();
                         break;
@@ -148,8 +164,14 @@ $(document).ready(function(){
                         break;
                     }
                 },
-                error: function (r) {
-                    console.log(r);
+                error: function () {
+                    Swal.fire({
+                        title: 'Woops!',
+                        text: 'Tenemos problema al enviar el código a tu correo, intenta de nuevo, si el problema persiste'
+                        +'informa a tu administrador o personal de IT',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar'
+                      })
                 }
             });
         }
@@ -157,7 +179,7 @@ $(document).ready(function(){
 
     //cuando hace click en validar código
     $("#btnValidCodigo").on("click",function(){
-        console.log(error);
+    
         var codIng= $("#txtCodCorreo").val();
         if(codigo == codIng){
             $("#btnValidCodigo").attr("disabled",true);
@@ -178,23 +200,8 @@ $(document).ready(function(){
                     confirmButtonText: 'Aceptar'
                   })
 
-                  //ocultamos errores y campo codigo
-                  $("#codeContent").hide();
-                  $("#labelError").hide();
-                  $("#labelErrorEmail").hide();
-                  $("#lbCoderror").hide();
-
-                  //limpiamos inputs y errores
-                  $("#lbCoderror").val("");
-                  $("#txtCodCorreo").val("");
-                  $("#txtCorreo").val("");
-
-                  //habilitamos el input con el correo
-                  $("#txtCorreo").attr("disabled",false);
-                  $("#btnCodigo").attr("disabled",false);
-                
-                  //cerramos modal
-                  $("#staticBackdrop").modal("hide");
+                  ocultarCamposModal();
+                 
             }
 
             $("#txtCodCorreo").keypress(function(){
@@ -227,10 +234,23 @@ $(document).ready(function(){
                     dataType: "json",
                     data: { "key": "cambiarPass","pass": pass1,"correo": mail },
                     success: function (r) {
-                        console.log(r);
+                        Swal.fire({
+                            title: 'CONTRASEÑA CAMBIADA!',
+                            text: 'Se ha cambiado correctamente tu contraseña!',
+                            icon: 'success',
+                            confirmButtonText: 'Aceptar'
+                          })
+
+                          ocultarCamposModal();
                     },
-                    error: function (r) {
-                        console.log(r);
+                    error: function () {
+                        Swal.fire({
+                            title: 'Woops!',
+                            text: 'No pudimos actualizar la contraseña, por favor intenta de nuevo, si el problema persiste'
+                            +'informa a tu administrador o personal de IT',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar'
+                          })
                     }
                 });
             }
@@ -260,9 +280,14 @@ $(document).ready(function(){
                 $('#customCheck').attr("checked",false);
             }
          },
-        error: function (r) {
-            console.log("No se pudo conectar al servidor");
-            console.log(r);  
+        error: function () {
+            Swal.fire({
+                title: 'Woops!',
+                text: 'No pudimos conectarnos al servidor, por favor intenta de nuevo, si el problema persiste'
+                +'informa a tu administrador o personal de IT',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              })
         }
     });
     }
@@ -279,9 +304,35 @@ $(document).ready(function(){
             
             },
             error: function (r) {
-                console.log(r);
+                Swal.fire({
+                    title: 'Woops!',
+                    text: 'Parece tenemos problemas técnicos para enviar el correo, por favor intenta de nuevo, si el problema persiste'
+                    +'informa a tu administrador o personal de IT',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                  })
             }
         });
+    }
+
+    function ocultarCamposModal(){
+                                //ocultamos errores y campo codigo
+                                $("#codeContent").hide();
+                                $("#labelError").hide();
+                                $("#labelErrorEmail").hide();
+                                $("#lbCoderror").hide();
+        
+                                //limpiamos inputs y errores
+                                $("#lbCoderror").val("");
+                                $("#txtCodCorreo").val("");
+                                $("#txtCorreo").val("");
+        
+                                //habilitamos el input con el correo
+                                $("#txtCorreo").attr("disabled",false);
+                                $("#btnCodigo").attr("disabled",false);
+                                
+                                //cerramos modal
+                                $("#staticBackdrop").modal("hide");
     }
 });
 

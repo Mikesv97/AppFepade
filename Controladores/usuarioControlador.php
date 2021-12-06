@@ -177,8 +177,13 @@ if(isset($_POST["key"])){
             break;
             case "cambiarPass":
                 $pass= $_POST["pass"];
-                $mail = $_POST["mail"];
-                echo json_encode("contraseña");
+                $mail = $_POST["correo"];
+                $updatePass= $usDao->actualizarPassUser($pass,$mail);
+                if($updatePass>0){
+                    echo json_encode(true);
+                }else{
+                    echo json_encode(false);
+                }
             break;
         }
 }
