@@ -187,6 +187,7 @@ $obj = new activoFijoDAO();
                                 </section>
                                 <h4>Informacion de activo</h4>
                                 <section>
+                                    <input type="text" id="tipoactivo">
                                     <div id="computadora">
                                         <div class="row">
                                             <div class="col-lg-6 col-sm-6 mb-4">
