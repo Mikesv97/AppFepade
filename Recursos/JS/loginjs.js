@@ -199,7 +199,7 @@ $(document).ready(function(){
                     icon: 'error',
                     confirmButtonText: 'Aceptar'
                   })
-
+                  codigo=0;
                   ocultarCamposModal();
                  
             }
