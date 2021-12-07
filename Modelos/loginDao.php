@@ -1,8 +1,8 @@
 <?php
 session_start();
-include 'usuarios.php';
 
-class UsuariosDao{
+
+class LoginDao{
     private $con;
     private $codGenerado;
 
@@ -12,7 +12,7 @@ class UsuariosDao{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
+        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            

@@ -65,7 +65,7 @@ $(document).ready(function(){
         }
         //se envia la información mediante ajax
         $.ajax({
-            url: "Controladores/usuarioControlador.php",
+            url: "Controladores/loginControlador.php",
             method: "post",
             dataType: "json",
             data: { "key": "validarUser","data": data,"valor": rem,"userChange": us},
@@ -119,7 +119,7 @@ $(document).ready(function(){
         if(correo != ""){
             e.preventDefault();
             $.ajax({
-                url: "Controladores/usuarioControlador.php" ,
+                url: "Controladores/loginControlador.php" ,
                 method: "post",
                 dataType: "json",
                 data: { "key": "validarCorreo","correo": correo},
@@ -229,7 +229,7 @@ $(document).ready(function(){
                 $("#lbFailNewPass").show();
             }else{
                 $.ajax({
-                    url: "Controladores/usuarioControlador.php",
+                    url: "Controladores/loginControlador.php",
                     method: "post",
                     dataType: "json",
                     data: { "key": "cambiarPass","pass": pass1,"correo": mail },
@@ -262,7 +262,7 @@ $(document).ready(function(){
     controles*/
     function comprobarCokieRememberme(){
     $.ajax({
-        url:"Controladores/usuarioControlador.php",
+        url:"Controladores/loginControlador.php",
         method: "post",
         dataType: "json",
         data: { "key": "validarRemember"},
@@ -295,7 +295,7 @@ $(document).ready(function(){
     function enviarCodigo(){
         var correo = $("#txtCorreo").val();
         $.ajax({
-            url: "Controladores/usuarioControlador.php",
+            url: "Controladores/loginControlador.php",
             method: "post",
             //dataType: "json",
             data: { "key":"enviarCodigo","correo": correo},
