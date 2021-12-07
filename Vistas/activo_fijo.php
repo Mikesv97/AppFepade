@@ -3,6 +3,11 @@ include('layout/header.php');
 include('layout/navbar.php');
 include_once '../Modelos/activoFijoDao.php';
 $obj = new activoFijoDAO();
+
+$usuario = $_SESSION["usuario"]["nombre"];
+$idUSuario = $_SESSION["usuario"]["id"];
+
+$date = date('d-m-Y');
 ?>
 
 <!-- script para mostrar o ocultar los campos segun, el tiepo de activo que se ingresara -->
@@ -17,8 +22,9 @@ $obj = new activoFijoDAO();
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Bienvenido <?= $_SESSION["usuario"]["nombre"]; ?>!</h4>
+                    <h4>Bienvenido <?= $usuario; ?>!</h4>
                     <p class="mb-0">Rol: <?= $_SESSION["usuario"]["rol"]; ?></p>
+                    <p class="mb-0">Hora: <?= $date; ?></p>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -44,13 +50,13 @@ $obj = new activoFijoDAO();
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Referencia*</label>
-                                                <input type="number" name="referencia" class="form-control" placeholder="12345678" maxlength="30" required>
+                                                <input type="text" name="referencia" class="form-control" placeholder="ABC123" maxlength="30" required >
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Codigo Contabilidad*</label>
-                                                <input type="text" name="codContabilidad" class="form-control" placeholder="123456" maxlength="10" value="1" readonly>
+                                                <input type="text" name="codContabilidad" class="form-control" placeholder="123456" maxlength="10">
                                             </div>
                                         </div>
                                     </div>
@@ -58,7 +64,7 @@ $obj = new activoFijoDAO();
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Codigo para proyectos*</label>
-                                                <input type="text" name="codProyectos" class="form-control" placeholder="123456" maxlength="4" value="1" readonly>
+                                                <input type="text" name="codProyectos" class="form-control" placeholder="123456" maxlength="10" required> 
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
@@ -72,7 +78,7 @@ $obj = new activoFijoDAO();
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Codigo Automatico*</label>
-                                                <input type="text" name="codAutomatico" class="form-control" placeholder="123456" required>
+                                                <input type="text" name="codAutomatico" class="form-control" placeholder="123456" readonly>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
@@ -86,7 +92,7 @@ $obj = new activoFijoDAO();
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Numero de factura*</label>
-                                                <input type="text" name="numFactura" class="form-control" placeholder="123456" maxlength="15">
+                                                <input type="text" name="numFactura" class="form-control" placeholder="123456" maxlength="15" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
@@ -107,7 +113,7 @@ $obj = new activoFijoDAO();
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">IP*</label>
-                                                <input type="text" name="ip" class="form-control" placeholder="192.168.137.1" required maxlength="50">
+                                                <input type="text" name="ip" class="form-control" placeholder="192.168.137.1" required maxlength="50" required>
                                             </div>
                                         </div>
                                     </div>
@@ -118,14 +124,8 @@ $obj = new activoFijoDAO();
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Usuario*</label>
-                                                <select name="comboUsuario" id="comboUsuario" class="form-control">
-                                                    <?php
-                                                    $data = $obj->comboUsuario();
-                                                    foreach ($data as $indice => $valor) {
-                                                        echo ' <option value="' . $indice . '">' . $valor . ' </option>';
-                                                    }
-                                                    ?>
-                                                </select>
+                                                <input type="text" name="usuario" value="<?= $idUSuario; ?>" hidden>
+                                                <input type="text" name="nombreUsuario" class="form-control" value="<?= $usuario; ?>" readonly>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
@@ -180,7 +180,21 @@ $obj = new activoFijoDAO();
                                         <div class="col-lg-6 col-sm-12 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Descripcion de activo*</label>
-                                                <textarea class="form-control" name="descripcion" rows="3" required maxlength="1000"></textarea>
+                                                <textarea class="form-control" name="descripcion" rows="3" maxlength="1000" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 mb-4">
+                                            <div class="form-group">
+                                                <label class="text-label">Codigo Automatico*</label>
+                                                <input type="text" name="codAutomatico" class="form-control" placeholder="123456" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 mb-4">
+                                            <div class="form-group">
+                                                <label for="party">Fecha de caducacion*</label>
+                                                <input id="party" type="date" name="fechaCad" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -279,13 +293,13 @@ $obj = new activoFijoDAO();
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
                                                     <label class="text-label">Tambor*</label>
-                                                    <input type="text" name="tonerCyan" class="form-control" placeholder="" maxlength="50">
+                                                    <input type="text" name="tambor" class="form-control" placeholder="" maxlength="50">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
                                                     <label class="text-label">Fusor*</label>
-                                                    <input type="text" name="Fusor" class="form-control" placeholder="" maxlength="50">
+                                                    <input type="text" name="fusor" class="form-control" placeholder="" maxlength="50">
                                                 </div>
                                             </div>
                                         </div>

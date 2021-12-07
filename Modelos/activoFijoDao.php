@@ -35,13 +35,13 @@ class activoFijoDAO{
 
     }
 
-    public function insertarActivoFijo($referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat){
+    public function insertarActivoFijo($referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat,$fechacomp){
         $this->conectar();
         $sql = "INSERT INTO Activo(Activo_referencia,PartidaCta,Empresa_id,numero_serie,Activo_fecha_adq,Activo_factura,Activo_tipo,Activo_descripcion,
-        Estructura1_id,Estructura2_id,Estructura3_id,Usuario_id,fecha,Activo_fecha_caduc) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        Estructura1_id,Estructura2_id,Estructura3_id,Usuario_id,fecha,Activo_fecha_caduc,fecha_compra) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $respuesta = $this->con->prepare($sql);
         try{
-            $respuesta->execute([$referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat]);
+            $respuesta->execute([$referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat,$fechacomp]);
             $datos = $respuesta->rowCount();
             if($datos > 0){
                 return true;
@@ -117,15 +117,16 @@ class activoFijoDAO{
         }
     }
 
-    public function comboUsuario(){
+    //ESTA FUNCION SE OCUPARA AL INSERTAR EL HISTORIAL DEL ACTIVO
+    public function comboResponsable(){
         $this->conectar();
-        $sql = "SELECT usuario_id, usuario_nombre FROM Usuario";
+        $sql = "SELECT Responsable_codigo, Nombre_responsable FROM Activo_responsable";
         $respuesta = $this->con->prepare($sql);
         try{
             $respuesta->execute();
             $data = array();
             while($fila = $respuesta->fetch(PDO::FETCH_ASSOC)){
-                $data[$fila["usuario_id"]]=$fila["usuario_nombre"];
+                $data[$fila["Responsable_codigo"]]=$fila["Nombre_responsable"];
             }
             return $data;
         }catch(PDOException $error){

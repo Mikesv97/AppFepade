@@ -10,6 +10,15 @@
         transitionEffect: "slideLeft",
         onStepChanging: function (event, currentIndex, newIndex)
         {
+            //plugings valited, que solamente comprueba que sean digitos en el input codProyectos para poder pasar a la siguiente pagina del formulario
+            $( "#step-form-horizontal" ).validate({
+                rules: {
+                    codProyectos: {
+                    digits: true
+                  }
+                }
+              });
+
             form.validate().settings.ignore = ":disabled,:hidden";
             return form.valid();
         },

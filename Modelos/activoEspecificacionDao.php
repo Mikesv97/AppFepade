@@ -68,4 +68,40 @@ class activoEspecificacionDao{
             return $error->getMessage();
         }  
     }
+
+    public function insertarActEspImp($activoId,$modelo,$ip,$tonerN,$toneM,$tonerC,$tonerA,$tambor,$fusor){
+        $this->conectar();
+        $sql = "INSERT INTO Activo_Especificacion(Activo_id,Modelo,IP,TonerN,TonerM,TonerC,TonerA,tambor,fusor,Procesador,Generacion,Ram,TipoRam,DiscoDuro,SO) 
+                VALUES (?,?,?,?,?,?,?,?,?,'','','','','','')";
+        $respuesta = $this->con->prepare($sql);
+        try{
+            $respuesta->execute([$activoId,$modelo,$ip,$tonerN,$toneM,$tonerC,$tonerA,$tambor,$fusor]);
+            $datos = $respuesta->rowCount();
+            if($datos > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(PDOException $error){
+            return $error->getMessage();
+        } 
+    }
+
+    public function insertarActEspProy($activoId,$modelo,$horasUso,$horasEco){
+        $this->conectar();
+        $sql = "INSERT INTO Activo_Especificacion(Activo_id,Modelo,IP,HorasUso,HoraEco,Procesador,Generacion,Ram,TipoRam,DiscoDuro,SO) 
+                VALUES (?,?,'',?,?,'','','','','','')";
+        $respuesta = $this->con->prepare($sql);
+        try{
+            $respuesta->execute([$activoId,$modelo,$horasUso,$horasEco]);
+            $datos = $respuesta->rowCount();
+            if($datos > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(PDOException $error){
+            return $error->getMessage();
+        } 
+    }
 }
