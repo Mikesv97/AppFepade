@@ -1,20 +1,34 @@
 $(document).ready(function(){
     var rem;
-    var uschange;
     var codigo;
     var error =parseInt(0);
-    var rememberUser = false;
-    
+
     //ocultamos controles que no deben ser visibles al cargar pag
-    $("#codeContent").hide();
-    $("#labelError").hide();
-    $("#labelErrorEmail").hide();
-    $("#newPasContent").hide();
-    $("#lbFailNewPass").hide();
+    ocultarControlLoad();
 
-
+    //comprobamos si algún usuario está con recuerdame en BD
     validarRememberme();
 
+    //cuando preciona para escribir cod validamos la entrada si es num o no
+    $("#txtCodCorreo").keyup(function(){
+        $("#lbCoderror").text("");
+        $("#lbCoderror").hide();
+
+        var val=$("#txtCodCorreo").val();
+        if(!/^\d*$/.test(val)){
+            $("#lbCoderror").text("Solo puedes ingresar números, no letras.");
+            $("#lbCoderror").show();
+        }
+
+    });
+
+    //al digitar correo que se oculte el error si esta visible
+    $("#txtCorreo").keypress(function(){
+        $("#labelErrorEmail").text("");
+        $("#labelErrorEmail").hide();
+    });
+
+    //al escribir en algun campo de nueva pass ocultamos cualquier error
     $("#txtNewPas1").keypress(function(){
         $("#lbFailNewPass").val("");
         $("#lbFailNewPass").hide();
@@ -39,13 +53,14 @@ $(document).ready(function(){
     //cuando escribe otro usuario diferente al que esta cargado por el
     //recuerdame
     $("input[name='txtUsuario']").keypress(function(){
+        //ocultamos cualquier error
+        $("#labelError").hide();
         //si es 1 esta seleccionado recuerdame
         if(rem ==1){
             //lo pasamos a 0 para que no este seleccionado
             rem=0;
         }
-        //activamos que hubo cambio de usuario
-        uschange=true;
+
         //limpiamos controles
         $("input[name='txtContraseña']").val("");
         $('#customCheck').attr("checked",false);
@@ -58,21 +73,14 @@ $(document).ready(function(){
 
         //obtenemos los datos del form
         var data = $("#frmLogin").serialize();
-        var us = null;
-        //evaluamos si se cambio el usuario que estaba seteado
-        if(uschange){
-            us="conCambio";
-        }else{
-            us="sinCambio";
-        }
+   
         //se envia la información mediante ajax
         $.ajax({
             url: "Controladores/loginControlador.php",
             method: "post",
             dataType: "json",
-            data: { "key": "validarUser","data": data,"valor": rem,"userChange": us,"userRemember": rememberUser},
+            data: { "key": "validarUser","data": data,"valor": rem},
             success: function (r) {
-                console.log(r);
                 switch(r){
                     case "datosLogNull":
                         $("#btnLogin").blur();
@@ -85,27 +93,13 @@ $(document).ready(function(){
     
                         //hacemos focus y al digitar en el usuario ocultamos error
                         $('input[name="txtUsuario"]').focus();
-                        $('input[name="txtUsuario"]').keypress(function(){
-                            $("#labelError").hide();
-                        });
-                    break;
-                    case "falloToken":
-                        Swal.fire({
-                            title: 'WOOPS!',
-                            text: 'Hubo un problema al comunicarse con el servidor, intenta de nuevo, ErrorCod: 0-ToKnSET',
-                            icon: 'error',
-                            confirmButtonText: 'Aceptar'
-                          })
-                        
                     break;
                     case true:
                         $(location).attr('href',"vistas/activo_fijo.php");
                     break;
                 }
             },
-            error: function (r) {
-
-                console.log(r);
+            error: function () {
                 //si falla algo se muestra error de conexión en el servidor
                 Swal.fire({
                     title: 'WOOPS!',
@@ -138,11 +132,7 @@ $(document).ready(function(){
                             //hacemos focus en el inut y lo limpiamos
                             $("#txtCorreo").focus();
                             $("#txtCorreo").val("");
-                            //al digitar que se oculte el error
-                            $("#txtCorreo").keypress(function(){
-                                $("#labelErrorEmail").text("");
-                                $("#labelErrorEmail").hide();
-                            });
+
                         break;
                         case true:
                             //enviamos cod al correo
@@ -208,13 +198,6 @@ $(document).ready(function(){
                   ocultarCamposModal();
                  
             }
-
-            $("#txtCodCorreo").keypress(function(){
-   
-                    $("#lbCoderror").text("");
-                    $("#lbCoderror").hide();
-        
-            });
        }
     });
 
@@ -281,8 +264,6 @@ $(document).ready(function(){
                 $("input[name='txtUsuario']").val(r["nombre"]);
                 $("input[name='txtContraseña']").val(r["clave"]);
                 rem=1;
-                uschange=false;
-                rememberUser=true;
                 $('#customCheck').attr("checked",true);
             }
          },
@@ -299,6 +280,8 @@ $(document).ready(function(){
     });
     }
 
+    //funcion que solicita envio de codigo al correo 
+    //al comprobar que es vaido
     function enviarCodigo(){
         var correo = $("#txtCorreo").val();
         $.ajax({
@@ -322,6 +305,7 @@ $(document).ready(function(){
         });
     }
 
+    //oculta campos del modal y el modal
     function ocultarCamposModal(){
                                 //ocultamos errores y campo codigo
                                 $("#codeContent").hide();
@@ -340,6 +324,15 @@ $(document).ready(function(){
                                 
                                 //cerramos modal
                                 $("#staticBackdrop").modal("hide");
+    }
+
+    //oculta controles que deben estar ocultos al cargar el login
+    function ocultarControlLoad(){
+        $("#codeContent").hide();
+        $("#labelError").hide();
+        $("#labelErrorEmail").hide();
+        $("#newPasContent").hide();
+        $("#lbFailNewPass").hide();
     }
 });
 

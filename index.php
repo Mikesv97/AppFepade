@@ -108,7 +108,7 @@ session_start();
               <div id="codeContent" class="my-3 form-group my-3">
                 <small id="labelInfoEmail" class="h6"></small>
                 <small id="txtCodRecPass" class="my-2 text-muted h6">Ingresa El Código:</small>
-                <input class="form-control my-2 m-0"  placeholder="Código" type="number" min="0" id="txtCodCorreo">
+                <input class="form-control my-2 m-0"  placeholder="Código" type="text" maxlength="9" id="txtCodCorreo">
                 <button id="btnValidCodigo" type="button" class="mx-3 my-2 btn btnLogin">Validar</button>
                 <p class="my-2 p-1 gold" id="lbCoderror"></p>
             </div>
