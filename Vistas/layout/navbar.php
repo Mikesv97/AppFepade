@@ -83,7 +83,7 @@
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Menu</span></a>
                 <ul aria-expanded="false">
                     <li><a href="activo_fijo.php">Agregar Activo</a></li>
-                    <li><a href="./app-calender.html">Calendar</a></li>
+                    <li><a href="nuevoUsuario.php">Nuevo Usuario</a></li>
                 </ul>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-chart-bar-33"></i><span class="nav-text">Charts</span></a>

@@ -46,7 +46,7 @@ class LoginDao{
         $this->conectar();
         //establecemos la consulta
         $sql="select a.usuario_clave , a.usuario_nombre, a.usuario_id, a.correo_electronico, b.rol_nombre
-        from usuario a inner join roles b on a.id_rol = b.id_rol where  a.usuario_user=?";
+        from usuario a inner join roles b on a.id_rol = b.id_rol where  a.usuario_id=?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
         try{
@@ -103,7 +103,7 @@ class LoginDao{
         //establecemos la coneccion
         $this->conectar();
         //establecemos la consulta
-        $sql="select usuario_user, usuario_clave from usuario where  remember =?";
+        $sql="select usuario_id, usuario_clave from usuario where  remember =?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
         try{
@@ -118,7 +118,7 @@ class LoginDao{
                 //si es mayor a 0, es que si hay, recorremos los datos
                 foreach($datosBD as $d){
                    $datos = array(
-                       'nombre' => $d["usuario_user"],
+                       'nombre' => $d["usuario_id"],
                        'clave'=>$d["usuario_clave"]);
                 }
 
@@ -140,7 +140,7 @@ class LoginDao{
                 //establecemos la coneccion
                 $this->conectar();
                 //establecemos la consulta
-                $sql="update usuario set remember = ? where  usuario_user=?";
+                $sql="update usuario set remember = ? where  usuario_id=?";
                 //preparamos la consulta
                 $respuesta = $this->con->prepare($sql);
                 try{
@@ -227,7 +227,7 @@ class LoginDao{
         $reme=1;
         $this->conectar();
         //establecemos la consulta
-        $sql="select usuario_user, remember from usuario where  remember =?";
+        $sql="select usuario_id, remember from usuario where  remember =?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
         try{
