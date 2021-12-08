@@ -14,16 +14,16 @@ class SendMail {
         //Server settings
        // $mail->SMTPDebug = 0;                      //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';                      //Set the SMTP server to send through
+        $mail->Host       = 'smtp-mail.outlook.com';                      //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'fepadeactivofijo@gmail.com';                     //SMTP username
-        $mail->Password   = 'fepade123';                               //SMTP password
+        $mail->Username   = 'activofijo@fepade.edu.sv';                     //SMTP username
+        $mail->Password   = 'zOoM98$$';                               //SMTP password
         $mail->SMTPSecure = 'tls';            //Enable implicit TLS encryption
         $mail->Port       = 25;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     
         //Recipients
-        $mail->setFrom('noreply@gmail.com', 'Sistema FEPADE');
-        $mail->addAddress("$correo");     //Add a recipient
+        $mail->setFrom('activofijo@fepade.edu.sv', 'Sistema FEPADE');
+        $mail->addAddress($correo);     //Add a recipient
         //$mail->addAddress('ellen@example.com');               //Name is optional
         //$mail->addReplyTo('info@example.com', 'Information');
         //$mail->addCC('cc@example.com');

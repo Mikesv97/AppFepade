@@ -13,10 +13,8 @@ if(isset($_POST["key"])){
                 //seteamos variables para mejor manejo
                 $nombre = $data["txtUsuario"];
                 $contraseña = $data["txtContraseña"];
-                $rem = $_POST["valor"];
-                $userChange = $_POST["userChange"];
-                $userRem = $_POST["userRemember"];
-
+                $rem = $_POST["valor"]; 
+                
                 //evaluamos si los datos son validos con usuario y password
                 $resp= $usDao->validarUsuario($nombre,$contraseña);
 
