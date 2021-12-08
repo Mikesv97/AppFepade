@@ -197,7 +197,7 @@ class LoginDao{
     //funcion para actualizar cambio de contraseña
     public function actualizarPassUser($pass,$correo){
         //encryptamos password
-        $passHash= password_hash($pass,PASSWORD_DEFAULT,array("cost"=>15));
+        $passHash= password_hash($pass,PASSWORD_DEFAULT,array("cost"=>12));
 
         //establecemos la coneccion
         $this->conectar();
