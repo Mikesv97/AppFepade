@@ -8,7 +8,7 @@ class activoFijoDAO{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
+        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            
@@ -35,13 +35,16 @@ class activoFijoDAO{
 
     }
 
-    public function insertarActivoFijo($referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat,$fechacomp){
+    public function insertarActivoFijo($referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat,$fechacomp,
+                                       $activoEliminado,$estado,$responsable){
         $this->conectar();
         $sql = "INSERT INTO Activo(Activo_referencia,PartidaCta,Empresa_id,numero_serie,Activo_fecha_adq,Activo_factura,Activo_tipo,Activo_descripcion,
-        Estructura1_id,Estructura2_id,Estructura3_id,Usuario_id,fecha,Activo_fecha_caduc,fecha_compra) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        Estructura1_id,Estructura2_id,Estructura3_id,Usuario_id,fecha,Activo_fecha_caduc,fecha_compra,Activo_eliminado,Estado,Responsable_codigo) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $respuesta = $this->con->prepare($sql);
         try{
-            $respuesta->execute([$referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat,$fechacomp]);
+            $respuesta->execute([$referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat,$fechacomp,
+            $estado,$activoEliminado,$responsable]);
             $datos = $respuesta->rowCount();
             if($datos > 0){
                 return true;
@@ -117,7 +120,6 @@ class activoFijoDAO{
         }
     }
 
-    //ESTA FUNCION SE OCUPARA AL INSERTAR EL HISTORIAL DEL ACTIVO
     public function comboResponsable(){
         $this->conectar();
         $sql = "SELECT Responsable_codigo, Nombre_responsable FROM Activo_responsable";

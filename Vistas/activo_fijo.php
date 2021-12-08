@@ -4,9 +4,10 @@ include('layout/navbar.php');
 include_once '../Modelos/activoFijoDao.php';
 $obj = new activoFijoDAO();
 
+//variables que almacenan el nombre y id del usuario que inicia sesion
 $usuario = $_SESSION["usuario"]["nombre"];
 $idUSuario = $_SESSION["usuario"]["id"];
-
+//variable que genera la fecha actual
 $date = date('d-m-Y');
 ?>
 
@@ -50,7 +51,7 @@ $date = date('d-m-Y');
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Referencia*</label>
-                                                <input type="text" name="referencia" class="form-control" placeholder="ABC123" maxlength="30" required >
+                                                <input type="text" name="referencia" class="form-control" placeholder="ABC123" maxlength="30" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
@@ -64,7 +65,7 @@ $date = date('d-m-Y');
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Codigo para proyectos*</label>
-                                                <input type="text" name="codProyectos" class="form-control" placeholder="123456" maxlength="10" required> 
+                                                <input type="text" name="codProyectos" class="form-control" placeholder="123456" maxlength="10" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
@@ -187,8 +188,8 @@ $date = date('d-m-Y');
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Codigo Automatico*</label>
-                                                <input type="text" name="codAutomatico" class="form-control" placeholder="123456" readonly>
+                                                <label class="text-label">Foto de activo*</label>
+                                                <input type="file" name="FileImagen" id="FileImagen" class="form-control" accept="image/x-png,image/gif,image/jpeg" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
@@ -321,7 +322,50 @@ $date = date('d-m-Y');
                                         </div>
                                     </div>
                                 </section>
-                            
+                                <h4>Renposable de activo</h4>
+                                <section>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 mb-4">
+                                            <div class="form-group">
+                                                <label class="text-label">Estado de activo*</label>
+                                                <select name="estado" id="estado" class="form-control">
+                                                    <option value="1">Activo</option>
+                                                    <option value="0">Inactivo</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 mb-4">
+                                            <div class="form-group">
+                                                <label class="text-label">Activo eliminado*</label>
+                                                <select name="estadoEliminado" id="estado" class="form-control">
+                                                    <option value="0">No</option>
+                                                    <option value="1">Si</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 mb-4">
+                                            <div class="form-group">
+                                                <label class="text-label">Responsable*</label>
+                                                <select name="comboResponsable" id="comboResponsable" class="form-control">
+                                                    <?php
+                                                    $data = $obj->comboResponsable();
+                                                    foreach ($data as $indice => $valor) {
+                                                        echo ' <option value="' . $indice . '">' . $valor . ' </option>';
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 mb-4">
+                                            <div class="form-group">
+                                                <label class="text-label">Comentarios de asignacion*</label>
+                                                <textarea class="form-control" name="comentario" rows="3" maxlength="50"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
                             </div>
                         </form>
                     </div>
