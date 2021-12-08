@@ -140,11 +140,74 @@ class activoFijoDAO{
         $this->conectar();
         $sql = "SELECT * FROM Activo";
         $respuesta = $this->con->prepare($sql);
+        $tabla = "
+        <table id='example2' name='activo' class='display' style='width:100%'>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>EMPRESA</th>
+                <th>DEPARTAMENTO</th>
+                <th>F.F.</th>
+                <th>AREA</th>
+                <th>TIPO ACTIVO</th>
+                <th>REFENCIA</th>
+                <th>SERIE</th>
+                <th>DESCRIPCION</th>
+                <th>RESPONSABLE</th>
+                <th>FECHA COMP</th>
+                <th>FECHA ADQ</th>
+                <th>FECHA CAD</th>
+            </tr>
+        </thead>
+        <tbody>
+        ";
+        try{
+            $respuesta->execute();
+            while($fila = $respuesta->fetch(PDO::FETCH_ASSOC)){
+                $tabla .= "<tr>";
+                $tabla .= "<td>".$fila["Activo_id"]."</td>";
+                $tabla .= "<td>".$fila["Empresa_id"]."</td>";
+                $tabla .= "<td>".$fila["Estructura1_id"]."</td>";
+                $tabla .= "<td>".$fila["Estructura2_id"]."</td>";
+                $tabla .= "<td>".$fila["Estructura3_id"]."</td>";
+                $tabla .= "<td>".$fila["Activo_tipo"]."</td>";
+                $tabla .= "<td>".$fila["Activo_referencia"]."</td>";
+                $tabla .= "<td>".$fila["numero_serie"]."</td>";
+                $tabla .= "<td>".$fila["Activo_descripcion"]."</td>";
+                $tabla .= "<td>".$fila["Responsable_codigo"]."</td>";
+                $tabla .= "<td>".$fila["fecha_compra"]."</td>";
+                $tabla .= "<td>".$fila["Activo_fecha_adq"]."</td>";
+                $tabla .= "<td>".$fila["Activo_fecha_caduc"]."</td>";
+                $tabla .= "</tr>";
+            }
+            $tabla .= "
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>ID</th>
+                    <th>EMPRESA</th>
+                    <th>DEPARTAMENTO</th>
+                    <th>F.F.</th>
+                    <th>AREA</th>
+                    <th>TIPO ACTIVO</th>
+                    <th>REFENCIA</th>
+                    <th>SERIE</th>
+                    <th>DESCRIPCION</th>
+                    <th>RESPONSABLE</th>
+                    <th>FECHA COMP</th>
+                    <th>FECHA ADQ</th>
+                    <th>FECHA CAD</th>
+                </tr>                             
+            </tfoot>
+            </table>
+            ";
+            return $tabla;
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
     }
 
 
 
 
 }
-
-?>
