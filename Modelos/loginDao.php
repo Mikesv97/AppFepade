@@ -33,28 +33,25 @@ class LoginDao{
     }
 
     public function desconectar($respuesta){
-        $this->con=null;
+       
         $respuesta->closeCursor();//dependiendo del driver es obligatorio o no.
-        $respuesta=null;
+       
 
     }
 
-    /*
-    Funcion que valida al usuario al hacer click en iniciar sesion
-    recibe su nombre de usuario y su contraseña para prosesar y
-    validar contra la base de datos
-    */
+    /*Funcion que valida al usuario al hacer click en iniciar sesion*/
     public function validarUsuario($nombre,$clave){
+
         //establecemos la coneccion
         $this->conectar();
         //establecemos la consulta
-        $sql="select a.usuario_nombre, a.usuario_id, a.correo_electronico, b.rol_nombre
-        from usuario a inner join roles b on a.id_rol = b.id_rol where  a.usuario_user=? and a.usuario_clave=?";
+        $sql="select a.usuario_clave , a.usuario_nombre, a.usuario_id, a.correo_electronico, b.rol_nombre
+        from usuario a inner join roles b on a.id_rol = b.id_rol where  a.usuario_user=?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros
-            $respuesta->execute([$nombre, $clave]);
+            $respuesta->execute([$nombre]);
             //convertimos a un arrreglo 
             $datos = $respuesta->fetchall();
     
@@ -62,127 +59,107 @@ class LoginDao{
             if(sizeof($datos)>0){
                 //si es mayor a 0, es que si hay, recorremos los datos
                 foreach($datos as $d){
-                    //creamos sesion
-                    $_SESSION["usuario"]["nombre"]= $d["usuario_nombre"];
-                    $_SESSION["usuario"]["id"]= $d["usuario_id"];
-                    $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
-                    $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
+                    //validamos si la clave coinciden o no
+
+                    $resp= password_verify($clave,$d["usuario_clave"]);
+                    if($resp){
+                        //creamos sesion
+                        $_SESSION["usuario"]["nombre"]= $d["usuario_nombre"];
+                        $_SESSION["usuario"]["id"]= $d["usuario_id"];
+                        $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
+                        $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
+
+                    }else  if($clave == $d["usuario_clave"]){
+                        //creamos sesion
+                        $_SESSION["usuario"]["nombre"]= $d["usuario_nombre"];
+                        $_SESSION["usuario"]["id"]= $d["usuario_id"];
+                        $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
+                        $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
+                        
+                    }else{
+                        return false;
+                    }
+
                 }
                 //cerramos conexion
                 $this->desconectar($respuesta);
                 //retornamos verdadero
                 return true;
 
-            }
-
-        }catch(PDOException $error){
-            return $error->getMessage();
-        }
-        
-    }
-
-    //funcion para actualizar el token de cada usuario en cada login
-    public function setUserToken($nombre,$token){
-
-        //establecemos la coneccion
-        $this->conectar();
-        //establecemos la consulta
-        $sql="update usuario set token = ? where  usuario_user=?";
-        //preparamos la consulta
-        $respuesta = $this->con->prepare($sql);
-        try{
-
-            //ejecutamos la consulta y seteamos parametros 
-            $respuesta->execute([$token,$nombre]);
-            //evaluamos cuantas filas fueron afectadas
-            if($respuesta->rowCount() > 0){
-                //cerramos conexion
-                $this->desconectar($respuesta);
-                //si se afectaron más de 0
-                return true;                 
-            }
-        }catch(PDOException $error){
-            return $error->getMessage();
-        }
-    }
-
-    //funcion para validar que los datos de las cookies sean correctos
-    function validarDatosCookie($nombre, $token){
-        //establecemos la coneccion
-        $this->conectar();
-        //establecemos la consulta
-        $sql="select usuario_nombre, token from usuario where  usuario_user=? and token=?";
-        //preparamos la consulta
-        $respuesta = $this->con->prepare($sql);
-        try{
-            //ejecutamos la consulta y seteamos parametros
-            $datosValidos=$respuesta->execute([$nombre, $token]);
-            //vemos si tiene filas la consulta
-            if($datosValidos){
-                //si tiene fila es que son validos los datos de la cookie
-                //regresamos los datos en un array
-                $data= array(
-                    "nombre" => $nombre,
-                    "token" => $token,
-                );
-                //cerramos conexion
-                $this->desconectar($respuesta);
-                echo json_encode($data);
             }else{
-                echo json_encode(false);
+                return false;
             }
+
         }catch(PDOException $error){
             return $error->getMessage();
         }
-
-      
-
+        
     }
 
-
-    /*
-    Funcion que valida al usuario al hacer click en iniciar sesion
-    cuando hay cookies de recuerdame
-    */
-    public function validarUsuarioCookie($nombre,$clave){
+    //funcion para verificar y cargar campos en caso exista usuario con recuerdame
+    function validarRemember(){
+        //declaramos variable recordar en 1
+        $remember = 1;
         //establecemos la coneccion
         $this->conectar();
         //establecemos la consulta
-        $sql="select  a.usuario_nombre, a.usuario_id, a.correo_electronico, b.rol_nombre
-        from usuario a inner join roles b on a.id_rol = b.id_rol where  a.usuario_user=? and a.token=? or a.usuario_clave=?";
+        $sql="select usuario_user, usuario_clave from usuario where  remember =?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros
-            $respuesta->execute([$nombre, $clave,$clave]);
-            //convertimos a un arrreglo 
-            $datos = $respuesta->fetchall();
-   
+            
+            //vemos si tiene filas la consulta
+            $respuesta->execute([$remember]);
+            $datosBD = $respuesta->fetchall();
+    
             //consultamos el tamaño del arreglo para controlar si hay resultados o no
-            if(sizeof($datos)>0){
+            if(sizeof($datosBD)>0){
                 //si es mayor a 0, es que si hay, recorremos los datos
-                foreach($datos as $d){
-                //creamos sesion
-                    $_SESSION["usuario"]["nombre"]= $d["usuario_nombre"];
-                    $_SESSION["usuario"]["id"]= $d["usuario_id"];
-                    $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
-                    $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
+                foreach($datosBD as $d){
+                   $datos = array(
+                       'nombre' => $d["usuario_user"],
+                       'clave'=>$d["usuario_clave"]);
                 }
-                
+
+                //retornamos datos
+                echo json_encode($datos);
                 //cerramos conexion
                 $this->desconectar($respuesta);
-                //retornamos verdadero
-                return true;
+            }else{
+                $this->desconectar($respuesta);
+                echo json_encode("noRemUser");
             }
-
         }catch(PDOException $error){
             return $error->getMessage();
         }
-
-        
-        
     }
 
+    //actualizar remember en la BD del usuario que hace login
+    function actualizarRemUser($valor, $usuario){
+                //establecemos la coneccion
+                $this->conectar();
+                //establecemos la consulta
+                $sql="update usuario set remember = ? where  usuario_user=?";
+                //preparamos la consulta
+                $respuesta = $this->con->prepare($sql);
+                try{
+        
+                    //ejecutamos la consulta y seteamos parametros 
+                    $respuesta->execute([$valor,$usuario]);
+                    //evaluamos cuantas filas fueron afectadas
+                    if($respuesta->rowCount() > 0){
+                        //cerramos conexion
+                        $this->desconectar($respuesta);
+                        //si se afectaron más de 0
+                        return true;                 
+                    }else{
+                        return false;
+                    }
+                }catch(PDOException $error){
+                    return $error->getMessage();
+                }
+    }
     //funcion para generar "token" numero al azar
     public function generarToken(){
         $numero_aleatorio = mt_rand(1000000,999999999);
@@ -190,11 +167,12 @@ class LoginDao{
         $this->codGenerado = $token;
         return $token;
     }
+    //funcion que retorna el token generado para el cod del correo
     public function getTokenGenerado(){
         return $this->codGenerado;
     }
 
-    //funcion para validar correo cambio contraseña
+    //funcion para validar correo para cambio contraseña
     public function validarCorreo($correo){
 
         //establecemos la coneccion
@@ -216,8 +194,10 @@ class LoginDao{
         }
     }
     
-
+    //funcion para actualizar cambio de contraseña
     public function actualizarPassUser($pass,$correo){
+        //encryptamos password
+        $passHash= password_hash($pass,PASSWORD_DEFAULT,array("cost"=>15));
 
         //establecemos la coneccion
         $this->conectar();
@@ -228,7 +208,7 @@ class LoginDao{
         try{
 
             //ejecutamos la consulta y seteamos parametros 
-            $respuesta->execute([$pass,$correo]);
+            $respuesta->execute([$passHash,$correo]);
             //evaluamos cuantas filas fueron afectadas
             if($respuesta->rowCount() > 0){
                 //cerramos conexion
@@ -241,6 +221,32 @@ class LoginDao{
         }
     }
 
+    //funcion que retorna un array con los usuarios que tienen 1 
+    //en campo remember para cambiar al ultimo que pide ser recordado
+    public function comprobarRememberUs(){
+        $reme=1;
+        $this->conectar();
+        //establecemos la consulta
+        $sql="select usuario_user, remember from usuario where  remember =?";
+        //preparamos la consulta
+        $respuesta = $this->con->prepare($sql);
+        try{
+            //ejecutamos la consulta
+            if($respuesta->execute([$reme])){
+                //si tiene exito retornamos datos
+               
+                return  $respuesta->fetchall();
+               
+                
+            }else{
+                $this->desconectar();
+                return false;
+                
+            }
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
 }
 
 ?>
