@@ -371,13 +371,29 @@ $date = date('d-m-Y');
                     </div>
                 </div>
             </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Datatable</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <?php
+                                echo $obj->mostrarActivoFijo();
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- script para mostrar o ocultar los campos segun, el tiepo de activo que se ingresara -->
 <script src="../Recursos/JS/tipoActivo.js"></script>
-</script>
+<!-- Datatable -->
+<script src="../Recursos/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../Recursos/JS/plugins-init/datatables.init.js"></script>
 <!--**********************************
             Content body end
         ***********************************-->

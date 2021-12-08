@@ -89,21 +89,24 @@ if($_POST){
                 //OBTENIDO EL ULTIMO ACTIVO ID QUE SE INSERTANDO EN LA TABLA ACTIVO_FIJO
                 $var2->setActivoId($valorid);
 
-                //SI EL TIPO DE ACTIVO SELECCIONADO ES COMPUTADORA SE INSERTARAN LOS DATOS CORRESPONDIENTES
+                //SI EL TIPO DE ACTIVO SELECCIONADO ES COMPUTADORA SE INSERTARAN LOS DATOS CORRESPONDIENTES y TAMBIEN SE INSERTAN LOS DATOS EN HISTORIAL DEL ACTIVO
                 if($tipoActivo == "computadora"){
                    $resultadoComp = $obj2->insertarActEspCom($var2->getActivoId(),$var2->getProcesador(),$var2->getGeneracion(),$var2->getRam(),$var2->getTipoRam(),$var2->getDiscoDuro(),
                                                              $var2->getSO(),$var2->getOffice(),$var2->getModelo(),$var2->getIP());
-                    echo json_encode($resultadoComp);
+                    $insertarHistorial = $Obj3->insertarHistorial($var2->getActivoId(),$fecha,$var->getEstructura3Id(),$var3->getResponsableId(),$var3->getHistoricoComentario(),
+                                                             $var->getUsuarioId(),$fecha,$var->getEstado());
+                    echo json_encode(true);
                 }else if($tipoActivo == "impresora"){
                     $resultadoImp = $obj2->insertarActEspImp($var2->getActivoId(),$var2->getModelo(),$var2->getIP(),$var2->getTonerN(),$var2->getTonerM(),$var2->getTonerC(),$var2->getTonerA(),
                                                             $var2->getTambor(),$var2->getFusor());
-                    echo json_encode($resultadoImp);
+                    $insertarHistorial = $Obj3->insertarHistorial($var2->getActivoId(),$fecha,$var->getEstructura3Id(),$var3->getResponsableId(),$var3->getHistoricoComentario(),
+                                                                  $var->getUsuarioId(),$fecha,$var->getEstado());
+                    echo json_encode(true);
                 }else if($tipoActivo == "proyector"){
                     $resultadoProy = $obj2->insertarActEspProy($var2->getActivoId(),$var2->getModelo(),$var2->getHorasUso(),$var2->getHoraEco());
                     $insertarHistorial = $Obj3->insertarHistorial($var2->getActivoId(),$fecha,$var->getEstructura3Id(),$var3->getResponsableId(),$var3->getHistoricoComentario(),
                                                                   $var->getUsuarioId(),$fecha,$var->getEstado());
-                    echo json_encode($resultadoProy);
-                    echo json_encode($insertarHistorial);
+                    echo json_encode(true);
                 }
                 
                 break;

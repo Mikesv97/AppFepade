@@ -29,6 +29,8 @@ if(!isset($_SESSION["usuario"]["nombre"])){
     <script src="../recursos/js/homejs.js" ></script>
     <!--Swwet Alert-->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Datatable -->
+    <link href="../Recursos/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 
 </head>
 
