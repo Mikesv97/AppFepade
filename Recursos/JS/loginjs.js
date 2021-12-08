@@ -2,7 +2,8 @@ $(document).ready(function(){
     var rem;
     var uschange;
     var codigo;
-    var error =parseInt(0);;
+    var error =parseInt(0);
+    var rememberUser = false;
     
     //ocultamos controles que no deben ser visibles al cargar pag
     $("#codeContent").hide();
@@ -12,7 +13,8 @@ $(document).ready(function(){
     $("#lbFailNewPass").hide();
 
 
-    comprobarCokieRememberme();
+    validarRememberme();
+
     $("#txtNewPas1").keypress(function(){
         $("#lbFailNewPass").val("");
         $("#lbFailNewPass").hide();
@@ -68,8 +70,9 @@ $(document).ready(function(){
             url: "Controladores/loginControlador.php",
             method: "post",
             dataType: "json",
-            data: { "key": "validarUser","data": data,"valor": rem,"userChange": us},
+            data: { "key": "validarUser","data": data,"valor": rem,"userChange": us,"userRemember": rememberUser},
             success: function (r) {
+                console.log(r);
                 switch(r){
                     case "datosLogNull":
                         $("#btnLogin").blur();
@@ -100,7 +103,9 @@ $(document).ready(function(){
                     break;
                 }
             },
-            error: function () {
+            error: function (r) {
+
+                console.log(r);
                 //si falla algo se muestra error de conexión en el servidor
                 Swal.fire({
                     title: 'WOOPS!',
@@ -258,29 +263,31 @@ $(document).ready(function(){
         
     });
     
-    /*funcion que solicita comprobacion  de datos de las cookies para ver si son validos y cargar los 
-    controles*/
-    function comprobarCokieRememberme(){
+    /*funcion que solicita comprobacion  de  remember*/
+    function validarRememberme(){
     $.ajax({
         url:"Controladores/loginControlador.php",
         method: "post",
         dataType: "json",
         data: { "key": "validarRemember"},
         success: function (r) {
-            //si hay cookies, y si son correctos los datos
-            if(r){
-                //seteamos controles
-                $("input[name='txtUsuario']").val(r["nombre"]);
-                $("input[name='txtContraseña']").val(r["token"]);
-                rem=1;
-                uschange=false;
-                $('#customCheck').attr("checked",true);
-            }else{
+            //si no hay usuario con recuerdame
+            if(r=="noRemUser"){
                 rem=0;
                 $('#customCheck').attr("checked",false);
+
+            }else{//en caso si exista
+                //seteamos controles
+                $("input[name='txtUsuario']").val(r["nombre"]);
+                $("input[name='txtContraseña']").val(r["clave"]);
+                rem=1;
+                uschange=false;
+                rememberUser=true;
+                $('#customCheck').attr("checked",true);
             }
          },
-        error: function () {
+        error: function (r) {
+            console.log(r);
             Swal.fire({
                 title: 'Woops!',
                 text: 'No pudimos conectarnos al servidor, por favor intenta de nuevo, si el problema persiste'
