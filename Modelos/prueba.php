@@ -7,6 +7,7 @@ include_once '../Modelos/activoFijoDao.php';
 $us = new LoginDao();
 
 //$us->actualizarPassUser("douglas123","raidenprueba75@gmail.com");
+$us->actualizarPassUser("alan123","alan.castillo20@itca.edu.sv");
 /*if($us->validarUsuario("douglasv","douglas123")){
     echo "valido";
 }else{
@@ -26,7 +27,7 @@ $us = new LoginDao();
 //$us->validarRemember();
 
 //$us->actualizarRemUser(1, "douglasv");
-$data = $us->comprobarRememberUs();
+/*$data = $us->comprobarRememberUs();
 
 if(sizeof($data)!= 0){
    foreach($data as $d){
@@ -34,7 +35,7 @@ if(sizeof($data)!= 0){
    }
 }else{
     echo "no";
-}
+}*/
 
 /*for($i =0 ; $i<sizeof($resp); $i++){
     echo "nombre: ".$resp[$i]["usuario_user"]."<br>";
