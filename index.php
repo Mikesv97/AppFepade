@@ -31,7 +31,7 @@ session_start();
   <div class="container-login">
     <div class="row justify-content-center">
       <div class="col-xl-6 col-lg-12 col-md-9">
-        <div class="card shadow-sm my-5">
+        <div class="card dd shadow-sm my-5">
           <div class="card-body p-0">
             <div class="row">
               <div class="col-lg-12">
@@ -41,21 +41,21 @@ session_start();
                   </div>
                   <form id="frmLogin"class="user">
                     <div class="form-group">
-                      <input type="text" class="form-control" name="txtUsuario" maxlength="12" placeholder="Ingresa Usuario">
+                      <input type="text" class="miControl form-control" name="txtUsuario" maxlength="12" placeholder="Ingresa Usuario">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control" name="txtContraseña" maxlength="10" placeholder="Contraseña">
+                      <input type="password" class="miControl form-control" name="txtContraseña" maxlength="10" placeholder="Contraseña">
                     </div>
                     <div class="form-group">
-                      <div class="custom-control custom-checkbox small" style="line-height: 1.5rem;">
+                      <div class="miControl custom-control custom-checkbox small" style="line-height: 1.5rem;">
                         <input type="checkbox" class="custom-control-input" id="customCheck" value="1">
-                        <label  class="custom-control-label" for="customCheck">Recordarme</label>
+                        <label  class=" custom-control-label" for="customCheck">Recordarme</label>
                       </div>
                       <p class="my-2 p-1 gold" id="labelError">
                       </p>
                     </div>
                     <div class="form-group">
-                      <button class="btn btnLogin btn-block" type="submit" id="btnLogin">Login</button>
+                      <button class="miControl btn btnLogin btn-block" type="submit" id="btnLogin">Login</button>
                     </div>
                     <hr>
                   </form>
