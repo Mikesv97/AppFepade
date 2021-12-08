@@ -33,10 +33,10 @@ session_start();
       <div class="col-xl-6 col-lg-12 col-md-9">
         <div class="card dd shadow-sm my-5">
           <div class="card-body p-0">
-            <div class="row">
+            <div class="row ">
               <div class="col-lg-12">
-                <div class="login-form">
-                  <div class="text-center">
+                <div class="login-form ">
+                  <div class="text-center just">
                     <img src="recursos/multimedia/imagenes/logo.jpg" alt="logoFepade"><h1 class="h4 text-gray-900 my-2 mb-4">IDENTIFICATE</h1>
                   </div>
                   <form id="frmLogin"class="user">

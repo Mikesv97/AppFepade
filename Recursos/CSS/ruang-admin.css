@@ -5,13 +5,12 @@
 }
 
 .dd{
-  max-width: 380px !important;
+  max-width: 380px;
   margin: 0 auto;
+
 }
-.form-control, .miControl, .btnLogin{
-  max-width: 70% !important;
-  margin: 0 auto; 
-}
+
+
 .btnLogin{
   background-color: #b0191e;
   color: white;
