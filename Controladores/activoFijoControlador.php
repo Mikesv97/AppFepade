@@ -1,12 +1,19 @@
 <?php
 include_once '../Modelos/activoFijoDao.php';
 include_once '../Modelos/activoEspecificacionDao.php';
+include_once '../Modelos/historialActivoDao.php';
+
 $obj = new activoFijoDAO();
 $obj2 = new activoEspecificacionDao();
+$Obj3 = new historialActivoDao();
+
 //VARIABLE PARA SACAR EL DIA QUE NOS ENCONTRAMOS
 $fecha = date('d-m-Y');
+
 //VARIABLE SESION DONDE SE MANTIENE EL ID DEL USUARIO QUE INICIO SESION EN EL SISTEMA
 //$idUSuario = $_SESSION["usuario"]["id"];
+
+
 
 if($_POST){
     if(isset($_POST['key'])){
@@ -16,6 +23,7 @@ if($_POST){
                 $tipoActivo = $_POST["tipoActivo"];
                 $var = new Activo_Fijo();
                 $var2 = new Activo_Especificacion();
+                $var3 = new historial_Activo();
                 parse_str($_POST["data"],$data);
 
                 //DATOS GENERALES DE ACTIVOS
@@ -31,6 +39,9 @@ if($_POST){
                 $var->setEstructura2Id($data['comboFondos']);
                 $var->setEstructura3Id($data['comboArea']);
                 $var->setActivoDescripcion($data['descripcion']);
+                $var->setActivoFechaCaduc($data['fechaCad']);
+                $var->setEstado($data['estado']);
+                $var->setActivoEliminado($data['estadoEliminado']);              
                 
                 //DATOS DE ESPECIFICACIONES PARA ACTIVO COMPUTADORA
                 $var2->setProcesador($data['procesador']);
@@ -55,10 +66,23 @@ if($_POST){
                 $var2->setHorasUso($data['horasUso']);
                 $var2->setHoraEco($data['horasEco']);
 
+                //DATOS DE HISTORIAL DE RESPONSABLE
+                $var3->setResponsableId($data['comboResponsable']);
+                $var3->setHistoricoComentario($data['comentario']);
+
+                //PENDIENTE DE COMPROBAR SI EL INPUT FECHA VIENE CON DATOS O NO YA QUE SIEMPRE LLEGA AL ELSE AUNQUE SE PONGA FECHA
+                $caducacion = $var->setActivoFechaCaduc($data['fechaCad']);
+                if(empty($caducacion)){
+                    $var->setActivoFechaCaduc('01/01/1900');
+                }else{
+                    $var->setActivoFechaCaduc($data['fechaCad']);
+                }
+
                 //INSERTANDOP ACTIVO FIJO
                 $resultado = $obj->insertarActivoFijo($var->getActivoReferencia(),$var->getPartidaCta(),$var->getEmpresaId(),$var->getNumeroSerie(),$var->getActivoFechaAdq(),
                                                       $var->getActivoFactura(),$var->getActivoTipo(),$var->getActivoDescripcion(),$var->getEstructura1Id(),$var->getEstructura2Id(),
-                                                      $var->getEstructura3Id(),$var->getUsuarioId(),$fecha,'01/01/1900',$var->getActivoFechaAdq());
+                                                      $var->getEstructura3Id(),$var->getUsuarioId(),$fecha,$var->getActivoFechaCaduc(),$var->getActivoFechaAdq(),$var->getEstado(),
+                                                      $var->getActivoEliminado(),$var3->getResponsableId());
 
                 //LLAMANDO FUNCION QUE OBTIENE EL ID DEL ACTIVO FIJO QUE SE ESTA INSERTANDO
                 $valorid =  $obj2->obtenerId();
@@ -76,7 +100,10 @@ if($_POST){
                     echo json_encode($resultadoImp);
                 }else if($tipoActivo == "proyector"){
                     $resultadoProy = $obj2->insertarActEspProy($var2->getActivoId(),$var2->getModelo(),$var2->getHorasUso(),$var2->getHoraEco());
+                    $insertarHistorial = $Obj3->insertarHistorial($var2->getActivoId(),$fecha,$var->getEstructura3Id(),$var3->getResponsableId(),$var3->getHistoricoComentario(),
+                                                                  $var->getUsuarioId(),$fecha,$var->getEstado());
                     echo json_encode($resultadoProy);
+                    echo json_encode($insertarHistorial);
                 }
                 
                 break;
