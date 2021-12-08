@@ -11,7 +11,7 @@ $idUSuario = $_SESSION["usuario"]["id"];
 $date = date('d-m-Y');
 ?>
 
-<!-- script para mostrar o ocultar los campos segun, el tiepo de activo que se ingresara -->
+<!-- script para mostrar o ocultar los campos segun, el tipo de activo que se ingresara -->
 <script src="../Recursos/JS/tipoActivo.js"></script>
 </script>
 
@@ -374,12 +374,12 @@ $date = date('d-m-Y');
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Datatable</h4>
+                        <h4 class="card-title">Activos fijos en sistema</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <?php
-                                echo $obj->mostrarActivoFijo();
+                            echo $obj->mostrarActivoFijo();
                             ?>
                         </div>
                     </div>
@@ -394,6 +394,29 @@ $date = date('d-m-Y');
 <!-- Datatable -->
 <script src="../Recursos/vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="../Recursos/JS/plugins-init/datatables.init.js"></script>
+
+<!-- <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script> -->
+
+<!-- <script>
+    $('#activoTabla').DataTable({
+        responsive: true,
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se han encontrado datos - intente nuevamente",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay datos disponibles",
+            "infoFiltered": "(Filtrado de _MAX_ activos totales)",
+            "search": "Buscar",
+            "paginate": {
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    });
+</script> -->
 <!--**********************************
             Content body end
         ***********************************-->
