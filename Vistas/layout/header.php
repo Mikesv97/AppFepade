@@ -8,7 +8,7 @@ if(!isset($_SESSION["usuario"]["nombre"])){
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -30,9 +30,8 @@ if(!isset($_SESSION["usuario"]["nombre"])){
     <!--Swwet Alert-->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Datatable -->
-    <link href="../Recursos/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 

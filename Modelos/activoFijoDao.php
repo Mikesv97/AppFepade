@@ -74,7 +74,7 @@ class activoFijoDAO{
 
     public function comboDapartamento(){
         $this->conectar();
-        $sql = "SELECT estructura11_id, estructura11_nombre FROM Estructura11";
+        $sql = "SELECT estructura11_id, estructura11_nombre FROM Qry_Estructura11";
         $respuesta = $this->con->prepare($sql);
         try{
             $respuesta->execute();
@@ -90,7 +90,7 @@ class activoFijoDAO{
 
     public function comboFondos(){
         $this->conectar();
-        $sql = "SELECT estructura21_id, estructura21_nombre FROM Estructura21";
+        $sql = "SELECT estructura21_id, estructura21_nombre FROM Qry_Estructura21";
         $respuesta = $this->con->prepare($sql);
         try{
             $respuesta->execute();
@@ -106,7 +106,7 @@ class activoFijoDAO{
 
     public function comboArea(){
         $this->conectar();
-        $sql = "SELECT estructura31_id, estructura31_nombre FROM Estructura31";
+        $sql = "SELECT estructura31_id, estructura31_nombre FROM Qry_Estructura31";
         $respuesta = $this->con->prepare($sql);
         try{
             $respuesta->execute();
@@ -141,7 +141,7 @@ class activoFijoDAO{
         $sql = "SELECT * FROM Activo";
         $respuesta = $this->con->prepare($sql);
         $tabla = "
-        <table id='example2' name='activo' class='display' style='width:100%'>
+        <table id='activoTabla' name='activoTabla' class='table table-striped dt-responsive nowrap' style='width:100%'>
         <thead>
             <tr>
                 <th>ID</th>
