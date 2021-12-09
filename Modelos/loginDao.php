@@ -12,7 +12,7 @@ class LoginDao{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
+        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            
@@ -197,7 +197,7 @@ class LoginDao{
     //funcion para actualizar cambio de contraseña
     public function actualizarPassUser($pass,$correo){
         //encryptamos password
-        $passHash= password_hash($pass,PASSWORD_DEFAULT,array("cost"=>15));
+        $passHash= password_hash($pass,PASSWORD_DEFAULT,array("cost"=>12));
 
         //establecemos la coneccion
         $this->conectar();
@@ -215,6 +215,8 @@ class LoginDao{
                 $this->desconectar($respuesta);
                 //si se afectaron más de 0
                 return true;                 
+            }else{
+                echo json_encode("no se actualizo");
             }
         }catch(PDOException $error){
             return $error->getMessage();

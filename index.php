@@ -17,7 +17,7 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Bienvenidos- Login</title>
+  <title>Bienvenidos activo fepade- login</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
   <link href="recursos/css/ruang-admin.min.css" rel="stylesheet">
@@ -37,7 +37,7 @@ session_start();
               <div class="col-lg-12">
                 <div class="login-form ">
                   <div class="text-center just">
-                    <img src="recursos/multimedia/imagenes/logo.jpg" alt="logoFepade"><h1 class="h4 text-gray-900 my-2 mb-4">IDENTIFICATE</h1>
+                    <img src="recursos/multimedia/imagenes/logo.jpg" alt="logoFepade"><h1 class="h4 text-gray-900 my-2 mb-4">Identifícate</h1>
                   </div>
                   <form id="frmLogin"class="user">
                     <div class="form-group">
@@ -60,7 +60,7 @@ session_start();
                     <hr>
                   </form>
                   <div class="text-center">
-                    <a class="linkPass small" data-toggle="modal" data-target="#staticBackdrop" href="#">Olvide Mi Contraseña!</a>
+                    <a class="linkPass small" data-toggle="modal" data-target="#staticBackdrop" href="#">¡Olvide mi contraseña!</a>
                   </div>
                   <div class="text-center">
                   </div>
@@ -85,40 +85,42 @@ session_start();
     <div class="modal-content">
       <div class="modal-header">
         <div class="w-100 row justify-content-center">
-        <img class="logof" src="recursos/multimedia/imagenes/logo.jpg" alt="logoFepade"><h1 class="h4 tittleModal my-2 mb-4">Cambiar Contraseña</h1>
+        <img class="logof" src="recursos/multimedia/imagenes/logo.jpg" alt="logoFepade"><h1 class="h4 tittleModal my-2 mb-4">Cambiar contraseña</h1>
         </div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="small text-muted">
-          <p>Para cambiar la contraseña se enviará un código de confirmación al correo, asegurate
-            de llenar correctamente los campos solicitados.
+        <div class="small text-black">
+          <p>Para cambiar la contraseña se enviará un código de confirmación al correo, 
+            asegúrate de llenar correctamente los campos solicitados.</p>
         </div>
         <div>
           <form id="frmRecPass">
             <div class="form-group">
-              <label for="txtCorreo" class="text-muted h6">Correo Electronico</label>
+              <label for="txtCorreo" class="text-muted h6">Correo electrónico</label>
               <input type="email" class="form-control" id="txtCorreo" maxlength="50" required>
-              <small id="emailHelp" class="form-text text-muted">Debes ingresar tu correo electronico con el que te registraste en el sistema.</small>
+              <small id="emailHelp" class="form-text text-black">
+                Debes ingresar tu correo electrónico con el que te registraste en el sistema.
+              </small>
               <p class="my-2 p-1 gold" id="labelErrorEmail"></p>
             </div>
-              <button id="btnCodigo" type="submit" class="btn btnLogin">Solicitar Código</button>
+              <button id="btnCodigo" type="submit" class="btn btnLogin">Solicitar código</button>
               <div id="codeContent" class="my-3 form-group my-3">
                 <small id="labelInfoEmail" class="h6"></small>
-                <small id="txtCodRecPass" class="my-2 text-muted h6">Ingresa El Código:</small>
+                <small id="txtCodRecPass" class="my-2 text-black h6">Ingresa el código:</small>
                 <input class="form-control my-2 m-0"  placeholder="Código" type="text" maxlength="9" id="txtCodCorreo">
                 <button id="btnValidCodigo" type="button" class="mx-3 my-2 btn btnLogin">Validar</button>
                 <p class="my-2 p-1 gold" id="lbCoderror"></p>
             </div>
             <div id="newPasContent" class="my-3 form-group my-3">
-                <p id="labelInfoPass" class="my-2 text-muted h6">Ingresa La Nueva Contraseña:</p>
+                <p id="labelInfoPass" class="my-2 text-black h6">Ingresa la nueva contraseña:</p>
                 <input class="form-control my-2 m-0"  maxlength="10" placeholder="contraseña nueva" type="password" id="txtNewPas1">
-                <small id="labelInfoPass" class="my-2 text-muted h6">Repite La Contraseña:</small>
+                <small id="labelInfoPass" class="my-2 text-black h6">Repite la contraseña:</small>
                 <input class="form-control my-2 m-0"  maxlength="10" placeholder="contraseña nueva" type="password" id="txtNewPas2">
                 <p class="my-2 p-1 gold" id="lbFailNewPass"></p>
-                <button id="btnChangPass" type="button" class="btn btnLogin">Cambiar Contraseña</button>
+                <button id="btnChangPass" type="button" class="btn btnLogin">Cambiar contraseña</button>
             </div>
           </form>
         </div>

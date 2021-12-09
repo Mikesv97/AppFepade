@@ -9,7 +9,7 @@ $us = new LoginDao();
 SendMail::enviarCodCorreo("alan.castillo20@itca.edu.sv","055645");
 SendMail::enviarCodCorreo("castillo.alan1995@gmail.com","055645");
 
-//$us->actualizarPassUser("douglas123","raidenprueba75@gmail.com");
+$us->actualizarPassUser("douglas123","douglas.figueroa20@itca.edu.sv");
 //$us->actualizarPassUser("alan123","alan.castillo20@itca.edu.sv");
 /*if($us->validarUsuario("douglasv","douglas123")){
     echo "valido";
