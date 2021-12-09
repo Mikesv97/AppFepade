@@ -392,15 +392,15 @@ $date = date('d-m-Y');
 <!-- script para mostrar o ocultar los campos segun, el tiepo de activo que se ingresara -->
 <script src="../Recursos/JS/tipoActivo.js"></script>
 <!-- Datatable -->
-<script src="../Recursos/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="../Recursos/JS/plugins-init/datatables.init.js"></script>
+<!-- <script src="../Recursos/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../Recursos/JS/plugins-init/datatables.init.js"></script> -->
 
-<!-- <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script> -->
 
-<!-- <script>
+<script>
     $('#activoTabla').DataTable({
         responsive: true,
         "language": {
@@ -416,7 +416,7 @@ $date = date('d-m-Y');
             }
         }
     });
-</script> -->
+</script>
 <!--**********************************
             Content body end
         ***********************************-->

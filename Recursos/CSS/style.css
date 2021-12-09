@@ -260,7 +260,7 @@ body {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #BDBDC7;
+  color: black;
   text-align: left;
   background-color: rgba(88, 115, 254, 0.04); }
 
@@ -1340,17 +1340,17 @@ pre {
 .table {
   width: 100%;
   margin-bottom: 1rem;
-  color: #BDBDC7; }
+  color: black; }
   .table th,
   .table td {
     padding: 0.75rem;
     vertical-align: top;
-    border-top: 1px solid #EEEEEE; }
+    border-top: 1px solid black; }
   .table thead th {
     vertical-align: bottom;
-    border-bottom: 2px solid #EEEEEE; }
+    border-bottom: 2px solid black; }
   .table tbody + tbody {
-    border-top: 2px solid #EEEEEE; }
+    border-top: 2px solid black; }
 
 .table-sm th,
 .table-sm td {
@@ -16688,7 +16688,7 @@ button {
 .table thead th {
   border-bottom-width: 1px;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.5px;
   border-color: #eaeaea; }
@@ -16769,8 +16769,8 @@ table.dataTable tbody tr, table.dataTable tbody td {
   background: transparent !important; }
 
 table.dataTable thead th {
-  color: #454545;
-  font-weight: 600; }
+  color: black;
+  font-weight: 800; }
   [data-theme-version="dark"] table.dataTable thead th {
     color: #fff; }
 
@@ -16782,7 +16782,7 @@ table.dataTable tr.selected {
 
 table.dataTable tfoot th {
   color: #454545;
-  font-weight: 600; }
+  font-weight: 800; }
   [data-theme-version="dark"] table.dataTable tfoot th {
     color: #fff; }
 
@@ -16811,7 +16811,8 @@ table.dataTable tfoot th {
   border: 1px solid #e2e2e2;
   padding: .3rem 0.5rem;
   color: #715d5d;
-  border-radius: 5px; }
+  border-radius: 5px;
+  font-size: 15px;}
   [data-theme-version="dark"] .dataTables_wrapper input[type="search"], [data-theme-version="dark"] .dataTables_wrapper input[type="text"], [data-theme-version="dark"] .dataTables_wrapper select {
     background: #2A2C32;
     border-color: #424D63;
