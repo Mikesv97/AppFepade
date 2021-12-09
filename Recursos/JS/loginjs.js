@@ -6,10 +6,10 @@ $(document).ready(function(){
     //ocultamos controles que no deben ser visibles al cargar pag
     ocultarControlLoad();
 
-    //comprobamos si algún usuario está con recuerdame en BD
+    //comprobamos si algún usuario está con recuérdame en BD
     validarRememberme();
 
-    //cuando preciona para escribir cod validamos la entrada si es num o no
+    //cuando presiona para escribir cod validamos la entrada si es número o no
     $("#txtCodCorreo").keyup(function(){
         $("#lbCoderror").text("");
         $("#lbCoderror").hide();
@@ -22,13 +22,13 @@ $(document).ready(function(){
 
     });
 
-    //al digitar correo que se oculte el error si esta visible
+    //al digitar correo que se oculte el error si está visible
     $("#txtCorreo").keypress(function(){
         $("#labelErrorEmail").text("");
         $("#labelErrorEmail").hide();
     });
 
-    //al escribir en algun campo de nueva pass ocultamos cualquier error
+    //al escribir en algún campo de nueva pass ocultamos cualquier error
     $("#txtNewPas1").keypress(function(){
         $("#lbFailNewPass").val("");
         $("#lbFailNewPass").hide();
@@ -40,8 +40,8 @@ $(document).ready(function(){
     });
 
 
-    //cuando se clickea en el check box variamos valor
-    //para manejar desde el servidor si esta seleccionado o no
+    //cuando se hace clic en el check box variamos valor
+    //para manejar desde el servidor si está seleccionado o no
     $('#customCheck').on("click",function(){
         if(rem==1){
             rem =0;
@@ -50,14 +50,14 @@ $(document).ready(function(){
         }
     });
 
-    //cuando escribe otro usuario diferente al que esta cargado por el
-    //recuerdame
+    //cuando escribe otro usuario diferente al que está cargado por el
+    //recuérdame
     $("input[name='txtUsuario']").keypress(function(){
         //ocultamos cualquier error
         $("#labelError").hide();
-        //si es 1 esta seleccionado recuerdame
+        //si es 1 está seleccionado recuérdame
         if(rem ==1){
-            //lo pasamos a 0 para que no este seleccionado
+            //lo pasamos a 0 para que no esté seleccionado
             rem=0;
         }
 
@@ -66,15 +66,15 @@ $(document).ready(function(){
         $('#customCheck').attr("checked",false);
     });
 
-    //cuando hace click en btnLogin 
+    //cuando hace clic en btnLogin 
     $("#btnLogin").on("click", function(e){
-        //se evita el evento envio del form
+        //se evita el evento submit del form
         e.preventDefault();
 
         //obtenemos los datos del form
         var data = $("#frmLogin").serialize();
    
-        //se envia la información mediante ajax
+        //se envía la información mediante ajax
         $.ajax({
             url: "Controladores/loginControlador.php",
             method: "post",
@@ -91,7 +91,7 @@ $(document).ready(function(){
                         $('input[name="txtUsuario"]').val("");
                         $('input[name="txtContraseña"]').val("");
     
-                        //hacemos focus y al digitar en el usuario ocultamos error
+                        //hacemos focus
                         $('input[name="txtUsuario"]').focus();
                     break;
                     case true:
@@ -101,10 +101,11 @@ $(document).ready(function(){
             },
             error: function () {
 
-                //si falla algo se muestra error de conexión en el servidor
+                //si falla algo se muestra error del proceso
                 Swal.fire({
                     title: 'WOOPS!',
-                    text: 'Hubo problemas al intentar comunicarse con el servidor, intenta de nuevo',
+                    text: 'Hubo problemas al intentar comunicarse con el servidor para validar tus datos de login'
+                    +' intenta de nuevo, si el problema persiste contacta a tu administrador o soporte IT.',
                     icon: 'error',
                     confirmButtonText: 'Aceptar'
                   })
@@ -113,7 +114,7 @@ $(document).ready(function(){
         });
     });
 
-    //cuando hace click en solicitar código
+    //cuando hace clic en solicitar código
     $("#btnCodigo").on("click",function(e){
         var correo = $("#txtCorreo").val();
         if(correo != ""){
@@ -127,7 +128,7 @@ $(document).ready(function(){
 
                     switch(r){
                         case "invalidMail":
-                            //si el correo es invalido mostramos error
+                            //si el correo es inválido mostramos error
                             $("#labelErrorEmail").text("Correo No Encontrado, Intenta De Nuevo");
                             $("#labelErrorEmail").show();
                             //hacemos focus en el inut y lo limpiamos
@@ -138,17 +139,18 @@ $(document).ready(function(){
                         case true:
                             //enviamos cod al correo
                             enviarCodigo();   
-                            //si el correo existe ocultamos el error del correo invalido si estuviera mostrado
+                            //si el correo existe ocultamos el error del correo inválido 
+                            //si estuviera mostrado
                             $("#labelErrorEmail").hide();
-                            //desabilitamos el input con el correo
+                            //deshabilitamos el input con el correo
                             $("#txtCorreo").attr("disabled",true);
                             $("#btnCodigo").attr("disabled",true);
-                            //mostramo mensaje que el codigo fue enviado
+                            //mostramos mensaje que el código fue enviado
                             $("#labelInfoEmail").attr("class","text-muted");
                             $("#labelInfoEmail").text("Enviamos un código a tu correo, por favor verifica e ingresalo");
                             Swal.fire({
-                                title: 'CÓDIGO ENVIADO!',
-                                text: 'Se envio correctamente el código de validación al correo proporcionado',
+                                title: '¡Código enviado!',
+                                text: 'Se envió correctamente el código de validación al correo proporcionado.',
                                 icon: 'success',
                                 confirmButtonText: 'Aceptar'
                               })
@@ -156,11 +158,17 @@ $(document).ready(function(){
                             $("#codeContent").show();
                         break;
                         case "failSendMail":
-                            alert("Vaya! Parece que tenemos dificultades tecnicas para enviar el correo, intenta más tarde")
+                            Swal.fire({
+                                title: '¡Problemas técnicos!',
+                                text: '¡Vaya! Parece que tenemos dificultades técnicas para enviar el correo, intenta más tarde'
+                                +' si el problema persiste contacta a tu administrador o soporte IT.',
+                                icon: 'error',
+                                confirmButtonText: 'Aceptar'
+                              })
                         break;
                     }
                 },
-                error: function (r) {
+                error: function () {
                     Swal.fire({
                         title: 'Woops!',
                         text: 'Tenemos problema al enviar el código a tu correo, intenta de nuevo, si el problema persiste'
@@ -173,7 +181,7 @@ $(document).ready(function(){
         }
     });
 
-    //cuando hace click en validar código
+    //cuando hace clic en validar código
     $("#btnValidCodigo").on("click",function(){
     
         var codIng= $("#txtCodCorreo").val();
@@ -190,8 +198,8 @@ $(document).ready(function(){
             if(error==3){
                 error = parseInt(0);
                 Swal.fire({
-                    title: 'Código Invalido!',
-                    text: 'Has ingresado un código incorrecto varias veces, por seguridad solicita uno nuevo',
+                    title: '!Código inválido!',
+                    text: 'Has ingresado un código incorrecto varias veces, por seguridad solícita uno nuevo',
                     icon: 'error',
                     confirmButtonText: 'Aceptar'
                   })
@@ -202,14 +210,14 @@ $(document).ready(function(){
        }
     });
 
-    //cuando hace click en btn cambiar contraseña
+    //cuando hace clic en btn cambiar contraseña
     $("#btnChangPass").on("click",function(e){
         $("#lbFailNewPass").hide();
         var pass1 = $("#txtNewPas1").val();
         var pass2 =  $("#txtNewPas2").val();
         var mail = $("#txtCorreo").val();
         if(pass1=="" || pass2==""){
-            $("#lbFailNewPass").text("No puedes dejar ninguno de los campos vacios");
+            $("#lbFailNewPass").text("No puedes dejar ninguno de los campos vacíos");
             $("#lbFailNewPass").show();
             $("#txtNewPas1").focus();
         }else{
@@ -224,8 +232,8 @@ $(document).ready(function(){
                     data: { "key": "cambiarPass","pass": pass1,"correo": mail },
                     success: function (r) {
                         Swal.fire({
-                            title: 'CONTRASEÑA CAMBIADA!',
-                            text: 'Se ha cambiado correctamente tu contraseña!',
+                            title: '¡Contraseña cambiada!',
+                            text: '¡Se ha cambiado correctamente tu contraseña!',
                             icon: 'success',
                             confirmButtonText: 'Aceptar'
                           })
@@ -234,7 +242,7 @@ $(document).ready(function(){
                     },
                     error: function () {
                         Swal.fire({
-                            title: 'Woops!',
+                            title: '¡Woops!',
                             text: 'No pudimos actualizar la contraseña, por favor intenta de nuevo, si el problema persiste'
                             +'informa a tu administrador o personal de IT',
                             icon: 'error',
@@ -247,7 +255,7 @@ $(document).ready(function(){
         
     });
     
-    /*funcion que solicita comprobacion  de  remember*/
+    /*función que solicita comprobación de  remember*/
     function validarRememberme(){
     $.ajax({
         url:"Controladores/loginControlador.php",
@@ -255,22 +263,22 @@ $(document).ready(function(){
         dataType: "json",
         data: { "key": "validarRemember"},
         success: function (r) {
-            //si no hay usuario con recuerdame
+            //si no hay usuario con recuérdame
             if(r=="noRemUser"){
                 rem=0;
                 $('#customCheck').attr("checked",false);
 
-            }else{//en caso si exista
-                //seteamos controles
+            }else{//en caso  exista
+                //cargamos los inputs
                 $("input[name='txtUsuario']").val(r["nombre"]);
                 $("input[name='txtContraseña']").val(r["clave"]);
                 rem=1;
                 $('#customCheck').attr("checked",true);
             }
          },
-        error: function (r) {
+        error: function () {
             Swal.fire({
-                title: 'Woops!',
+                title: '!Woops!',
                 text: 'No pudimos conectarnos al servidor, por favor intenta de nuevo, si el problema persiste'
                 +'informa a tu administrador o personal de IT',
                 icon: 'error',
@@ -280,8 +288,8 @@ $(document).ready(function(){
     });
     }
 
-    //funcion que solicita envio de codigo al correo 
-    //al comprobar que es vaido
+    //función que solicita envío de código al correo 
+    //al comprobar que es válido
     function enviarCodigo(){
         var correo = $("#txtCorreo").val();
         $.ajax({
@@ -296,7 +304,7 @@ $(document).ready(function(){
             error: function (r) {
                 Swal.fire({
                     title: 'Woops!',
-                    text: 'Parece tenemos problemas técnicos para enviar el correo, por favor intenta de nuevo, si el problema persiste'
+                    text: 'Parece tenemos problemas técnicos para comunicarnos con el servidor y enviar el correo, por favor intenta de nuevo, si el problema persiste'
                     +'informa a tu administrador o personal de IT',
                     icon: 'error',
                     confirmButtonText: 'Aceptar'
@@ -307,7 +315,7 @@ $(document).ready(function(){
 
     //oculta campos del modal y el modal
     function ocultarCamposModal(){
-                                //ocultamos errores y campo codigo
+                                //ocultamos errores y campo código
                                 $("#codeContent").hide();
                                 $("#labelError").hide();
                                 $("#labelErrorEmail").hide();
