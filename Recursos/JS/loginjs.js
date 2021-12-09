@@ -343,24 +343,3 @@ $(document).ready(function(){
         $("#lbFailNewPass").hide();
     }
 });
-
-
-
-
-
-/*
-$.ajax({
-                    url: ,
-                    method: "post",
-                    dataType: "json",
-                    data: { "cod": cod },
-                    success: function (r) {
-                        
-                    },
-                    error: function () {
-                       
-                    }
-                });
-
-
-*/
