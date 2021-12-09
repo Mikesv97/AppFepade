@@ -100,6 +100,7 @@ $(document).ready(function(){
                 }
             },
             error: function () {
+
                 //si falla algo se muestra error de conexión en el servidor
                 Swal.fire({
                     title: 'WOOPS!',
@@ -159,11 +160,11 @@ $(document).ready(function(){
                         break;
                     }
                 },
-                error: function () {
+                error: function (r) {
                     Swal.fire({
                         title: 'Woops!',
                         text: 'Tenemos problema al enviar el código a tu correo, intenta de nuevo, si el problema persiste'
-                        +'informa a tu administrador o personal de IT',
+                        +' informa a tu administrador o personal de IT',
                         icon: 'error',
                         confirmButtonText: 'Aceptar'
                       })
@@ -268,7 +269,6 @@ $(document).ready(function(){
             }
          },
         error: function (r) {
-            console.log(r);
             Swal.fire({
                 title: 'Woops!',
                 text: 'No pudimos conectarnos al servidor, por favor intenta de nuevo, si el problema persiste'

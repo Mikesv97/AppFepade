@@ -12,7 +12,7 @@ class LoginDao{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
+        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            
@@ -215,6 +215,8 @@ class LoginDao{
                 $this->desconectar($respuesta);
                 //si se afectaron más de 0
                 return true;                 
+            }else{
+                echo json_encode("no se actualizo");
             }
         }catch(PDOException $error){
             return $error->getMessage();

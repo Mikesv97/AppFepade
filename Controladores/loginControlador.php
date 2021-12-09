@@ -31,9 +31,9 @@ if(isset($_POST["key"])){
                         if(sizeof($dataRem)!= 0){
                             //recorremos
                             foreach($dataRem as $d){
-                                if($nombre!=$d["usuario_user"]){
+                                if($nombre!=$d["usuario_id"]){
                                     //asigamos recuerdame en BD al usuario ingreado en login
-                                   $usDao->actualizarRemUser(0, $d["usuario_user"]);
+                                   $usDao->actualizarRemUser(0, $d["usuario_id"]);
                                 }
                             }
                             //respondemos el resultado
