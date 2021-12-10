@@ -8135,7 +8135,7 @@ a {
   z-index: 999; }
 
 .hamburger .line {
-  background: #593bdb;
+  background: #f0ad16;
   display: block;
   height: 2px;
   margin-top: 6px;
@@ -10292,7 +10292,10 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   padding: 1.5625rem 0 10px;
   text-transform: uppercase;
   font-size: 0.75rem;
-  letter-spacing: 0.05rem; }
+  letter-spacing: 0.05rem;
+  color: white;  
+  font-weight: bold;
+}
 
 .nav-badge {
   position: absolute;
@@ -10315,7 +10318,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   top: 5rem;
   padding-top: 0;
   z-index: 2;
-  background-color: #343957;
+  background-color: #282b3a;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   transition: all .2s ease; }
   .quixnav .quixnav-scroll {
@@ -10350,7 +10353,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
       .quixnav .metismenu > li > a {
         color: #bdbdc7; }
       .quixnav .metismenu > li:hover > a, .quixnav .metismenu > li:focus > a, .quixnav .metismenu > li.mm-active > a {
-        background-color: #6b51df;
+        background-color: #f0ad16;
         color: #fff; }
       .quixnav .metismenu > li.mm-active ul {
         background-color: rgba(88, 115, 254, 0.04); }
@@ -10359,11 +10362,12 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     .quixnav .metismenu li {
       position: relative; }
     .quixnav .metismenu ul {
-      background-color: #1c0f54;
+      background-color: black;
       transition: all .2s ease-in-out; }
       .quixnav .metismenu ul a {
         padding-left: 54px;
-        font-weight: 300; }
+        font-weight: 300; 
+        background-color: #3f4457}
         .quixnav .metismenu ul a:hover, .quixnav .metismenu ul a:focus, .quixnav .metismenu ul a.mm-active {
           text-decoration: none;
           color: #fff; }
@@ -10378,7 +10382,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
       display: block;
       padding: 0.8125rem 1.25rem;
       outline-width: 0;
-      color: #bdbdc7;
+      color: #9f9796;
       text-decoration: none; }
     .quixnav .metismenu .has-arrow:after {
       width: .35rem;
@@ -10648,7 +10652,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     padding-right: 0;
     justify-content: center; }
   [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .nav-header .nav-control .hamburger .line {
-    background-color: #593bdb !important; }
+    background-color: #f0ad16 !important; }
 
 [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .header {
   padding-left: 3.75rem;
@@ -13888,7 +13892,9 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
         .wizard .content > .body {
           padding: 0; } }
       .wizard .content > .body .form-control {
-        border: 1px solid #eaeaea; }
+        border: 1px solid rgba(241, 165, 14, 0.5);
+        box-shadow: inset 0 1px 1px rgba(228, 154, 5, 0.033), 0 0 9px rgba(247, 176, 36, 0.2);
+       }
       .wizard .content > .body input.error {
         position: relative; }
       .wizard .content > .body label.error {
@@ -13939,7 +13945,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     left: 0;
     padding: 2rem; }
     .wizard > .actions li:not(.disabled) a {
-      background-color: #593bdb;
+      background-color: #e2171d;
       color: #fff; }
 
 .wizard .actions ul li.disabled a {
@@ -13989,9 +13995,9 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
         background-color: transparent;
         color: #fff; }
     .step-form-horizontal .wizard .steps li.current a .number {
-      color: #593bdb;
+      color: red;
       background: #fff;
-      border: 2px solid #593bdb; }
+      border: 2px solid red; }
     .step-form-horizontal .wizard .steps li.disabled a .number {
       color: #593bdb; }
     .step-form-horizontal .wizard .steps li a {

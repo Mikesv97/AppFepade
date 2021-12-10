@@ -10,7 +10,7 @@ class LoginDao{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
+        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            
