@@ -241,7 +241,7 @@ class LoginDao{
                
                 
             }else{
-                $this->desconectar();
+                $this->desconectar($respuesta);
                 return false;
                 
             }
