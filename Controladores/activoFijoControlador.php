@@ -10,6 +10,7 @@ $Obj3 = new historialActivoDao();
 //VARIABLE PARA SACAR EL DIA QUE NOS ENCONTRAMOS
 $fecha = date('d-m-Y');
 
+//FUNCION PARA CARGAR LA IMAGEN AL SERVIDOR LOCAL Y INSERTAR EL NOMBRE DE LA IMAGEN EN EL SERVIDOR
 function cargarImagen()
 {
     $nombreimg = $_FILES["FileImagen"]["name"];
