@@ -16687,7 +16687,6 @@ button {
 
 .table thead th {
   border-bottom-width: 1px;
-  text-transform: uppercase;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -16781,7 +16780,8 @@ table.dataTable tr.selected {
   color: #593bdb; }
 
 table.dataTable tfoot th {
-  color: #454545;
+  color: black;
+  text-transform: none;
   font-weight: 800; }
   [data-theme-version="dark"] table.dataTable tfoot th {
     color: #fff; }

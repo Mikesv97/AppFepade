@@ -43,7 +43,7 @@ $date = date('d-m-Y');
                         <h4 class="card-title">Ingreso de activo nuevo</h4>
                     </div>
                     <div class="card-body">
-                        <form action="#" id="step-form-horizontal" class="step-form-horizontal">
+                        <form action="#" id="step-form-horizontal" class="step-form-horizontal" method="POST" enctype="multipart/form-data">
                             <div>
                                 <h4>Informacion de activo</h4>
                                 <section>
@@ -65,7 +65,7 @@ $date = date('d-m-Y');
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Codigo para proyectos*</label>
-                                                <input type="text" name="codProyectos" class="form-control" placeholder="123456" maxlength="10" required>
+                                                <input type="text" name="codProyectos" class="form-control" placeholder="123456" maxlength="10" value="1" readonly required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
@@ -400,6 +400,7 @@ $date = date('d-m-Y');
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script> -->
 
+<!-- script para poner el boton que muestra las demas columnas de la tabla activo fijo y cambiando el idioma-->
 <script>
     $('#activoTabla').DataTable({
         responsive: true,

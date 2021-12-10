@@ -8,7 +8,7 @@ class activoFijoDAO{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
+        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            
@@ -36,15 +36,15 @@ class activoFijoDAO{
     }
 
     public function insertarActivoFijo($referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat,$fechacomp,
-                                       $activoEliminado,$estado,$responsable){
+                                       $activoEliminado,$estado,$responsable,$imagen){
         $this->conectar();
         $sql = "INSERT INTO Activo(Activo_referencia,PartidaCta,Empresa_id,numero_serie,Activo_fecha_adq,Activo_factura,Activo_tipo,Activo_descripcion,
-        Estructura1_id,Estructura2_id,Estructura3_id,Usuario_id,fecha,Activo_fecha_caduc,fecha_compra,Activo_eliminado,Estado,Responsable_codigo) 
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        Estructura1_id,Estructura2_id,Estructura3_id,Usuario_id,fecha,Activo_fecha_caduc,fecha_compra,Activo_eliminado,Estado,Responsable_codigo,Imagen) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $respuesta = $this->con->prepare($sql);
         try{
             $respuesta->execute([$referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat,$fechacomp,
-            $estado,$activoEliminado,$responsable]);
+            $estado,$activoEliminado,$responsable,$imagen]);
             $datos = $respuesta->rowCount();
             if($datos > 0){
                 return true;
@@ -141,22 +141,23 @@ class activoFijoDAO{
         $sql = "SELECT * FROM Activo";
         $respuesta = $this->con->prepare($sql);
         $tabla = "
-        <table id='activoTabla' name='activoTabla' class='table table-striped dt-responsive nowrap' style='width:100%'>
+        <table id='activoTabla' name='activoTabla' class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>EMPRESA</th>
-                <th>DEPARTAMENTO</th>
+                <th>Id</th>
+                <th>Empresa</th>
+                <th>Departamento</th>
                 <th>F.F.</th>
-                <th>AREA</th>
-                <th>TIPO ACTIVO</th>
-                <th>REFENCIA</th>
-                <th>SERIE</th>
-                <th>DESCRIPCION</th>
-                <th>RESPONSABLE</th>
-                <th>FECHA COMP</th>
-                <th>FECHA ADQ</th>
-                <th>FECHA CAD</th>
+                <th>Área</th>
+                <th>Tipo de activo</th>
+                <th>Referencia</th>
+                <th>Serie</th>
+                <th>Descripción</th>
+                <th>Responsable</th>
+                <th>Fecha de compra</th>
+                <th>Fecha de adquisición</th>
+                <th>Fecha de caducación</th>
+                <th>Opciones</th>
             </tr>
         </thead>
         <tbody>
@@ -178,25 +179,37 @@ class activoFijoDAO{
                 $tabla .= "<td>".$fila["fecha_compra"]."</td>";
                 $tabla .= "<td>".$fila["Activo_fecha_adq"]."</td>";
                 $tabla .= "<td>".$fila["Activo_fecha_caduc"]."</td>";
+                $tabla .= "<td>".
+                                "<button type='button' class='btn btn-info'>Modificar 
+                                <span class='btn-icon-right'><i class='fa fa-pencil'></i></span>
+                                </button>"." ".
+                                "<button type='button' class='btn btn-success'>Historial 
+                                <span class='btn-icon-right'><i class='fa fa-history'></i></span>
+                                </button>"." ".
+                                "<button type='button' class='btn btn-danger'>Eliminar 
+                                <span class='btn-icon-right'><i class='fa fa-close'></i></span>
+                                </button>"
+                        ."</td>";
                 $tabla .= "</tr>";
             }
             $tabla .= "
             </tbody>
             <tfoot>
                 <tr>
-                    <th>ID</th>
-                    <th>EMPRESA</th>
-                    <th>DEPARTAMENTO</th>
-                    <th>F.F.</th>
-                    <th>AREA</th>
-                    <th>TIPO ACTIVO</th>
-                    <th>REFENCIA</th>
-                    <th>SERIE</th>
-                    <th>DESCRIPCION</th>
-                    <th>RESPONSABLE</th>
-                    <th>FECHA COMP</th>
-                    <th>FECHA ADQ</th>
-                    <th>FECHA CAD</th>
+                <th>Id</th>
+                <th>Empresa</th>
+                <th>Departamento</th>
+                <th>F.F.</th>
+                <th>Área</th>
+                <th>Tipo de activo</th>
+                <th>Referencia</th>
+                <th>Serie</th>
+                <th>Descripción</th>
+                <th>Responsable</th>
+                <th>Fecha de compra</th>
+                <th>Fecha de adquisición</th>
+                <th>Fecha de caducación</th>
+                <th>Opciones</th>
                 </tr>                             
             </tfoot>
             </table>
