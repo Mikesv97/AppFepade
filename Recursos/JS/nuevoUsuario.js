@@ -16,7 +16,26 @@ $(document).ready(function(){
             $("#lbError").show();
         }else{
             //obtenemos los datos del form
-        var data = $("#frmNuevoUsuario").serialize();
+            var data = $("#frmNuevoUsuario").serialize();
+            $.ajax({
+                url:"../controladores/controladorNuevoUsuario.php",
+                method: "post",
+                dataType: "json",
+                data: { "key": "insertatUsuario","data": data },
+                success: function (r) {
+                    Swal.fire({
+                        position: 'bottom-end',
+                        icon: 'success',
+                        title: 'Usuario creado con éxtio',
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
+                      $("#frmNuevoUsuario")[0].reset();
+                },
+                error: function (r) {
+                    console.log(r);
+                }
+            });
         }
     });
     

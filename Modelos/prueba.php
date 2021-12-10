@@ -1,10 +1,15 @@
 <?php
 include_once 'sendMail.php';
 include_once '../Modelos/loginDao.php';
-
 include_once '../Modelos/activoFijoDao.php';
-
+include_once '../Modelos/usuarioNuevoDao.php';
 $us = new LoginDao();
+$nuser = new UsuarioNuevoDao();
+
+$use = new UsuarioNuevo();
+
+
+
 
 //SendMail::enviarCodCorreo("alan.castillo20@itca.edu.sv","055645");
 //SendMail::enviarCodCorreo("castillo.alan1995@gmail.com","055645");
@@ -79,4 +84,3 @@ $.ajax({
 
 
 ?>
-

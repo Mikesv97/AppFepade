@@ -1,7 +1,7 @@
 <?php
 include "usuarioNuevo.php";
 
-class LoginDao{
+class UsuarioNuevoDao{
     private $con;
 
     public function __construct(){
@@ -10,7 +10,7 @@ class LoginDao{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
+        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            
@@ -35,5 +35,40 @@ class LoginDao{
         $respuesta->closeCursor();//dependiendo del driver es obligatorio o no.
        
 
+    }
+
+
+    public function insertarUsuario($objeto){
+        $usuario = new UsuarioNuevo();
+        $usuario = $objeto;
+        //establecemos la coneccion
+        $this->conectar();
+        //establecemos la consulta
+        $sql="insert into usuario values (?,?,?,CURRENT_TIMESTAMP,?,?,?)";
+        //preparamos la consulta
+        $respuesta = $this->con->prepare($sql);
+        try{
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([
+                $usuario->getUsuarioId(),
+                $usuario->getUsuarioClave(),
+                $usuario->getUsuarioNombre(),
+                $usuario->getCorreoElectronico(),
+                $usuario->getIdRol(),
+                $usuario->getRemember()]);
+
+
+            //evaluamos cuantas filas fueron afectadas
+            if($respuesta->rowCount() > 0){
+                //cerramos conexion
+                $this->desconectar($respuesta);
+                //si se afectaron más de 0
+                return true;                 
+            }else{
+                return false;
+            }
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
     }
 }

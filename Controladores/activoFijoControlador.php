@@ -129,6 +129,8 @@ if ($_POST) {
                         $var2->getModelo(),
                         $var2->getIP()
                     );
+
+
                     $insertarHistorial = $Obj3->insertarHistorial(
                         $var2->getActivoId(),
                         $fecha,
