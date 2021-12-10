@@ -6,6 +6,9 @@ class Activo_Especificacion{
     private $Generacion;
     private $Ram;
     private $DiscoDuro;
+    private $Capacidad_D1;
+    private $DiscoDuro2;
+    private $Capacidad_D2;
     private $Modelo;
     private $SO;
     private $office;
@@ -22,6 +25,36 @@ class Activo_Especificacion{
 
     public function __construct()
     {
+    }
+
+    public function getCapacidad_D1()
+    {
+        return $this->Capacidad_D1;
+    }
+
+    public function setCapacidad_D1($Capacidad_D1)
+    {
+        $this->Capacidad_D1 = $Capacidad_D1;
+    }
+
+    public function getDiscoDuro2()
+    {
+        return $this->DiscoDuro2;
+    }
+
+    public function setDiscoDuro2($DiscoDuro2)
+    {
+        $this->DiscoDuro2 = $DiscoDuro2;
+    }
+
+    public function getCapacidad_D2()
+    {
+        return $this->Capacidad_D2;
+    }
+
+    public function setCapacidad_D2($Capacidad_D2)
+    {
+        $this->Capacidad_D2 = $Capacidad_D2;
     }
 
     public function getActivoId()

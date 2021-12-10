@@ -45,7 +45,7 @@ $date = date('d-m-Y');
                     <div class="card-body">
                         <form action="#" id="step-form-horizontal" class="step-form-horizontal" method="POST" enctype="multipart/form-data">
                             <div>
-                                <h4>Informacion de activo</h4>
+                                <h4>Información de activo</h4>
                                 <section>
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6 mb-4">
@@ -56,7 +56,7 @@ $date = date('d-m-Y');
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Codigo Contabilidad*</label>
+                                                <label class="text-label">Código contabilidad</label>
                                                 <input type="text" name="codContabilidad" class="form-control" placeholder="123456" maxlength="10">
                                             </div>
                                         </div>
@@ -64,13 +64,13 @@ $date = date('d-m-Y');
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Codigo para proyectos*</label>
+                                                <label class="text-label">Código para proyectos*</label>
                                                 <input type="text" name="codProyectos" class="form-control" placeholder="123456" maxlength="10" value="1" readonly required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Numero de serie*</label>
+                                                <label class="text-label">Número de serie</label>
                                                 <input type="text" name="numSerie" class="form-control" placeholder="123456" maxlength="50">
                                             </div>
                                         </div>
@@ -78,13 +78,13 @@ $date = date('d-m-Y');
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Codigo Automatico*</label>
+                                                <label class="text-label">Código automático*</label>
                                                 <input type="text" name="codAutomatico" class="form-control" placeholder="123456" readonly>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label for="party">Fecha de adquisicion</label>
+                                                <label for="party">Fecha de adquisición*</label>
                                                 <input id="party" type="date" name="fechaAdq" class="form-control" required>
                                             </div>
                                         </div>
@@ -92,7 +92,7 @@ $date = date('d-m-Y');
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Numero de factura*</label>
+                                                <label class="text-label">Número de factura*</label>
                                                 <input type="text" name="numFactura" class="form-control" placeholder="123456" maxlength="15" required>
                                             </div>
                                         </div>
@@ -137,7 +137,7 @@ $date = date('d-m-Y');
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-12 mb-4">
+                                        <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
                                                 <label class="text-label">Departamento*</label>
                                                 <select name="comboDepartamento" id="comboDepartamento" class="form-control">
@@ -150,9 +150,9 @@ $date = date('d-m-Y');
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-sm-12 mb-4">
+                                        <div class="ccol-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">F.F.</label>
+                                                <label class="text-label">F.F.*</label>
                                                 <select name="comboFondos" id="comboFondos" class="form-control">
                                                     <?php
                                                     $data = $obj->comboFondos();
@@ -165,9 +165,9 @@ $date = date('d-m-Y');
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-12 mb-4">
+                                        <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Area</label>
+                                                <label class="text-label">Área*</label>
                                                 <select name="comboArea" id="comboArea" class="form-control">
                                                     <?php
                                                     $data = $obj->comboArea();
@@ -178,9 +178,9 @@ $date = date('d-m-Y');
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-sm-12 mb-4">
+                                        <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Descripcion de activo*</label>
+                                                <label class="text-label">Descripción de activo*</label>
                                                 <textarea class="form-control" name="descripcion" rows="3" maxlength="1000" required></textarea>
                                             </div>
                                         </div>
@@ -194,7 +194,7 @@ $date = date('d-m-Y');
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label for="party">Fecha de caducacion*</label>
+                                                <label for="party">Fecha de caducación*</label>
                                                 <input id="party" type="date" name="fechaCad" class="form-control">
                                             </div>
                                         </div>
@@ -213,7 +213,7 @@ $date = date('d-m-Y');
                                             </div>
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
-                                                    <label class="text-label">Generacion*</label>
+                                                    <label class="text-label">Generación*</label>
                                                     <input type="text" name="generacion" class="form-control" placeholder="Tercera" required maxlength="50">
                                                 </div>
                                             </div>
@@ -235,14 +235,28 @@ $date = date('d-m-Y');
                                         <div class="row">
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
-                                                    <label class="text-label">Disco Duro*</label>
-                                                    <input type="text" name="disco" class="form-control" placeholder="100GB" required maxlength="50">
+                                                    <label class="text-label">Disco duro principal*</label>
+                                                    <input type="text" name="disco" class="form-control" placeholder="Mecanico, SSD" required maxlength="50">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
-                                                    <label class="text-label">Sistema Operativo*</label>
-                                                    <input type="text" name="sistema" class="form-control" placeholder="Winwdows 10" required maxlength="50">
+                                                    <label class="text-label">Capacidad disco principal*</label>
+                                                    <input type="text" name="capacidadD1" class="form-control" placeholder="100GB" required maxlength="50">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Disco duro secundario</label>
+                                                    <input type="text" name="disco2" class="form-control" placeholder="Mecanico, SSD" maxlength="50">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="text-label">Capacidad disco secundario</label>
+                                                    <input type="text" name="capacidadD2" class="form-control" placeholder="100GB" maxlength="50">
                                                 </div>
                                             </div>
                                         </div>
@@ -255,8 +269,8 @@ $date = date('d-m-Y');
                                             </div>
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
-                                                    <label class="text-label">Otros datos*</label>
-                                                    <input type="text" name="otros" class="form-control" placeholder="otros datos" required maxlength="50">
+                                                    <label class="text-label">Sistema operativo*</label>
+                                                    <input type="text" name="sistema" class="form-control" placeholder="Winwdows 10" required maxlength="50">
                                                 </div>
                                             </div>
                                         </div>
@@ -265,13 +279,13 @@ $date = date('d-m-Y');
                                         <div class="row">
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
-                                                    <label class="text-label">Toner Negro*</label>
+                                                    <label class="text-label">Toner negro*</label>
                                                     <input type="text" name="tonerNegro" class="form-control" placeholder="CE1234" required maxlength="50">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
-                                                    <label class="text-label">Toner Magenta*</label>
+                                                    <label class="text-label">Toner magenta*</label>
                                                     <input type="text" name="tonerMagenta" class="form-control" placeholder="CE1234" required maxlength="50">
                                                 </div>
                                             </div>
@@ -279,13 +293,13 @@ $date = date('d-m-Y');
                                         <div class="row">
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
-                                                    <label class="text-label">Toner Cyan*</label>
+                                                    <label class="text-label">Toner cyan*</label>
                                                     <input type="text" name="tonerCyan" class="form-control" placeholder="CE1234" required maxlength="50">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
-                                                    <label class="text-label">Toner Amarillo*</label>
+                                                    <label class="text-label">Toner amarillo*</label>
                                                     <input type="text" name="tonerAmarillo" class="form-control" placeholder="CE1234" required maxlength="50">
                                                 </div>
                                             </div>
@@ -293,13 +307,13 @@ $date = date('d-m-Y');
                                         <div class="row">
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
-                                                    <label class="text-label">Tambor*</label>
+                                                    <label class="text-label">Tambor</label>
                                                     <input type="text" name="tambor" class="form-control" placeholder="" maxlength="50">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-sm-6 mb-4">
                                                 <div class="form-group">
-                                                    <label class="text-label">Fusor*</label>
+                                                    <label class="text-label">Fusor</label>
                                                     <input type="text" name="fusor" class="form-control" placeholder="" maxlength="50">
                                                 </div>
                                             </div>
@@ -327,16 +341,16 @@ $date = date('d-m-Y');
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Estado de activo*</label>
+                                                <label class="text-label">Estado de activo</label>
                                                 <select name="estado" id="estado" class="form-control">
-                                                    <option value="1">Activo</option>
-                                                    <option value="0">Inactivo</option>
+                                                    <option value="1">Disponible</option>
+                                                    <option value="0">No disponible</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Activo eliminado*</label>
+                                                <label class="text-label">Activo eliminado</label>
                                                 <select name="estadoEliminado" id="estado" class="form-control">
                                                     <option value="0">No</option>
                                                     <option value="1">Si</option>
@@ -347,7 +361,7 @@ $date = date('d-m-Y');
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Responsable*</label>
+                                                <label class="text-label">Responsable</label>
                                                 <select name="comboResponsable" id="comboResponsable" class="form-control">
                                                     <?php
                                                     $data = $obj->comboResponsable();
@@ -360,7 +374,7 @@ $date = date('d-m-Y');
                                         </div>
                                         <div class="col-lg-6 col-sm-6 mb-4">
                                             <div class="form-group">
-                                                <label class="text-label">Comentarios de asignacion*</label>
+                                                <label class="text-label">Comentarios de asignación</label>
                                                 <textarea class="form-control" name="comentario" rows="3" maxlength="50"></textarea>
                                             </div>
                                         </div>
@@ -392,9 +406,6 @@ $date = date('d-m-Y');
 <!-- script para mostrar o ocultar los campos segun, el tiepo de activo que se ingresara -->
 <script src="../Recursos/JS/tipoActivo.js"></script>
 <!-- Datatable -->
-<!-- <script src="../Recursos/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="../Recursos/JS/plugins-init/datatables.init.js"></script> -->
-
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
