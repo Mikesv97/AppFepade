@@ -20,9 +20,18 @@ class Activo_Fijo{
     private $numero_serie;
     private $Usuario_id;
     private $fecha;
+    private $Imagen;
 
     public function __construct()
     {
+    }
+
+    public function getImagen(){
+        return $this->Imagen;
+    }
+
+    public function setImagen($Imagen){
+        $this->Imagen = $Imagen;
     }
 
     public function getActivoId()
