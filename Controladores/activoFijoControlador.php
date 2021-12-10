@@ -50,7 +50,7 @@ if ($_POST) {
                 $var->setActivoFechaCaduc($_POST['fechaCad']);
                 $var->setEstado($_POST['estado']);
                 $var->setActivoEliminado($_POST['estadoEliminado']);
-                $var->setImagen(cargarImagen());
+                $var->setImagen(cargarImagen());//LLAMANDO A LA FUNCION QUE SUBE LA IMAGEN Y RETONAR EL NOMBRE DE LA IMAGEN
 
                 //DATOS DE ESPECIFICACIONES PARA ACTIVO COMPUTADORA
                 $var2->setProcesador($_POST['procesador']);
@@ -62,6 +62,9 @@ if ($_POST) {
                 $var2->setOffice($_POST['office']);
                 $var2->setModelo($_POST['modelo']);
                 $var2->setIP($_POST['ip']);
+                $var2->setCapacidad_D1($_POST['capacidadD1']);
+                $var2->setDiscoDuro2($_POST['disco2']);
+                $var2->setCapacidad_D2($_POST['capacidadD2']);
 
                 //DATOS DE ESPECIFICACIONES PARA ACTIVO IMPRESORA
                 $var2->setTonerN($_POST['tonerNegro']);
@@ -127,7 +130,10 @@ if ($_POST) {
                         $var2->getSO(),
                         $var2->getOffice(),
                         $var2->getModelo(),
-                        $var2->getIP()
+                        $var2->getIP(),
+                        $var2->getCapacidad_D1(),
+                        $var2->getDiscoDuro2(),
+                        $var2->getCapacidad_D2()
                     );
                     $insertarHistorial = $Obj3->insertarHistorial(
                         $var2->getActivoId(),

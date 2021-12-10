@@ -52,12 +52,13 @@ class activoEspecificacionDao{
         }
     }
 
-    public function insertarActEspCom($activoId,$procesador,$generacion,$ram,$tipoRam,$discoDuro,$so,$office,$modelo,$ip){
+    public function insertarActEspCom($activoId,$procesador,$generacion,$ram,$tipoRam,$discoDuro,$so,$office,$modelo,$ip,$capacidad1,$discoDuro2,$capacidad2){
         $this->conectar();
-        $sql = "INSERT INTO Activo_Especificacion(Activo_id,Procesador,Generacion,Ram,TipoRam,DiscoDuro,SO,Office,Modelo,IP) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO Activo_Especificacion(Activo_id,Procesador,Generacion,Ram,TipoRam,DiscoDuro,SO,Office,Modelo,IP,Capacidad_D1,DiscoDuro2,Capacidad_D2) 
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $respuesta = $this->con->prepare($sql);
         try{
-            $respuesta->execute([$activoId,$procesador,$generacion,$ram,$tipoRam,$discoDuro,$so,$office,$modelo,$ip]);
+            $respuesta->execute([$activoId,$procesador,$generacion,$ram,$tipoRam,$discoDuro,$so,$office,$modelo,$ip,$capacidad1,$discoDuro2,$capacidad2]);
             $datos = $respuesta->rowCount();
             if($datos > 0){
                 return true;
