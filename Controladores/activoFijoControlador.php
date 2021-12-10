@@ -135,6 +135,8 @@ if ($_POST) {
                         $var2->getDiscoDuro2(),
                         $var2->getCapacidad_D2()
                     );
+
+
                     $insertarHistorial = $Obj3->insertarHistorial(
                         $var2->getActivoId(),
                         $fecha,
