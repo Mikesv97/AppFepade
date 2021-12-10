@@ -6,10 +6,10 @@ include_once '../Modelos/activoFijoDao.php';
 
 $us = new LoginDao();
 
-SendMail::enviarCodCorreo("alan.castillo20@itca.edu.sv","055645");
-SendMail::enviarCodCorreo("castillo.alan1995@gmail.com","055645");
+//SendMail::enviarCodCorreo("alan.castillo20@itca.edu.sv","055645");
+//SendMail::enviarCodCorreo("castillo.alan1995@gmail.com","055645");
 
-$us->actualizarPassUser("douglas123","douglas.figueroa20@itca.edu.sv");
+//$us->actualizarPassUser("douglas123","douglas.figueroa20@itca.edu.sv");
 //$us->actualizarPassUser("alan123","alan.castillo20@itca.edu.sv");
 /*if($us->validarUsuario("douglasv","douglas123")){
     echo "valido";
@@ -54,6 +54,26 @@ if(sizeof($data)!= 0){
  //si hay un usuario recordados, validamos datos 
  
 
+
+
+
+
+/*
+$.ajax({
+                    url: ,
+                    method: "post",
+                    dataType: "json",
+                    data: { "cod": cod },
+                    success: function (r) {
+                        
+                    },
+                    error: function () {
+                       
+                    }
+                });
+
+
+*/
 
 
 
