@@ -9,6 +9,9 @@ Class UsuarioNuevo {
     private $correoElectronico;
     private $idRol;
     private $remember;
+    private $idBitacora;
+    private $fotoUsuario;
+    private $usuarioNuevo;
 
 
     public function __construct()
@@ -83,6 +86,36 @@ Class UsuarioNuevo {
     public function setRemember($remember)
     {
         $this->remember= $remember;
+    }
+
+    /** */
+    public function getIdBitacora()
+    {
+        return $this->idBitacora;
+    }
+
+    public function setIdBitacora($idBitacora)
+    {
+        $this->idBitacora= $idBitacora;
+    }
+
+    public function getFotoUsuario()
+    {
+        return $this->fotoUsuario;
+    }
+
+    public function setFotoUsuario($fotoUsuario)
+    {
+        $this->fotoUsuario= $fotoUsuario;
+    }
+    public function getUsuarioNuevo()
+    {
+        return $this->usuarioNuevo;
+    }
+
+    public function setUsuarioNuevo($usuarioNuevo)
+    {
+        $this->usuarioNuevo= $usuarioNuevo;
     }
 
     

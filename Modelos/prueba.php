@@ -6,7 +6,28 @@ include_once '../Modelos/usuarioNuevoDao.php';
 $us = new LoginDao();
 $nuser = new UsuarioNuevoDao();
 
-$use = new UsuarioNuevo();
+$user = new UsuarioNuevo();
+
+$nuser->insertarBitacoraUs("miguelitosv", "Douglas Méndez Admin");
+
+$idBitacora= $nuser->obtenerIdBitacora();
+
+$user->setUsuarioId("miguelitosv");
+$user->setUsuarioNombre("miguel méndez");
+$user->setUsuarioClave(password_hash("123",PASSWORD_DEFAULT,array("cost"=>12)));
+$user->setCorreoElectronico("micorreo@algo.com");
+$user->setIdRol("4");  
+$user->setRemember(0);
+$user->setIdBitacora($idBitacora);
+$user->setFotoUsuario("foto98.jpg");
+$user->setUsuarioNuevo(1);
+
+
+if($nuser->insertarUsuario($user)){
+    echo "insertado";
+}else{
+    echo "No we, no pude";
+}
 
 
 

@@ -20,7 +20,7 @@ class SendMail {
         $mail->Password   = 'zOoM98$$';                               //SMTP password
         $mail->SMTPSecure = 'tls';            //Enable implicit TLS encryption
         $mail->Port       = 25;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-    
+        $mail->CharSet = 'UTF-8';
         //Recipients
         $mail->setFrom('activofijo@fepade.edu.sv', 'Sistema FEPADE');
         $mail->addAddress($correo);     //Add a recipient
@@ -104,7 +104,7 @@ class SendMail {
             transition: all ease-in-out 0.5s;
         }
         h3{
-            color:rgba(163, 161, 161, 0.959);
+            color: black;
         }
         </style>
         </head>
@@ -113,18 +113,18 @@ class SendMail {
             <div>
             <h1 class="titulo">
                 <img class="h" src="https://github.com/Mikesv97/AppFepade/blob/main/flecha.png?raw=true">
-                SOLICITUD DE CAMBIO DE CONTRASEÑA
+                Solicitud cambio de contraseña
             </h1>
             </div>
             <div class="contentMsj">
-                <h3 class="">Hola se ha solicitado cambio de contraseña en el sistema <span class="spanClas">ACTIVO FIJO-FEPADE</span></h3>
+                <h3 class="">Hola se ha solicitado cambio de contraseña en el sistema <span class="spanClas">Ativo fijo</span></h3>
                 <h3 class="">
                 Tu código de validacion es el : <span class="spanCodigo"><strong>'.$codigo.'</strong></span>
                 </h3>
                 <h3 class="">Si no has sido tú por favor reportalo:</h3><a class="" href="http://localhost/appfepade/vistas/reportar.html">Reportar</a>    
             </div>
             <h1 class="titulo"><img class="h" src="https://github.com/Mikesv97/AppFepade/blob/main/flecha.png?raw=true">
-                FAVOR NO RESPONDER ESTE MENSAJE
+                Favor no responder a este mensaje.
             </h1>
             <img style="width: 100%;" src="https://raw.githubusercontent.com/Mikesv97/AppFepade/main/baner.jpg">
         </div>

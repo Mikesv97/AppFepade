@@ -44,7 +44,7 @@ class UsuarioNuevoDao{
         //establecemos la coneccion
         $this->conectar();
         //establecemos la consulta
-        $sql="insert into usuario values (?,?,?,CURRENT_TIMESTAMP,?,?,?)";
+        $sql="insert into usuario values (?,?,?,CURRENT_TIMESTAMP,?,?,?, ?,?,?)";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
         try{
@@ -55,7 +55,11 @@ class UsuarioNuevoDao{
                 $usuario->getUsuarioNombre(),
                 $usuario->getCorreoElectronico(),
                 $usuario->getIdRol(),
-                $usuario->getRemember()]);
+                $usuario->getRemember(),
+                $usuario->getIdBitacora(),
+                $usuario->getFotoUsuario(),
+                $usuario->getUsuarioNuevo()
+            ]);
 
 
             //evaluamos cuantas filas fueron afectadas
@@ -67,6 +71,49 @@ class UsuarioNuevoDao{
             }else{
                 return false;
             }
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
+
+    public function insertarBitacoraUs($usuario, $responsable){
+        //establecemos la coneccion
+        $this->conectar();
+        //establecemos la consulta
+        $sql="insert into bitacora_usuarios values (?,?)";
+        //preparamos la consulta
+        $respuesta = $this->con->prepare($sql);
+        try{
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([$usuario,$responsable]);
+
+
+            //evaluamos cuantas filas fueron afectadas
+            if($respuesta->rowCount() > 0){
+                //cerramos conexion
+                $this->desconectar($respuesta);
+                //si se afectaron más de 0
+                return true;                 
+            }else{
+                return false;
+            }
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
+
+    public function obtenerIdBitacora(){
+        $this->conectar();
+        $sql = "select max(id_bitacora) as id from bitacora_usuarios";
+        $respuesta = $this->con->prepare($sql);
+        try{
+
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute();
+            //retornamos la cantidad de registro con el correo ingresado
+            //solo puede ser 1 si hay o 0 si no hay
+            return $respuesta->fetchColumn();
+
         }catch(PDOException $error){
             return $error->getMessage();
         }
