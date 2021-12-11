@@ -1,6 +1,5 @@
 
 $(document).ready(function(){
-
     //llamamos las funciones que deben ejecutarse en la carga de la pag.
     cargarRoles();
     esconderControles();
@@ -19,17 +18,21 @@ $(document).ready(function(){
             confirmButtonText: '¡Sí, eliminar!'
           }).then((result) => {
             if (result.isConfirmed) {
-              Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-              )
+                var table = $('#usuarios').DataTable();
+
+                    var data = table.row(this).data();
+             for(let i=0; i<6; i++){
+                 console.log(data[i]);
+
+             }
+
+            
             }
           })
     });
 
     $("body").on("click",".odd, .even",function(){
-       alert("kya");
+       
     });
 
     //cuando hace clic en el btn nuevo usuario
@@ -94,7 +97,8 @@ $(document).ready(function(){
         $("#lbError").hide();
     }
 
-    
+    //función que solicita por ajax la carga de usuarios
+    //y carga la tabla automáticamente con DataTable
     function  cargarUsuario() {
         $.noConflict(true);
         $('#usuarios').DataTable({
@@ -152,6 +156,10 @@ $(document).ready(function(){
             });
     }
 
+    //función que envía ID para eliminar el registro
+    function eliminarUsuario(codigo){
+       
+    }
     
 });
 
