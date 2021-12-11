@@ -5,6 +5,33 @@ $(document).ready(function(){
     cargarRoles();
     esconderControles();
     cargarUsuario();
+
+    $("body").on("click","#btnEliminar",function(e){
+        e.preventDefault();
+        $("#btnEliminar").blur();
+        Swal.fire({
+            title: 'Estás seguro de eliminar este registro?',
+            text: "¡No podrás deshacer los cambios!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, eliminar!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+            }
+          })
+    });
+
+    $("body").on("click",".odd, .even",function(){
+       alert("kya");
+    });
+
     //cuando hace clic en el btn nuevo usuario
     $("#frmNuevoUsuario").submit(function(e){
         //cancelo submit del form
@@ -79,16 +106,34 @@ $(document).ready(function(){
                     "dataSrc": ""
                 },
                 "columns": [
-                    {"data": "usuario_id"},
-                    {"data": "usuario_nombre"},
-                    {"data": "usuario_fecha"},
-                    {"data": "correo_electronico"},
-                    {"data": "rol_nombre"},
-                    {"data": "usuario_responsable"},
+                    {
+                        data: "usuario_id",
+                        className: "usuarioId"
+                    },
+                    {
+                        data: "usuario_nombre",
+                        className: "nombreUsuario"
+                    },
+                    {
+                        data: "usuario_fecha",
+                        className: "usuarioFecha"
+                    },
+                    {
+                        data:"correo_electronico",
+                        className: "usuarioCorreo"
+                    },
+                    {
+                        data: "rol_nombre",
+                        className: "usuarioRol"
+                    },
+                    {
+                        data: "usuario_responsable",
+                        className: "usuarioResponsable"
+                    },
                     {
                         data: null,
                         className: "center",
-                        defaultContent: '<a href="#" class="btn btn-danger noHover">Eliminar</a>'
+                        defaultContent: '<button id="btnEliminar" class="btn btn-danger noHover">Eliminar</button>'
                     }
                 ],
                 responsive: true,
