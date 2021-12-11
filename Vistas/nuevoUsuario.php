@@ -72,9 +72,70 @@ include('layout/navbar.php');
         </div>
         <!-- fin cuerpo form -->
 
+
+        <div class="row page-titles mx-0">
+            <div class="col-md-12 p-md-0">
+            <div class="table-responsive">
+                <table id="usuarios" name="activoInformacion" class='table table-striped dt-responsive nowrap' cellspacing="0" cellpadding="0" style='width:100%; text-align: center'>
+                    <thead>
+                        <tr>
+                            <th>Usuario id</th>
+                            <th>Usuario nombre</th>
+                            <th>Fecha creación</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                            <th>Usuario Responsable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+
     </div>
 </div>
-
+<!-- Datatable -->
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
+<script>
+    
+    $('#usuarios').DataTable({
+        "ajax":{
+            "url": "../controladores/controladorNuevoUsuario.php",
+            "method": "post",
+            "dataType": "json",
+            "data": { "key": "getUsuarios" },
+            "dataSrc": ""
+        },
+        "columns": [
+            {"data": "usuario_id"},
+            {"data": "usuario_nombre"},
+            {"data": "usuario_fecha"},
+            {"data": "correo_electronico"},
+            {"data": "rol_nombre"},
+            {"data": "usuario_responsable"}
+        ],
+        responsive: true,
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se han encontrado datos - intente nuevamente",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay datos disponibles",
+            "infoFiltered": "(Filtrado de _MAX_ activos totales)",
+            "search": "Buscar",
+            "paginate": {
+            "next": "Siguiente",
+            "previous": "Anterior"
+            }
+        }
+    });
+    
+</script>
 <?php
 include('layout/footer.php');
 ?>

@@ -38,7 +38,8 @@ if(isset($_POST["key"])){
             echo json_encode($userDao->insertarUsuario($objUsuario));
         break;
         case "getUsuarios":
-
+            $userDao= new UsuarioNuevoDao();
+           echo json_encode($userDao->obtenerUsuarios());
         break;
         case "validarCorreo":
         break;

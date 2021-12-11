@@ -10,7 +10,7 @@ class UsuarioNuevoDao{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
+        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            
@@ -114,6 +114,24 @@ class UsuarioNuevoDao{
             //solo puede ser 1 si hay o 0 si no hay
             return $respuesta->fetchColumn();
 
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
+
+    public function obtenerUsuarios(){     
+        //establecemos la coneccion
+        $this->conectar();
+        //establecemos la consulta
+        $sql="select a.usuario_id, a.usuario_nombre, a.usuario_fecha, a.correo_electronico, b.rol_nombre, c.usuario_responsable
+        from usuario a inner join roles b on a.id_rol = b.id_rol inner join bitacora_usuarios c on a.id_bitacora = c.id_bitacora";
+        try{
+            //ejecutamos la consulta 
+            $respuesta = $this->con->query($sql);
+
+            //retornamos el arreglo
+            return $respuesta->fetchAll();
+           
         }catch(PDOException $error){
             return $error->getMessage();
         }
