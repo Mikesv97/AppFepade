@@ -37,7 +37,7 @@ if(isset($_POST["key"])){
             
             echo json_encode($userDao->insertarUsuario($objUsuario));
         break;
-        case "validarRemember":
+        case "getUsuarios":
 
         break;
         case "validarCorreo":
