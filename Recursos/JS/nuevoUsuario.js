@@ -1,8 +1,10 @@
+
 $(document).ready(function(){
+
     //llamamos las funciones que deben ejecutarse en la carga de la pag.
     cargarRoles();
     esconderControles();
-
+    cargarUsuario();
     //cuando hace clic en el btn nuevo usuario
     $("#frmNuevoUsuario").submit(function(e){
         //cancelo submit del form
@@ -31,6 +33,7 @@ $(document).ready(function(){
                         timer: 1500
                       })
                       $("#frmNuevoUsuario")[0].reset();
+                      $('#usuarios').DataTable().ajax.reload();
                 },
                 error: function (r) {
                     console.log(r);
@@ -65,23 +68,43 @@ $(document).ready(function(){
     }
 
     
-    //función que solicita la carga de roles y setea el select en la vista
-    function cargarUsuarios(){
-        $.ajax({
-            url:"../controladores/controladorNuevoUsuario.php",
-            method: "post",
-            dataType: "json",
-            data: { "key": "getUsuarios" },
-            success: function (r) {
-                for(let i=0; i<r.length; i++){
-                    var option = '<option value="'+r[i]["id_rol"]+'">'+r[i]["rol_nombre"]+'</option>';
-                    $("#selectRol").append(option);
+    function  cargarUsuario() {
+        $.noConflict(true);
+        $('#usuarios').DataTable({
+                "ajax":{
+                    "url": "../controladores/controladorNuevoUsuario.php",
+                    "method": "post",
+                    "dataType": "json",
+                    "data": { "key": "getUsuarios" },
+                    "dataSrc": ""
+                },
+                "columns": [
+                    {"data": "usuario_id"},
+                    {"data": "usuario_nombre"},
+                    {"data": "usuario_fecha"},
+                    {"data": "correo_electronico"},
+                    {"data": "rol_nombre"},
+                    {"data": "usuario_responsable"},
+                    {
+                        data: null,
+                        className: "center",
+                        defaultContent: '<a href="#" class="btn btn-danger noHover">Eliminar</a>'
+                    }
+                ],
+                responsive: true,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se han encontrado datos - intente nuevamente",
+                    "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay datos disponibles",
+                    "infoFiltered": "(Filtrado de _MAX_ activos totales)",
+                    "search": "Buscar",
+                    "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                    }
                 }
-            },
-            error: function (r) {
-                console.log(r);
-            }
-        });
+            });
     }
 
     
