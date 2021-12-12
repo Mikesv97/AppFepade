@@ -4,7 +4,7 @@ include_once '../Modelos/activoEspecificacionDao.php';
 include_once '../Modelos/historialActivoDao.php';
 
 $activoFijo = new activoFijoDAO();
-$actifoEspe = new activoEspecificacionDao();
+$activoEspe = new activoEspecificacionDao();
 $activoHist = new historialActivoDao();
 
 if ($_POST) {
@@ -12,9 +12,9 @@ if ($_POST) {
         $activo = $_POST['key'];
         switch ($activo) {
             case "insertar":
-            
+            //VARIABLE DONDE SE ALMACENA EL ID TIPO ACTIVO
             $tipoActivo = $_POST["tipoActivo"];
-
+            //ASIGNADO A LA FUNCION SETOBJETIVOACTIVOFIJO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
             $objActivoFijo = setObjActivoFijo(
                 $_POST['ActivoReferencia'],
                 $_POST['PartidaCta'],
@@ -33,8 +33,94 @@ if ($_POST) {
                 $_POST['estado'],
                 $_POST['ResponsableId']
             );
-
-            echo json_encode($activoFijo->insertarActivoFijo($objActivoFijo));
+            //GUARDANDO EN LA VARIABLE ACTIVOINSERTADO LO QUE VENGA DE LA FUNCION INSERTAACTIVOFIJO
+            $activoInsertado = $activoFijo->insertarActivoFijo($objActivoFijo);
+            //SI INSERTARACTIVO FIJO ES DIFERENTE A 0 ENTONCES SE OBTETIENE ENTONCES SE OBTIENE EL ID ACTIVO
+            //DEL ACTIVO QUE SE ESTA INSERTADO, SI NO MANDA A ERROR
+            if($activoInsertado != 0){
+                $obtejerIdActivo = $activoEspe->obtenerId();
+                if($obtejerIdActivo != 0){
+                    //DEPENDIENDO DEL ID TIPO ACTIVO QUE VENGA ASI SE REALIZA EL INSERT EN LA TABLA CON SUS CAMPOS
+                    switch ($tipoActivo){
+                        case 1:
+                            //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                            $objActivoEspeComp = setObjActivoEspeComp(
+                                $obtejerIdActivo,//LLAMANDO A LA VARIABLE DONDE TIENE LA FUNCION PARA OBTENER EL ID ACTIVO INGRESADOR
+                                $_POST['Procesador'],
+                                $_POST['Generacion'],
+                                $_POST['Ram'],
+                                $_POST['TipoRam'],
+                                $_POST['DiscoDuro'],
+                                $_POST['CapacidadD1'],
+                                $_POST['DiscoDuro2'],
+                                $_POST['CapacidadD2'],
+                                $_POST['SO'],
+                                $_POST['Office'],
+                                $_POST['Modelo'],
+                                $_POST['ip']
+                            );
+                            echo json_encode($activoEspe->insertarActEspCom($objActivoEspeComp));
+                        break;
+                        case 2:
+                            //ASIGNADO A LA FUNCION SETOBJETIVOLO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                            $objActivoEspeComp = setObjActivoEspeComp(
+                                $obtejerIdActivo,
+                                $_POST['Procesador'],
+                                $_POST['Generacion'],
+                                $_POST['Ram'],
+                                $_POST['TipoRam'],
+                                $_POST['DiscoDuro'],
+                                $_POST['CapacidadD1'],
+                                $_POST['DiscoDuro2'],
+                                $_POST['CapacidadD2'],
+                                $_POST['SO'],
+                                $_POST['Office'],
+                                $_POST['Modelo'],
+                                $_POST['ip']
+                            );
+                            echo json_encode($activoEspe->insertarActEspCom($objActivoEspeComp));
+                        break;
+                        case 3:
+                            $objActivoEspeImpre = setObjActivoEspeImpre(
+                                $obtejerIdActivo,
+                                $_POST['Modelo'],
+                                $_POST['TonerN'],
+                                $_POST['TonerM'],
+                                $_POST['TonerC'],
+                                $_POST['TonerA'],
+                                $_POST['tambor'],
+                                $_POST['fusor']
+                            );
+                            echo json_encode($activoEspe->insertarActEspImp($objActivoEspeImpre));
+                        break;
+                        case 4:
+                            $objActivoEspeProy = setObjActivoEspeProy(
+                                $obtejerIdActivo,
+                                $_POST['Modelo'],
+                                $_POST['HorasUso'],
+                                $_POST['HoraEco']
+                            );
+                            echo json_encode($activoEspe->insertarActEspProy($objActivoEspeProy));
+                        break;  
+                    }
+                    //ASIGNANDO A LA FUNCION OBJACTIVOHISTORIAL LO QUE VIENEN EN LOS INPUT SEGUN SU NAME
+                    $objActivoHistorial = setObjActivoHistorial(
+                        $obtejerIdActivo,
+                        $_POST['Estructura3Id'],
+                        $_POST['ResponsableId'],
+                        $_POST['HistoricoComentario'],
+                        $_POST['UsuarioId'],
+                        $_POST['estado']
+                    );
+                    echo json_encode($activoHist->insertarHistorial($objActivoHistorial));
+                }else{
+                    echo json_encode("No insertado");
+                }
+                
+            }else{
+                echo json_encode("No insertado");
+            }
+            
                 break;
         }
     }
@@ -53,6 +139,7 @@ function cargarImagen()
     }
 }
 
+//OBJETO DONDE SETAMOS LOS VALORES PARA INSERTAR EN LA TABLA ACTIVO FIJO
 function setObjActivoFijo(
     $ActivoReferencia,
     $PartidaCta,
@@ -93,3 +180,94 @@ function setObjActivoFijo(
     return $objActivoFijo;
     
 }
+//OBJETO DONDE SETEAMOS LOS VALORES PARA INSERTAR EN ACTIVO ESPECIFICACION SI ES COMPUTADORA
+function setObjActivoEspeComp(
+    $ActivoId,
+    $Procesador,
+    $Generacion,
+    $Ram,
+    $TipoRam,
+    $DiscoDuro,
+    $CapacidadD1,
+    $DiscoDuro2,
+    $CapacidadD2,
+    $SO,
+    $Office,
+    $Modelo,
+    $IP
+) {
+    $objActivoEspeComp = new Activo_Especificacion();
+    $objActivoEspeComp->setActivoId($ActivoId);
+    $objActivoEspeComp->setProcesador($Procesador);
+    $objActivoEspeComp->setGeneracion($Generacion);
+    $objActivoEspeComp->setRam($Ram);
+    $objActivoEspeComp->setTipoRam($TipoRam);
+    $objActivoEspeComp->setDiscoDuro($DiscoDuro);
+    $objActivoEspeComp->setCapacidad_D1($CapacidadD1);
+    $objActivoEspeComp->setDiscoDuro2($DiscoDuro2);
+    $objActivoEspeComp->setCapacidad_D2($CapacidadD2);
+    $objActivoEspeComp->setSO($SO);
+    $objActivoEspeComp->setOffice($Office);
+    $objActivoEspeComp->setModelo($Modelo);
+    $objActivoEspeComp->setIP($IP);
+
+    return $objActivoEspeComp;
+}
+
+//OBJETO DONDE SETEAMOS LOS VALORES PARA INSERTAR EN ACTIVO ESPECIFICACION SI ES UNA IMPRESORA
+function setObjActivoEspeImpre(
+    $ActivoId,
+    $Modelo,
+    $TonerN,
+    $TonerM,
+    $TonerC,
+    $TonerA,
+    $tambor,
+    $fusor
+){
+    $objActivoEspeImpre = new Activo_Especificacion();
+    $objActivoEspeImpre->setActivoId($ActivoId);
+    $objActivoEspeImpre->setModelo($Modelo);
+    $objActivoEspeImpre->setTonerN($TonerN);
+    $objActivoEspeImpre->setTonerM($TonerM);
+    $objActivoEspeImpre->setTonerC($TonerC);
+    $objActivoEspeImpre->setTonerA($TonerA);
+    $objActivoEspeImpre->setTambor($tambor);
+    $objActivoEspeImpre->setFusor($fusor);
+    return $objActivoEspeImpre;
+}
+
+//OBJETO DONDE SETEAMOS LOS VALORES PARA INSERTAR EN ACTIVO ESPECIFICACION SI ES UN PROYECTOR
+function setObjActivoEspeProy(
+    $ActivoId,
+    $Modelo,
+    $HorasUso,
+    $HoraEco
+){
+    $objActivoEspeProy = new Activo_Especificacion();
+    $objActivoEspeProy->setActivoId($ActivoId);
+    $objActivoEspeProy->setModelo($Modelo);
+    $objActivoEspeProy->setHorasUso($HorasUso);
+    $objActivoEspeProy->setHoraEco($HoraEco);
+    return $objActivoEspeProy;
+}
+
+//OBJETO DONDE SETEAMOS LOS VALORES PARA INSERTAR EN HISTORIAL DE ACTIVO
+function setObjActivoHistorial(
+    $ActivoId,
+    $Estructura31_id,
+    $Responsable_id,
+    $Historico_comentario,
+    $Usuario_id,
+    $Estado
+){
+    $objActivoHistorial = new historial_Activo();
+    $objActivoHistorial->setActivoId($ActivoId);
+    $objActivoHistorial->setEstructura31Id($Estructura31_id);
+    $objActivoHistorial->setResponsableId($Responsable_id);
+    $objActivoHistorial->setHistoricoComentario($Historico_comentario);
+    $objActivoHistorial->setUsuarioId($Usuario_id);
+    $objActivoHistorial->setEstado($Estado);
+    return $objActivoHistorial;
+}
+

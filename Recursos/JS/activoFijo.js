@@ -17,7 +17,7 @@ $(document).ready(function () {
             success: function (r) {
                 console.log(r);
                 switch (r) {
-                    case '1':
+                    case 1:
                         Swal.fire({
                             title: 'Ingresar activo al sistema',
                             text: "Porfavor confirma para ingresar el activo al sistema",
@@ -34,6 +34,7 @@ $(document).ready(function () {
                                     'success'
                                 ).then(function () {
                                     $("#formActivo")[0].reset();
+                                    $('#activoInformacion').DataTable().ajax.reload();
                                 })
                             }
                         })

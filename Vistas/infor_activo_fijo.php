@@ -19,6 +19,10 @@ $date = date('d-m-Y');
     .alturaFija {
         min-height: 400px;
     }
+    .borde{
+        /* border: 0.5px solid rgba(0, 0, 0, 0.3); */
+        padding: 10px;
+    }
 </style>
 
 <!--**********************************
@@ -54,7 +58,7 @@ $date = date('d-m-Y');
                     <div class="card-body">
                         <form action="#" id="formActivo" class="formActivo" method="POST" enctype="multipart/form-data">
                             <div class="row ">
-                                <div class="col-md-6">
+                                <div class="col-md-5 borde">
                                     <!-- INICIO PRIMERA COLUMNA DEL FORM -->
                                     <h5>Información de activo</h5>
                                     <br>
@@ -105,7 +109,7 @@ $date = date('d-m-Y');
                                     </div>
                                     <!-- FIN PRIMERA COLUMNA DEL FORM -->
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 borde offset-md-1">
                                     <!-- INICIO SEGUNDA COLUNMA DEL FORM -->
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
@@ -174,7 +178,7 @@ $date = date('d-m-Y');
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12 bg-warning">
+                                <div class="col-md-12 borde my-3">
                                     <div class="form-row ">
                                         <div class="form-group col-md-4">
                                             <label class="text-label">Estado de activo</label>
@@ -202,7 +206,7 @@ $date = date('d-m-Y');
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-5 borde my-2"">
                                     <input type="text" id="tipoactivo">
                                     <h5>Especificaciones de activo </h5>
                                     <br>
@@ -285,7 +289,7 @@ $date = date('d-m-Y');
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 bg-danger">
+                                <div class="col-md-6 borde my-2 offset-md-1">
 
                                 </div>
                             </div>

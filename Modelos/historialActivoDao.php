@@ -36,18 +36,30 @@ class historialActivoDao{
 
     }
 
-    public function insertarHistorial($activoId,$historicoFecha,$estructura31_id,$responsable_id,$comentario,$usuario,$fecha,$estado){
+    public function insertarHistorial($objeto){
+        $ah = $objeto;
         $this->conectar();
-        $sql = "INSERT INTO Historico(Activo_id,Historico_fecha,Estructura31_id,Responsable_id,Historico_comentario,Usuario_id,fecha,Estado) VALUES (?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO Historico(
+            Activo_id,
+            Historico_fecha,
+            Estructura31_id,
+            Responsable_id,
+            Historico_comentario,
+            Usuario_id,
+            fecha,
+            Estado) 
+            VALUES (?,CURRENT_TIMESTAMP,?,?,?,?,CURRENT_TIMESTAMP,?)";
         $respuesta = $this->con->prepare($sql);
         try{
-            $respuesta->execute([$activoId,$historicoFecha,$estructura31_id,$responsable_id,$comentario,$usuario,$fecha,$estado]);
-            $datos = $respuesta->rowCount();
-            if($datos > 0){
-                return true;
-            }else{
-                return false;
-            }
+            $respuesta->execute([
+                $ah->getActivoId(),
+                $ah->getEstructura31Id(),
+                $ah->getResponsableId(),
+                $ah->getHistoricoComentario(),
+                $ah->getUsuarioId(),
+                $ah->getEstado()
+            ]);
+            return $respuesta->rowCount();
         }catch(PDOException $error){
             return $error->getMessage();
         }  

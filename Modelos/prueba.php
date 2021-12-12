@@ -3,30 +3,66 @@ include_once 'sendMail.php';
 include_once '../Modelos/loginDao.php';
 include_once '../Modelos/activoFijoDao.php';
 include_once '../Modelos/usuarioNuevoDao.php';
-$us = new LoginDao();
-$nuser = new UsuarioNuevoDao();
+include_once '../Modelos/activoEspecificacionDao.php';
+include_once '../Modelos/historialActivoDao.php';
 
-$user = new UsuarioNuevo();
+$activoEspe = new activoEspecificacionDao();
+$activoHist = new historialActivoDao();
+// // $us = new LoginDao();
+// $nuser = new UsuarioNuevoDao();
 
-$nuser->insertarBitacoraUs("miguelitosv", "Douglas Méndez Admin");
+// $user = new UsuarioNuevo();
 
-$idBitacora= $nuser->obtenerIdBitacora();
+// $nuser->insertarBitacoraUs("miguelitosv", "Douglas Méndez Admin");
 
-$user->setUsuarioId("miguelitosv");
-$user->setUsuarioNombre("miguel méndez");
-$user->setUsuarioClave(password_hash("123",PASSWORD_DEFAULT,array("cost"=>12)));
-$user->setCorreoElectronico("micorreo@algo.com");
-$user->setIdRol("4");  
-$user->setRemember(0);
-$user->setIdBitacora($idBitacora);
-$user->setFotoUsuario("foto98.jpg");
-$user->setUsuarioNuevo(1);
+// $idBitacora= $nuser->obtenerIdBitacora();
+
+// $user->setUsuarioId("miguelitosv");
+// $user->setUsuarioNombre("miguel méndez");
+// $user->setUsuarioClave(password_hash("123",PASSWORD_DEFAULT,array("cost"=>12)));
+// $user->setCorreoElectronico("micorreo@algo.com");
+// $user->setIdRol("4");  
+// $user->setRemember(0);
+// $user->setIdBitacora($idBitacora);
+// $user->setFotoUsuario("foto98.jpg");
+// $user->setUsuarioNuevo(1);
 
 
-if($nuser->insertarUsuario($user)){
-    echo "insertado";
-}else{
-    echo "No we, no pude";
+// if($nuser->insertarUsuario($user)){
+//     echo "insertado";
+// }else{
+//     echo "No we, no pude";
+// }
+
+
+$objActivoHistorial = setObjActivoHistorial(
+    "247",
+    "1",
+    "1",
+    "Probando que inserte el historial",
+    "AEC",
+    "1"
+);
+
+echo json_encode($activoHist->insertarHistorial($objActivoHistorial));
+
+
+function setObjActivoHistorial(
+    $ActivoId,
+    $Estructura31_id,
+    $Responsable_id,
+    $Historico_comentario,
+    $Usuario_id,
+    $Estado
+){
+    $objActivoHistorial = new historial_Activo();
+    $objActivoHistorial->setActivoId($ActivoId);
+    $objActivoHistorial->setEstructura31Id($Estructura31_id);
+    $objActivoHistorial->setResponsableId($Responsable_id);
+    $objActivoHistorial->setHistoricoComentario($Historico_comentario);
+    $objActivoHistorial->setUsuarioId($Usuario_id);
+    $objActivoHistorial->setEstado($Estado);
+    return $objActivoHistorial;
 }
 
 
