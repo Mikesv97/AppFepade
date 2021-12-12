@@ -22,12 +22,12 @@ if(isset($_POST["key"])){
                         //no quiere ser recordado, borramos cookies
                         setcookie("usuario",$nombre,time()-3600*24*30);
                         setcookie("token",$contraseña,time()-3600*24*30);
-                        echo json_encode(true);
+                        echo json_encode($usDao->actualizarEstadoUser(1,$nombre));
                     }else{
                         //si quiere ser recordado creamos las cookies
                         setcookie("usuario",$nombre,time()+3600*24*30);
                         setcookie("token",$contraseña,time()+3600*24*30);
-                        echo json_encode(true);
+                        echo json_encode($usDao->actualizarEstadoUser(1,$nombre));
                     }
                    
                 }else{
@@ -38,7 +38,8 @@ if(isset($_POST["key"])){
             break;
             case "cerrarSesion":
                 session_destroy();
-                echo json_encode(true);
+                $nombreUser=$_POST["nombre"];
+                echo json_encode($usDao->actualizarEstadoUser(0,$nombreUser));
             break;
             case "validarRemember":
                 //validamos si hay cookies con los datos

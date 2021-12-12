@@ -134,13 +134,13 @@ class LoginDao{
                 //establecemos la coneccion
                 $this->conectar();
                 //establecemos la consulta
-                $sql="update usuario set estado = ? where  usuario_id=?";
+                $sql="update usuario set estado_sesion = ? where  usuario_id=? or usuario_nombre =?";
                 //preparamos la consulta
                 $respuesta = $this->con->prepare($sql);
                 try{
         
                     //ejecutamos la consulta y seteamos parametros 
-                    $respuesta->execute([$valor,$usuario]);
+                    $respuesta->execute([$valor,$usuario,$usuario]);
                     //evaluamos cuantas filas fueron afectadas
                     if($respuesta->rowCount() > 0){
                         //cerramos conexion

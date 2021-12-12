@@ -40,7 +40,7 @@
 
                 <ul class="navbar-nav header-right">
                     <li class="nav-item dropdown header-profile">
-                        <?= $_SESSION["usuario"]["nombre"]; ?>
+                        <span id="nombreUser"><?= $_SESSION["usuario"]["nombre"]; ?></span>
                         <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                             <i class="mdi mdi-account"></i>
                         </a>

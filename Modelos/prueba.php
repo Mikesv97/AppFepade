@@ -8,8 +8,8 @@ $nuser = new UsuarioNuevoDao();
 
 $user = new UsuarioNuevo();
 
- $us->validarRemember('douglasv','douglas123');
-
+ //$us->validarRemember('douglasv','douglas123');
+ echo $us->actualizarEstadoUser(1,'douglasv');
 
 /*
                         //comprobamos cual usuario está con recuerdame en BD
