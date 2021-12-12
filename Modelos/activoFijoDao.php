@@ -45,12 +45,8 @@ class activoFijoDAO{
         try{
             $respuesta->execute([$referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat,$fechacomp,
             $estado,$activoEliminado,$responsable,$imagen]);
-            $datos = $respuesta->rowCount();
-            if($datos > 0){
-                return true;
-            }else{
-                return false;
-            }
+            return $respuesta->rowCount();
+
         }catch(PDOException $error){
             return $error->getMessage();
         }   
