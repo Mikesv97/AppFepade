@@ -11,7 +11,7 @@ class activoFijoDAO
 
     public function conectar()
     {
-        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
+        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos = "ACTIVO";
         try {
 
