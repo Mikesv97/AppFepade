@@ -9,7 +9,7 @@ $(document).ready(function(){
         e.preventDefault();
         $("#btnEliminar").blur();
         Swal.fire({
-            title: 'Estás seguro de eliminar este registro?',
+            title: '¿Estás seguro de eliminar este usuario?',
             text: "¡No podrás deshacer los cambios!",
             icon: 'warning',
             showCancelButton: true,
@@ -18,23 +18,17 @@ $(document).ready(function(){
             confirmButtonText: '¡Sí, eliminar!'
           }).then((result) => {
             if (result.isConfirmed) {
+
                 var table = $('#usuarios').DataTable();
-
-                    var data = table.row(this).data();
-             for(let i=0; i<6; i++){
-                 console.log(data[i]);
-
-             }
-
-            
+                var data = table.row(this).data();
+                var id =data["usuario_id"];
+                eliminarUsuario(id);
             }
           })
     });
 
-    $("body").on("click",".odd, .even",function(){
-       
-    });
-
+      $("#frmNuevoUsuario")[0].reset();
+      $('#usuarios').DataTable().ajax.reload();
     //cuando hace clic en el btn nuevo usuario
     $("#frmNuevoUsuario").submit(function(e){
         //cancelo submit del form
@@ -53,7 +47,7 @@ $(document).ready(function(){
                 url:"../controladores/controladorNuevoUsuario.php",
                 method: "post",
                 dataType: "json",
-                data: { "key": "insertatUsuario","data": data },
+                data: { "key": "insertarUsuario","data": data },
                 success: function (r) {
                     Swal.fire({
                         position: 'bottom-end',
@@ -157,8 +151,58 @@ $(document).ready(function(){
     }
 
     //función que envía ID para eliminar el registro
-    function eliminarUsuario(codigo){
-       
+    function eliminarUsuario(id){
+        $.ajax({
+            url:"../controladores/controladorNuevoUsuario.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "eliminarUsuario","id": id },
+            success: function (r) {
+                switch(r){
+                    case "nullId":
+                        Swal.fire({
+                            icon: 'error',
+                            title: "Usuario no encontrado",
+                            text: 'El id del usuario no se encuentra en la base de datos'+
+                            ' asegúrate de que su id sea correcto e intenta de nuevo, si el problema'+
+                            ' persiste contacta con tu administrador o personal de TI.',
+                            showConfirmButton: true
+                        })
+                        $('#usuarios').DataTable().ajax.reload();
+                    break;
+                    case "userSesOn":
+                        Swal.fire({
+                            icon: 'error',
+                            title: "Usuario con sesión activa",
+                            text: 'No se puede eliminar el usuario debido a que tiene una sesión activa en estos momentos, por favor'
+                            +' intenta cuando no este on-line, sí crees que se trata de algún problema por favor contacta a tu administrador o personal de TI.',
+                            showConfirmButton: true
+                        })
+                        $('#usuarios').DataTable().ajax.reload();
+                    break;
+                    case true:
+                        Swal.fire({
+                            position: 'bottom-end',
+                            icon: 'success',
+                            title: 'Usuario eliminado con éxtio',
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
+                        $('#usuarios').DataTable().ajax.reload();
+                    break;
+                    
+                }
+            },
+            error: function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece tenemos problemas para comunicarnos con los servidores y eliminar el usuario'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+        });          
     }
     
 });

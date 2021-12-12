@@ -11,7 +11,7 @@ if(isset($_POST["key"])){
            $resp= $roles->obtenerCmbRoles();
             echo json_encode($resp);
         break;
-        case "insertatUsuario":
+        case "insertarUsuario":
             //declaramos objeto dao
             $userDao= new UsuarioNuevoDao();
             //desempacamos data
@@ -41,7 +41,11 @@ if(isset($_POST["key"])){
             $userDao= new UsuarioNuevoDao();
            echo json_encode($userDao->obtenerUsuarios());
         break;
-        case "validarCorreo":
+        case "eliminarUsuario":
+            $id = $_POST["id"];
+            $userDao = new UsuarioNuevoDao();
+            echo json_encode($userDao->eliminarUsuario($id));
+
         break;
         case "enviarCodigo":
         break;

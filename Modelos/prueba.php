@@ -9,8 +9,10 @@ include_once '../Modelos/historialActivoDao.php';
 // $activoEspe = new activoEspecificacionDao();
 // $activoHist = new historialActivoDao();
 // // // $us = new LoginDao();
-// // $nuser = new UsuarioNuevoDao();
+$nuser = new UsuarioNuevoDao();
 
+
+echo $nuser->eliminarUsuario("douglasv");
 // // $user = new UsuarioNuevo();
 
 // // $nuser->insertarBitacoraUs("miguelitosv", "Douglas Méndez Admin");
