@@ -6,7 +6,7 @@ $(document).ready(function () {
     $('#proyector').hide();
     $('#impresora').hide();
     //COMPRUEBA QUE TIPO DE ACTIVO SE SELECIONA
-    $('#comboTipoActivo').on('change', function () {
+    $('#ActivoTipo').on('change', function () {
         tipo = $(this).val();
         switch (tipo) {
             case '1':

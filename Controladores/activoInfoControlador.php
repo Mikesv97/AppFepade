@@ -2,8 +2,23 @@
 
 include_once '../Modelos/activoFijoInformacionDao.php';
 
-$obj = new Activo_fijo_informacion;
-$resp = $obj->prueba();
-echo json_encode($resp);
 
-?>
+
+if ($_POST) {
+    if (isset($_POST['key'])) {
+        $activo = $_POST['key'];
+        switch ($activo) {
+            case "getInfoActivo":
+                $obj = new Activo_fijo_informacion;
+                $resp = $obj->tablaActivoFijo();
+                echo json_encode($resp);
+            break;
+            case "mostrarInformaci":
+                break;
+            case "modificar":
+                break;
+            case "eliminar":
+                break;
+        }
+    }
+}

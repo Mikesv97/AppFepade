@@ -73,8 +73,8 @@
             <li class="nav-label">Menu de navegación</li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Activos</span></a>
                 <ul aria-expanded="false">
-                    <li><a href="activo_fijo.php">Registro de activo</a></li>
-                    <li><a href="#">Registro tipo de activo</a></li>
+                    <li><a href="activo_fijo.php">Ingresar nuevo activo</a></li>
+                    <li><a href="infor_activo_fijo.php">Registro de activo</a></li>
                     <li><a href="#">Registro historial activo</a></li>
                 </ul>
             </li>
