@@ -2,6 +2,7 @@ $(document).ready(function(){
     var rem;
     var codigo;
     var error =parseInt(0);
+    var usChange =false;
 
     //ocultamos controles que no deben ser visibles al cargar pag
     ocultarControlLoad();
@@ -64,6 +65,7 @@ $(document).ready(function(){
         //limpiamos controles
         $("input[name='txtContraseña']").val("");
         $('#customCheck').attr("checked",false);
+        usChange=true;
     });
 
     //cuando hace clic en btnLogin 
@@ -79,7 +81,7 @@ $(document).ready(function(){
             url: "Controladores/loginControlador.php",
             method: "post",
             dataType: "json",
-            data: { "key": "validarUser","data": data,"valor": rem},
+            data: { "key": "validarUser","data": data,"valor": rem,"usChange":usChange},
             success: function (r) {
                 switch(r){
                     case "datosLogNull":
@@ -99,8 +101,8 @@ $(document).ready(function(){
                     break;
                 }
             },
-            error: function () {
-
+            error: function (r) {
+                console.log(r);
                 //si falla algo se muestra error del proceso
                 Swal.fire({
                     title: 'WOOPS!',
@@ -163,7 +165,7 @@ $(document).ready(function(){
                                 text: '¡Vaya! Parece que tenemos dificultades técnicas para enviar el correo, intenta más tarde'
                                 +' si el problema persiste contacta a tu administrador o soporte IT.',
                                 icon: 'error',
-                                confirmButtonText: 'Aceptar'
+                                confirmButtonText: 'Aceptar',
                               })
                         break;
                     }
@@ -276,11 +278,12 @@ $(document).ready(function(){
                 $('#customCheck').attr("checked",true);
             }
          },
-        error: function () {
+        error: function (r) {
+            console.log(r);
             Swal.fire({
                 title: '!Woops!',
                 text: 'No pudimos conectarnos al servidor, por favor intenta de nuevo, si el problema persiste'
-                +'informa a tu administrador o personal de IT',
+                +'informa a tu administrador o personal de IT erro: ',
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
               })

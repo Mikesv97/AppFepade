@@ -14,36 +14,18 @@ if(isset($_POST["key"])){
                 $nombre = $data["txtUsuario"];
                 $contraseña = $data["txtContraseña"];
                 $rem = $_POST["valor"]; 
-                
+                $usChange = $_POST["usChange"];
                 //evaluamos si los datos son validos con usuario y password
                 $resp= $usDao->validarUsuario($nombre,$contraseña);
 
                 if($resp){//si da verdadero vemos si quiere que le recuerde el sistema
-                    if($rem!=1){
-                        //no quiere ser recordado
-                        $respRem = $usDao->actualizarRemUser(0, $nombre);
-                        echo json_encode($respRem);
+                    if(isset($_COOKIE["usuario"]) && isset($_COOKIE["usuario"])){
+                        recordarmeCookies($rem,$nombre, $contraseña,$usChange);
+                        echo json_encode($usDao->actualizarEstadoUser(1,$nombre));
                     }else{
-                        //si quiere ser recordado
-                        //comprobamos cual usuario está con recuerdame en BD
-                        $dataRem = $usDao->comprobarRememberUs();
-                        //comprobamos no venga vacia la información
-                        if(sizeof($dataRem)!= 0){
-                            //recorremos
-                            foreach($dataRem as $d){
-                                if($nombre!=$d["usuario_id"]){
-                                    //asigamos recuerdame en BD al usuario ingreado en login
-                                   $usDao->actualizarRemUser(0, $d["usuario_id"]);
-                                }
-                            }
-                            //respondemos el resultado
-                            echo json_encode( $usDao->actualizarRemUser(1, $nombre));
-                        }else{
-                            $respRem = $usDao->actualizarRemUser(1, $nombre);
-                            echo json_encode($respRem);
-                        }
+                        recordarmeNoCookies($rem,$nombre, $contraseña);
+                        echo json_encode($usDao->actualizarEstadoUser(1,$nombre));
                     }
-                   
                 }else{
                     //en caso contrario mandamos error
                     echo json_encode("datosLogNull");
@@ -52,11 +34,18 @@ if(isset($_POST["key"])){
             break;
             case "cerrarSesion":
                 session_destroy();
-                echo json_encode(true);
+                $nombreUser=$_POST["nombre"];
+                echo json_encode($usDao->actualizarEstadoUser(0,$nombreUser));
             break;
             case "validarRemember":
-                //buscamos en la base de dato un usuario que tenga activo "1" remember
-                $usDao->validarRemember();
+                //validamos si hay cookies con los datos
+                if(isset($_COOKIE["usuario"]) && isset($_COOKIE["token"])){
+                    //si hay validamos que los datos sean correctos
+                    $usDao->validarRemember($_COOKIE["usuario"],$_COOKIE["token"]);
+                }else{
+                 echo json_encode("noRemUser");
+                }
+               
             break;
             case "validarCorreo":
 
@@ -87,5 +76,40 @@ if(isset($_POST["key"])){
                 }
             break;
         }
+}
+
+
+function recordarmeCookies($rem, $nombre,$contraseña, $usChange){
+    //evaluamos si el usuario cambio al que estaba seteado
+    if($usChange){
+        if($rem!=0){
+            //si quiere ser recordado creamos las cookies
+            setcookie("usuario",$nombre,time()+3600*24*30);
+            setcookie("token",$contraseña,time()+3600*24*30);
+        }
+    }else{
+        //si no cambio el usuario solo evaluamos si quiere seguir
+        //siendo recordado
+        if($rem!=1){
+            //no quiere ser recordado, borramos cookies
+            setcookie("usuario",$nombre,time()-3600*24*30);
+            setcookie("token",$contraseña,time()-3600*24*30);
+            
+        }else{
+            //si quiere ser recordado creamos las cookies
+            setcookie("usuario",$nombre,time()+3600*24*30);
+            setcookie("token",$contraseña,time()+3600*24*30);
+        }
+    }
+
+}
+function recordarmeNoCookies($rem,$nombre,$contraseña){
+    if($rem!=1){
+        //no quiere ser recordado, borramos cookies
+    }else{
+        //si quiere ser recordado creamos las cookies
+        setcookie("usuario",$nombre,time()+3600*24*30);
+        setcookie("token",$contraseña,time()+3600*24*30);
+    }
 }
 ?>

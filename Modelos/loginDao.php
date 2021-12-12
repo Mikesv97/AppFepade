@@ -12,7 +12,7 @@ class LoginDao{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
+        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            
@@ -45,7 +45,7 @@ class LoginDao{
         //establecemos la coneccion
         $this->conectar();
         //establecemos la consulta
-        $sql="select a.usuario_clave , a.usuario_nombre, a.usuario_id, a.correo_electronico, b.rol_nombre
+        $sql="select a.usuario_nuevo, a.usuario_clave , a.usuario_nombre, a.usuario_id, a.correo_electronico, b.rol_nombre
         from usuario a inner join roles b on a.id_rol = b.id_rol where  a.usuario_id=?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
@@ -68,6 +68,7 @@ class LoginDao{
                         $_SESSION["usuario"]["id"]= $d["usuario_id"];
                         $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
                         $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
+                        $_SESSION["usuario"]["usuarioNuevo"]= $d["usuario_nuevo"];
 
                     }else  if($clave == $d["usuario_clave"]){
                         //creamos sesion
@@ -75,6 +76,7 @@ class LoginDao{
                         $_SESSION["usuario"]["id"]= $d["usuario_id"];
                         $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
                         $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
+                        $_SESSION["usuario"]["usuarioNuevo"]= $d["usuario_nuevo"];
                         
                     }else{
                         return false;
@@ -97,38 +99,32 @@ class LoginDao{
     }
 
     //funcion para verificar y cargar campos en caso exista usuario con recuerdame
-    function validarRemember(){
+    function validarRemember($usuario, $clave){
         //declaramos variable recordar en 1
-        $remember = 1;
+
         //establecemos la coneccion
         $this->conectar();
         //establecemos la consulta
-        $sql="select usuario_id, usuario_clave from usuario where  remember =?";
+        $sql="select usuario_id, usuario_clave from usuario where usuario_id =?";
         //preparamos la consulta
         $respuesta = $this->con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros
-            
-            //vemos si tiene filas la consulta
-            $respuesta->execute([$remember]);
-            $datosBD = $respuesta->fetchall();
-    
-            //consultamos el tamaño del arreglo para controlar si hay resultados o no
-            if(sizeof($datosBD)>0){
-                //si es mayor a 0, es que si hay, recorremos los datos
-                foreach($datosBD as $d){
-                   $datos = array(
-                       'nombre' => $d["usuario_id"],
-                       'clave'=>$d["usuario_clave"]);
-                }
+            $respuesta->execute([$usuario]);
+            $datosBD = $respuesta->fetchall();            
 
-                //retornamos datos
-                echo json_encode($datos);
-                //cerramos conexion
-                $this->desconectar($respuesta);
-            }else{
-                $this->desconectar($respuesta);
-                echo json_encode("noRemUser");
+            foreach($datosBD as $d){
+
+                if($clave ==$d["usuario_clave"] || password_verify($clave,$d["usuario_clave"])){
+                    $datos = array(
+                        'nombre' => $d["usuario_id"],
+                        'clave'=>$d["usuario_clave"]
+                    );
+
+                    echo json_encode($datos);
+                }else{
+                    return 'noRemUser';
+                }
             }
         }catch(PDOException $error){
             return $error->getMessage();
@@ -136,17 +132,17 @@ class LoginDao{
     }
 
     //actualizar remember en la BD del usuario que hace login
-    function actualizarRemUser($valor, $usuario){
+    function actualizarEstadoUser($valor, $usuario){
                 //establecemos la coneccion
                 $this->conectar();
                 //establecemos la consulta
-                $sql="update usuario set remember = ? where  usuario_id=?";
+                $sql="update usuario set estado_sesion = ? where  usuario_id=? or usuario_nombre =?";
                 //preparamos la consulta
                 $respuesta = $this->con->prepare($sql);
                 try{
         
                     //ejecutamos la consulta y seteamos parametros 
-                    $respuesta->execute([$valor,$usuario]);
+                    $respuesta->execute([$valor,$usuario,$usuario]);
                     //evaluamos cuantas filas fueron afectadas
                     if($respuesta->rowCount() > 0){
                         //cerramos conexion

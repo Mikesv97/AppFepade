@@ -35,6 +35,7 @@ $date = date('d-m-Y');
                 <div class="welcome-text">
                     <h4>Bienvenido <?= $usuario; ?>!</h4>
                     <p class="mb-0">Rol: <?= $_SESSION["usuario"]["rol"]; ?></p>
+                    <p class="mb-0">Eres nuevo ?: <?= $_SESSION["usuario"]["usuarioNuevo"]; ?></p>
                     <p class="mb-0">Hora: <?= $date; ?></p>
                 </div>
             </div>
