@@ -95,7 +95,7 @@ $(document).ready(function(){
                         $('input[name="txtUsuario"]').focus();
                     break;
                     case true:
-                        $(location).attr('href',"vistas/activo_fijo.php");
+                        $(location).attr('href',"vistas/infor_activo_fijo.php");
                     break;
                 }
             },
