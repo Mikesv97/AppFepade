@@ -11,7 +11,7 @@ class activoFijoDAO
 
     public function conectar()
     {
-        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
+        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
         $basedatos = "ACTIVO";
         try {
 
@@ -79,8 +79,8 @@ class activoFijoDAO
                 $a->getUsuarioId(),
                 $a->getActivoFechaCaduc(),
                 $a->getActivoFechaAdq(),
-                $a->getEstado(),
                 $a->getActivoEliminado(),
+                $a->getEstado(),
                 $a->getResponsableCodigo(),
                 $a->getImagen()
             ]);
