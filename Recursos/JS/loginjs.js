@@ -99,8 +99,8 @@ $(document).ready(function(){
                     break;
                 }
             },
-            error: function () {
-
+            error: function (r) {
+                console.log(r);
                 //si falla algo se muestra error del proceso
                 Swal.fire({
                     title: 'WOOPS!',
@@ -163,7 +163,7 @@ $(document).ready(function(){
                                 text: '¡Vaya! Parece que tenemos dificultades técnicas para enviar el correo, intenta más tarde'
                                 +' si el problema persiste contacta a tu administrador o soporte IT.',
                                 icon: 'error',
-                                confirmButtonText: 'Aceptar'
+                                confirmButtonText: 'Aceptar',
                               })
                         break;
                     }
@@ -276,11 +276,11 @@ $(document).ready(function(){
                 $('#customCheck').attr("checked",true);
             }
          },
-        error: function () {
+        error: function (r) {
             Swal.fire({
                 title: '!Woops!',
                 text: 'No pudimos conectarnos al servidor, por favor intenta de nuevo, si el problema persiste'
-                +'informa a tu administrador o personal de IT',
+                +'informa a tu administrador o personal de IT erro: ',
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
               })

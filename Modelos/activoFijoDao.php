@@ -11,7 +11,7 @@ class activoFijoDAO
 
     public function conectar()
     {
-        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
+        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos = "ACTIVO";
         try {
 
@@ -63,14 +63,6 @@ class activoFijoDAO
         Imagen) 
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?,?,?,?)";
         $respuesta = $this->con->prepare($sql);
-<<<<<<< HEAD
-        try{
-            $respuesta->execute([$referencia,$codContabi,$codPro,$serie,$fechaAdq,$factura,$tipoAct,$descripcion,$departamentom,$ff,$area,$usuario,$fecha,$fechaCat,$fechacomp,
-            $estado,$activoEliminado,$responsable,$imagen]);
-            return $respuesta->rowCount();
-
-        }catch(PDOException $error){
-=======
         try {
             $respuesta->execute([
                 $a->getActivoReferencia(),
@@ -94,7 +86,6 @@ class activoFijoDAO
             ]);
             return $respuesta->rowCount();
         } catch (PDOException $error) {
->>>>>>> 0f8224dc5f6a84c491aa7f5b3807d851b01f5368
             return $error->getMessage();
         }
     }

@@ -8,29 +8,28 @@ $nuser = new UsuarioNuevoDao();
 
 $user = new UsuarioNuevo();
 
-$nuser->insertarBitacoraUs("miguelitosv", "Douglas Méndez Admin");
-
-$idBitacora= $nuser->obtenerIdBitacora();
-
-$user->setUsuarioId("miguelitosv");
-$user->setUsuarioNombre("miguel méndez");
-$user->setUsuarioClave(password_hash("123",PASSWORD_DEFAULT,array("cost"=>12)));
-$user->setCorreoElectronico("micorreo@algo.com");
-$user->setIdRol("4");  
-$user->setRemember(0);
-$user->setIdBitacora($idBitacora);
-$user->setFotoUsuario("foto98.jpg");
-$user->setUsuarioNuevo(1);
+ $us->validarRemember('douglasv','douglas123');
 
 
-if($nuser->insertarUsuario($user)){
-    echo "insertado";
-}else{
-    echo "No we, no pude";
-}
-
-
-
+/*
+                        //comprobamos cual usuario está con recuerdame en BD
+                        $dataRem = $usDao->comprobarRememberUs();
+                        //comprobamos no venga vacia la información
+                        if(sizeof($dataRem)!= 0){
+                            //recorremos
+                            foreach($dataRem as $d){
+                                if($nombre!=$d["usuario_id"]){
+                                    //asigamos recuerdame en BD al usuario ingreado en login
+                                   $usDao->actualizarRemUser(0, $d["usuario_id"]);
+                                }
+                            }
+                            //respondemos el resultado
+                            echo json_encode( $usDao->actualizarRemUser(1, $nombre));
+                        }else{
+                            $respRem = $usDao->actualizarRemUser(1, $nombre);
+                            echo json_encode($respRem);
+                        }
+*/
 
 //SendMail::enviarCodCorreo("alan.castillo20@itca.edu.sv","055645");
 //SendMail::enviarCodCorreo("castillo.alan1995@gmail.com","055645");
