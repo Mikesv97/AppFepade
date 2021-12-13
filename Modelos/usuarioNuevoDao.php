@@ -10,7 +10,7 @@ class UsuarioNuevoDao{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
+        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            
@@ -36,7 +36,6 @@ class UsuarioNuevoDao{
        
 
     }
-
 
     public function insertarUsuario($objeto){
         $usuario = new UsuarioNuevo();
@@ -158,10 +157,15 @@ class UsuarioNuevoDao{
                     $respuesta->execute([$id]);
                     //evaluamos cuantas filas fueron afectadas
                     if($respuesta->rowCount() > 0){
-                        //cerramos conexion
-                        $this->desconectar($respuesta);
-                        //si se afectaron más de 0
-                        return true;                 
+                        if($this->eliminarBitaUser($id)!=0){//elimamos bitacora del usuario
+                            //si se afecta filas es que se elimino
+                            //cerramos conexion
+                            $this->desconectar($respuesta);
+                            //si se afectaron más de 0
+                            return true; 
+                        }else{
+                            return "userSesOn";
+                        }
                     }else{
                         return false;
                     }
@@ -201,6 +205,25 @@ class UsuarioNuevoDao{
                 $this->desconectar($respuesta); 
                 return "nullId";
             }
+                        
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
+    
+    //funcion que elimina el registro de bitacora usuario
+    //retorna el número de filas afectadas
+    public function eliminarBitaUser($id){
+        //establecemos la coneccion
+        $this->conectar();
+        //establecemos la consulta
+        $sql="delete from bitacora_usuarios where usuario_id = ?";
+        //preparamos la consulta
+        $respuesta = $this->con->prepare($sql);
+        try{
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([$id]);
+            return $respuesta->rowCount();
                         
         }catch(PDOException $error){
             return $error->getMessage();

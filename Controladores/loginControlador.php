@@ -33,8 +33,9 @@ if(isset($_POST["key"])){
                
             break;
             case "cerrarSesion":
-                session_destroy();
+                
                 $nombreUser=$_POST["nombre"];
+                session_destroy();
                 echo json_encode($usDao->actualizarEstadoUser(0,$nombreUser));
             break;
             case "validarRemember":

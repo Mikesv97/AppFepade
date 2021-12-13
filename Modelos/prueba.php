@@ -12,7 +12,7 @@ include_once '../Modelos/historialActivoDao.php';
 $nuser = new UsuarioNuevoDao();
 
 
-echo $nuser->eliminarUsuario("douglasv");
+//echo $nuser->eliminarBitaUser("asda");
 // // $user = new UsuarioNuevo();
 
 // // $nuser->insertarBitacoraUs("miguelitosv", "Douglas Méndez Admin");
