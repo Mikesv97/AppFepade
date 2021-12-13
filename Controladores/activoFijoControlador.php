@@ -20,7 +20,7 @@ if ($_POST) {
                 $_POST['PartidaCta'],
                 $_POST['EmpresaId'],
                 $_POST['numeroSerie'],
-                $_POST['ActivoFechaAdq'],
+                str_replace ('T',' ',$_POST['ActivoFechaAdq']),
                 $_POST['ActivoFactura'],
                 $_POST['ActivoTipo'],
                 $_POST['ActivoDescripcion'],
@@ -28,13 +28,14 @@ if ($_POST) {
                 $_POST['Estructura2Id'],
                 $_POST['Estructura3Id'],
                 $_POST['UsuarioId'],
-                $_POST['ActivoFechaCaduc'],
+                str_replace ('T',' ',$_POST['ActivoFechaCaduc']),
                 $_POST['ActivoEliminado'],
                 $_POST['estado'],
                 $_POST['ResponsableId']
             );
             //GUARDANDO EN LA VARIABLE ACTIVOINSERTADO LO QUE VENGA DE LA FUNCION INSERTAACTIVOFIJO
             $activoInsertado = $activoFijo->insertarActivoFijo($objActivoFijo);
+            
             //SI INSERTARACTIVO FIJO ES DIFERENTE A 0 ENTONCES SE OBTETIENE ENTONCES SE OBTIENE EL ID ACTIVO
             //DEL ACTIVO QUE SE ESTA INSERTADO, SI NO MANDA A ERROR
             if($activoInsertado != 0){
@@ -125,6 +126,11 @@ if ($_POST) {
             case "getInfoActivo":
                 $resp = $activoFijo->tablaActivoFijo();
                 echo json_encode($resp);
+            break;
+            case "getInfoHistorial":
+                $id = $_POST['ActivoId'];
+                $resp2 = $activoHist->mostrarHistorial($id);
+                echo json_encode($resp2);
             break;
         }
     }

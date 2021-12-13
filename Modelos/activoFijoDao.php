@@ -11,7 +11,7 @@ class activoFijoDAO
 
     public function conectar()
     {
-        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
+        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
         $basedatos = "ACTIVO";
         try {
 
@@ -175,9 +175,10 @@ class activoFijoDAO
         }
     }
 
+    //CONVERT FECHA 
     public function tablaActivoFijo(){
         $this->conectar();
-        $sql = "SELECT a.*, b.*, c.Nombre_Responsable as Responsable, d.usuario_nombre as Usuario, e.* 
+        $sql = "SELECT a.*,convert(varchar,a.Activo_fecha_adq,127) as FechaAdquisicion,convert(varchar,a.Activo_fecha_adq,127) as FechaCaducacion,b.*,c.Nombre_Responsable as Responsable, d.usuario_nombre as Usuario, e.* 
         FROM Activo a 
         INNER JOIN Tipo_Activo b 
         ON a.Activo_tipo = b.tipo_activo_id

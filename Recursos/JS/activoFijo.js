@@ -1,6 +1,7 @@
-$(document).ready(function () {
-    mostrar()
-
+$.noConflict();
+jQuery( document ).ready(function( $ ) {
+    
+    //CUANDO SE INSERTA UN ACTIVO FIJO
     $('#formActivo').submit(function (e) {
         e.preventDefault();
         var formData = new FormData($('#formActivo')[0]);
@@ -47,98 +48,201 @@ $(document).ready(function () {
         });
     });
 
-    function mostrar() {
-        $.noConflict(true);
-        $('#activoInformacion').DataTable({
+    //EN LA CARGA DE LA PAGINA SE CARGA LA TABLA DE ACTIVO FIJO MEDIANTE 
+    //AJAX CON DATATABLE
+    $('#activoInformacion').DataTable({
+        "ajax": {
+            "url": "../Controladores/activoFijoControlador.php",
+            "method": "post",
+            "dataType": "json",
+            "data": { "key": "getInfoActivo" },
+            "dataSrc": ""
+        },
+        "columns": [
+            {
+                data: "Activo_id",
+                className: "Activo_id"
+            },
+            {
+                data: "Activo_referencia",
+                className: "Activo_referencia"
+            },
+            {
+                data: "PartidaCta",
+                className: "PartidaCta"
+            },
+            {
+                data: "Empresa_id",
+                className: "Empresa_id"
+            },
+            {
+                data: "numero_serie",
+                className: "numero_serie"
+            },
+            {
+                data: "Activo_fecha_adq",
+                className: "Activo_fecha_adq"
+            },
+            {
+                data: "Activo_fecha_caduc",
+                className: "Activo_fecha_caduc"
+            },
+            {
+                data: "Activo_factura",
+                className: "Activo_factura"
+            },
+            {
+                data: "tipo_activo_nombre",
+                className: "tipo_activo_nombre"
+            },
+            {
+                data: "IP",
+                className: "IP"
+            },
+            {
+                data: "Usuario",
+                className: "Usuario"
+            },
+            {
+                data: "Modelo",
+                className: "Modelo"
+            },
+            {
+                data: "Estructura1_id",
+                className: "Estructura1_id"
+            },
+            {
+                data: "Estructura2_id",
+                className: "Estructura2_id"
+            },
+            {
+                data: "Estructura3_id",
+                className: "Estructura3_id"
+            },
+            {
+                data: "Activo_descripcion",
+                className: "Activo_descripcion"
+            },
+            {
+                data: "Activo_eliminado",
+                className: "Activo_eliminado"
+            },
+            {
+                data: null,
+                className: "center",
+                defaultContent: '<button type="button" class="btn btn-spotify btnMostrar" id="mostrar"><i class="fa fa-eye"></i></button> <button type="button" class="btn btn-facebook btnEditar"><i class="fa fa-pencil-square-o"></i></button> <button type="button" class="btn btn-pinterest btnEliminar"><i class="fa fa-trash-o"></i></button> '
+            },
+            {
+                data: "Imagen",
+                "render": function (data) {
+                    return '<img src="../Recursos/Multimedia/Imagenes/Upload/' + data + '" height="100px" width="100px" >';
+                }
+            }
+            
+        ],
+        responsive: true,
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se han encontrado datos - intente nuevamente",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay datos disponibles",
+            "infoFiltered": "(Filtrado de _MAX_ activos totales)",
+            "search": "Buscar",
+            "paginate": {
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    });
+
+    $('#activoInformacion tbody').on('click', 'tr', function () {
+        $('#activoHistorial').dataTable().fnDestroy();
+        var table = $('#activoInformacion').DataTable();
+        //LA VARIABLE DATA OBTIENE TODOS LOS VALORES QUE ESTAN EN LA TABLA CON ID ACTIVOINFORMACION
+        var data = table.row(this).data();
+        
+        cargarGeneral1(
+            data['Activo_referencia'],
+            data['PartidaCta'],
+            data['Empresa_id'],
+            data['numero_serie'],
+            data['Activo_id'],
+            data['FechaAdquisicion'],
+            data['Activo_factura'],
+            data['tipo_activo_id'],
+            data['IP']
+        );
+
+        cargarGeneral2(
+            data['Usuario'],
+            data['Modelo'],
+            data['Estructura1_id'],
+            data['Estructura2_id'],
+            data['Estructura3_id'],
+            data['Activo_descripcion'],
+            data['FechaCaducacion'],
+            data['Activo_eliminado']
+        );
+
+        cargarEspComputadora(
+            data['Procesador'],
+            data['Generacion'],
+            data['Ram'],
+            data['TipoRam'],
+            data['DiscoDuro'],
+            data['Capacidad_D1'],
+            data['DiscoDuro2'],
+            data['Capacidad_D2'],
+            data['Office'],
+            data['SO']
+        );
+
+        cargarEspImpresora(
+            data['TonerN'],
+            data['TonerM'],
+            data['TonerC'],
+            data['TonerA'],
+            data['tambor'],
+            data['fusor']
+        );
+
+        cargarEspProyector(
+            data['HorasUso'],
+            data['HoraEco']
+        );
+
+        
+        
+
+        $('#activoHistorial').DataTable({
             "ajax": {
                 "url": "../Controladores/activoFijoControlador.php",
                 "method": "post",
                 "dataType": "json",
-                "data": { "key": "getInfoActivo" },
+                "data": { "key": "getInfoHistorial", "ActivoId": data['Activo_id'] },
                 "dataSrc": ""
             },
             "columns": [
                 {
-                    data: "Activo_id",
-                    className: "Activo_id"
+                    data: "Activo_referencia",
+                    className: "Activo_referencia"
                 },
                 {
                     data: "Activo_referencia",
                     className: "Activo_referencia"
                 },
                 {
-                    data: "PartidaCta",
-                    className: "PartidaCta"
+                    data: "Activo_referencia",
+                    className: "Activo_referencia"
                 },
                 {
-                    data: "Empresa_id",
-                    className: "Empresa_id"
+                    data: "Activo_referencia",
+                    className: "Activo_referencia"
                 },
                 {
-                    data: "numero_serie",
-                    className: "numero_serie"
-                },
-                {
-                    data: "Activo_fecha_adq",
-                    className: "Activo_fecha_adq"
-                },
-                {
-                    data: "Activo_fecha_caduc",
-                    className: "Activo_fecha_caduc"
-                },
-                {
-                    data: "Activo_factura",
-                    className: "Activo_factura"
-                },
-                {
-                    data: "tipo_activo_nombre",
-                    className: "tipo_activo_nombre"
-                },
-                {
-                    data: "IP",
-                    className: "IP"
-                },
-                {
-                    data: "Usuario",
-                    className: "Usuario"
-                },
-                {
-                    data: "Modelo",
-                    className: "Modelo"
-                },
-                {
-                    data: "Estructura1_id",
-                    className: "Estructura1_id"
-                },
-                {
-                    data: "Estructura2_id",
-                    className: "Estructura2_id"
-                },
-                {
-                    data: "Estructura3_id",
-                    className: "Estructura3_id"
-                },
-                {
-                    data: "Activo_descripcion",
-                    className: "Activo_descripcion"
-                },
-                {
-                    data: "Activo_eliminado",
-                    className: "Activo_eliminado"
-                },
-                {
-                    data: null,
-                    className: "center",
-                    defaultContent: '<button type="button" class="btn btn-spotify btnMostrar" id="mostrar"><i class="fa fa-eye"></i></button> <button type="button" class="btn btn-facebook btnEditar"><i class="fa fa-pencil-square-o"></i></button> <button type="button" class="btn btn-pinterest btnEliminar"><i class="fa fa-trash-o"></i></button> '
-                },
-                {
-                    data: "Imagen",
-                    "render": function (data) {
-                        return '<img src="../Recursos/Multimedia/Imagenes/Upload/' + data + '" height="50px" width="50px" >';
-                    }
+                    data: "Activo_referencia",
+                    className: "Activo_referencia"
                 }
-                
-
             ],
             responsive: true,
             "language": {
@@ -153,51 +257,60 @@ $(document).ready(function () {
                     "previous": "Anterior"
                 }
             }
-        });
-    }
-
-    $('#activoInformacion tbody').on('click', 'tr', function () {
-        var table = $('#activoInformacion').DataTable();
-        //LA VARIABLE DATA OBTIENE TODOS LOS VALORES QUE ESTAN EN LA TABLA CON ID ACTIVOINFORMACION
-        var data = table.row(this).data();
-        console.log(data);
-        //PONEMOS DATA MAS EL NOMBRE DE LA COLUMNA SEGUN LA BASE DE DATOS Y OBTENEMOS EL VALOR
-        $('input[name=ActivoReferencia]').val(data['Activo_referencia']);
-        $('input[name=PartidaCta]').val(data['PartidaCta']);
-        $('input[name=EmpresaId]').val(data['Empresa_id']);
-        $('input[name=numeroSerie]').val(data['numero_serie']);
-        $('input[name=ActivoId]').val(data['Activo_id']);
-        //INPUT FECHA HAY PROBLEMAS CON PASAR LA INFORMACION DE LA BASE DE DATOS AL INPUT
-        $('input[name=ActivoFactura]').val(data['Activo_factura']);
-        $('#ActivoTipo option[value=' + data['tipo_activo_id'] + ']').prop('selected', true);
-        $('input[name=ip]').val(data['IP']);
-        $('input[name=nombreUsuario]').val(data['Usuario']);
-        $('input[name=Modelo]').val(data['Modelo']);
-        $('#Estructura1Id option[value=' + data['Estructura1_id'] + ']').prop('selected', true);
-        $('#Estructura2Id option[value=' + data['Estructura2_id'] + ']').prop('selected', true);
-        $('#Estructura3Id option[value=' + data['Estructura3_id'] + ']').prop('selected', true);
-        $('textarea[name=ActivoDescripcion]').val(data['Activo_descripcion']);
-        //INPUT FECHA HAY PROBLEMAS CON PASAR LA INFORMACION DE LA BASE DE DATOS AL INPUT
-        $('#ActivoEliminado option[value=' + data['Activo_eliminado'] + ']').prop('selected', true);
-        $('input[name=Procesador]').val(data['Procesador']);
-        $('input[name=Generacion]').val(data['Generacion']);
-        $('input[name=Ram]').val(data['Ram']);
-        $('input[name=TipoRam]').val(data['TipoRam']);
-        $('input[name=DiscoDuro]').val(data['DiscoDuro']);
-        $('input[name=CapacidadD1]').val(data['Capacidad_D1']);
-        $('input[name=DiscoDuro2]').val(data['DiscoDuro2']);
-        $('input[name=CapacidadD2]').val(data['Capacidad_D2']);
-        $('input[name=Office]').val(data['Office']);
-        $('input[name=SO]').val(data['SO']);
-        $('input[name=TonerN]').val(data['TonerN']);
-        $('input[name=TonerM]').val(data['TonerM']);
-        $('input[name=TonerC]').val(data['TonerC']);
-        $('input[name=TonerA]').val(data['TonerA']);
-        $('input[name=tambor]').val(data['tambor']);
-        $('input[name=fusor]').val(data['fusor']);
-        $('input[name=HorasUso]').val(data['HorasUso']);
-        $('input[name=HoraEco]').val(data['HoraEco']);
-        
+        });    
     });
 
+    function cargarGeneral1(activoRerefencia,partidaContabilidad,empresaId,numeroSerie,activoId,fechaAdq,activoFactura,activoTipo,ip){
+        $('input[name=ActivoReferencia]').val(activoRerefencia);
+        $('input[name=PartidaCta]').val(partidaContabilidad);
+        $('input[name=EmpresaId]').val(empresaId);
+        $('input[name=numeroSerie]').val(numeroSerie);
+        $('input[name=ActivoId]').val(activoId);
+        $('input[name=ActivoFechaAdq]').val(fechaAdq);
+        $('input[name=ActivoFactura]').val(activoFactura);
+        $('#ActivoTipo option[value=' + activoTipo + ']').prop('selected', true);
+        $('input[name=ip]').val(ip);
+    }
+
+    function cargarGeneral2(nombreUsuario,modelo,estructura1,estructura2,estructura3,activoDescripcion,fechaCaducacion,activoEliminado){
+        $('input[name=nombreUsuario]').val(nombreUsuario);
+        $('input[name=Modelo]').val(modelo);
+        $('#Estructura1Id option[value=' + estructura1 + ']').prop('selected', true);
+        $('#Estructura2Id option[value=' + estructura2 + ']').prop('selected', true);
+        $('#Estructura3Id option[value=' + estructura3 + ']').prop('selected', true);
+        $('textarea[name=ActivoDescripcion]').val(activoDescripcion);
+        $('input[name=ActivoFechaCaduc]').val(fechaCaducacion);
+        $('#ActivoEliminado option[value=' + activoEliminado + ']').prop('selected', true);
+    }
+
+    function cargarEspComputadora(procesador,gerenacion,ram,tipoRam,discoDuro,capacidad1,discoDuro2,capacidad2,office,so){
+        $('input[name=Procesador]').val(procesador);
+        $('input[name=Generacion]').val(gerenacion);
+        $('input[name=Ram]').val(ram);
+        $('input[name=TipoRam]').val(tipoRam);
+        $('input[name=DiscoDuro]').val(discoDuro);
+        $('input[name=CapacidadD1]').val(capacidad1);
+        $('input[name=DiscoDuro2]').val(discoDuro2);
+        $('input[name=CapacidadD2]').val(capacidad2);
+        $('input[name=Office]').val(office);
+        $('input[name=SO]').val(so);
+    }
+
+    function cargarEspImpresora(toneN,tonerM,tonerC,tonerA,tambor,fusor){
+        $('input[name=TonerN]').val(toneN);
+        $('input[name=TonerM]').val(tonerM);
+        $('input[name=TonerC]').val(tonerC);
+        $('input[name=TonerA]').val(tonerA);
+        $('input[name=tambor]').val(tambor);
+        $('input[name=fusor]').val(fusor);
+    }
+
+    function cargarEspProyector(horasUso,horaEco){
+        $('input[name=HorasUso]').val(horasUso);
+        $('input[name=HoraEco]').val(horaEco);
+    }
+
+    // $('#ActivoFechaAdq').change(function(){
+    //     console.log($('#ActivoFechaAdq').val());
+    // });
 });

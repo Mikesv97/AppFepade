@@ -9,7 +9,7 @@ class historialActivoDao{
     }
 
     public function conectar(){
-        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
+        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            
@@ -63,6 +63,26 @@ class historialActivoDao{
         }catch(PDOException $error){
             return $error->getMessage();
         }  
+    }
+
+    public function mostrarHistorial($id){
+        $this->conectar();
+        $sql = "SELECT a.*, b.Activo_descripcion as Descripcion, c.Nombre_Responsable as Responsable,
+        b.Activo_referencia 
+        FROM Historico a
+        INNER JOIN Activo b 
+        ON a.Activo_id = b.Activo_id 
+        INNER JOIN Activo_responsable c
+        ON c.Responsable_codigo = a.Responsable_id
+        WHERE a.Activo_id = ?";
+        $respuesta = $this->con->prepare($sql);
+        try{
+            $respuesta->execute([$id]);
+            $data = $respuesta->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
     }
 
 }
