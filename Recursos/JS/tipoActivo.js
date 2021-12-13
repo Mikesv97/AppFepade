@@ -10,28 +10,28 @@ $(document).ready(function () {
         tipo = $(this).val();
         switch (tipo) {
             case '1':
-                $('#impresora').hide();
-                $('#computadora').show();
-                $('#proyector').hide();
-                $('#tipoactivo').val('computadora');
+                $('#Impresor').hide();
+                $('#PC').show();
+                $('#Proyector').hide();
+                $('#tipoactivo').val('PC');
                 break;
             case '2':
-                $('#impresora').hide();
-                $('#computadora').show();
-                $('#proyector').hide();
-                $('#tipoactivo').val('computadora');
+                $('#Impresor').hide();
+                $('#PC').show();
+                $('#Proyector').hide();
+                $('#tipoactivo').val('Laptop');
                 break;
             case '3':
-                $('#impresora').show();
-                $('#computadora').hide();
-                $('#proyector').hide();
-                $('#tipoactivo').val('impresora');
+                $('#Impresor').show();
+                $('#PC').hide();
+                $('#Proyector').hide();
+                $('#tipoactivo').val('Impresor');
                 break;
             case '4':
-                $('#proyector').show();
-                $('#computadora').hide();
-                $('#impresora').hide();
-                $('#tipoactivo').val('proyector');
+                $('#Proyector').show();
+                $('#PC').hide();
+                $('#Impresor').hide();
+                $('#tipoactivo').val('Proyector');
                 break;
             default:
 

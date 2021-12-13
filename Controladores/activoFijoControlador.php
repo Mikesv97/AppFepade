@@ -120,8 +120,12 @@ if ($_POST) {
             }else{
                 echo json_encode("No insertado");
             }
-            
-                break;
+            break;
+            //MOSTRANDO TABLA ACTIVO FIJO
+            case "getInfoActivo":
+                $resp = $activoFijo->tablaActivoFijo();
+                echo json_encode($resp);
+            break;
         }
     }
 }

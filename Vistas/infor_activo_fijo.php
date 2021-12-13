@@ -1,8 +1,8 @@
 <?php
 include('layout/header.php');
 include('layout/navbar.php');
-include_once '../Modelos/activoFijoInformacionDao.php';
-$obj = new Activo_fijo_informacion();
+include_once '../Modelos/activoFijoDao.php';
+$obj = new activoFijoDAO();
 
 //variables que almacenan el nombre y id del usuario que inicia sesion
 $usuario = $_SESSION["usuario"]["nombre"];
@@ -16,9 +16,6 @@ $date = date('d-m-Y');
 </script>
 
 <style>
-    .alturaFija {
-        min-height: 400px;
-    }
     .borde{
         /* border: 0.5px solid rgba(0, 0, 0, 0.3); */
         padding: 10px;
@@ -86,7 +83,7 @@ $date = date('d-m-Y');
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="party">Fecha de adquisición*</label>
-                                            <input id="party" type="date" name="ActivoFechaAdq" class="form-control" required>
+                                            <input id="ActivoFechaAdq" type="date" name="ActivoFechaAdq" class="form-control" required>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Número de factura*</label>
@@ -125,8 +122,8 @@ $date = date('d-m-Y');
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Departamento*</label>
                                             <select name="Estructura1Id" id="Estructura1Id" class="form-control">
-                                                <?php
-                                                $data = $obj->comboDapartamento();
+                                              <?php
+                                                  $data = $obj->comboDapartamento();
                                                 foreach ($data as $indice => $valor) {
                                                     echo ' <option value="' . $indice . '">' . $valor . ' </option>';
                                                 }
@@ -208,10 +205,9 @@ $date = date('d-m-Y');
                             </div>
                             <div class="row">
                                 <div class="col-md-5 borde my-2"">
-                                    <input type="text" id="tipoactivo">
                                     <h5>Especificaciones de activo </h5>
                                     <br>
-                                    <div class="form-row" id="computadora">
+                                    <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Procesador*</label>
                                             <input type="text" name="Procesador" class="form-control" maxlength="50">
@@ -253,7 +249,7 @@ $date = date('d-m-Y');
                                             <input type="text" name="SO" class="form-control" maxlength="50">
                                         </div>
                                     </div>
-                                    <div class="form-row alturaFija" id="impresora">
+                                    <div class="form-row alturaFija">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Toner negro*</label>
                                             <input type="text" name="TonerN" class="form-control" maxlength="50">
@@ -279,7 +275,7 @@ $date = date('d-m-Y');
                                             <input type="text" name="fusor" class="form-control" maxlength="50">
                                         </div>
                                     </div>
-                                    <div class="form-row alturaFija" id="proyector">
+                                    <div class="form-row alturaFija">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Horas de uso*</label>
                                             <input type="number" name="HorasUso" class="form-control" maxlength="50">
@@ -309,12 +305,25 @@ $date = date('d-m-Y');
                             <table id="activoInformacion" name="activoInformacion" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Empresa</th>
+                                        <th>Activo id</th>
+                                        <th>Referencia</th>
+                                        <th>Codigo contabilidad</th>
+                                        <th>Codigo proyecto</th>
+                                        <th>Numero de serie</th>
+                                        <th>Fecha adquisición</th>
+                                        <th>Fecha de caducación</th>
+                                        <th>Numero de factura</th>
+                                        <th>Tipo de activo</th>
+                                        <th>IP</th>
+                                        <th>Nombre de usuario</th>
+                                        <th>Modelo</th>
                                         <th>Departamento</th>
                                         <th>F.F.</th>
                                         <th>Área</th>
+                                        <th>Descripción de activo</th>
+                                        <th>Activo Eliminado</th>
                                         <th>Opciones</th>
+                                        <th>Imagen</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -322,12 +331,25 @@ $date = date('d-m-Y');
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Empresa</th>
+                                    <th>Id</th>
+                                        <th>Codigo contabilidad</th>
+                                        <th>Referencia</th>
+                                        <th>Codigo proyecto</th>
+                                        <th>Numero de serie</th>
+                                        <th>Fecha adquisición</th>
+                                        <th>Fecha de caducación</th>
+                                        <th>Numero de factura</th>
+                                        <th>Tipo de activo</th>
+                                        <th>IP</th>
+                                        <th>Nombre de usuario</th>
+                                        <th>Modelo</th>
                                         <th>Departamento</th>
                                         <th>F.F.</th>
                                         <th>Área</th>
+                                        <th>Descripción de activo</th>
+                                        <th>Activo Eliminado</th>
                                         <th>Opciones</th>
+                                        <th>Imagen</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -340,7 +362,7 @@ $date = date('d-m-Y');
 </div>
 
 <!-- script para mostrar o ocultar los campos segun, el tiepo de activo que se ingresara -->
-<script src="../Recursos/JS/tipoActivo.js"></script>
+<!-- <script src="../Recursos/JS/tipoActivo.js"></script> -->
 <script src="../Recursos/JS/activoFijo.js"></script>
 
 
@@ -351,7 +373,6 @@ $date = date('d-m-Y');
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script> -->
 
 <!-- script para poner el boton que muestra las demas columnas de la tabla activo fijo y cambiando el idioma-->
-<script src="../Recursos/JS/activoInformacion.js"></script>
 
 <script>
 
