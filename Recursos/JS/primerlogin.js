@@ -1,5 +1,11 @@
 $(document).ready(function () {
-    mensajeLoad();
+      mensajeLoad();
+  
+
+    $("#cambiarUsuario").on("click",function(e){
+      e.preventDefault();
+      $(location).attr('href',"../index.php?s=true");
+    });
 
 });
 

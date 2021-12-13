@@ -33,14 +33,14 @@ session_start();
                     <span class="text-gray-900">Cambio de contraseña</span>
                 </h2>
                     <form class="login-container shadow">
-                        <p><input type="password" placeholder="Contraseña actual"></p>
-                        <p><input type="password" placeholder="Contraseña nueva"></p>
-                        <p><input type="password" placeholder="Confirmar contraseña"></p>
-                        
+                        <p><input name="usuarioId" class="form-control" type="text" placeholder="Usuario id" value="<?=$_SESSION["usuario"]["id"]?>" readonly></p>
+                        <p><input name="passOld" id="passOld" class="form-control" type="password" placeholder="Contraseña actual"></p>
+                        <p><input name="passNew1" id="passNew1" class="form-control" type="password" placeholder="Contraseña nueva"></p>
+                        <p><input  name="passNew2" id="passNew2" class="form-control" type="password" placeholder="Confirmar contraseña nueva"></p>
                         <div class="textLink">
                         <button type="submit" class="btn btn-danger ">Cambiar contraseña</button>
                        <div class="textLink my-2">
-                           <a class="h6" href="../index.php?s=true">
+                           <a id="cambiarUsuario" class="h6" href=".#">
                                Cambiar usuario
                            </a>
                         <div>
