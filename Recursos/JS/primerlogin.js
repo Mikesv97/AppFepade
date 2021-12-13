@@ -13,7 +13,7 @@ function mensajeLoad(){
     Swal.fire({
         title: 'Primer inicio de sesión',
         text: "¡Hola!, este es tu primer inicio de sesión, por seguridad debes cambiar tu contraseña actual "
-        +'de lo contrario no podrás iniciar sesión hasta que hagas el cambio. Si crees que se trata '
+        +'de lo contrario no podrás entrar al sistema hasta que hagas el cambio. Si crees que se trata '
         +'de algún problema contacta a tu administrador o personal de TI.',
         icon: 'warning',
         showCancelButton: true,
