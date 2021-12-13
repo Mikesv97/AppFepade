@@ -174,4 +174,26 @@ class activoFijoDAO
             return $error->getMessage();
         }
     }
+
+    public function tablaActivoFijo(){
+        $this->conectar();
+        $sql = "SELECT a.*, b.*, c.Nombre_Responsable as Responsable, d.usuario_nombre as Usuario, e.* 
+        FROM Activo a 
+        INNER JOIN Tipo_Activo b 
+        ON a.Activo_tipo = b.tipo_activo_id
+        INNER JOIN  Activo_responsable c 
+        ON a.Responsable_codigo = c.Responsable_codigo
+        INNER JOIN Usuario d
+        ON a.Usuario_id = d.usuario_id
+        INNER JOIN Activo_Especificacion e
+        ON a.Activo_id = e.Activo_id";
+        $respuesta = $this->con->prepare($sql);
+        try{
+            $respuesta->execute();
+            $data = $respuesta->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
 }
