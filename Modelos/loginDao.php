@@ -252,7 +252,7 @@ class LoginDao{
         $this->conectar();
         //establecemos la consulta
         $sql="select count(correo_Electronico) from usuario where correo_electronico = ?";
-        //preparamos la consulta
+        //preparamos la consulta a ejecutar
         $respuesta = $this->con->prepare($sql);
         try{
 

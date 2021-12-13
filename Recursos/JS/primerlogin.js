@@ -29,7 +29,7 @@ $(document).ready(function () {
           dataType: "json",
           data: { "key": "validarPassOld","usuario":user, "passOld": passOld},
           success: function (r) {
-            console.log(r);
+            console.log("respuesta"+r);
           },
           error: function (r) {
             console.log(r);

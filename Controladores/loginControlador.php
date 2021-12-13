@@ -79,6 +79,7 @@ if(isset($_POST["key"])){
             case "validarPassOld":
               $usuario= $_POST["usuario"];
               $passOld = $_POST["passOld"]);
+              echo $passOld;
             break;
         }
 }
