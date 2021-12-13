@@ -37,7 +37,6 @@ class UsuarioNuevoDao{
 
     }
 
-
     public function insertarUsuario($objeto){
         $usuario = new UsuarioNuevo();
         $usuario = $objeto;
@@ -211,7 +210,6 @@ class UsuarioNuevoDao{
             return $error->getMessage();
         }
     }
-
     
     //funcion que elimina el registro de bitacora usuario
     //retorna el número de filas afectadas

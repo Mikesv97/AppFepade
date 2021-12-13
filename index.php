@@ -1,10 +1,19 @@
 <?php
 session_start();
-/*if(isset($_SESSION["usuario"]["nombre"])){
-    header("Location: vistas/home.php");
-}*/
+if(isset($_SESSION["usuario"]["nombre"]) && isset($_SESSION["usuario"]["usuarioNuevo"])){
+  if($_SESSION["usuario"]["usuarioNuevo"] ==0){
+    header("Location: vistas/infor_activo_fijo.php");
+  }else{
+    header("Location: vistas/primerlogin.php");
+  }
+}
 
-
+if(isset($_REQUEST["s"])){
+  if($_REQUEST["s"]){
+    session_destroy();
+    header("Location: index.php");
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +27,6 @@ session_start();
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Bienvenidos activo fepade- login</title>
-
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
   <link href="recursos/css/ruang-admin.min.css" rel="stylesheet">
   <link href="recursos/css/ruang-admin.css" rel="stylesheet">
