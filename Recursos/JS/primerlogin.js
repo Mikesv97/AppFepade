@@ -1,6 +1,5 @@
 $(document).ready(function () {
-      mensajeLoad();
-  
+    mensajeLoad();
 
     $("#cambiarUsuario").on("click",function(e){
       e.preventDefault();
