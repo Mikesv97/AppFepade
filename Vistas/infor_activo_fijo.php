@@ -16,9 +16,26 @@ $date = date('d-m-Y');
 </script>
 
 <style>
-    .borde{
+    .borde {
         /* border: 0.5px solid rgba(0, 0, 0, 0.3); */
         padding: 10px;
+    }
+
+    .comentarioAsig {
+        min-height: 250px;
+        max-height: 250px;
+        min-width: 100%;
+        max-width: 100%;
+        overflow: scroll;
+        resize: none;
+    }
+
+    .borde-left{
+        border-left: 1px solid black;
+    }
+
+    .borde-top{
+        border-top: 1px solid black;
     }
 </style>
 
@@ -55,11 +72,10 @@ $date = date('d-m-Y');
                     </div>
                     <div class="card-body">
                         <form action="#" id="formActivo" class="formActivo" method="POST" enctype="multipart/form-data">
-                            <div class="row ">
-                                <div class="col-md-5 borde">
+                            <div class="row">
+                                <div class="col-md-6 borde">
                                     <!-- INICIO PRIMERA COLUMNA DEL FORM -->
-                                    <h5>Información de activo</h5>
-                                    <br>
+                                    <h5 class="my-2 label label-danger">Información general de activo</h5>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Referencia*</label>
@@ -83,7 +99,7 @@ $date = date('d-m-Y');
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="party">Fecha de adquisición*</label>
-                                            <input id="ActivoFechaAdq" type="date" name="ActivoFechaAdq" class="form-control" required>
+                                            <input id="ActivoFechaAdq" type="datetime-local" name="ActivoFechaAdq" class="form-control" required>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Número de factura*</label>
@@ -107,9 +123,10 @@ $date = date('d-m-Y');
                                     </div>
                                     <!-- FIN PRIMERA COLUMNA DEL FORM -->
                                 </div>
-                                <div class="col-md-6 borde offset-md-1">
+                                <div class="col-md-6">
                                     <!-- INICIO SEGUNDA COLUNMA DEL FORM -->
-                                    <div class="form-row">
+                                    <h5 class="my-2 label label-danger">Información general de activo</h5>
+                                    <div class="form-row borde-left">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Usuario*</label>
                                             <input type="text" name="UsuarioId" value="<?= $idUSuario; ?>" hidden>
@@ -122,8 +139,8 @@ $date = date('d-m-Y');
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Departamento*</label>
                                             <select name="Estructura1Id" id="Estructura1Id" class="form-control">
-                                              <?php
-                                                  $data = $obj->comboDapartamento();
+                                                <?php
+                                                $data = $obj->comboDapartamento();
                                                 foreach ($data as $indice => $valor) {
                                                     echo ' <option value="' . $indice . '">' . $valor . ' </option>';
                                                 }
@@ -162,7 +179,7 @@ $date = date('d-m-Y');
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Fecha de caducación</label>
-                                            <input type="date" name="ActivoFechaCaduc" class="form-control">
+                                            <input type="datetime-local" name="ActivoFechaCaduc" class="form-control">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Activo eliminado</label>
@@ -175,17 +192,18 @@ $date = date('d-m-Y');
                                     <!-- FIN SEGUNDA COLUMNA DEL FORM -->
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12 borde my-3">
+                            <div class="row borde-top">
+                                <div class="col-md-6 borde">
+                                <h5 class="my-2 label label-danger">Responsable y comentarios de asignación</h5>
                                     <div class="form-row ">
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-6">
                                             <label class="text-label">Estado de activo</label>
                                             <select name="estado" id="estado" class="form-control">
                                                 <option value="1">Disponible</option>
                                                 <option value="0">No disponible</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-6">
                                             <label class="text-label">Responsable</label>
                                             <select name="ResponsableId" id="ResponsableId" class="form-control">
                                                 <?php
@@ -196,18 +214,26 @@ $date = date('d-m-Y');
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-12">
                                             <label class="text-label">Comentarios de asignación</label>
-                                            <textarea class="form-control" name="HistoricoComentario" rows="3" maxlength="50"></textarea>
+                                            <textarea class="form-control comentarioAsig" name="HistoricoComentario" rows="3" maxlength="50"></textarea>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6 borde">
+                                    <div class="text-center borde-left">
+                                        <h5 class="my-2 label label-danger">Imagen de activo fijo</h5>
+                                    
+                                    <div style="background-color: purple; width: 320px; height: 320px; margin: 0 auto;">
+                                        IMAGEN DE PRUEBA
+                                    </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-5 borde my-2"">
-                                    <h5>Especificaciones de activo </h5>
-                                    <br>
-                                    <div class="form-row">
+                            <div class="row borde-top">
+                                <div class="col-md-4">
+                                    <h5 class="my-2 label label-danger">Especificaciones computadora</h5>
+                                    <div class="form-row my-2 ">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Procesador*</label>
                                             <input type="text" name="Procesador" class="form-control" maxlength="50">
@@ -249,10 +275,13 @@ $date = date('d-m-Y');
                                             <input type="text" name="SO" class="form-control" maxlength="50">
                                         </div>
                                     </div>
-                                    <div class="form-row alturaFija">
+                                </div>
+                                <div class="col-md-4">
+                                    <h5 class="my-2 label label-danger">Especificaciones impresora</h5>
+                                    <div class="form-row my-2 borde-left">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Toner negro*</label>
-                                            <input type="text" name="TonerN" class="form-control" maxlength="50">
+                                            <input type="text" name="TonerN" id="TonerN" class="form-control" maxlength="50">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Toner magenta*</label>
@@ -274,8 +303,8 @@ $date = date('d-m-Y');
                                             <label class="text-label">Fusor</label>
                                             <input type="text" name="fusor" class="form-control" maxlength="50">
                                         </div>
-                                    </div>
-                                    <div class="form-row alturaFija">
+                                        <h5 class="my-4 label label-danger">Especificaciones proyector</h5>
+                                        <div class="form-group col-md-6"></div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Horas de uso*</label>
                                             <input type="number" name="HorasUso" class="form-control" maxlength="50">
@@ -286,11 +315,36 @@ $date = date('d-m-Y');
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 borde my-2 offset-md-1">
+                                <div class="col-md-4">
+                                    <h5 class="my-2 label label-danger">Historial activo</h5>
+                                    <div class="borde-left">
+                                    <table id="activoHistorial" name="activoHistorial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
+                                        <thead>
+                                            <tr>
+                                                <th>Referencia</th>
+                                                <th>Activo Descripcion</th>
+                                                <th>Area</th>
+                                                <th>Responsable</th>
+                                                <th>Comentario</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Referencia</th>
+                                                <th>Activo Descripcion</th>
+                                                <th>Area</th>
+                                                <th>Responsable</th>
+                                                <th>Comentario</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-tumblr" name="btnInsertar" id="btnInsertar">Insertar</button>
+                            <button type="submit" class="btn btn-tumblr my-4" name="btnInsertar" id="btnInsertar">Insertar</button>
                         </form>
                     </div>
                 </div>
@@ -331,7 +385,7 @@ $date = date('d-m-Y');
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                    <th>Id</th>
+                                        <th>Id</th>
                                         <th>Codigo contabilidad</th>
                                         <th>Referencia</th>
                                         <th>Codigo proyecto</th>
@@ -362,15 +416,16 @@ $date = date('d-m-Y');
 </div>
 
 <!-- script para mostrar o ocultar los campos segun, el tiepo de activo que se ingresara -->
-<!-- <script src="../Recursos/JS/tipoActivo.js"></script> -->
-<script src="../Recursos/JS/activoFijo.js"></script>
-
 
 <!-- Datatable -->
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script> -->
+
+<!-- <script src="../Recursos/JS/tipoActivo.js"></script> -->
+<script src="../Recursos/JS/activoFijo.js"></script>
+<!-- <script src="../Recursos/JS/guardo.js"></script> -->
 
 <!-- script para poner el boton que muestra las demas columnas de la tabla activo fijo y cambiando el idioma-->
 
