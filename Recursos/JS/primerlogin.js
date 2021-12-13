@@ -20,6 +20,23 @@ $(document).ready(function () {
         });
     });
 
+    $("#passOld").change(function(){
+      var user = $("#usuarioId").val();
+      var passOld = $("#passOld").val();
+        $.ajax({
+          url: "../Controladores/loginControlador.php",
+          method: "post",
+          dataType: "json",
+          data: { "key": "validarPassOld","usuario":user, "passOld": passOld},
+          success: function (r) {
+            console.log(r);
+          },
+          error: function (r) {
+            console.log(r);
+          }
+        });
+    });
+
 });
 
 function mensajeLoad(){

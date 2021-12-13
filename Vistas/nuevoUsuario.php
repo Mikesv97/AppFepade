@@ -35,32 +35,32 @@ include('layout/navbar.php');
                 <form id="frmNuevoUsuario" class="my-4">
                     <div class="form-group">
                         <div class="form-group">
-                            <label for="txtNombreUser">Nombre completo</label>
+                            <label for="txtNombreUser">Nombre completo *</label>
                             <input type="text" class="form-control" id="txtNombreUser" name ="txtNombreUser" maxlength="100" placeholder="Nombre completo del usuario" required>
                         </div>
                         <div class="form-group">
-                            <label for="txtCorreoUsuario">Correo electrónico</label>
+                            <label for="txtCorreoUsuario">Correo electrónico *</label>
                             <input type="email" class="form-control" id="txtCorreoUsuario" name="txtCorreoUsuario" placeholder="alguien@algo.com" maxlength="50" required>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="txtPassword1">Contraseña</label>
+                                <label for="txtPassword1">Contraseña *</label>
                                 <input type="password" class="form-control" id="txtPassword1" name="txtPassword1" placeholder="contraseña" maxlength="10" required>
                             </div>
                                 <div class="form-group col-md-6">
-                                <label for="txtPassword2">Repite la contraseña</label>
+                                <label for="txtPassword2">Repite la contraseña *</label>
                                 <input type="password" class="form-control" id="txtPassword2" name="txtPassword2" placeholder="confirmar contraseña" maxlength="10" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <label for="txtNickUser">ID del usuario</label>
+                                <label for="txtNickUser">ID del usuario *</label>
                                 <input type="text" class="form-control" id="txtIdUser" name ="txtIdUser" maxlength="15" required> 
                             </div>
                             <div class="form-group col-md-8">
-                                <label for="inputState" >Selecciona rol de este usuario</label>
+                                <label for="inputState" >Selecciona rol de este usuario *</label>
                                 <select id="selectRol" name="selectRol" class="form-control" required>
-                                    <option value="0">Escoger rol...</option>
+                                    <option value="0">Escoger rol... *</option>
                                 </select>
                             </div>
                             <p class="my-2 p-1 gold" id="lbError"></p>

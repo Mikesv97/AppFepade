@@ -76,6 +76,10 @@ if(isset($_POST["key"])){
                     echo json_encode(false);
                 }
             break;
+            case "validarPassOld":
+              $usuario= $_POST["usuario"];
+              $passOld = $_POST["passOld"]);
+            break;
         }
 }
 
@@ -104,13 +108,12 @@ function recordarmeCookies($rem, $nombre,$contraseña, $usChange){
     }
 
 }
+
 function recordarmeNoCookies($rem,$nombre,$contraseña){
-    if($rem!=1){
-        //no quiere ser recordado, borramos cookies
-    }else{
+
         //si quiere ser recordado creamos las cookies
         setcookie("usuario",$nombre,time()+3600*24*30);
         setcookie("token",$contraseña,time()+3600*24*30);
-    }
+
 }
 ?>
