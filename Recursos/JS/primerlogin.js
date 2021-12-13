@@ -4,7 +4,21 @@ $(document).ready(function () {
 
     $("#cambiarUsuario").on("click",function(e){
       e.preventDefault();
-      $(location).attr('href',"../index.php?s=true");
+      var dato = $("#usuarioId").val();
+        $.ajax({
+          url: "../Controladores/loginControlador.php",
+          method: "post",
+          dataType: "json",
+          data: { "key": "cerrarSesion", "nombre": dato},
+          success: function (r) {
+              if(r){
+                  $(location).attr('href',"../index.php");
+              }
+          },
+          error: function (r) {
+            console.log(r);
+          }
+        });
     });
 
 });
