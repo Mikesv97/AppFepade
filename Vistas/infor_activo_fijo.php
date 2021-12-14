@@ -196,11 +196,10 @@ $date = date('d-m-Y');
                                     <h5 class="my-2 label label-danger col-md-12">Responsable y comentarios de asignación</h5>
                                     <div class="form-row ">
                                         <div class="form-group col-md-6">
-                                            <label class="text-label">Estado de activo</label>
-                                            <select name="estado" id="estado" class="form-control">
-                                                <option value="1">Disponible</option>
-                                                <option value="0">No disponible</option>
-                                            </select>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" name="estado" id="estado">
+                                                <label class="form-check-label" for="ActivoEliminado">Inactivo</label>
+                                            </div>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Responsable</label>
