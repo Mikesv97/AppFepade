@@ -30,18 +30,10 @@ $date = date('d-m-Y');
         resize: none;
     }
 
-    .borde-left {
-        border-left: 1px solid black;
-    }
-
-    .borde-top {
-        border-top: 1px solid black;
-    }
-
-    #mostrarImagen{
-        background-color: white; 
+    #mostrarImagen {
+        background-color: white;
         max-width: 420px;
-        max-width: 420px; 
+        max-height: 400px;
         margin: 0 auto;
     }
 </style>
@@ -134,7 +126,7 @@ $date = date('d-m-Y');
                                 <div class="col-md-6">
                                     <!-- INICIO SEGUNDA COLUNMA DEL FORM -->
                                     <h5 class="my-2 label label-danger col-md-12">Información general de activo</h5>
-                                    <div class="form-row borde-left">
+                                    <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Usuario*</label>
                                             <input type="text" name="UsuarioId" value="<?= $idUSuario; ?>" hidden>
@@ -190,11 +182,10 @@ $date = date('d-m-Y');
                                             <input type="datetime-local" name="ActivoFechaCaduc" class="form-control">
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label class="text-label">Activo eliminado</label>
-                                            <select name="ActivoEliminado" id="ActivoEliminado" class="form-control">
-                                                <option value="0">No</option>
-                                                <option value="1">Si</option>
-                                            </select>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" name="ActivoEliminado" id="ActivoEliminado">
+                                                <label class="form-check-label" for="ActivoEliminado">Eliminado</label>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- FIN SEGUNDA COLUMNA DEL FORM -->
@@ -229,16 +220,16 @@ $date = date('d-m-Y');
                                     </div>
                                 </div>
                                 <div class="col-md-6 borde">
-                                    <div class="text-center borde-left">
+                                    <div class="text-center">
                                         <h5 class="my-2 label label-danger col-md-12">Imagen de activo fijo</h5>
 
                                         <div>
-                                            <img id="mostrarImagen" >
+                                            <img id="mostrarImagen" src="../Recursos/Multimedia/Imagenes/Upload/nodisponible.jpg">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row borde-top">
+                            <div class="row">
                                 <div class="col-md-4">
                                     <h5 class="my-2 label label-danger col-md-12">Especificaciones computadora</h5>
                                     <div class="form-row my-2 ">
@@ -286,7 +277,7 @@ $date = date('d-m-Y');
                                 </div>
                                 <div class="col-md-4">
                                     <h5 class="my-2 label label-danger col-md-12">Especificaciones impresora</h5>
-                                    <div class="form-row my-2 borde-left">
+                                    <div class="form-row my-2">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Toner negro*</label>
                                             <input type="text" name="TonerN" id="TonerN" class="form-control" maxlength="50">
@@ -312,7 +303,7 @@ $date = date('d-m-Y');
                                             <input type="text" name="fusor" class="form-control" maxlength="50">
                                         </div>
                                         <h5 class="my-4 label label-danger col-md-12">Especificaciones proyector</h5>
-                                
+
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Horas de uso*</label>
                                             <input type="number" name="HorasUso" class="form-control" maxlength="50">
@@ -325,7 +316,7 @@ $date = date('d-m-Y');
                                 </div>
                                 <div class="col-md-4">
                                     <h5 class="my-2 label label-danger col-md-12">Historial activo</h5>
-                                    <div class="borde-left">
+                                    <div class="">
                                         <table id="activoHistorial" name="activoHistorial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
                                             <thead>
                                                 <tr>
@@ -347,7 +338,7 @@ $date = date('d-m-Y');
                                         </table>
                                         <button type="button" class="btn btn-facebook btn-block" data-toggle="modal" data-target=".modalHistorial">Transladar activo</button>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-tumblr my-4" name="btnInsertar" id="btnInsertar">Insertar</button>

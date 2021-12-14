@@ -29,7 +29,7 @@ if ($_POST) {
                 $_POST['Estructura3Id'],
                 $_POST['UsuarioId'],
                 str_replace ('T',' ',$_POST['ActivoFechaCaduc']),
-                $_POST['ActivoEliminado'],
+                $_POST['activoDel'],
                 $_POST['estado'],
                 $_POST['ResponsableId']
             );

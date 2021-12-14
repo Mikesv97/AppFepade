@@ -1,11 +1,35 @@
 $.noConflict();
 jQuery( document ).ready(function( $ ) {
+
+    var eliminado = 0;
+    $('#ActivoEliminado').change(function(){
+        if(eliminado == 0){
+            eliminado = 1;
+        }else{
+            eliminado = 0;
+        }
+    })
+
+    //DESABILITANDO BOTON INSERTAR CUANDO SE CARGA LA PAGINA
+    $('#btnInsertar').attr('disabled',true);
+
+    //INVOCANDO FUNCION QUE DESABILITA LOS CONTROLES DEL FORMULARIO
+    blockControl(true);
+
+    //EVENTO CLICK QUE ACTIVO O DESABILITA CONTROLES DEL FORMULARIO
+    $('#verFormulario').on('click',function(){
+        blockControl(false);
+        $('#btnInsertar').attr('disabled',false);
+        $("#formActivo")[0].reset();
+        $('#ActivoEliminado').attr('checked',false);
+        $('#mostrarImagen').attr('src','../recursos/multimedia/imagenes/upload/nodisponible.jpg');
+    });
+
     //EVENTO CHANGE QUE MUESTRA LA IMAGEN QUE SE AGREGAR EN EL INPUT FILE
     //PARA PREVISUALIZAR LA IMAGEN ANTES DE INSERTARLA
     $('#Imagen').change(function(){
         var file =this.files;
         var element = file[0];
-
         var imgTemp = URL.createObjectURL(element);
         $('#mostrarImagen').attr('src',imgTemp);
     });
@@ -15,6 +39,7 @@ jQuery( document ).ready(function( $ ) {
         var formData = new FormData($('#formActivo')[0]);
         formData.append("key", "insertar");
         formData.append("tipoActivo", $('#ActivoTipo').val());
+        formData.append("activoDel", eliminado);
         $.ajax({
             type: 'POST',
             url: "../Controladores/activoFijoControlador.php",
@@ -44,6 +69,7 @@ jQuery( document ).ready(function( $ ) {
                                 ).then(function () {
                                     $("#formActivo")[0].reset();
                                     $('#activoInformacion').DataTable().ajax.reload();
+                                    $('#mostrarImagen').attr('src','../recursos/multimedia/imagenes/upload/nodisponible.jpg');
                                 })
                             }
                         })
@@ -138,7 +164,7 @@ jQuery( document ).ready(function( $ ) {
             {
                 data: null,
                 className: "center",
-                defaultContent: '<button type="button" class="btn btn-spotify btnMostrar" id="mostrar"><i class="fa fa-eye"></i></button> <button type="button" class="btn btn-facebook btnEditar"><i class="fa fa-pencil-square-o"></i></button> <button type="button" class="btn btn-pinterest btnEliminar"><i class="fa fa-trash-o"></i></button> '
+                defaultContent: '<button type="button" class="btn btn-spotify btnMostrar" id="btnMostrar"><i class="fa fa-eye"></i></button> <button type="button" class="btn btn-facebook btnEditar"><i class="fa fa-pencil-square-o"></i></button> <button type="button" class="btn btn-pinterest btnEliminar"><i class="fa fa-trash-o"></i></button> '
             },
             {
                 data: "Imagen",
@@ -163,18 +189,36 @@ jQuery( document ).ready(function( $ ) {
         }
     });
 
-    $('#activoInformacion tbody').on('click', 'tr', function () {
+    $('#activoInformacion tbody').on('click', '#btnMostrar', function () {
+
+        //INVOCANDO FUNCION PARA DESABILITAR CONTROLES DEL FORMULARIO
+        blockControl(true);
+
         //REMOVIENTO LA CLASE COLLAPSE PARA QUE AL DARLE CLICK AL ACTIVO SE DESPLIEGUE EL FORM 
         //CON LA INFORMACION
         $('#mostrarFormulario').removeClass('collapse');
-        //ENVIANDO AL INICIO DEL FORMULARIO CUANDO EL USUARIO DE CLICK AL ACTIVO
+
+        //DESABILITANDO EL BOTON INSERTAR ACTIVO CUANDO EL USUARIO CARGA LA INFORMACION DE UN ACTIVO
+        $('#btnInsertar').attr('disabled',true);
+
+         //ENVIANDO AL INICIO DEL FORMULARIO CUANDO EL USUARIO DE CLICK AL ACTIVO
         $(location).attr('href','#inicioForm');
+
         //DESTRUIR EL OBJETO DE LA TABLA ACTIVOHISTORIAL YA INICIALIZADO Y ASI PODER
         //MOSTRAR EL HISTORIAL DE OTRO ACTIVO
         $('#activoHistorial').dataTable().fnDestroy();
         var table = $('#activoInformacion').DataTable();
+
         //LA VARIABLE DATA OBTIENE TODO EL CONTENIDO QUE VIENE DE LA FUNCION tablaActivoFijo DE ACTIVOFIJODAO
         var data = table.row(this).data();
+
+        //EVALUA EL VALOR QUE VIENE DE LA COLUMNA ACTIVO ELIMINADO PARA PONER EL CHEKE O QUITARLO
+        if(data['Activo_eliminado'] == 1){
+            $('#ActivoEliminado').attr('checked',true);
+        }else{
+            $('#ActivoEliminado').attr('checked',false);
+        }
+
         //MOSTRANDO LA IMAGEN QUE TIENE CADA ACTIVO
         $('#mostrarImagen').attr('src','../recursos/multimedia/imagenes/upload/'+data['Imagen']);
 
@@ -319,7 +363,49 @@ jQuery( document ).ready(function( $ ) {
         $('input[name=HoraEco]').val(horaEco);
     }
 
-    // $('#ActivoFechaAdq').change(function(){
-    //     console.log($('#ActivoFechaAdq').val());
-    // });
+    function blockControl(desabilitar){
+        //INPUTS DE INFORMACION GENERAL ACTIVO
+        $('input[name=ActivoReferencia]').attr('disabled',desabilitar);
+        $('input[name=PartidaCta]').attr('disabled',desabilitar);
+        $('input[name=EmpresaId]').attr('disabled',desabilitar);
+        $('input[name=numeroSerie]').attr('disabled',desabilitar);
+        $('input[name=ActivoId]').attr('disabled',desabilitar);
+        $('input[name=ActivoFechaAdq]').attr('disabled',desabilitar);
+        $('input[name=ActivoFactura]').attr('disabled',desabilitar);
+        $("#ActivoTipo").attr('disabled',desabilitar);
+        $('input[name=ip]').attr('disabled',desabilitar);
+        $('input[name=nombreUsuario]').attr('disabled',desabilitar);
+        $('input[name=Modelo]').attr('disabled',desabilitar);
+        $("#Estructura1Id").attr('disabled',desabilitar);
+        $("#Estructura2Id").attr('disabled',desabilitar);
+        $("#Estructura3Id").attr('disabled',desabilitar);
+        $('textarea[name=ActivoDescripcion]').attr('disabled',desabilitar);
+        $('input[name=ActivoFechaCaduc]').attr('disabled',desabilitar);
+        $('input[name=ActivoEliminado]').attr('disabled',desabilitar);
+        $('input[name=Imagen]').attr('disabled',desabilitar);
+        //INPUTS ACTIVO RESPONSABLE
+        $('#estado').attr('disabled',desabilitar);
+        $("#ResponsableId").attr('disabled',desabilitar);
+        $('textarea[name=HistoricoComentario]').attr('disabled',desabilitar);
+        //INPUTS DE ACTIVO ESPECIFICACION
+        $('input[name=Procesador]').attr('disabled',desabilitar);
+        $('input[name=Generacion]').attr('disabled',desabilitar);
+        $('input[name=Ram]').attr('disabled',desabilitar);
+        $('input[name=TipoRam]').attr('disabled',desabilitar);
+        $('input[name=DiscoDuro]').attr('disabled',desabilitar);
+        $('input[name=CapacidadD1]').attr('disabled',desabilitar);
+        $('input[name=DiscoDuro2]').attr('disabled',desabilitar);
+        $('input[name=CapacidadD2]').attr('disabled',desabilitar);
+        $('input[name=Office]').attr('disabled',desabilitar);
+        $('input[name=SO]').attr('disabled',desabilitar);
+        $('input[name=TonerN]').attr('disabled',desabilitar);
+        $('input[name=TonerM]').attr('disabled',desabilitar);
+        $('input[name=TonerC]').attr('disabled',desabilitar);
+        $('input[name=TonerA]').attr('disabled',desabilitar);
+        $('input[name=tambor]').attr('disabled',desabilitar);
+        $('input[name=fusor]').attr('disabled',desabilitar);
+        $('input[name=HorasUso]').attr('disabled',desabilitar);
+        $('input[name=HoraEco]').attr('disabled',desabilitar);
+    }
+
 });
