@@ -35,7 +35,6 @@ if ($_POST) {
                 );
                 //GUARDANDO EN LA VARIABLE ACTIVOINSERTADO LO QUE VENGA DE LA FUNCION INSERTAACTIVOFIJO
                 $activoInsertado = $activoFijo->insertarActivoFijo($objActivoFijo);
-
                 //SI INSERTARACTIVO FIJO ES DIFERENTE A 0 ENTONCES SE OBTETIENE ENTONCES SE OBTIENE EL ID ACTIVO
                 //DEL ACTIVO QUE SE ESTA INSERTADO, SI NO MANDA A ERROR
                 if ($activoInsertado != 0) {
