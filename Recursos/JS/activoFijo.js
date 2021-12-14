@@ -1,6 +1,12 @@
 $.noConflict();
 jQuery( document ).ready(function( $ ) {
-    
+    $('#Imagen').change(function(){
+        var file =this.files;
+        var element = file[0];
+
+        var imgTemp = URL.createObjectURL(element);
+        $('#mostrarImagen').attr('src',imgTemp);
+    });
     //CUANDO SE INSERTA UN ACTIVO FIJO
     $('#formActivo').submit(function (e) {
         e.preventDefault();

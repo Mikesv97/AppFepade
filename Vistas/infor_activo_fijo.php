@@ -226,7 +226,7 @@ $date = date('d-m-Y');
                                         <h5 class="my-2 label label-danger">Imagen de activo fijo</h5>
 
                                         <div style="background-color: purple; width: 320px; height: 320px; margin: 0 auto;">
-                                            IMAGEN DE PRUEBA
+                                          <img id="mostrarImagen">
                                         </div>
                                     </div>
                                 </div>
