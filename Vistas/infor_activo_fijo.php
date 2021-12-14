@@ -37,6 +37,13 @@ $date = date('d-m-Y');
     .borde-top {
         border-top: 1px solid black;
     }
+
+    #mostrarImagen{
+        background-color: white; 
+        max-width: 420px;
+        max-width: 420px; 
+        margin: 0 auto;
+    }
 </style>
 
 <!--**********************************
@@ -64,7 +71,7 @@ $date = date('d-m-Y');
         <!-- row -->
         <div class="row">
             <button type="button" class="btn btn-tumblr mb-5 ml-4" data-toggle="collapse" href="#mostrarFormulario" aria-controls="mostrarFormulario" id="verFormulario">
-                Mostrar formulario
+                Ingresar activo fijo
             </button>
             <div class="col-xl-12 col-xxl-12 collapse" id="mostrarFormulario">
                 <div class="card">
@@ -76,7 +83,7 @@ $date = date('d-m-Y');
                             <div class="row">
                                 <div class="col-md-6 borde">
                                     <!-- INICIO PRIMERA COLUMNA DEL FORM -->
-                                    <h5 class="my-2 label label-danger">Información general de activo</h5>
+                                    <h5 class="my-2 label label-danger col-md-12">Información general de activo</h5>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Referencia*</label>
@@ -126,7 +133,7 @@ $date = date('d-m-Y');
                                 </div>
                                 <div class="col-md-6">
                                     <!-- INICIO SEGUNDA COLUNMA DEL FORM -->
-                                    <h5 class="my-2 label label-danger">Información general de activo</h5>
+                                    <h5 class="my-2 label label-danger col-md-12">Información general de activo</h5>
                                     <div class="form-row borde-left">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Usuario*</label>
@@ -195,7 +202,7 @@ $date = date('d-m-Y');
                             </div>
                             <div class="row borde-top">
                                 <div class="col-md-6 borde">
-                                    <h5 class="my-2 label label-danger">Responsable y comentarios de asignación</h5>
+                                    <h5 class="my-2 label label-danger col-md-12">Responsable y comentarios de asignación</h5>
                                     <div class="form-row ">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Estado de activo</label>
@@ -223,17 +230,17 @@ $date = date('d-m-Y');
                                 </div>
                                 <div class="col-md-6 borde">
                                     <div class="text-center borde-left">
-                                        <h5 class="my-2 label label-danger">Imagen de activo fijo</h5>
+                                        <h5 class="my-2 label label-danger col-md-12">Imagen de activo fijo</h5>
 
-                                        <div style="background-color: purple; width: 320px; height: 320px; margin: 0 auto;">
-                                          <img id="mostrarImagen">
+                                        <div>
+                                            <img id="mostrarImagen" >
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row borde-top">
                                 <div class="col-md-4">
-                                    <h5 class="my-2 label label-danger">Especificaciones computadora</h5>
+                                    <h5 class="my-2 label label-danger col-md-12">Especificaciones computadora</h5>
                                     <div class="form-row my-2 ">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Procesador*</label>
@@ -278,7 +285,7 @@ $date = date('d-m-Y');
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <h5 class="my-2 label label-danger">Especificaciones impresora</h5>
+                                    <h5 class="my-2 label label-danger col-md-12">Especificaciones impresora</h5>
                                     <div class="form-row my-2 borde-left">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Toner negro*</label>
@@ -304,8 +311,8 @@ $date = date('d-m-Y');
                                             <label class="text-label">Fusor</label>
                                             <input type="text" name="fusor" class="form-control" maxlength="50">
                                         </div>
-                                        <h5 class="my-4 label label-danger">Especificaciones proyector</h5>
-                                        <div class="form-group col-md-6"></div>
+                                        <h5 class="my-4 label label-danger col-md-12">Especificaciones proyector</h5>
+                                
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Horas de uso*</label>
                                             <input type="number" name="HorasUso" class="form-control" maxlength="50">
@@ -317,7 +324,7 @@ $date = date('d-m-Y');
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <h5 class="my-2 label label-danger">Historial activo</h5>
+                                    <h5 class="my-2 label label-danger col-md-12">Historial activo</h5>
                                     <div class="borde-left">
                                         <table id="activoHistorial" name="activoHistorial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
                                             <thead>
