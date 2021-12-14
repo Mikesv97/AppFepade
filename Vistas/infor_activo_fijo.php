@@ -30,11 +30,11 @@ $date = date('d-m-Y');
         resize: none;
     }
 
-    .borde-left{
+    .borde-left {
         border-left: 1px solid black;
     }
 
-    .borde-top{
+    .borde-top {
         border-top: 1px solid black;
     }
 </style>
@@ -51,6 +51,7 @@ $date = date('d-m-Y');
                     <p class="mb-0">Rol: <?= $_SESSION["usuario"]["rol"]; ?></p>
                     <p class="mb-0">Eres nuevo ?: <?= $_SESSION["usuario"]["usuarioNuevo"]; ?></p>
                     <p class="mb-0">Hora: <?= $date; ?></p>
+                    <a href="" id="inicioForm"></a>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -62,7 +63,7 @@ $date = date('d-m-Y');
         </div>
         <!-- row -->
         <div class="row">
-            <button type="button" class="btn btn-tumblr mb-5 ml-4" data-toggle="collapse" href="#mostrarFormulario" aria-controls="mostrarFormulario">
+            <button type="button" class="btn btn-tumblr mb-5 ml-4" data-toggle="collapse" href="#mostrarFormulario" aria-controls="mostrarFormulario" id="verFormulario">
                 Mostrar formulario
             </button>
             <div class="col-xl-12 col-xxl-12 collapse" id="mostrarFormulario">
@@ -194,7 +195,7 @@ $date = date('d-m-Y');
                             </div>
                             <div class="row borde-top">
                                 <div class="col-md-6 borde">
-                                <h5 class="my-2 label label-danger">Responsable y comentarios de asignación</h5>
+                                    <h5 class="my-2 label label-danger">Responsable y comentarios de asignación</h5>
                                     <div class="form-row ">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Estado de activo</label>
@@ -223,10 +224,10 @@ $date = date('d-m-Y');
                                 <div class="col-md-6 borde">
                                     <div class="text-center borde-left">
                                         <h5 class="my-2 label label-danger">Imagen de activo fijo</h5>
-                                    
-                                    <div style="background-color: purple; width: 320px; height: 320px; margin: 0 auto;">
-                                        IMAGEN DE PRUEBA
-                                    </div>
+
+                                        <div style="background-color: purple; width: 320px; height: 320px; margin: 0 auto;">
+                                            IMAGEN DE PRUEBA
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -318,30 +319,28 @@ $date = date('d-m-Y');
                                 <div class="col-md-4">
                                     <h5 class="my-2 label label-danger">Historial activo</h5>
                                     <div class="borde-left">
-                                    <table id="activoHistorial" name="activoHistorial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
-                                        <thead>
-                                            <tr>
-                                                <th>Referencia</th>
-                                                <th>Activo Descripcion</th>
-                                                <th>Area</th>
-                                                <th>Responsable</th>
-                                                <th>Comentario</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                        <table id="activoHistorial" name="activoHistorial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Área</th>
+                                                    <th>Responsable</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Referencia</th>
-                                                <th>Activo Descripcion</th>
-                                                <th>Area</th>
-                                                <th>Responsable</th>
-                                                <th>Comentario</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Área</th>
+                                                    <th>Responsable</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        <button type="button" class="btn btn-facebook btn-block" data-toggle="modal" data-target=".modalHistorial">Transladar activo</button>
                                     </div>
+                                    
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-tumblr my-4" name="btnInsertar" id="btnInsertar">Insertar</button>
@@ -410,6 +409,24 @@ $date = date('d-m-Y');
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA HISTORIAL DE ACTIVO -->
+<div class="modal fade modalHistorial" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">Modal body text goes here.</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>

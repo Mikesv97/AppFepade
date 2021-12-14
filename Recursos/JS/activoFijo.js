@@ -156,9 +156,11 @@ jQuery( document ).ready(function( $ ) {
     });
 
     $('#activoInformacion tbody').on('click', 'tr', function () {
+        $('#mostrarFormulario').removeClass('collapse');
+        $(location).attr('href','#inicioForm');
         $('#activoHistorial').dataTable().fnDestroy();
         var table = $('#activoInformacion').DataTable();
-        //LA VARIABLE DATA OBTIENE TODOS LOS VALORES QUE ESTAN EN LA TABLA CON ID ACTIVOINFORMACION
+        //LA VARIABLE DATA OBTIENE TODO EL CONTENIDO QUE VIENE DE LA FUNCION tablaActivoFijo DE ACTIVOFIJODAO
         var data = table.row(this).data();
         
         cargarGeneral1(
@@ -213,7 +215,7 @@ jQuery( document ).ready(function( $ ) {
 
         
         
-
+        //DATATABLE QUE CONTIENE EL HISTORIAL DE CADA ACTIVO FIJO SEGUN EL ACTIVO ID QUE RECIBE
         $('#activoHistorial').DataTable({
             "ajax": {
                 "url": "../Controladores/activoFijoControlador.php",
@@ -224,24 +226,16 @@ jQuery( document ).ready(function( $ ) {
             },
             "columns": [
                 {
-                    data: "Activo_referencia",
-                    className: "Activo_referencia"
+                    data: "Estructura31_id",
+                    className: "Estructura31_id"
                 },
                 {
-                    data: "Activo_referencia",
-                    className: "Activo_referencia"
+                    data: "estructura31_nombre",
+                    className: "estructura31_nombre"
                 },
                 {
-                    data: "Activo_referencia",
-                    className: "Activo_referencia"
-                },
-                {
-                    data: "Activo_referencia",
-                    className: "Activo_referencia"
-                },
-                {
-                    data: "Activo_referencia",
-                    className: "Activo_referencia"
+                    data: "Responsable",
+                    className: "Responsable"
                 }
             ],
             responsive: true,
