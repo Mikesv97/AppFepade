@@ -250,6 +250,21 @@ jQuery(document).ready(function ($) {
             $('#estado').attr('checked', false);
         }
 
+        //INVOCANDO FUNCIONES DE tipoActivo.js PARA HABILITAR O DESABILITAR LOS INPUT SEGUN TIPO DE ACTIVO
+        if(data['Activo_tipo'] == 1 || data['Activo_tipo'] == 2){
+            desabilitarInputPc(false);
+            desabilitarInputProyector(true);
+            desabilitarInputImpresora(true);
+        }else if(data['Activo_tipo'] == 3){
+            desabilitarInputPc(true)
+            desabilitarInputProyector(true)
+            desabilitarInputImpresora(false);
+        }else if(data['Activo_tipo'] == 4){
+            desabilitarInputPc(true)
+            desabilitarInputProyector(false)
+            desabilitarInputImpresora(true);
+        }
+
         //MOSTRANDO LA IMAGEN QUE TIENE CADA ACTIVO
         $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/' + data['Imagen']);
 

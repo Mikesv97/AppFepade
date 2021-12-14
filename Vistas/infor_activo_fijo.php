@@ -13,7 +13,6 @@ $date = date('d-m-Y');
 
 <!-- script para mostrar o ocultar los campos segun, el tipo de activo que se ingresara -->
 <script src="../Recursos/JS/tipoActivo.js"></script>
-</script>
 
 <style>
     .borde {
@@ -35,6 +34,14 @@ $date = date('d-m-Y');
         max-width: 420px;
         max-height: 400px;
         margin: 0 auto;
+    }
+
+    .desabilitado{
+        background: #dddddd !important;
+    }
+
+    .habilitado{
+        background: none;
     }
 </style>
 
@@ -229,7 +236,7 @@ $date = date('d-m-Y');
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <h5 class="my-2 label label-danger col-md-12">Especificaciones computadora</h5>
                                     <div class="form-row my-2 ">
                                         <div class="form-group col-md-6">
@@ -264,17 +271,17 @@ $date = date('d-m-Y');
                                             <label class="text-label">Capacidad disco secundario</label>
                                             <input type="text" name="CapacidadD2" class="form-control" maxlength="50">
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label class="text-label">Office*</label>
                                             <input type="text" name="Office" class="form-control" maxlength="50">
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label class="text-label">Sistema operativo*</label>
                                             <input type="text" name="SO" class="form-control" maxlength="50">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <h5 class="my-2 label label-danger col-md-12">Especificaciones impresora</h5>
                                     <div class="form-row my-2">
                                         <div class="form-group col-md-6">
@@ -303,17 +310,17 @@ $date = date('d-m-Y');
                                         </div>
                                         <h5 class="my-4 label label-danger col-md-12">Especificaciones proyector</h5>
 
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label class="text-label">Horas de uso*</label>
                                             <input type="number" name="HorasUso" class="form-control" maxlength="50">
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label class="text-label">Horas economicas*</label>
                                             <input type="number" name="HoraEco" class="form-control" maxlength="50">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <h5 class="my-2 label label-danger col-md-12">Historial activo</h5>
                                     <div class="">
                                         <table id="activoHistorial" name="activoHistorial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
@@ -437,15 +444,7 @@ $date = date('d-m-Y');
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script> -->
 
-<!-- <script src="../Recursos/JS/tipoActivo.js"></script> -->
 <script src="../Recursos/JS/activoFijo.js"></script>
-<!-- <script src="../Recursos/JS/guardo.js"></script> -->
-
-<!-- script para poner el boton que muestra las demas columnas de la tabla activo fijo y cambiando el idioma-->
-
-<script>
-
-</script>
 
 <!--**********************************
             Content body end
