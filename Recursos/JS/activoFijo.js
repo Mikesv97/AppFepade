@@ -1,6 +1,14 @@
 $.noConflict();
 jQuery( document ).ready(function( $ ) {
-    
+    //EVENTO CHANGE QUE MUESTRA LA IMAGEN QUE SE AGREGAR EN EL INPUT FILE
+    //PARA PREVISUALIZAR LA IMAGEN ANTES DE INSERTARLA
+    $('#Imagen').change(function(){
+        var file =this.files;
+        var element = file[0];
+
+        var imgTemp = URL.createObjectURL(element);
+        $('#mostrarImagen').attr('src',imgTemp);
+    });
     //CUANDO SE INSERTA UN ACTIVO FIJO
     $('#formActivo').submit(function (e) {
         e.preventDefault();
@@ -156,13 +164,20 @@ jQuery( document ).ready(function( $ ) {
     });
 
     $('#activoInformacion tbody').on('click', 'tr', function () {
+        //REMOVIENTO LA CLASE COLLAPSE PARA QUE AL DARLE CLICK AL ACTIVO SE DESPLIEGUE EL FORM 
+        //CON LA INFORMACION
         $('#mostrarFormulario').removeClass('collapse');
+        //ENVIANDO AL INICIO DEL FORMULARIO CUANDO EL USUARIO DE CLICK AL ACTIVO
         $(location).attr('href','#inicioForm');
+        //DESTRUIR EL OBJETO DE LA TABLA ACTIVOHISTORIAL YA INICIALIZADO Y ASI PODER
+        //MOSTRAR EL HISTORIAL DE OTRO ACTIVO
         $('#activoHistorial').dataTable().fnDestroy();
         var table = $('#activoInformacion').DataTable();
         //LA VARIABLE DATA OBTIENE TODO EL CONTENIDO QUE VIENE DE LA FUNCION tablaActivoFijo DE ACTIVOFIJODAO
         var data = table.row(this).data();
-        
+        //MOSTRANDO LA IMAGEN QUE TIENE CADA ACTIVO
+        $('#mostrarImagen').attr('src','../recursos/multimedia/imagenes/upload/'+data['Imagen']);
+
         cargarGeneral1(
             data['Activo_referencia'],
             data['PartidaCta'],
