@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include_once 'conexion.php';
 
 class LoginDao{
     private $con;
@@ -11,44 +11,17 @@ class LoginDao{
         
     }
 
-    public function conectar(){
-        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
-        $basedatos="ACTIVO";
-        try{
-           
-            //DECLARANDO CANEDA DE CONEXION
-            $this->con = new PDO("sqlsrv:Server=$serverName;Database=$basedatos","","");
-            
-            //preparamos a la libreria PDO para mandar
-            //excepsiones en caso de errores
-            $this->con->setAttribute(
-                PDO::ATTR_ERRMODE,
-                PDO::ERRMODE_EXCEPTION
-            );
-        }catch(PDOException $error){
-            //MOSTRANDO ERROR
-            echo $error->getMessage();
-        }
-    
-    }
-
-    public function desconectar($respuesta){
-       
-        $respuesta->closeCursor();//dependiendo del driver es obligatorio o no.
-       
-
-    }
 
     /*Funcion que valida al usuario al hacer click en iniciar sesion*/
     public function validarUsuario($nombre,$clave){
 
         //establecemos la coneccion
-        $this->conectar();
+        $con = Conexion::conectar();
         //establecemos la consulta
         $sql="select a.usuario_nuevo, a.usuario_clave , a.usuario_nombre, a.usuario_id, a.correo_electronico, b.rol_nombre
         from usuario a inner join roles b on a.id_rol = b.id_rol where  a.usuario_id=?";
         //preparamos la consulta
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros
             $respuesta->execute([$nombre]);
@@ -84,7 +57,7 @@ class LoginDao{
 
                 }
                 //cerramos conexion
-                $this->desconectar($respuesta);
+                Conexion::desconectar($respuesta);
                 //retornamos verdadero
                 return true;
 
@@ -103,11 +76,11 @@ class LoginDao{
         //declaramos variable recordar en 1
 
         //establecemos la coneccion
-        $this->conectar();
+        $con = Conexion::conectar();
         //establecemos la consulta
         $sql="select usuario_id, usuario_clave from usuario where usuario_id =?";
         //preparamos la consulta
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros
             $respuesta->execute([$usuario]);
@@ -134,11 +107,11 @@ class LoginDao{
     //actualizar remember en la BD del usuario que hace login
     function actualizarEstadoUser($valor, $usuario){
                 //establecemos la coneccion
-                $this->conectar();
+                $con = Conexion::conectar();
                 //establecemos la consulta
                 $sql="update usuario set estado_sesion = ? where  usuario_id=? or usuario_nombre =?";
                 //preparamos la consulta
-                $respuesta = $this->con->prepare($sql);
+                $respuesta = $con->prepare($sql);
                 try{
         
                     //ejecutamos la consulta y seteamos parametros 
@@ -146,7 +119,7 @@ class LoginDao{
                     //evaluamos cuantas filas fueron afectadas
                     if($respuesta->rowCount() > 0){
                         //cerramos conexion
-                        $this->desconectar($respuesta);
+                        Conexion::desconectar($respuesta);
                         //si se afectaron más de 0
                         return true;                 
                     }else{
@@ -172,11 +145,11 @@ class LoginDao{
     public function validarCorreo($correo){
 
         //establecemos la coneccion
-        $this->conectar();
+        $con = Conexion::conectar();
         //establecemos la consulta
         $sql="select count(correo_Electronico) from usuario where correo_electronico = ?";
         //preparamos la consulta
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
 
             //ejecutamos la consulta y seteamos parametros 
@@ -196,11 +169,11 @@ class LoginDao{
         $passHash= password_hash($pass,PASSWORD_DEFAULT,array("cost"=>12));
 
         //establecemos la coneccion
-        $this->conectar();
+        $con = Conexion::conectar();
         //establecemos la consulta
         $sql="update usuario set usuario_clave = ? where  correo_electronico=?";
         //preparamos la consulta
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
 
             //ejecutamos la consulta y seteamos parametros 
@@ -208,7 +181,7 @@ class LoginDao{
             //evaluamos cuantas filas fueron afectadas
             if($respuesta->rowCount() > 0){
                 //cerramos conexion
-                $this->desconectar($respuesta);
+                Conexion::desconectar($respuesta);
                 //si se afectaron más de 0
                 return true;                 
             }else{
@@ -223,11 +196,11 @@ class LoginDao{
     //en campo remember para cambiar al ultimo que pide ser recordado
     public function comprobarRememberUs(){
         $reme=1;
-        $this->conectar();
+        $con = Conexion::conectar();
         //establecemos la consulta
         $sql="select usuario_id, remember from usuario where  remember =?";
         //preparamos la consulta
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
             //ejecutamos la consulta
             if($respuesta->execute([$reme])){
@@ -237,7 +210,7 @@ class LoginDao{
                
                 
             }else{
-                $this->desconectar($respuesta);
+                Conexion::desconectar($respuesta);
                 return false;
                 
             }
@@ -249,11 +222,11 @@ class LoginDao{
     public function validarPassOld($passOld){
 
         //establecemos la coneccion
-        $this->conectar();
+        $con = Conexion::conectar();
         //establecemos la consulta
         $sql="select count(correo_Electronico) from usuario where correo_electronico = ?";
         //preparamos la consulta a ejecutar
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
 
             //ejecutamos la consulta y seteamos parametros 

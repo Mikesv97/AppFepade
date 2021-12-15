@@ -1,6 +1,6 @@
 <?php
 include "usuarioNuevo.php";
-
+include_once 'conexion.php';
 class UsuarioNuevoDao{
     private $con;
 
@@ -9,43 +9,15 @@ class UsuarioNuevoDao{
         
     }
 
-    public function conectar(){
-        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
-        $basedatos="ACTIVO";
-        try{
-           
-            //DECLARANDO CANEDA DE CONEXION
-            $this->con = new PDO("sqlsrv:Server=$serverName;Database=$basedatos","","");
-            
-            //preparamos a la libreria PDO para mandar
-            //excepsiones en caso de errores
-            $this->con->setAttribute(
-                PDO::ATTR_ERRMODE,
-                PDO::ERRMODE_EXCEPTION
-            );
-        }catch(PDOException $error){
-            //MOSTRANDO ERROR
-            echo $error->getMessage();
-        }
-    
-    }
-
-    public function desconectar($respuesta){
-       
-        $respuesta->closeCursor();
-       
-
-    }
-
     public function insertarUsuario($objeto){
         $usuario = new UsuarioNuevo();
         $usuario = $objeto;
         //establecemos la coneccion
-        $this->conectar();
+        $con = Conexion::conectar();
         //establecemos la consulta
         $sql="insert into usuario values (?,?,?,CURRENT_TIMESTAMP,?,?,?, ?,?,?)";
         //preparamos la consulta
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros 
             $respuesta->execute([
@@ -64,7 +36,7 @@ class UsuarioNuevoDao{
             //evaluamos cuantas filas fueron afectadas
             if($respuesta->rowCount() > 0){
                 //cerramos conexion
-                $this->desconectar($respuesta);
+               Conexion::desconectar($respuesta);
                 //si se afectaron más de 0
                 return true;                 
             }else{
@@ -77,11 +49,11 @@ class UsuarioNuevoDao{
 
     public function insertarBitacoraUs($usuario, $responsable){
         //establecemos la coneccion
-        $this->conectar();
+        $con = Conexion::conectar();
         //establecemos la consulta
         $sql="insert into bitacora_usuarios values (?,?)";
         //preparamos la consulta
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros 
             $respuesta->execute([$usuario,$responsable]);
@@ -90,7 +62,7 @@ class UsuarioNuevoDao{
             //evaluamos cuantas filas fueron afectadas
             if($respuesta->rowCount() > 0){
                 //cerramos conexion
-                $this->desconectar($respuesta);
+                Conexion::desconectar($respuesta);
                 //si se afectaron más de 0
                 return true;                 
             }else{
@@ -102,9 +74,9 @@ class UsuarioNuevoDao{
     }
 
     public function obtenerIdBitacora(){
-        $this->conectar();
+        $con = Conexion::conectar();
         $sql = "select max(id_bitacora) as id from bitacora_usuarios";
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
 
             //ejecutamos la consulta y seteamos parametros 
@@ -120,13 +92,13 @@ class UsuarioNuevoDao{
 
     public function obtenerUsuarios(){     
         //establecemos la coneccion
-        $this->conectar();
+        $con = Conexion::conectar();
         //establecemos la consulta
         $sql="select a.usuario_id, a.usuario_nombre, a.usuario_fecha, a.correo_electronico, b.rol_nombre, c.usuario_responsable
         from usuario a inner join roles b on a.id_rol = b.id_rol inner join bitacora_usuarios c on a.id_bitacora = c.id_bitacora";
         try{
             //ejecutamos la consulta 
-            $respuesta = $this->con->query($sql);
+            $respuesta = $con->query($sql);
 
             //retornamos el arreglo
             return $respuesta->fetchAll();
@@ -147,11 +119,11 @@ class UsuarioNuevoDao{
                 //eliminar, caso contrario tiene sesión activa y no se puede borrar.
 
                 //establecemos la coneccion
-                $this->conectar();
+                $con = Conexion::conectar();
                 //establecemos la consulta
                 $sql="delete from usuario where usuario_id = ?";
                 //preparamos la consulta
-                $respuesta = $this->con->prepare($sql);
+                $respuesta = $con->prepare($sql);
                 try{
                     //ejecutamos la consulta y seteamos parametros 
                     $respuesta->execute([$id]);
@@ -160,7 +132,7 @@ class UsuarioNuevoDao{
                         if($this->eliminarBitaUser($id)!=0){//elimamos bitacora del usuario
                             //si se afecta filas es que se elimino
                             //cerramos conexion
-                            $this->desconectar($respuesta);
+                            Conexion::desconectar($respuesta);
                             //si se afectaron más de 0
                             return true; 
                         }else{
@@ -187,22 +159,22 @@ class UsuarioNuevoDao{
     //1 si está logueado, 0 si está off.
     public function getSesionEstUsuario($id){
         //establecemos la coneccion
-        $this->conectar();
+        $con = Conexion::conectar();
         //establecemos la consulta
         $sql="select estado_sesion from usuario where usuario_id = ?";
         //preparamos la consulta
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros 
             $respuesta->execute([$id]);
             $dato = $respuesta->fetchall(PDO::FETCH_COLUMN, 0);
             if(sizeof($dato)>0){
-                $this->desconectar($respuesta); 
+                Conexion::desconectar($respuesta); 
                 return $dato[0]; 
                 
                
             }else{
-                $this->desconectar($respuesta); 
+                Conexion::desconectar($respuesta); 
                 return "nullId";
             }
                         
@@ -215,11 +187,11 @@ class UsuarioNuevoDao{
     //retorna el número de filas afectadas
     public function eliminarBitaUser($id){
         //establecemos la coneccion
-        $this->conectar();
+        $con = Conexion::conectar();
         //establecemos la consulta
         $sql="delete from bitacora_usuarios where usuario_id = ?";
         //preparamos la consulta
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros 
             $respuesta->execute([$id]);
