@@ -29,6 +29,15 @@ $date = date('d-m-Y');
         resize: none;
     }
 
+    .descripcionActivo {
+        min-height: 80px;
+        max-height: 80px;
+        min-width: 100%;
+        max-width: 100%;
+        overflow: scroll;
+        resize: none;
+    }
+
     #mostrarImagen {
         background-color: white;
         max-width: 420px;
@@ -36,11 +45,11 @@ $date = date('d-m-Y');
         margin: 0 auto;
     }
 
-    .desabilitado{
+    .desabilitado {
         background: #dddddd !important;
     }
 
-    .habilitado{
+    .habilitado {
         background: none;
     }
 </style>
@@ -322,7 +331,7 @@ $date = date('d-m-Y');
                                 </div>
                                 <div class="col-md-6">
                                     <h5 class="my-2 label label-danger col-md-12">Historial activo</h5>
-                                    <div class="">
+                                    <div class="" id="prueba">
                                         <table id="activoHistorial" name="activoHistorial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
                                             <thead>
                                                 <tr>
@@ -342,9 +351,8 @@ $date = date('d-m-Y');
                                                 </tr>
                                             </tfoot>
                                         </table>
-                                        <button type="button" class="btn btn-facebook btn-block" data-toggle="modal" data-target=".modalHistorial">Transladar activo</button>
+                                        <button type="button" id="btnMostrarHistorial" class="btn btn-facebook btn-block" data-toggle="modal" data-target=".modalHistorial">Transladar activo</button>
                                     </div>
-
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-tumblr my-4" name="btnInsertar" id="btnInsertar">Insertar</button>
@@ -423,14 +431,102 @@ $date = date('d-m-Y');
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title">Historial de activo fijo</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <div class="modal-body">Modal body text goes here.</div>
+            <div class="modal-body">
+                <input type="text" id="guardarIdActivo" hidden>
+                <form action="#" id="formHistorico" class="formHistorico" method="POST">
+                    <div class="row">
+                        <div class="col-md-12 borde">
+                            <!-- INICIO PRIMERA COLUMNA DEL FORM -->
+                            <div class="form-row">
+                                <label class="label label-danger col-md-12">Activo</label>
+                                <div class="form-group col-md-5">
+                                    <input type="text" name="ActivoReferenciaH" class="form-control" maxlength="30" required readonly>
+                                </div>
+                                <div class="form-group col-md-7">
+                                    <textarea class="form-control descripcionActivo" name="ActivoDescripcionH" rows="3" maxlength="1000" required readonly></textarea>
+                                </div>
+                                <label class="label label-danger col-md-12">Area</label>
+                                <div class="form-group col-md-3">
+                                    <input type="text" id="probando">
+                                    <input type="text" class="form-control" name="idArea" id="idArea" readonly>
+                                </div>
+                                <div class="form-group col-md-9">
+                                    <select name="Estructura3IdH" id="Estructura3IdH" class="form-control">
+                                        <?php
+                                        $data = $obj->comboArea();
+                                        foreach ($data as $indice => $valor) {
+                                            echo ' <option value="' . $indice . '">' . $valor . ' </option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <label class="label label-danger col-md-12">Responsable</label>
+                                <div class="form-group col-md-3">
+                                    <input type="text" class="form-control" name="idResponsable" readonly>
+                                </div>
+                                <div class="form-group col-md-9">
+                                    <select name="ResponsableIdH" id="ResponsableIdH" class="form-control">
+                                        <?php
+                                        $data = $obj->comboResponsable();
+                                        foreach ($data as $indice => $valor) {
+                                            echo ' <option value="' . $indice . '">' . $valor . ' </option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <label class="label label-danger col-md-12">Fecha y estado de activo</label>
+                                <div class="form-group col-md-6">
+                                    <input id="fechaHistorico" type="datetime-local" name="fechaHistorico" class="form-control" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="estadoH" id="estadoH">
+                                        <label class="form-check-label" for="estadoH">Inactivo</label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="label label-danger col-md-12">Comentarios de asignación</label>
+                                    <textarea class="form-control descripcionActivo" name="HistoricoComentarioH" rows="3" maxlength="50"></textarea>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h5 class="my-2 label label-danger col-md-12">Historico de ubicaciones</h5>
+                                    <div class="">
+                                        <table id="historial" name="historial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
+                                            <thead>
+                                                <tr>
+                                                    <th>Referencia</th>
+                                                    <th>Boton</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Referencia</th>
+                                                    <th>Boton</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-whatsapp" id="btnInsertar">Insertar</button>
+                    <button type="submit" class="btn btn-facebook" id="btnModificar">Modificar</button>
+                    <button type="submit" class="btn btn-pinterest" id="btnEliminar">Borrar</button>
+                </form>
+            </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-info" id="btnNuevo">Nuevo</button>
+
+                <button type="button" class="btn btn-google-plus" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
