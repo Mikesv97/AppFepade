@@ -1,6 +1,8 @@
 $.noConflict();
 jQuery(document).ready(function ($) {
-
+    desabilitarInputPc(false);
+    desabilitarInputProyector(true);
+    desabilitarInputImpresora(true);
     //ASIGNADO EL VALOR DE 0 O 1 SI EL CHECK ELIMINADO TIENE UN CAMBIO, OSEA SI LO ACTIVAN O NO
     var eliminado = 0;
     $('#ActivoEliminado').change(function () {
@@ -30,6 +32,8 @@ jQuery(document).ready(function ($) {
 
     //EVENTO CLICK QUE ACTIVO O DESABILITA CONTROLES DEL FORMULARIO
     $('#verFormulario').on('click', function () {
+        $('#activoHistorial').dataTable().fnDestroy();
+        
         blockControl(false);
         $('#btnInsertar').attr('disabled', false);
         $('#btnMostrarHistorial').attr('disabled', true);
@@ -37,6 +41,7 @@ jQuery(document).ready(function ($) {
         $('#ActivoEliminado').attr('checked', false);
         $('#estado').attr('checked', false);
         $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
+        
     });
 
     //EVENTO CHANGE QUE MUESTRA LA IMAGEN QUE SE AGREGAR EN EL INPUT FILE
