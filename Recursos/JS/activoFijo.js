@@ -33,7 +33,6 @@ jQuery(document).ready(function ($) {
     //EVENTO CLICK QUE ACTIVO O DESABILITA CONTROLES DEL FORMULARIO
     $('#verFormulario').on('click', function () {
         $('#activoHistorial').dataTable().fnDestroy();
-        
         blockControl(false);
         $('#btnInsertar').attr('disabled', false);
         $('#btnMostrarHistorial').attr('disabled', true);
