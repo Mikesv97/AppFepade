@@ -12,12 +12,12 @@ class RolesDao{
 
     public function obtenerCmbRoles(){     
         //establecemos la coneccion
-        $con = Conexion::conectar();
+        $this->con = Conexion::conectar();
         //establecemos la consulta
         $sql="select id_rol,rol_nombre from roles;";
         try{
             //ejecutamos la consulta 
-            $respuesta = $con->query($sql);
+            $respuesta = $this->con->query($sql);
 
             //retornamos el arreglo
             return $respuesta->fetchAll();

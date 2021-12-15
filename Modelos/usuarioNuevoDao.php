@@ -2,7 +2,7 @@
 include "usuarioNuevo.php";
 include_once 'conexion.php';
 class UsuarioNuevoDao{
-    private $con;
+
 
     public function __construct(){
 

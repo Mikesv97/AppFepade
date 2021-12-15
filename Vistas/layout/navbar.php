@@ -1,5 +1,5 @@
 <?php
-session_start();
+
     if(isset($_SESSION["usuario"]["usuarioNuevo"])){
         if($_SESSION["usuario"]["usuarioNuevo"] ==1){
             header("Location: ../vistas/primerLogin.php");

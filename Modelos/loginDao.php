@@ -3,7 +3,6 @@ session_start();
 include_once 'conexion.php';
 
 class LoginDao{
-    private $con;
     private $codGenerado;
 
     public function __construct(){
