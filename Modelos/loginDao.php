@@ -72,8 +72,6 @@ class LoginDao{
 
     //funcion para verificar y cargar campos en caso exista usuario con recuerdame
     function validarRemember($usuario, $clave){
-        //declaramos variable recordar en 1
-
         //establecemos la coneccion
         $con = Conexion::conectar();
         //establecemos la consulta
@@ -82,24 +80,19 @@ class LoginDao{
         $respuesta = $con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros
-            $respuesta->execute([$usuario]);
-            $datosBD = $respuesta->fetchall();            
+            //$respuesta->execute([$usuario]);
+           $respuesta->execute([$usuario]);
+            //convertimos a un array asociativo la respuesta
+            $datosBD = $respuesta->fetchall(PDO::FETCH_ASSOC);
+            //cerramos puntero
+            Conexion::desconectar($respuesta);
+            //imprimimos el arreglo.
+            echo json_encode($datosBD);            
 
-            foreach($datosBD as $d){
-
-                if($clave ==$d["usuario_clave"] || password_verify($clave,$d["usuario_clave"])){
-                    $datos = array(
-                        'nombre' => $d["usuario_id"],
-                        'clave'=>$d["usuario_clave"]
-                    );
-
-                    echo json_encode($datos);
-                }else{
-                    return 'noRemUser';
-                }
-            }
+           
         }catch(PDOException $error){
-            return $error->getMessage();
+            echo $error->getMessage();
+
         }
     }
 
@@ -239,5 +232,3 @@ class LoginDao{
         }
     }
 }
-
-?>

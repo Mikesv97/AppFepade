@@ -1,8 +1,8 @@
 $(document).ready(function(){
     var rem;
     var codigo;
-    var error =parseInt(0);
-    var usChange =false;
+    var error =0;
+    var usChange =0;
 
     //ocultamos controles que no deben ser visibles al cargar pag
     ocultarControlLoad();
@@ -60,19 +60,21 @@ $(document).ready(function(){
         if(rem ==1){
             //lo pasamos a 0 para que no esté seleccionado
             rem=0;
+            $('#customCheck').attr("checked",false);
         }
 
         //limpiamos controles
         $("input[name='txtContraseña']").val("");
-        $('#customCheck').attr("checked",false);
-        usChange=true;
+        
+        
+        usChange=1;
+        
     });
 
     //cuando hace clic en btnLogin 
     $("#btnLogin").on("click", function(e){
         //se evita el evento submit del form
         e.preventDefault();
-
         //obtenemos los datos del form
         var data = $("#frmLogin").serialize();
    
@@ -85,6 +87,7 @@ $(document).ready(function(){
             success: function (r) {
                 switch(r){
                     case "datosLogNull":
+                        $('#customCheck').attr("checked",false);
                         $("#btnLogin").blur();
                         $("#labelError").show();
                         $("#labelError").text("Datos Incorrectos, Intenta De Nuevo");
@@ -92,7 +95,8 @@ $(document).ready(function(){
                         //limpiamos campos
                         $('input[name="txtUsuario"]').val("");
                         $('input[name="txtContraseña"]').val("");
-    
+                        rem=0;
+                       
                         //hacemos focus
                         $('input[name="txtUsuario"]').focus();
                     break;
@@ -102,9 +106,9 @@ $(document).ready(function(){
                 }
             },
             error: function (r) {
-                console.log(r);
+                console.log(r.responseText);
                 //si falla algo se muestra error del proceso
-                Swal.fire({
+               Swal.fire({
                     title: 'WOOPS!',
                     text: 'Hubo problemas al intentar comunicarse con el servidor para validar tus datos de login'
                     +' intenta de nuevo, si el problema persiste contacta a tu administrador o soporte IT.',
@@ -265,25 +269,24 @@ $(document).ready(function(){
         dataType: "json",
         data: { "key": "validarRemember"},
         success: function (r) {
-            //si no hay usuario con recuérdame
-            if(r=="noRemUser"){
-                rem=0;
-                $('#customCheck').attr("checked",false);
-
-            }else{//en caso  exista
+            if(Array.isArray(r) && r.length>0){
                 //cargamos los inputs
-                $("input[name='txtUsuario']").val(r["nombre"]);
-                $("input[name='txtContraseña']").val(r["clave"]);
+                $("input[name='txtUsuario']").val(r[0]["usuario_id"].trim());
+                $("input[name='txtContraseña']").val(r[0]["usuario_clave"].trim());
                 rem=1;
                 $('#customCheck').attr("checked",true);
+            }else{
+                rem=0;
+                $('#customCheck').attr("checked",false);
             }
          },
         error: function (r) {
-            console.log(r);
+            console.log(r.responseText);
             Swal.fire({
                 title: '!Woops!',
                 text: 'No pudimos conectarnos al servidor, por favor intenta de nuevo, si el problema persiste'
-                +'informa a tu administrador o personal de IT erro: ',
+                +'informa a tu administrador o personal de IT.\n'
+                +'Proceso: ValidarRem',
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
               })

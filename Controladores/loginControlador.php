@@ -87,13 +87,7 @@ if(isset($_POST["key"])){
 
 function recordarmeCookies($rem, $nombre,$contraseña, $usChange){
     //evaluamos si el usuario cambio al que estaba seteado
-    if($usChange){
-        if($rem!=0){
-            //si quiere ser recordado creamos las cookies
-            setcookie("usuario",$nombre,time()+3600*24*30);
-            setcookie("token",$contraseña,time()+3600*24*30);
-        }
-    }else{
+    if($usChange ==0){
         //si no cambio el usuario solo evaluamos si quiere seguir
         //siendo recordado
         if($rem!=1){
@@ -102,6 +96,13 @@ function recordarmeCookies($rem, $nombre,$contraseña, $usChange){
             setcookie("token",$contraseña,time()-3600*24*30);
             
         }else{
+            //si quiere ser recordado creamos las cookies
+            setcookie("usuario",$nombre,time()+3600*24*30);
+            setcookie("token",$contraseña,time()+3600*24*30);
+        }
+
+    }else{
+        if($rem!=0){
             //si quiere ser recordado creamos las cookies
             setcookie("usuario",$nombre,time()+3600*24*30);
             setcookie("token",$contraseña,time()+3600*24*30);
