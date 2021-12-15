@@ -5,37 +5,6 @@ include_once 'conexion.php';
 class historialActivoDao{
 
 
-<<<<<<< HEAD
-    public function __construct(){
-    }
-
-    public function conectar(){
-        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
-        $basedatos="ACTIVO";
-        try{
-           
-            //DECLARANDO CANEDA DE CONEXION
-            $this->con = new PDO("sqlsrv:Server=$serverName;Database=$basedatos","","");
-            
-            //preparamos a la libreria PDO para mandar
-            //excepsiones en caso de errores
-            $this->con->setAttribute(
-                PDO::ATTR_ERRMODE,
-                PDO::ERRMODE_EXCEPTION
-            );
-        }catch(PDOException $error){
-            //MOSTRANDO ERROR
-            echo $error->getMessage();
-        }
-    
-    }
-
-    public function desconectar($respuesta){
-        $this->con=null;
-        $respuesta->closeCursor();//dependiendo de la lib es obligatorio o no.
-        $respuesta=null;
-=======
->>>>>>> 12675ab167f5e3a0119e525652df9af6412433fe
 
     public function __construct(){
     }
@@ -69,10 +38,41 @@ class historialActivoDao{
         }  
     }
 
+    public function insertarNuevoHistorial($objeto){
+        $ah = $objeto;
+        $con = Conexion::conectar();
+        $sql = "INSERT INTO Historico(
+            Activo_id,
+            Historico_fecha,
+            Estructura31_id,
+            Responsable_id,
+            Historico_comentario,
+            Usuario_id,
+            fecha,
+            Estado) 
+            VALUES (?,?,?,?,?,?,?,?)";
+        $respuesta = $con->prepare($sql);
+        try{
+            $respuesta->execute([
+                $ah->getActivoId(),
+                $ah->getHistoricoFecha(),
+                $ah->getEstructura31Id(),
+                $ah->getResponsableId(),
+                $ah->getHistoricoComentario(),
+                $ah->getUsuarioId(),
+                $ah->getFecha(),
+                $ah->getEstado()
+            ]);
+            return $respuesta->rowCount();
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }  
+    }
+
     public function mostrarHistorial($id){
         $con = Conexion::conectar();
         $sql = "SELECT a.*, b.Activo_descripcion as Descripcion, c.Nombre_Responsable as Responsable, d.estructura31_nombre,
-        b.Activo_referencia 
+        b.Activo_referencia, convert(varchar,a.Historico_fecha,127) as fechaHistorico
         FROM Historico a
         INNER JOIN Activo b 
         ON a.Activo_id = b.Activo_id 

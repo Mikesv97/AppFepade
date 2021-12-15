@@ -95,7 +95,7 @@ $date = date('d-m-Y');
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Referencia*</label>
-                                            <input type="text" name="ActivoReferencia" class="form-control" maxlength="30" required>
+                                            <input type="text" name="ActivoReferencia" id="ActivoReferencia" class="form-control" maxlength="30" required>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Código contabilidad</label>
@@ -187,7 +187,7 @@ $date = date('d-m-Y');
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Descripción de activo*</label>
-                                            <textarea class="form-control" name="ActivoDescripcion" rows="3" maxlength="1000" required></textarea>
+                                            <textarea class="form-control" name="ActivoDescripcion" id="ActivoDescripcion" rows="3" maxlength="1000" required></textarea>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Foto de activo*</label>
@@ -442,6 +442,8 @@ $date = date('d-m-Y');
                         <div class="col-md-12 borde">
                             <!-- INICIO PRIMERA COLUMNA DEL FORM -->
                             <div class="form-row">
+                                <input type="text" id="guardarIdActivo2" name="guardarIdActivo2" hidden>
+                                <input type="text" name="UsuarioIdH" value="<?= $idUSuario; ?>" hidden>
                                 <label class="label label-danger col-md-12">Activo</label>
                                 <div class="form-group col-md-5">
                                     <input type="text" name="ActivoReferenciaH" class="form-control" maxlength="30" required readonly>
@@ -451,7 +453,6 @@ $date = date('d-m-Y');
                                 </div>
                                 <label class="label label-danger col-md-12">Area</label>
                                 <div class="form-group col-md-3">
-                                    <input type="text" id="probando">
                                     <input type="text" class="form-control" name="idArea" id="idArea" readonly>
                                 </div>
                                 <div class="form-group col-md-9">
@@ -466,7 +467,7 @@ $date = date('d-m-Y');
                                 </div>
                                 <label class="label label-danger col-md-12">Responsable</label>
                                 <div class="form-group col-md-3">
-                                    <input type="text" class="form-control" name="idResponsable" readonly>
+                                    <input type="text" class="form-control" name="idResponsable" id="idResponsable" readonly>
                                 </div>
                                 <div class="form-group col-md-9">
                                     <select name="ResponsableIdH" id="ResponsableIdH" class="form-control">
@@ -500,6 +501,9 @@ $date = date('d-m-Y');
                                             <thead>
                                                 <tr>
                                                     <th>Referencia</th>
+                                                    <th>Activo descripción</th>
+                                                    <th>Área</th>
+                                                    <th>Responsable</th>
                                                     <th>Boton</th>
                                                 </tr>
                                             </thead>
@@ -509,6 +513,9 @@ $date = date('d-m-Y');
                                             <tfoot>
                                                 <tr>
                                                     <th>Referencia</th>
+                                                    <th>Activo descripción</th>
+                                                    <th>Área</th>
+                                                    <th>Responsable</th>
                                                     <th>Boton</th>
                                                 </tr>
                                             </tfoot>
@@ -519,14 +526,13 @@ $date = date('d-m-Y');
                         </div>
                     </div>
                     <button type="submit" class="btn btn-whatsapp" id="btnInsertar">Insertar</button>
-                    <button type="submit" class="btn btn-facebook" id="btnModificar">Modificar</button>
-                    <button type="submit" class="btn btn-pinterest" id="btnEliminar">Borrar</button>
+                    <button type="button" class="btn btn-facebook" id="btnModificar">Modificar</button>
+                    <button type="button" class="btn btn-pinterest" id="btnEliminar">Borrar</button>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-info" id="btnNuevo">Nuevo</button>
-
-                <button type="button" class="btn btn-google-plus" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-google-plus" id="btnCerrar" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

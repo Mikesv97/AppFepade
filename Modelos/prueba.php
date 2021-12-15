@@ -7,9 +7,45 @@ include_once '../Modelos/activoEspecificacionDao.php';
 include_once '../Modelos/historialActivoDao.php';
 
 // $activoEspe = new activoEspecificacionDao();
-// $activoHist = new historialActivoDao();
+$activoHist = new historialActivoDao();
 // // // $us = new LoginDao();
 $nuser = new UsuarioNuevoDao();
+
+
+// $ObjHistorico = setObjHistorico(
+//     '286',
+//     '2021-12-15',
+//     '3',
+//     '1',
+//     'Prueba',
+//     'AEC',
+//     '2021-12-15',
+//     '1'
+// );
+
+// echo json_encode($activoHist->insertarNuevoHistorial($ObjHistorico));
+
+// function setObjHistorico(
+//     $ActivoId,
+//     $Historico_fecha,
+//     $Estructura31_id,
+//     $Responsable_id,
+//     $Historico_comentario,
+//     $Usuario_id,
+//     $Fecha,
+//     $Estado
+// ) {
+//     $ObjHistorico = new historial_Activo();
+//     $ObjHistorico->setActivoId($ActivoId);
+//     $ObjHistorico->setHistoricoFecha($Historico_fecha);
+//     $ObjHistorico->setEstructura31Id($Estructura31_id);
+//     $ObjHistorico->setResponsableId($Responsable_id);
+//     $ObjHistorico->setHistoricoComentario($Historico_comentario);
+//     $ObjHistorico->setUsuarioId($Usuario_id);
+//     $ObjHistorico->setFecha($Fecha);
+//     $ObjHistorico->setEstado($Estado);
+//     return $ObjHistorico;
+// }
 
 
 //echo $nuser->eliminarBitaUser("asda");

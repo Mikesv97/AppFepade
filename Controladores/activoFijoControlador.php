@@ -160,6 +160,24 @@ if ($_POST) {
                 $resp2 = $activoHist->mostrarHistorial($id);
                 echo json_encode($resp2);
                 break;
+            case "insertarHistorial":
+                $ObjHistorico = setObjHistorico(
+                    $_POST['guardarIdActivo2'],
+                    str_replace('T', ' ', $_POST['fechaHistorico']),
+                    $_POST['Estructura3IdH'],
+                    $_POST['ResponsableIdH'],
+                    $_POST['HistoricoComentarioH'],
+                    $_POST['UsuarioIdH'],
+                    str_replace('T', ' ', $_POST['fechaHistorico']),
+                    $_POST['activoInacH']
+                );
+
+                if($activoHist->insertarNuevoHistorial($ObjHistorico) == 0){
+                    echo json_encode('FailHistorico');
+                }else{
+                    echo json_encode('Insertado');
+                }
+                break;
         }
     }
 }
@@ -306,4 +324,26 @@ function setObjActivoHistorial(
     $objActivoHistorial->setUsuarioId($Usuario_id);
     $objActivoHistorial->setEstado($Estado);
     return $objActivoHistorial;
+}
+
+function setObjHistorico(
+    $ActivoId,
+    $Historico_fecha,
+    $Estructura31_id,
+    $Responsable_id,
+    $Historico_comentario,
+    $Usuario_id,
+    $Fecha,
+    $Estado
+) {
+    $ObjHistorico = new historial_Activo();
+    $ObjHistorico->setActivoId($ActivoId);
+    $ObjHistorico->setHistoricoFecha($Historico_fecha);
+    $ObjHistorico->setEstructura31Id($Estructura31_id);
+    $ObjHistorico->setResponsableId($Responsable_id);
+    $ObjHistorico->setHistoricoComentario($Historico_comentario);
+    $ObjHistorico->setUsuarioId($Usuario_id);
+    $ObjHistorico->setFecha($Fecha);
+    $ObjHistorico->setEstado($Estado);
+    return $ObjHistorico;
 }

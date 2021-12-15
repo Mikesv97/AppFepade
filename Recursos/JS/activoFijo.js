@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
     desabilitarInputPc(false);
     desabilitarInputProyector(true);
     desabilitarInputImpresora(true);
-    //ASIGNADO EL VALOR DE 0 O 1 SI EL CHECK ELIMINADO TIENE UN CAMBIO, OSEA SI LO ACTIVAN O NO
+    //ASIGNADO EL VALOR DE 0 O 1 SI EL CHECK ELIMINADO TIENE UN CAMBIO, OSEA SI LO ACTIVAN O NO DEL FORMULARIO ACTIVO
     var eliminado = 0;
     $('#ActivoEliminado').change(function () {
         if (eliminado == 0) {
@@ -13,13 +13,23 @@ jQuery(document).ready(function ($) {
         }
     })
 
-    //ASIGNADO EL VALOR DE 0 O 1 SI EL CHECK INACTIVO TIENE UN CAMBIO, OSEA SI LO ACTIVAN O NO
+    //ASIGNADO EL VALOR DE 0 O 1 SI EL CHECK INACTIVO TIENE UN CAMBIO, OSEA SI LO ACTIVAN O NO DEL FORMULARIO ACTIVO
     var inactivo = 1;
     $('#estado').change(function () {
         if (inactivo == 1) {
             inactivo = 0;
         } else {
             inactivo = 1;
+        }
+    })
+
+    //ASIGNADO EL VALOR DE 0 O 1 SI EL CHECK INACTIVO TIENE UN CAMBIO, OSEA SI LO ACTIVAN O NO DEL FORMULARIO HISTORICOM
+    var inactivoH = 1;
+    $('#estadoH').change(function () {
+        if (inactivoH == 1) {
+            inactivoH = 0;
+        } else {
+            inactivoH = 1;
         }
     })
 
@@ -40,7 +50,7 @@ jQuery(document).ready(function ($) {
         $('#ActivoEliminado').attr('checked', false);
         $('#estado').attr('checked', false);
         $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
-        
+
     });
 
     //EVENTO CHANGE QUE MUESTRA LA IMAGEN QUE SE AGREGAR EN EL INPUT FILE
@@ -93,6 +103,66 @@ jQuery(document).ready(function ($) {
                                 $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
                                 break;
                             case "FailActiveEspe":
+                                Swal.fire({
+                                    title: '¡Problemas técnicos!',
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta la especificacion del activo'
+                                        + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar',
+                                })
+                                break;
+                        }
+                    },
+                    error: function (r) {
+                        console.log(r);
+                    }
+                });
+
+            }
+        })
+    });
+
+    //CUANDO SE INSERTA EN HISTICO ACTIVO
+    $('#formHistorico').submit(function (e) {
+
+        e.preventDefault();
+        Swal.fire({
+            title: 'Ingresar historico al sistema',
+            text: "Porfavor confirma para ingresar al historico",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ingresasr'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                var formData = new FormData($('#formHistorico')[0]);
+                formData.append("key", "insertarHistorial");
+                formData.append("activoInacH", inactivoH);
+                $.ajax({
+                    type: 'POST',
+                    url: "../Controladores/activoFijoControlador.php",
+                    dataType: "json",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (r) {
+                        console.log(r);
+                        switch (r) {
+                            case "Insertado":
+                                Swal.fire(
+                                    'Activo ingresado!',
+                                    'El activo a sido ingresado al sistema',
+                                    'success'
+                                )
+                                $("#formHistorico")[0].reset();
+                                $('#historial').DataTable().ajax.reload();
+                                $('#activoHistorial').DataTable().ajax.reload();
+                                break;
+                            case "FailHistorico":
+                                console.log(r);
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
                                     text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta la especificacion del activo'
@@ -365,16 +435,33 @@ jQuery(document).ready(function ($) {
 
         //INPUT QUE GUARDA EL ACTIVO ID DEL ACTIVO QUE EL USUARIO SELECIONA
         $('#guardarIdActivo').val(data['Activo_id']);
-        $('#probando').val($('#Estructura3IdH'));
     });
 
-    $('#Estructura3IdH').change(function(){
-        $('#idArea').val($('#probando'));
-    });
+    $('#btnMostrarHistorial').on('click', function () {
 
-    $('#btnMostrarHistorial').on('click',function (){
-        var historialId = $('#guardarIdActivo').val(); 
-        
+        //DEJANDO EL FORMULARIO DE HISTORICO EN LIMPIO SIEMPRE QUE LO MUESTREN
+        $("#formHistorico")[0].reset();
+
+        //MOSTRANDO EL ID DE ESTRUCTURA 31 EN EL INPUT IDAREA
+        $('#Estructura3IdH').on('change', function () {
+            $('#idArea').val(this.value);
+        });
+
+        //MOSTRANDO EL ID DE ESTRUCTURA 31 EN EL INPUT RESPONSABLEID
+        $('#ResponsableIdH').on('change', function () {
+            $('#idResponsable').val(this.value);
+        });
+
+        //OBTENIEDO EL ACTIVO ID PARA CARGAR EL HISTORICO PO
+        var historialId1 = $('#guardarIdActivo').val();
+        //OBTENIENDO VARIABLES REFERENCIA Y DESCRIPCION DE ACTIVO PARA CARGARLOS EN EL FORMULARIO DE HISTORIAL
+        var referencia = $('#ActivoReferencia').val();
+        var descripcion = $('#ActivoDescripcion').val();
+        //PONE EN EL INPUT GUARDARIDACTIVO2 EL VALOR DE ACTIVO_ID
+        var ActivoIdHistorico = $('#guardarIdActivo2').val(historialId1);
+
+        cargarHistorico2(referencia, descripcion);
+
         $('#historial').dataTable().fnDestroy();
         //DATATABLE QUE SE ENCUENTRA EN MODAL CONTIENE EL HISTORIAL DE CADA ACTIVO FIJO SEGUN EL ACTIVO ID QUE RECIBE
         $('#historial').DataTable({
@@ -382,13 +469,25 @@ jQuery(document).ready(function ($) {
                 "url": "../Controladores/activoFijoControlador.php",
                 "method": "post",
                 "dataType": "json",
-                "data": { "key": "getInfoHistorial", "ActivoId": historialId },
+                "data": { "key": "getInfoHistorial", "ActivoId": historialId1 },
                 "dataSrc": ""
             },
             "columns": [
                 {
+                    data: "Activo_referencia",
+                    className: "Activo_referencia"
+                },
+                {
+                    data: "Descripcion",
+                    className: "Descripcion"
+                },
+                {
                     data: "Estructura31_id",
                     className: "Estructura31_id"
+                },
+                {
+                    data: "Responsable",
+                    className: "Responsable"
                 },
                 {
                     data: null,
@@ -412,11 +511,21 @@ jQuery(document).ready(function ($) {
         });
     });
 
-    $('#historial tbody').on('click','tr', function () {
-
+    $('#historial tbody').on('click', 'tr', function () {
 
         var table = $('#historial').DataTable();
         var data = table.row(this).data();
+
+        cargarHistorico(
+            data['Activo_referencia'],
+            data['Descripcion'],
+            data['Estructura31_id'],
+            data['Responsable_id'],
+            data['fechaHistorico'],
+            data['Estado'],
+            data['Historico_comentario'],
+            data['Activo_id']
+        );
 
         //EVALUA EL VALOR QUE VIENE DE LA COLUMNA ACTIVO ESTADO PARA PONER EL CHEKE O QUITARLO
         if (data['Estado'] == 0) {
@@ -425,18 +534,8 @@ jQuery(document).ready(function ($) {
             $('#estadoH').attr('checked', false);
         }
 
-        cargarHistorico(
-            data['Activo_referencia'],
-            data['Descripcion'],
-            data['Estructura31_id'],
-            data['Responsable_id'],
-            data['Historico_fecha'],
-            data['Estado'],
-            data['Historico_comentario']
-        );
+    });
 
-    } );
-    
     // $('#historial tbody').on('click','#btnMostrarH', function(){
     // });
 
@@ -490,7 +589,7 @@ jQuery(document).ready(function ($) {
         $('input[name=HoraEco]').val(horaEco);
     }
 
-    function cargarHistorico(referencia,descripcionActivo,estructura3,reponsable,fecha,estado,comentario){
+    function cargarHistorico(referencia, descripcionActivo, estructura3, reponsable, fecha, estado, comentario, id) {
         $('input[name=ActivoReferenciaH]').val(referencia);
         $('textarea[name=ActivoDescripcionH]').val(descripcionActivo);
         $('input[name=idArea]').val(estructura3);
@@ -500,6 +599,12 @@ jQuery(document).ready(function ($) {
         $('input[name=fechaHistorico]').val(fecha);
         $('input[name=estadoH]').val(estado);
         $('textarea[name=HistoricoComentarioH]').val(comentario);
+        $('input[name=guardarIdActivo2]').val(id);
+    }
+
+    function cargarHistorico2(referencia, descripcionActivo) {
+        $('input[name=ActivoReferenciaH]').val(referencia);
+        $('textarea[name=ActivoDescripcionH]').val(descripcionActivo);
     }
 
     function blockControl(desabilitar) {

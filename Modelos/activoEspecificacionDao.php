@@ -6,37 +6,6 @@ class activoEspecificacionDao{
     public function __construct(){
     }
 
-<<<<<<< HEAD
-    public function conectar(){
-        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
-        $basedatos="ACTIVO";
-        try{
-           
-            //DECLARANDO CANEDA DE CONEXION
-            $this->con = new PDO("sqlsrv:Server=$serverName;Database=$basedatos","","");
-            
-            //preparamos a la libreria PDO para mandar
-            //excepsiones en caso de errores
-            $this->con->setAttribute(
-                PDO::ATTR_ERRMODE,
-                PDO::ERRMODE_EXCEPTION
-            );
-        }catch(PDOException $error){
-            //MOSTRANDO ERROR
-            echo $error->getMessage();
-        }
-    
-    }
-
-    public function desconectar($respuesta){
-        $this->con=null;
-        $respuesta->closeCursor();//dependiendo de la lib es obligatorio o no.
-        $respuesta=null;
-
-    }
-
-=======
->>>>>>> 12675ab167f5e3a0119e525652df9af6412433fe
     public function obtenerId(){
        $con = Conexion::conectar();
         $sql = "SELECT MAX(Activo_id) AS id FROM Activo";
