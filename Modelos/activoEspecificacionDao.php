@@ -1,44 +1,16 @@
 <?php
 include 'activoEspe.php';
-
+include_once 'conexion.php';
 class activoEspecificacionDao{
     private $con;
 
     public function __construct(){
     }
 
-    public function conectar(){
-        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
-        $basedatos="ACTIVO";
-        try{
-           
-            //DECLARANDO CANEDA DE CONEXION
-            $this->con = new PDO("sqlsrv:Server=$serverName;Database=$basedatos","","");
-            
-            //preparamos a la libreria PDO para mandar
-            //excepsiones en caso de errores
-            $this->con->setAttribute(
-                PDO::ATTR_ERRMODE,
-                PDO::ERRMODE_EXCEPTION
-            );
-        }catch(PDOException $error){
-            //MOSTRANDO ERROR
-            echo $error->getMessage();
-        }
-    
-    }
-
-    public function desconectar($respuesta){
-        $this->con=null;
-        $respuesta->closeCursor();//dependiendo de la lib es obligatorio o no.
-        $respuesta=null;
-
-    }
-
     public function obtenerId(){
-        $this->conectar();
+        $this->con = Conexion::conectar();
         $sql = "SELECT MAX(Activo_id) AS id FROM Activo";
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
 
             //ejecutamos la consulta y seteamos parametros 
@@ -55,7 +27,7 @@ class activoEspecificacionDao{
     public function insertarActEspCom($objeto)
     {
         $ae = $objeto;
-        $this->conectar();
+        $this->con = Conexion::conectar();
         $sql = "INSERT INTO Activo_Especificacion(
             Activo_id,
             Procesador,
@@ -71,7 +43,7 @@ class activoEspecificacionDao{
             Modelo,
             IP)
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([
                 $ae->getActivoId(),
@@ -96,7 +68,7 @@ class activoEspecificacionDao{
 
     public function insertarActEspImp($objeto){
         $aei = $objeto;
-        $this->conectar();
+        $this->con = Conexion::conectar();
         $sql = "INSERT INTO Activo_Especificacion(
             Activo_id,
             Procesador,
@@ -113,7 +85,7 @@ class activoEspecificacionDao{
             tambor,
             fusor) 
             VALUES (?,'','','','',?,'','',?,?,?,?,?,?)";
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([
                 $aei->getActivoId(),
@@ -133,7 +105,7 @@ class activoEspecificacionDao{
 
     public function insertarActEspProy($objeto){
         $ae = $objeto;
-        $this->conectar();
+        $this->con = Conexion::conectar();
         $sql = "INSERT INTO Activo_Especificacion(
             Activo_id,
             Procesador,
@@ -146,7 +118,7 @@ class activoEspecificacionDao{
             HorasUso,
             HoraEco) 
             VALUES (?,'','','','',?,'','',?,?)";
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([
                 $ae->getActivoId(),

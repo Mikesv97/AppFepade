@@ -13,11 +13,11 @@ class UsuarioNuevoDao{
         $usuario = new UsuarioNuevo();
         $usuario = $objeto;
         //establecemos la coneccion
-        $con = Conexion::conectar();
+        $this->con = Conexion::conectar();
         //establecemos la consulta
         $sql="insert into usuario values (?,?,?,CURRENT_TIMESTAMP,?,?,?, ?,?,?)";
         //preparamos la consulta
-        $respuesta = $con->prepare($sql);
+        $respuesta = $this->con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros 
             $respuesta->execute([
@@ -49,11 +49,11 @@ class UsuarioNuevoDao{
 
     public function insertarBitacoraUs($usuario, $responsable){
         //establecemos la coneccion
-        $con = Conexion::conectar();
+        $this->con = Conexion::conectar();
         //establecemos la consulta
         $sql="insert into bitacora_usuarios values (?,?)";
         //preparamos la consulta
-        $respuesta = $con->prepare($sql);
+        $respuesta = $this->con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros 
             $respuesta->execute([$usuario,$responsable]);
@@ -74,9 +74,9 @@ class UsuarioNuevoDao{
     }
 
     public function obtenerIdBitacora(){
-        $con = Conexion::conectar();
+        $this->con = Conexion::conectar();
         $sql = "select max(id_bitacora) as id from bitacora_usuarios";
-        $respuesta = $con->prepare($sql);
+        $respuesta = $this->con->prepare($sql);
         try{
 
             //ejecutamos la consulta y seteamos parametros 
@@ -92,13 +92,13 @@ class UsuarioNuevoDao{
 
     public function obtenerUsuarios(){     
         //establecemos la coneccion
-        $con = Conexion::conectar();
+        $this->con = Conexion::conectar();
         //establecemos la consulta
         $sql="select a.usuario_id, a.usuario_nombre, a.usuario_fecha, a.correo_electronico, b.rol_nombre, c.usuario_responsable
         from usuario a inner join roles b on a.id_rol = b.id_rol inner join bitacora_usuarios c on a.id_bitacora = c.id_bitacora";
         try{
             //ejecutamos la consulta 
-            $respuesta = $con->query($sql);
+            $respuesta = $this->con->query($sql);
 
             //retornamos el arreglo
             return $respuesta->fetchAll();
@@ -119,11 +119,11 @@ class UsuarioNuevoDao{
                 //eliminar, caso contrario tiene sesión activa y no se puede borrar.
 
                 //establecemos la coneccion
-                $con = Conexion::conectar();
+                $this->con = Conexion::conectar();
                 //establecemos la consulta
                 $sql="delete from usuario where usuario_id = ?";
                 //preparamos la consulta
-                $respuesta = $con->prepare($sql);
+                $respuesta = $this->con->prepare($sql);
                 try{
                     //ejecutamos la consulta y seteamos parametros 
                     $respuesta->execute([$id]);
@@ -159,11 +159,11 @@ class UsuarioNuevoDao{
     //1 si está logueado, 0 si está off.
     public function getSesionEstUsuario($id){
         //establecemos la coneccion
-        $con = Conexion::conectar();
+        $this->con = Conexion::conectar();
         //establecemos la consulta
         $sql="select estado_sesion from usuario where usuario_id = ?";
         //preparamos la consulta
-        $respuesta = $con->prepare($sql);
+        $respuesta = $this->con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros 
             $respuesta->execute([$id]);
@@ -187,11 +187,11 @@ class UsuarioNuevoDao{
     //retorna el número de filas afectadas
     public function eliminarBitaUser($id){
         //establecemos la coneccion
-        $con = Conexion::conectar();
+        $this->con = Conexion::conectar();
         //establecemos la consulta
         $sql="delete from bitacora_usuarios where usuario_id = ?";
         //preparamos la consulta
-        $respuesta = $con->prepare($sql);
+        $respuesta = $this->con->prepare($sql);
         try{
             //ejecutamos la consulta y seteamos parametros 
             $respuesta->execute([$id]);

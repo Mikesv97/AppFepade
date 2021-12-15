@@ -1,5 +1,6 @@
 <?php
 include_once "historialActivo.php";
+include_once 'conexion.php';
 
 class historialActivoDao{
 
@@ -8,37 +9,9 @@ class historialActivoDao{
     public function __construct(){
     }
 
-    public function conectar(){
-        $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
-        $basedatos="ACTIVO";
-        try{
-           
-            //DECLARANDO CANEDA DE CONEXION
-            $this->con = new PDO("sqlsrv:Server=$serverName;Database=$basedatos","","");
-            
-            //preparamos a la libreria PDO para mandar
-            //excepsiones en caso de errores
-            $this->con->setAttribute(
-                PDO::ATTR_ERRMODE,
-                PDO::ERRMODE_EXCEPTION
-            );
-        }catch(PDOException $error){
-            //MOSTRANDO ERROR
-            echo $error->getMessage();
-        }
-    
-    }
-
-    public function desconectar($respuesta){
-        $this->con=null;
-        $respuesta->closeCursor();//dependiendo de la lib es obligatorio o no.
-        $respuesta=null;
-
-    }
-
     public function insertarHistorial($objeto){
         $ah = $objeto;
-        $this->conectar();
+        $this->con = Conexion::conectar();
         $sql = "INSERT INTO Historico(
             Activo_id,
             Historico_fecha,
@@ -66,7 +39,7 @@ class historialActivoDao{
     }
 
     public function mostrarHistorial($id){
-        $this->conectar();
+        $this->con = Conexion::conectar();
         $sql = "SELECT a.*, b.Activo_descripcion as Descripcion, c.Nombre_Responsable as Responsable, d.estructura31_nombre,
         b.Activo_referencia 
         FROM Historico a
