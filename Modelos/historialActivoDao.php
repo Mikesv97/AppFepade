@@ -4,14 +4,14 @@ include_once 'conexion.php';
 
 class historialActivoDao{
 
-    private $con;
+
 
     public function __construct(){
     }
 
     public function insertarHistorial($objeto){
         $ah = $objeto;
-        $this->con = Conexion::conectar();
+        $con = Conexion::conectar();
         $sql = "INSERT INTO Historico(
             Activo_id,
             Historico_fecha,
@@ -22,7 +22,7 @@ class historialActivoDao{
             fecha,
             Estado) 
             VALUES (?,CURRENT_TIMESTAMP,?,?,?,?,CURRENT_TIMESTAMP,?)";
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([
                 $ah->getActivoId(),
@@ -39,7 +39,7 @@ class historialActivoDao{
     }
 
     public function mostrarHistorial($id){
-        $this->con = Conexion::conectar();
+        $con = Conexion::conectar();
         $sql = "SELECT a.*, b.Activo_descripcion as Descripcion, c.Nombre_Responsable as Responsable, d.estructura31_nombre,
         b.Activo_referencia 
         FROM Historico a
@@ -50,7 +50,7 @@ class historialActivoDao{
         INNER JOIN Qry_Estructura31 d
         ON a.Estructura31_id = d.estructura31_id
         WHERE a.Activo_id = ?";
-        $respuesta = $this->con->prepare($sql);
+        $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([$id]);
             $data = $respuesta->fetchAll(PDO::FETCH_ASSOC);

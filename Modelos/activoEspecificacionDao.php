@@ -2,13 +2,12 @@
 include 'activoEspe.php';
 include_once 'conexion.php';
 class activoEspecificacionDao{
-    private $con;
 
     public function __construct(){
     }
 
     public function obtenerId(){
-        $this->con = Conexion::conectar();
+       $con = Conexion::conectar();
         $sql = "SELECT MAX(Activo_id) AS id FROM Activo";
         $respuesta = $con->prepare($sql);
         try{
@@ -27,7 +26,7 @@ class activoEspecificacionDao{
     public function insertarActEspCom($objeto)
     {
         $ae = $objeto;
-        $this->con = Conexion::conectar();
+        $con = Conexion::conectar();
         $sql = "INSERT INTO Activo_Especificacion(
             Activo_id,
             Procesador,
@@ -68,7 +67,7 @@ class activoEspecificacionDao{
 
     public function insertarActEspImp($objeto){
         $aei = $objeto;
-        $this->con = Conexion::conectar();
+        $con = Conexion::conectar();
         $sql = "INSERT INTO Activo_Especificacion(
             Activo_id,
             Procesador,
@@ -105,7 +104,7 @@ class activoEspecificacionDao{
 
     public function insertarActEspProy($objeto){
         $ae = $objeto;
-        $this->con = Conexion::conectar();
+        $con = Conexion::conectar();
         $sql = "INSERT INTO Activo_Especificacion(
             Activo_id,
             Procesador,
