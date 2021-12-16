@@ -81,6 +81,21 @@ if(isset($_POST["key"])){
               $passOld = $_POST["passOld"];
               $usDao->validarPassOld($passOld, $usuario);
             break;
+            case "primerCambioPass":
+            $usuario =$_POST["usuario"];
+            $pass = $_POST["contraseña"];
+            $resp = $usDao->primerCambioPassUser($pass,$usuario);
+            if($resp>0){
+                $resultF=$usDao->eliminarEstadoNuevoUser($usuario,0);
+               if($resultF>0){
+                   echo true;
+               }else{
+                   echo $resultF;
+               }
+            }else{
+                echo $resp;
+            }
+            break;
         }
 }
 

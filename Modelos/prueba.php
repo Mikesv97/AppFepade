@@ -13,7 +13,7 @@ $nuser = new UsuarioNuevoDao();
 
 $l = new LoginDao();
 
-$l->validarPassOld("adriana123", "adriana");
+echo $l->eliminarEstadoNuevoUser("adriana",0);
 
 // $ObjHistorico = setObjHistorico(
 //     '286',
