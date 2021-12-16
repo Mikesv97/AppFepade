@@ -34,13 +34,15 @@ session_start();
                     <img src="../recursos/multimedia/imagenes/logo.jpg" alt="logoFepade">
                     <span class="text-gray-900">Cambio de contraseña</span>
                 </h2>
-                    <form class="login-container shadow">
+                    <form id="frmPrimerLogin" class="login-container shadow" >
                         <p><input id="usuarioId" name="usuarioId" class="form-control" type="text" placeholder="Usuario id" value="<?=$_SESSION["usuario"]["id"]?>" readonly></p>
-                        <p><input name="passOld" id="passOld" class="form-control" type="password" placeholder="Contraseña actual"></p>
-                        <p><input name="passNew1" id="passNew1" class="form-control" type="password" placeholder="Contraseña nueva"></p>
-                        <p><input  name="passNew2" id="passNew2" class="form-control" type="password" placeholder="Confirmar contraseña nueva"></p>
+                        <p><input name="passOld" id="passOld" class="form-control" type="password" maxlength="10" placeholder="Contraseña actual *" required></p>
+                        <div class="col-md-12"><p class="small p-1 alertError" role="alert" id="labelError"></p></div>
+                        <p><input name="passNew1" id="passNew1" class="form-control" type="password"  maxlength="10" placeholder="Contraseña nueva *" required></p>
+                        <p><input  name="passNew2" id="passNew2" class="form-control" type="password"maxlength="10" placeholder="Confirmar contraseña nueva *" required></p>
+                        <div class="col-md-12"><p class="small p-1 alertError" role="alert" id="labelError2"></p></div>
                         <div class="textLink">
-                        <button type="submit" class="btn btn-danger ">Cambiar contraseña</button>
+                        <button type="submit" class="btn btn-danger">Cambiar contraseña</button>
                        <div class="textLink my-2">
                            <a id="cambiarUsuario" class="h6" href=".#">
                                Cambiar usuario

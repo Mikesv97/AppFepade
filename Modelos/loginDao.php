@@ -92,7 +92,7 @@ class LoginDao{
            
         }catch(PDOException $error){
             echo $error->getMessage();
-
+//sd
         }
     }
 
@@ -184,51 +184,33 @@ class LoginDao{
         }
     }
 
-    //funcion que retorna un array con los usuarios que tienen 1 
-    //en campo remember para cambiar al ultimo que pide ser recordado
-    public function comprobarRememberUs(){
-        $reme=1;
-        $con = Conexion::conectar();
-        //establecemos la consulta
-        $sql="select usuario_id, remember from usuario where  remember =?";
-        //preparamos la consulta
-        $respuesta = $con->prepare($sql);
-        try{
-            //ejecutamos la consulta
-            if($respuesta->execute([$reme])){
-                //si tiene exito retornamos datos
-               
-                return  $respuesta->fetchall();
-               
-                
-            }else{
-                Conexion::desconectar($respuesta);
-                return false;
-                
-            }
-        }catch(PDOException $error){
-            return $error->getMessage();
-        }
-    }
-
-    public function validarPassOld($passOld){
+    public function validarPassOld($passOld, $usuario){
 
         //establecemos la coneccion
         $con = Conexion::conectar();
         //establecemos la consulta
-        $sql="select count(correo_Electronico) from usuario where correo_electronico = ?";
+        $sql="select usuario_clave from usuario where usuario_id =?";
         //preparamos la consulta a ejecutar
         $respuesta = $con->prepare($sql);
         try{
 
             //ejecutamos la consulta y seteamos parametros 
-            $respuesta->execute([$correo]);
-            //retornamos la cantidad de registro con el correo ingresado
-            //solo puede ser 1 si hay o 0 si no hay
-            return $respuesta->fetchColumn();
-
+            $respuesta->execute([$usuario]);
+            
+            $passDB=$respuesta->fetchColumn();
+            Conexion::desconectar($respuesta);
+            if(empty($passDB)){
+                echo "invalidPassOld";
+            }else{
+                if(!password_verify($passOld,$passDB)){
+                    echo"invalidPassOld";
+                }else{
+                    echo true;
+                }
+            }   
+           
         }catch(PDOException $error){
-            return $error->getMessage();
+            echo $error->getMessage();
         }
     }
 }
