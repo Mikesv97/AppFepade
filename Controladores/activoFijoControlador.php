@@ -140,7 +140,7 @@ if ($_POST) {
                             } else {
                                 echo json_encode('Insertado');
                             }
-                        }else{
+                        } else {
                             echo json_encode("FailActiveEspe");
                         }
                     } else {
@@ -173,34 +173,76 @@ if ($_POST) {
                     $_POST['activoInacH']
                 );
 
-                if($activoHist->insertarNuevoHistorial($ObjHistorico) == 0){
+                if ($activoHist->insertarNuevoHistorial($ObjHistorico) == 0) {
                     echo json_encode('FailHistorico');
-                }else{
+                } else {
                     $historialInsertado = true;
-                    if($historialInsertado){
+                    if ($historialInsertado) {
 
                         $ObjActualizarEstActivo = setObjActualizarEstActivo(
                             $_POST['activoInacH'],
                             $_POST['guardarIdActivo2']
                         );
 
-                        if($activoFijo->updateEstado($ObjActualizarEstActivo) == 0){
+                        if ($activoFijo->updateEstado($ObjActualizarEstActivo) == 0) {
                             echo json_encode('FailHistorico');
-                        }else{
+                        } else {
                             echo json_encode('Insertado');
                         }
-
-                    }else{
+                    } else {
                         echo json_encode('FailHistorico');
                     }
-                }      
+                }
                 break;
             case "eliminarHistorial":
-                if($activoHist->eliminarHistorial($_POST['historicoId']) == 0 ){
+                if ($activoHist->eliminarHistorial($_POST['historicoId']) == 0) {
                     echo json_encode('FailHistoricoEliminado');
-                }else{
+                } else {
                     echo json_encode('Eliminado');
                 }
+                break;
+            case "modificarHisotial":
+                $ObjModificarHistorico = setObjModificarHistorico(
+                    str_replace('T', ' ', $_POST['fechaHistorico']),
+                    $_POST['Estructura3IdH'],
+                    $_POST['ResponsableIdH'],
+                    $_POST['HistoricoComentarioH'],
+                    $_POST['UsuarioIdH'],
+                    $_POST['activoInacH'],
+                    $_POST['historicoId']
+                );
+
+                //SI ES LA ULTIMA LINEA DE LA TABLA HISTORICO ES LA QUE SE SELECCIONO SE DEBE ACTUALIZAR EL ESTADO EN LA TABLA ACTIVO
+                if ($_POST['ultimoLinea'] == 1) {
+                    //EVALUAMOS LOS VALORES QUE VIENEN SETEADOS
+                    if ($activoHist->modificarHistorial($ObjModificarHistorico) == 0) {
+                        //SI MODIFICAR HISTORIAL ES IGUAL A CERO ENVIAMOS ERROR
+                        echo json_encode('FailHistoricoModificado');
+                    } else {
+                        //SETEANDO EL OBJETO ESTADO PARA ENVIAR LOS VALORES A INSERTAR EN ACTIVO
+                        $ObjActualizarEstActivo = setObjActualizarEstActivo(
+                            $_POST['activoInacH'],
+                            $_POST['guardarIdActivo2']
+                        );
+                        //EVALUAMOS QUE LOS DATOS DE ESTADO Y ACTIVOID SEAN DIFERENTE A 0
+                        if ($activoFijo->updateEstado($ObjActualizarEstActivo) == 0) {
+                            //SI EL VALOR ES IGUAL A CERO MANDA ERROR
+                            echo json_encode('FailHistoricoModificado');
+                        } else {
+                            //SI NO ENVIAMOS MODIFICAR
+                            echo json_encode('modificar');
+                        }
+                    }
+                }else if ($_POST['ultimoLinea'] == 0){
+                    if ($activoHist->modificarHistorial($ObjModificarHistorico) == 0) {
+                        //SI EL VALOR ES IGUAL A CERO MANDA ERROR
+                        echo json_encode('FailHistoricoModificado');
+                    } else {
+                        //SI NO ENVIAMOS MODIFICAR
+                        echo json_encode('modificar');
+                    }
+                }
+
                 break;
         }
     }
@@ -375,9 +417,29 @@ function setObjHistorico(
 function setObjActualizarEstActivo(
     $Estado,
     $ActivoId
-){
+) {
     $ObjActualizarEstActivo = new Activo_Fijo();
     $ObjActualizarEstActivo->setEstado($Estado);
     $ObjActualizarEstActivo->setActivoId($ActivoId);
     return $ObjActualizarEstActivo;
+}
+
+function setObjModificarHistorico(
+    $historicoFecha,
+    $Estructura31Id,
+    $ResponsableIdd,
+    $HistoricoComentario,
+    $UsuarioId,
+    $Estado,
+    $HistoritoId
+) {
+    $ObjModificarHistorico = new historial_Activo();
+    $ObjModificarHistorico->setHistoricoFecha($historicoFecha);
+    $ObjModificarHistorico->setEstructura31Id($Estructura31Id);
+    $ObjModificarHistorico->setResponsableId($ResponsableIdd);
+    $ObjModificarHistorico->setHistoricoComentario($HistoricoComentario);
+    $ObjModificarHistorico->setUsuarioId($UsuarioId);
+    $ObjModificarHistorico->setEstado($Estado);
+    $ObjModificarHistorico->setHistoricoId($HistoritoId);
+    return $ObjModificarHistorico;
 }

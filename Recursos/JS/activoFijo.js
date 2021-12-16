@@ -28,7 +28,7 @@ jQuery(document).ready(function ($) {
 
     //ASIGNADO EL VALOR DE 0 O 1 SI EL CHECK INACTIVO TIENE UN CAMBIO, OSEA SI LO ACTIVAN O NO DEL FORMULARIO HISTORICOM
     var inactivoH = 1;
-    $('#estadoH').change(function () {
+    $('#estadoH').on('click', function () {
         if (inactivoH == 1) {
             inactivoH = 0;
         } else {
@@ -156,13 +156,16 @@ jQuery(document).ready(function ($) {
                         switch (r) {
                             case "Insertado":
                                 Swal.fire(
-                                    'Activo ingresado!',
+                                    'Historico ingresado!',
                                     'El historico a sido ingresado al sistema',
                                     'success'
                                 )
                                 $("#formHistorico")[0].reset();
                                 $('#historial').DataTable().ajax.reload();
                                 $('#activoHistorial').DataTable().ajax.reload();
+                                var referencia = $('#ActivoReferencia').val();
+                                var descripcion = $('#ActivoDescripcion').val();
+                                cargarHistorico2(referencia, descripcion);
                                 break;
                             case "FailHistorico":
                                 console.log(r);
@@ -514,20 +517,20 @@ jQuery(document).ready(function ($) {
         });
     });
 
-    $('#historial tbody').on('click', '.btnMostrarHistorial' , function () {
+    $('#historial tbody').on('click', '.btnMostrarHistorial', function () {
 
         var table = $('#historial').DataTable();
         var data = table.row(this).data();
-
-        console.log(data);
 
         //VARIABLES QUE SIRVEN PARA ACTUALIZAR EL ESTADO DEL ACTIVO EN LA TABLA ACTIVO
         var totalFilas = table.rows().count();
         var filaClick = parseInt(table.row(this).index()) + 1;
 
         //COMPROBACION DE CUAL ES EL ULTIMO HISTORICO INGRESADO
-        if(filaClick == totalFilas){
+        if (filaClick == totalFilas) {
             lastHistoricoPosition = true;
+        } else {
+            lastHistoricoPosition = false;
         }
 
         //CARGANDO LOS INPUT CON LA DATA DE LA TABLA HISTORIAL
@@ -546,22 +549,87 @@ jQuery(document).ready(function ($) {
         //EVALUA EL VALOR QUE VIENE DE LA COLUMNA ACTIVO ESTADO PARA PONER EL CHEKE O QUITARLO
         if (data['Estado'] == 0) {
             $('#estadoH').attr('checked', true);
+            inactivoH = 0;
         } else {
             $('#estadoH').attr('checked', false);
+            inactivoH = 1;
         }
 
     });
 
-    $('#btnModificarHostorico').on('click', function(){
-        if(lastHistoricoPosition){
-            console.log('actualizar tablas');
-        }else{
-            console.log('NO actualizar tablas');
+    $('#btnModificarHostorico').on('click', function () {
+
+        //VARIABLE PARA VERIFICAR SI lastHistoricoPosition ES VERDADERO O FALSO Y ASI ENTRAR A LA CONDICION DE ACTIVO CONTROLADOR
+        var prueba1;
+
+        //SI ES VERDADER0 ENTONCES EL VALOR TOMA 1 PARA MODIFICAR HISTORICO Y EL ESTADO DE ACTIVO
+        if (lastHistoricoPosition) {
+            prueba1 = 1;
+            //SI NO SOLO MODIFICA EL HISTORICO
+        } else {
+            prueba1 = 0;
         }
+
+        Swal.fire({
+            title: 'Eliminar historico al sistema',
+            text: "Porfavor confirma para eliminar al historico",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                var formData = new FormData($('#formHistorico')[0]);
+                formData.append("key", "modificarHisotial");
+                formData.append("activoInacH", inactivoH);
+                formData.append("ultimoLinea", prueba1);
+                $.ajax({
+                    type: 'POST',
+                    url: "../Controladores/activoFijoControlador.php",
+                    dataType: "json",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (r) {
+                        console.log(r);
+                        switch (r) {
+                            case "modificar":
+                                Swal.fire(
+                                    'Historico modifica!',
+                                    'El historico a sido modifica al sistema',
+                                    'success'
+                                )
+                                $("#formHistorico")[0].reset();
+                                $('#historial').DataTable().ajax.reload();
+                                $('#activoHistorial').DataTable().ajax.reload();
+                                var referencia = $('#ActivoReferencia').val();
+                                var descripcion = $('#ActivoDescripcion').val();
+                                cargarHistorico2(referencia, descripcion);
+                                break;
+                            case "FailHistoricoModificado":
+                                Swal.fire({
+                                    title: '¡Problemas técnicos!',
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta la especificacion del activo'
+                                        + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar',
+                                })
+                                break;
+                        }
+                    },
+                    error: function (r) {
+                        console.log(r);
+                    }
+                });
+            }
+        })
     });
 
-    $('#btnEliminarHistorico').on('click', function(){
-        
+    $('#btnEliminarHistorico').on('click', function () {
+
         Swal.fire({
             title: 'Eliminar historico al sistema',
             text: "Porfavor confirma para eliminar al historico",
