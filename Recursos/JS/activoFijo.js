@@ -3,6 +3,9 @@ jQuery(document).ready(function ($) {
     desabilitarInputPc(false);
     desabilitarInputProyector(true);
     desabilitarInputImpresora(true);
+
+    var lastHistoricoPosition = false;
+
     //ASIGNADO EL VALOR DE 0 O 1 SI EL CHECK ELIMINADO TIENE UN CAMBIO, OSEA SI LO ACTIVAN O NO DEL FORMULARIO ACTIVO
     var eliminado = 0;
     $('#ActivoEliminado').change(function () {
@@ -154,7 +157,7 @@ jQuery(document).ready(function ($) {
                             case "Insertado":
                                 Swal.fire(
                                     'Activo ingresado!',
-                                    'El activo a sido ingresado al sistema',
+                                    'El historico a sido ingresado al sistema',
                                     'success'
                                 )
                                 $("#formHistorico")[0].reset();
@@ -491,8 +494,8 @@ jQuery(document).ready(function ($) {
                 },
                 {
                     data: null,
-                    className: "btnMostrarH center",
-                    defaultContent: '<button type="button" class="btn btn-spotify btnMostrarH" id="btnMostrarH"><i class="fa fa-eye"></i></button>'
+                    className: "center btnMostrarHistorial",
+                    defaultContent: '<button type="button" class="btn btn-spotify"><i class="fa fa-eye"></i></button>'
                 },
             ],
             responsive: true,
@@ -511,11 +514,23 @@ jQuery(document).ready(function ($) {
         });
     });
 
-    $('#historial tbody').on('click', 'tr', function () {
+    $('#historial tbody').on('click', '.btnMostrarHistorial' , function () {
 
         var table = $('#historial').DataTable();
         var data = table.row(this).data();
 
+        console.log(data);
+
+        //VARIABLES QUE SIRVEN PARA ACTUALIZAR EL ESTADO DEL ACTIVO EN LA TABLA ACTIVO
+        var totalFilas = table.rows().count();
+        var filaClick = parseInt(table.row(this).index()) + 1;
+
+        //COMPROBACION DE CUAL ES EL ULTIMO HISTORICO INGRESADO
+        if(filaClick == totalFilas){
+            lastHistoricoPosition = true;
+        }
+
+        //CARGANDO LOS INPUT CON LA DATA DE LA TABLA HISTORIAL
         cargarHistorico(
             data['Activo_referencia'],
             data['Descripcion'],
@@ -524,7 +539,8 @@ jQuery(document).ready(function ($) {
             data['fechaHistorico'],
             data['Estado'],
             data['Historico_comentario'],
-            data['Activo_id']
+            data['Activo_id'],
+            data['Historico_id']
         );
 
         //EVALUA EL VALOR QUE VIENE DE LA COLUMNA ACTIVO ESTADO PARA PONER EL CHEKE O QUITARLO
@@ -533,6 +549,73 @@ jQuery(document).ready(function ($) {
         } else {
             $('#estadoH').attr('checked', false);
         }
+
+    });
+
+    $('#btnModificarHostorico').on('click', function(){
+        if(lastHistoricoPosition){
+            console.log('actualizar tablas');
+        }else{
+            console.log('NO actualizar tablas');
+        }
+    });
+
+    $('#btnEliminarHistorico').on('click', function(){
+        
+        Swal.fire({
+            title: 'Eliminar historico al sistema',
+            text: "Porfavor confirma para eliminar al historico",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                var formData = new FormData($('#formHistorico')[0]);
+                formData.append("key", "eliminarHistorial");
+                $.ajax({
+                    type: 'POST',
+                    url: "../Controladores/activoFijoControlador.php",
+                    dataType: "json",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (r) {
+                        console.log(r);
+                        switch (r) {
+                            case "Eliminado":
+                                Swal.fire(
+                                    'Historico eliminado!',
+                                    'El historico a sido eliminado al sistema',
+                                    'success'
+                                )
+                                $("#formHistorico")[0].reset();
+                                $('#historial').DataTable().ajax.reload();
+                                $('#activoHistorial').DataTable().ajax.reload();
+                                break;
+                            case "FailHistoricoEliminado":
+                                console.log(r);
+                                Swal.fire({
+                                    title: '¡Problemas técnicos!',
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta la especificacion del activo'
+                                        + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar',
+                                })
+                                break;
+                        }
+                    },
+                    error: function (r) {
+                        console.log(r);
+                    }
+                });
+
+            }
+        })
+
 
     });
 
@@ -589,7 +672,7 @@ jQuery(document).ready(function ($) {
         $('input[name=HoraEco]').val(horaEco);
     }
 
-    function cargarHistorico(referencia, descripcionActivo, estructura3, reponsable, fecha, estado, comentario, id) {
+    function cargarHistorico(referencia, descripcionActivo, estructura3, reponsable, fecha, estado, comentario, id, historicoId) {
         $('input[name=ActivoReferenciaH]').val(referencia);
         $('textarea[name=ActivoDescripcionH]').val(descripcionActivo);
         $('input[name=idArea]').val(estructura3);
@@ -600,6 +683,7 @@ jQuery(document).ready(function ($) {
         $('input[name=estadoH]').val(estado);
         $('textarea[name=HistoricoComentarioH]').val(comentario);
         $('input[name=guardarIdActivo2]').val(id);
+        $('input[name=historicoId]').val(historicoId);
     }
 
     function cargarHistorico2(referencia, descripcionActivo) {

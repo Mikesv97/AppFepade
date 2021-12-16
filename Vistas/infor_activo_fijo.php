@@ -436,14 +436,19 @@ $date = date('d-m-Y');
                 </button>
             </div>
             <div class="modal-body">
+                <!-- INPUT QUE GUARDA EL ID ACTIVO PARA CARGAR EL DATA TABLE DE HISTORICO -->
                 <input type="text" id="guardarIdActivo" hidden>
                 <form action="#" id="formHistorico" class="formHistorico" method="POST">
                     <div class="row">
                         <div class="col-md-12 borde">
                             <!-- INICIO PRIMERA COLUMNA DEL FORM -->
                             <div class="form-row">
+                                <!-- INPUT QUE GUARDA EL ID ACTIVO PARA INSERTARLO EN LA BASE DE DATOS -->
                                 <input type="text" id="guardarIdActivo2" name="guardarIdActivo2" hidden>
+                                <!-- INPUT QUE GUARDA EL ID USUARIO PARA INSERTARLO EN LA BASE DE DATOS -->
                                 <input type="text" name="UsuarioIdH" value="<?= $idUSuario; ?>" hidden>
+                                <!-- INPUT QUE GUARDA EL ID HISTORICO PARA ELIMINAR UN HISTORICO -->
+                                <input type="text" name="historicoId" id="historicoId" hidden>
                                 <label class="label label-danger col-md-12">Activo</label>
                                 <div class="form-group col-md-5">
                                     <input type="text" name="ActivoReferenciaH" class="form-control" maxlength="30" required readonly>
@@ -526,8 +531,8 @@ $date = date('d-m-Y');
                         </div>
                     </div>
                     <button type="submit" class="btn btn-whatsapp" id="btnInsertar">Insertar</button>
-                    <button type="button" class="btn btn-facebook" id="btnModificar">Modificar</button>
-                    <button type="button" class="btn btn-pinterest" id="btnEliminar">Borrar</button>
+                    <button type="button" class="btn btn-facebook" id="btnModificarHostorico">Modificar</button>
+                    <button type="button" class="btn btn-pinterest" id="btnEliminarHistorico">Borrar</button>
                 </form>
             </div>
             <div class="modal-footer">

@@ -161,6 +161,7 @@ if ($_POST) {
                 echo json_encode($resp2);
                 break;
             case "insertarHistorial":
+                $historialInsertado = false;
                 $ObjHistorico = setObjHistorico(
                     $_POST['guardarIdActivo2'],
                     str_replace('T', ' ', $_POST['fechaHistorico']),
@@ -175,7 +176,30 @@ if ($_POST) {
                 if($activoHist->insertarNuevoHistorial($ObjHistorico) == 0){
                     echo json_encode('FailHistorico');
                 }else{
-                    echo json_encode('Insertado');
+                    $historialInsertado = true;
+                    if($historialInsertado){
+
+                        $ObjActualizarEstActivo = setObjActualizarEstActivo(
+                            $_POST['activoInacH'],
+                            $_POST['guardarIdActivo2']
+                        );
+
+                        if($activoFijo->updateEstado($ObjActualizarEstActivo) == 0){
+                            echo json_encode('FailHistorico');
+                        }else{
+                            echo json_encode('Insertado');
+                        }
+
+                    }else{
+                        echo json_encode('FailHistorico');
+                    }
+                }      
+                break;
+            case "eliminarHistorial":
+                if($activoHist->eliminarHistorial($_POST['historicoId']) == 0 ){
+                    echo json_encode('FailHistoricoEliminado');
+                }else{
+                    echo json_encode('Eliminado');
                 }
                 break;
         }
@@ -346,4 +370,14 @@ function setObjHistorico(
     $ObjHistorico->setFecha($Fecha);
     $ObjHistorico->setEstado($Estado);
     return $ObjHistorico;
+}
+
+function setObjActualizarEstActivo(
+    $Estado,
+    $ActivoId
+){
+    $ObjActualizarEstActivo = new Activo_Fijo();
+    $ObjActualizarEstActivo->setEstado($Estado);
+    $ObjActualizarEstActivo->setActivoId($ActivoId);
+    return $ObjActualizarEstActivo;
 }

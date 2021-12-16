@@ -91,6 +91,18 @@ class historialActivoDao{
         }
     }
 
+    public function eliminarHistorial($id){
+        $con = Conexion::conectar();
+        $sql = "DELETE FROM Historico WHERE Historico_id = ?";
+        $respuesta = $con->prepare($sql);
+        try{
+            $respuesta->execute([$id]);
+            return $respuesta->rowCount();
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }  
+    }
+
 }
 
 
