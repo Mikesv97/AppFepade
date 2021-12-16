@@ -80,7 +80,7 @@ class historialActivoDao{
         ON c.Responsable_codigo = a.Responsable_id
         INNER JOIN Qry_Estructura31 d
         ON a.Estructura31_id = d.estructura31_id
-        WHERE a.Activo_id = ?";
+        WHERE a.Activo_id = ? ORDER BY Historico_id asc";
         $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([$id]);
@@ -101,6 +101,35 @@ class historialActivoDao{
         }catch(PDOException $error){
             return $error->getMessage();
         }  
+    }
+
+    public function modificarHistorial($objeto){
+        $ah = $objeto;
+        $con = Conexion::conectar();
+        $sql = "UPDATE Historico SET 
+            Historico_fecha = ?, 
+            Estructura31_id = ?, 
+            Responsable_id = ?, 
+            Historico_comentario = ?,
+            Usuario_id = ?,
+            Fecha = CURRENT_TIMESTAMP,
+            Estado = ? 
+            WHERE Historico_id = ?";
+        $respuesta = $con->prepare($sql);
+        try{
+            $respuesta->execute([
+                $ah->getHistoricoFecha(),
+                $ah->getEstructura31Id(),
+                $ah->getResponsableId(),
+                $ah->getHistoricoComentario(),
+                $ah->getUsuarioId(),
+                $ah->getEstado(),
+                $ah->getHistoricoId(),              
+            ]);
+            return $respuesta->rowCount();
+        }catch(PDOException $error){
+            return $error->getMessage();
+        } 
     }
 
 }
