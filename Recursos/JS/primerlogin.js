@@ -1,7 +1,7 @@
 $(document).ready(function () {
     //mensajeLoad();
     $("#labelError").hide();
-
+    $("#labelError2").hide();
     //cuando hace click en el botón para cambiar usuario
     $("#cambiarUsuario").on("click",function(e){
       e.preventDefault();
@@ -40,10 +40,11 @@ $(document).ready(function () {
         $("#passNew2").val("");
         $("#passNew1").focus();
       }else{
-        
         alert("enviar ajax");
       }
     });
+
+
     //cuando se cambia el input, se valida que la contraseña sea la actual del usuario
     $("#passOld").change(function(){
       var user = $("#usuarioId").val();
