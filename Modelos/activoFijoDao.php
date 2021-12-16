@@ -169,4 +169,21 @@ class activoFijoDAO
             return $error->getMessage();
         }
     }
+
+    //FUNCION QUE SOLAMENTE HACE UN UPDATE AL ESTADO DE LA TABLA ACTIVO 
+    public function updateEstado($objeto){
+        $a = $objeto;
+        $con = Conexion::conectar();
+        $sql = "UPDATE Activo SET Estado = ? WHERE Activo_id = ?";
+        $respuesta = $con->prepare($sql);
+        try{
+            $respuesta->execute([
+                $a->getEstado(),
+                $a->getActivoId()
+            ]);
+            return $respuesta->rowCount();
+        }catch(PDOException $error){
+            return $error->getMessage();
+        }
+    }
 }
