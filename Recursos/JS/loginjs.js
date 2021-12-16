@@ -281,7 +281,7 @@ $(document).ready(function(){
             }
          },
         error: function (r) {
-            console.log(r.responseText);
+            //console.log(r.responseText);
             Swal.fire({
                 title: '!Woops!',
                 text: 'No pudimos conectarnos al servidor, por favor intenta de nuevo, si el problema persiste'

@@ -79,7 +79,7 @@ if(isset($_POST["key"])){
             case "validarPassOld":
               $usuario= $_POST["usuario"];
               $passOld = $_POST["passOld"];
-              echo $passOld;
+              $usDao->validarPassOld($passOld, $usuario);
             break;
         }
 }
@@ -100,7 +100,6 @@ function recordarmeCookies($rem, $nombre,$contraseña, $usChange){
             setcookie("usuario",$nombre,time()+3600*24*30);
             setcookie("token",$contraseña,time()+3600*24*30);
         }
-
     }else{
         if($rem!=0){
             //si quiere ser recordado creamos las cookies

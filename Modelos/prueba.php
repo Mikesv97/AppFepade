@@ -11,6 +11,9 @@ $activoHist = new historialActivoDao();
 // // // $us = new LoginDao();
 $nuser = new UsuarioNuevoDao();
 
+$l = new LoginDao();
+
+$l->validarPassOld("adriana123", "adriana");
 
 // $ObjHistorico = setObjHistorico(
 //     '286',
