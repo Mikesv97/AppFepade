@@ -92,11 +92,10 @@ class LoginDao{
            
         }catch(PDOException $error){
             echo $error->getMessage();
-//sd
         }
     }
 
-    //actualizar remember en la BD del usuario que hace login
+    //actualizar estado de la sessión del usuario activa/off
     function actualizarEstadoUser($valor, $usuario){
                 //establecemos la coneccion
                 $con = Conexion::conectar();
@@ -121,6 +120,7 @@ class LoginDao{
                     return $error->getMessage();
                 }
     }
+
     //funcion para generar "token" numero al azar
     public function generarToken(){
         $numero_aleatorio = mt_rand(1000000,999999999);
@@ -128,6 +128,7 @@ class LoginDao{
         $this->codGenerado = $token;
         return $token;
     }
+
     //funcion que retorna el token generado para el cod del correo
     public function getTokenGenerado(){
         return $this->codGenerado;
@@ -155,7 +156,7 @@ class LoginDao{
         }
     }
     
-    //funcion para actualizar cambio de contraseña
+    //funcion para actualizar cambio de contraseña en caso de olvidarla
     public function actualizarPassUser($pass,$correo){
         //encryptamos password
         $passHash= password_hash($pass,PASSWORD_DEFAULT,array("cost"=>12));
@@ -177,13 +178,14 @@ class LoginDao{
                 //si se afectaron más de 0
                 return true;                 
             }else{
-                echo json_encode("no se actualizo");
+                echo "noActPass";
             }
         }catch(PDOException $error){
-            return $error->getMessage();
+           echo $error->getMessage();
         }
     }
 
+    //funcion que valida la contraseña default en el primer cambio de pass
     public function validarPassOld($passOld, $usuario){
 
         //establecemos la coneccion
@@ -213,4 +215,57 @@ class LoginDao{
             echo $error->getMessage();
         }
     }
+
+    //funcion que actualiza la pass en el primer cambio de contraseña del usuario
+    public function primerCambioPassUser($pass,$usuario){
+        //encryptamos password
+        $passHash= password_hash($pass,PASSWORD_DEFAULT,array("cost"=>12));
+
+        //establecemos la coneccion
+        $con = Conexion::conectar();
+        //establecemos la consulta
+        $sql="update usuario set usuario_clave = ? where  usuario_id=?";
+        //preparamos la consulta
+        $respuesta = $con->prepare($sql);
+        try{
+
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([$passHash,$usuario]);
+            //evaluamos cuantas filas fueron afectadas
+            $filas =$respuesta->rowCount();
+            Conexion::desconectar($respuesta);
+
+            return $filas;
+            
+        }catch(PDOException $error){
+            echo $error->getMessage();
+        }
+    }
+
+        //funcion que actualiza el campo usuarioNuevo en BD
+    public function eliminarEstadoNuevoUser($usuario, $valor){
+        //establecemos la coneccion
+        $con = Conexion::conectar();
+        //establecemos la consulta
+        $sql="update usuario set usuario_nuevo = ? where  usuario_id=?";
+        //preparamos la consulta
+        $respuesta = $con->prepare($sql);
+        try{
+
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([$valor,$usuario]);
+            //evaluamos cuantas filas fueron afectadas
+            $filas =$respuesta->rowCount();
+            //cerramos conexion
+            Conexion::desconectar($respuesta);
+            //si se afectaron más de 0
+            return $filas;
+
+        }catch(PDOException $error){
+            echo $error->getMessage();
+        }
+    }
+
+
+    
 }
