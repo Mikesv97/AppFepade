@@ -169,7 +169,6 @@ if ($_POST) {
                     $_POST['ResponsableIdH'],
                     $_POST['HistoricoComentarioH'],
                     $_POST['UsuarioIdH'],
-                    str_replace('T', ' ', $_POST['fechaHistorico']),
                     $_POST['activoInacH']
                 );
 
@@ -399,7 +398,6 @@ function setObjHistorico(
     $Responsable_id,
     $Historico_comentario,
     $Usuario_id,
-    $Fecha,
     $Estado
 ) {
     $ObjHistorico = new historial_Activo();
@@ -409,7 +407,6 @@ function setObjHistorico(
     $ObjHistorico->setResponsableId($Responsable_id);
     $ObjHistorico->setHistoricoComentario($Historico_comentario);
     $ObjHistorico->setUsuarioId($Usuario_id);
-    $ObjHistorico->setFecha($Fecha);
     $ObjHistorico->setEstado($Estado);
     return $ObjHistorico;
 }

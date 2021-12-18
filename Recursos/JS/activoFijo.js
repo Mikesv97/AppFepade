@@ -1,9 +1,13 @@
 $.noConflict();
 jQuery(document).ready(function ($) {
-    desabilitarInputPc(false);
+    //DESABILITANDO LOS INPUT DEPENDIENDO DEL TIPO DE ACTIVO QUE SE SELECCIONE, POR DEFECTO LOS DE COMPUTADORA Y LAPTOP ESTAN DISPONIBLES
+    //SIEMPREU QUE SE CARAG LA PAGINA
+    desabilitarInputPc(false, true);
     desabilitarInputProyector(true);
     desabilitarInputImpresora(true);
+    desabilitarIp(false, true)
 
+    //VARIABLE QUE UTILIZO SOLAMENTE PARA SABER CUAL ES LA ULTIMA POSICION EN EL HISTORIAL
     var lastHistoricoPosition = false;
 
     //ASIGNADO EL VALOR DE 0 O 1 SI EL CHECK ELIMINADO TIENE UN CAMBIO, OSEA SI LO ACTIVAN O NO DEL FORMULARIO ACTIVO
@@ -14,7 +18,7 @@ jQuery(document).ready(function ($) {
         } else {
             eliminado = 0;
         }
-    })
+    });
 
     //ASIGNADO EL VALOR DE 0 O 1 SI EL CHECK INACTIVO TIENE UN CAMBIO, OSEA SI LO ACTIVAN O NO DEL FORMULARIO ACTIVO
     var inactivo = 1;
@@ -24,7 +28,7 @@ jQuery(document).ready(function ($) {
         } else {
             inactivo = 1;
         }
-    })
+    });
 
     //ASIGNADO EL VALOR DE 0 O 1 SI EL CHECK INACTIVO TIENE UN CAMBIO, OSEA SI LO ACTIVAN O NO DEL FORMULARIO HISTORICOM
     var inactivoH = 1;
@@ -34,7 +38,7 @@ jQuery(document).ready(function ($) {
         } else {
             inactivoH = 1;
         }
-    })
+    });
 
     //DESABILITANDO BOTON INSERTAR CUANDO SE CARGA LA PAGINA
     $('#btnInsertar').attr('disabled', true);
@@ -54,6 +58,15 @@ jQuery(document).ready(function ($) {
         $('#estado').attr('checked', false);
         $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
 
+        //PARA CARGAR LA FECHA ACTUAL EN EL INPUT DATE DE ACTIVO FIJO CON LA FECHA ACTUAL
+        function zeroPadded(val) {
+            if (val >= 10)
+                return val;
+            else
+                return '0' + val;
+        }
+        var d = new Date();
+        $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
     });
 
     //EVENTO CHANGE QUE MUESTRA LA IMAGEN QUE SE AGREGAR EN EL INPUT FILE
@@ -335,16 +348,16 @@ jQuery(document).ready(function ($) {
 
         //INVOCANDO FUNCIONES DE tipoActivo.js PARA HABILITAR O DESABILITAR LOS INPUT SEGUN TIPO DE ACTIVO
         if (data['Activo_tipo'] == 1 || data['Activo_tipo'] == 2) {
-            desabilitarInputPc(false);
+            desabilitarInputPc(true);
             desabilitarInputProyector(true);
             desabilitarInputImpresora(true);
         } else if (data['Activo_tipo'] == 3) {
             desabilitarInputPc(true)
             desabilitarInputProyector(true)
-            desabilitarInputImpresora(false);
+            desabilitarInputImpresora(true);
         } else if (data['Activo_tipo'] == 4) {
             desabilitarInputPc(true)
-            desabilitarInputProyector(false)
+            desabilitarInputProyector(true)
             desabilitarInputImpresora(true);
         }
 
@@ -458,6 +471,20 @@ jQuery(document).ready(function ($) {
             $('#idResponsable').val(this.value);
         });
 
+        //PARA CARGAR LA FECHA ACTUAL EN EL INPUT DATE DE HISTORIAL CON LA FECHA ACTUAL
+        function zeroPadded(val) {
+            if (val >= 10)
+                return val;
+            else
+                return '0' + val;
+        }
+        var d = new Date();
+        $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+
+        //ESTE CARGA FECHA Y HORA PERO DABA ERROR
+        // d = new Date();
+        // $('input[type=datetime-local]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate())+"T"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds());
+
         //OBTENIEDO EL ACTIVO ID PARA CARGAR EL HISTORICO PO
         var historialId1 = $('#guardarIdActivo').val();
         //OBTENIENDO VARIABLES REFERENCIA Y DESCRIPCION DE ACTIVO PARA CARGARLOS EN EL FORMULARIO DE HISTORIAL
@@ -478,14 +505,15 @@ jQuery(document).ready(function ($) {
                 "data": { "key": "getInfoHistorial", "ActivoId": historialId1 },
                 "dataSrc": ""
             },
+            "order": [[0, "desc"]],//CON ESTO LE DECIMOS QUE PONGA LA COLUMNA DE FECHA HISTORICO DESCENDENTE
             "columns": [
                 {
-                    data: "Activo_referencia",
-                    className: "Activo_referencia"
+                    data: "Historico_fecha",
+                    className: "Historico_fecha"
                 },
                 {
-                    data: "Descripcion",
-                    className: "Descripcion"
+                    data: "estructura31_nombre",
+                    className: "estructura31_nombre"
                 },
                 {
                     data: "Estructura31_id",
@@ -521,6 +549,8 @@ jQuery(document).ready(function ($) {
 
         var table = $('#historial').DataTable();
         var data = table.row(this).data();
+
+        console.log(data);
 
         //VARIABLES QUE SIRVEN PARA ACTUALIZAR EL ESTADO DEL ACTIVO EN LA TABLA ACTIVO
         var totalFilas = table.rows().count();
@@ -759,7 +789,7 @@ jQuery(document).ready(function ($) {
         $('textarea[name=ActivoDescripcionH]').val(descripcionActivo);
     }
 
-    function blockControl(desabilitar) {
+    function blockControl(desabilitar, required) {
         //INPUTS DE INFORMACION GENERAL ACTIVO
         $('input[name=ActivoReferencia]').attr('disabled', desabilitar);
         $('input[name=PartidaCta]').attr('disabled', desabilitar);

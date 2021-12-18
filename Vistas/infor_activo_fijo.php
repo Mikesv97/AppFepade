@@ -52,6 +52,10 @@ $date = date('d-m-Y');
     .habilitado {
         background: none;
     }
+
+    #ActivoReferenciaH{
+        font-weight: bold;
+    }
 </style>
 
 <!--**********************************
@@ -115,7 +119,7 @@ $date = date('d-m-Y');
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="party">Fecha de adquisición*</label>
-                                            <input id="ActivoFechaAdq" type="datetime-local" name="ActivoFechaAdq" class="form-control" required>
+                                            <input id="ActivoFechaAdq" type="date" name="ActivoFechaAdq" class="form-control" required>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Número de factura*</label>
@@ -195,7 +199,7 @@ $date = date('d-m-Y');
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Fecha de caducación</label>
-                                            <input type="datetime-local" name="ActivoFechaCaduc" class="form-control">
+                                            <input type="date" name="ActivoFechaCaduc" class="form-control">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <div class="form-check">
@@ -451,7 +455,7 @@ $date = date('d-m-Y');
                                 <input type="text" name="historicoId" id="historicoId" hidden>
                                 <label class="label label-danger col-md-12">Activo</label>
                                 <div class="form-group col-md-5">
-                                    <input type="text" name="ActivoReferenciaH" class="form-control" maxlength="30" required readonly>
+                                    <input type="text" name="ActivoReferenciaH" id="ActivoReferenciaH" class="form-control" maxlength="30" required readonly>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <textarea class="form-control descripcionActivo" name="ActivoDescripcionH" rows="3" maxlength="1000" required readonly></textarea>
@@ -486,7 +490,7 @@ $date = date('d-m-Y');
                                 </div>
                                 <label class="label label-danger col-md-12">Fecha y estado de activo</label>
                                 <div class="form-group col-md-6">
-                                    <input id="fechaHistorico" type="datetime-local" name="fechaHistorico" class="form-control" required>
+                                    <input id="fechaHistorico" type="date" name="fechaHistorico" class="form-control" required>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="form-check">
@@ -505,8 +509,8 @@ $date = date('d-m-Y');
                                         <table id="historial" name="historial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
                                             <thead>
                                                 <tr>
-                                                    <th>Referencia</th>
-                                                    <th>Activo descripción</th>
+                                                    <th>Fecha de historico</th>
+                                                    <th>Nombre de área</th>
                                                     <th>Área</th>
                                                     <th>Responsable</th>
                                                     <th>Boton</th>
@@ -517,8 +521,8 @@ $date = date('d-m-Y');
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Referencia</th>
-                                                    <th>Activo descripción</th>
+                                                    <th>Fecha de historico</th>
+                                                    <th>Nombre de área</th>
                                                     <th>Área</th>
                                                     <th>Responsable</th>
                                                     <th>Boton</th>
@@ -536,7 +540,6 @@ $date = date('d-m-Y');
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" id="btnNuevo">Nuevo</button>
                 <button type="button" class="btn btn-google-plus" id="btnCerrar" data-dismiss="modal">Close</button>
             </div>
         </div>

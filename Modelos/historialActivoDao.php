@@ -50,17 +50,16 @@ class historialActivoDao{
             Usuario_id,
             fecha,
             Estado) 
-            VALUES (?,?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,CURRENT_TIMESTAMP,?)";
         $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([
                 $ah->getActivoId(),
-                $ah->getHistoricoFecha(),
+                date_create($ah->getHistoricoFecha())->format('d/m/y'),
                 $ah->getEstructura31Id(),
                 $ah->getResponsableId(),
                 $ah->getHistoricoComentario(),
                 $ah->getUsuarioId(),
-                $ah->getFecha(),
                 $ah->getEstado()
             ]);
             return $respuesta->rowCount();
@@ -80,7 +79,7 @@ class historialActivoDao{
         ON c.Responsable_codigo = a.Responsable_id
         INNER JOIN Qry_Estructura31 d
         ON a.Estructura31_id = d.estructura31_id
-        WHERE a.Activo_id = ? ORDER BY Historico_id asc";
+        WHERE a.Activo_id = ? ORDER BY Historico_fecha DESC";
         $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([$id]);
