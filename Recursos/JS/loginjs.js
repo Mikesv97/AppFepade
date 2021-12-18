@@ -38,6 +38,7 @@ $(document).ready(function(){
     $("#txtNewPas2").keypress(function(){
         $("#lbFailNewPass").val("");
         $("#lbFailNewPass").hide();
+
     });
 
 
@@ -65,8 +66,6 @@ $(document).ready(function(){
 
         //limpiamos controles
         $("input[name='txtContraseña']").val("");
-        
-        
         usChange=1;
         
     });
