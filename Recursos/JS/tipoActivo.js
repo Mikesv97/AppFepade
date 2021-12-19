@@ -24,7 +24,7 @@ $(document).ready(function () {
                 desabilitarInputPc(true);
                 desabilitarInputImpresora(false, true);
                 desabilitarInputProyector(true);
-                desabilitarIp(true, false)
+                desabilitarIp(false, true)
                 break;
             case '4':
                 desabilitarInputPc(true);

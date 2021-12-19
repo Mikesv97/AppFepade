@@ -71,7 +71,7 @@ class historialActivoDao{
     public function mostrarHistorial($id){
         $con = Conexion::conectar();
         $sql = "SELECT a.*, b.Activo_descripcion as Descripcion, c.Nombre_Responsable as Responsable, d.estructura31_nombre,
-        b.Activo_referencia, convert(varchar,a.Historico_fecha,127) as fechaHistorico
+        b.Activo_referencia, convert(varchar,a.Historico_fecha,23) as fechaHistorico
         FROM Historico a
         INNER JOIN Activo b 
         ON a.Activo_id = b.Activo_id 
