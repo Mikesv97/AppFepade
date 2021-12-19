@@ -241,7 +241,7 @@ $date = date('d-m-Y');
                                 <div class="col-md-6 borde">
                                     <div class="text-center">
                                         <h5 class="my-2 label label-danger col-md-12">Imagen de activo fijo</h5>
-
+                                        <input type="text" name="imagenBD" id="imagenBD">
                                         <div>
                                             <img id="mostrarImagen" src="../Recursos/Multimedia/Imagenes/Upload/nodisponible.jpg">
                                         </div>
@@ -360,6 +360,7 @@ $date = date('d-m-Y');
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-tumblr my-4" name="btnInsertar" id="btnInsertar">Insertar</button>
+                            <button type="button" class="btn btn-tumblr my-4" name="btnModificar" id="btnModificar">Modificar</button>
                         </form>
                     </div>
                 </div>

@@ -66,7 +66,7 @@ jQuery(document).ready(function ($) {
                 return '0' + val;
         }
         var d = new Date();
-        $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+        $('input[type=date]').val(d.getFullYear() + "-" + zeroPadded(d.getMonth() + 1) + "-" + zeroPadded(d.getDate()));
     });
 
     //EVENTO CHANGE QUE MUESTRA LA IMAGEN QUE SE AGREGAR EN EL INPUT FILE
@@ -77,6 +77,7 @@ jQuery(document).ready(function ($) {
         var imgTemp = URL.createObjectURL(element);
         $('#mostrarImagen').attr('src', imgTemp);
     });
+
     //CUANDO SE INSERTA UN ACTIVO FIJO
     $('#formActivo').submit(function (e) {
 
@@ -136,6 +137,68 @@ jQuery(document).ready(function ($) {
 
             }
         })
+    });
+
+    //CUANDO SE MODIFICA UN ACTIVO
+    $('#btnModificar').on('click',function (e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Modificar el activo al sistema',
+            text: "Porfavor confirma para modificar en el sistema",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ingresasr'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                var formData = new FormData($('#formActivo')[0]);
+                formData.append("key", "modificar");
+                formData.append("tipoActivo", $('#ActivoTipo').val());
+                formData.append("activoDel", eliminado);
+                formData.append("activoInac", inactivo);
+                $.ajax({
+                    type: 'POST',
+                    url: "../Controladores/activoFijoControlador.php",
+                    dataType: "json",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (r) {
+                        console.log(r);
+                        switch (r) {
+                            case "Modificado":
+                                Swal.fire(
+                                    'Activo modificado!',
+                                    'El activo a sido modificado en el sistema',
+                                    'success'
+                                )
+                                $("#formActivo")[0].reset();
+                                $('#activoInformacion').DataTable().ajax.reload();
+                                $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
+                                break;
+                            case "FailModificarActivo":
+                                Swal.fire({
+                                    title: '¡Problemas técnicos!',
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta la especificacion del activo'
+                                        + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar',
+                                })
+                                break;
+                        }
+                    },
+                    error: function (r) {
+                        console.log(r);
+                    }
+                });
+
+            }
+        })
+
+
     });
 
     //CUANDO SE INSERTA EN HISTICO ACTIVO
@@ -283,7 +346,7 @@ jQuery(document).ready(function ($) {
             {
                 data: null,
                 className: "center",
-                defaultContent: '<button type="button" class="btn btn-spotify btnMostrar" id="btnMostrar"><i class="fa fa-eye"></i></button> <button type="button" class="btn btn-facebook btnEditar"><i class="fa fa-pencil-square-o"></i></button> <button type="button" class="btn btn-pinterest btnEliminar"><i class="fa fa-trash-o"></i></button> '
+                defaultContent: '<button type="button" class="btn btn-spotify btnMostrar" id="btnMostrar"><i class="fa fa-eye"></i></button> <button type="button" class="btn btn-facebook btnEditar" id="btnEditar"><i class="fa fa-pencil-square-o"></i></button> <button type="button" class="btn btn-pinterest btnEliminar"><i class="fa fa-trash-o"></i></button> '
             },
             {
                 data: "Imagen",
@@ -308,6 +371,7 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    //CUANDO SE DA AL OJO DEL ACTIVO QUE SE QUIERE MOSTRAR
     $('#activoInformacion tbody').on('click', '#btnMostrar', function () {
 
         //INVOCANDO FUNCION PARA DESABILITAR CONTROLES DEL FORMULARIO
@@ -384,7 +448,160 @@ jQuery(document).ready(function ($) {
             data['Estructura3_id'],
             data['Activo_descripcion'],
             data['FechaCaducacion'],
-            data['Activo_eliminado']
+            data['Activo_eliminado'],
+            data['Imagen']
+        );
+
+        cargarEspComputadora(
+            data['Procesador'],
+            data['Generacion'],
+            data['Ram'],
+            data['TipoRam'],
+            data['DiscoDuro'],
+            data['Capacidad_D1'],
+            data['DiscoDuro2'],
+            data['Capacidad_D2'],
+            data['Office'],
+            data['SO']
+        );
+
+        cargarEspImpresora(
+            data['TonerN'],
+            data['TonerM'],
+            data['TonerC'],
+            data['TonerA'],
+            data['tambor'],
+            data['fusor']
+        );
+
+        cargarEspProyector(
+            data['HorasUso'],
+            data['HoraEco']
+        );
+
+        //DATATABLE QUE SE MUESTRA EN FORMULARIO Y QUE CONTIENE EL HISTORIAL DE CADA ACTIVO FIJO SEGUN EL ACTIVO ID QUE RECIBE
+        $('#activoHistorial').DataTable({
+            "ajax": {
+                "url": "../Controladores/activoFijoControlador.php",
+                "method": "post",
+                "dataType": "json",
+                "data": { "key": "getInfoHistorial", "ActivoId": data['Activo_id'] },
+                "dataSrc": ""
+            },
+            "columns": [
+                {
+                    data: "Estructura31_id",
+                    className: "Estructura31_id"
+                },
+                {
+                    data: "estructura31_nombre",
+                    className: "estructura31_nombre"
+                },
+                {
+                    data: "Responsable",
+                    className: "Responsable"
+                }
+            ],
+            responsive: true,
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                "zeroRecords": "No se han encontrado datos - intente nuevamente",
+                "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay datos disponibles",
+                "infoFiltered": "(Filtrado de _MAX_ activos totales)",
+                "search": "Buscar",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+        });
+
+        //INPUT QUE GUARDA EL ACTIVO ID DEL ACTIVO QUE EL USUARIO SELECIONA
+        $('#guardarIdActivo').val(data['Activo_id']);
+    });
+
+    //BOTON PARA EDITAR EL ACTIVO
+    $('#activoInformacion tbody').on('click', '#btnEditar', function () {
+
+        //INVOCANDO FUNCION PARA DESABILITAR CONTROLES DEL FORMULARIO
+        blockControl(false);
+
+        //REMOVIENTO LA CLASE COLLAPSE PARA QUE AL DARLE CLICK AL ACTIVO SE DESPLIEGUE EL FORM 
+        //CON LA INFORMACION
+        $('#mostrarFormulario').removeClass('collapse');
+
+        //DESABILITANDO EL BOTON INSERTAR ACTIVO CUANDO EL USUARIO CARGA LA INFORMACION DE UN ACTIVO
+        $('#btnInsertar').attr('disabled', true);
+        $('#btnMostrarHistorial').attr('disabled', false);
+
+        //ENVIANDO AL INICIO DEL FORMULARIO CUANDO EL USUARIO DE CLICK AL ACTIVO
+        $(location).attr('href', '#inicioForm');
+
+        //DESTRUIR EL OBJETO DE LA TABLA ACTIVOHISTORIAL YA INICIALIZADO Y ASI PODER
+        //MOSTRAR EL HISTORIAL DE OTRO ACTIVO
+        $('#activoHistorial').dataTable().fnDestroy();
+
+        //LA VARIABLE DATA OBTIENE TODO EL CONTENIDO QUE VIENE DE LA FUNCION tablaActivoFijo DE ACTIVOFIJODAO
+        var table = $('#activoInformacion').DataTable();
+        var data = table.row(this).data();
+
+        //EVALUA EL VALOR QUE VIENE DE LA COLUMNA ACTIVO ELIMINADO PARA PONER EL CHEKE O QUITARLO
+        if (data['Activo_eliminado'] == 1) {
+            $('#ActivoEliminado').attr('checked', true);
+        } else {
+            $('#ActivoEliminado').attr('checked', false);
+        }
+
+        //EVALUA EL VALOR QUE VIENE DE LA COLUMNA ACTIVO ESTADO PARA PONER EL CHEKE O QUITARLO
+        if (data['Estado'] == 0) {
+            $('#estado').attr('checked', true);
+        } else {
+            $('#estado').attr('checked', false);
+        }
+
+        //INVOCANDO FUNCIONES DE tipoActivo.js PARA HABILITAR O DESABILITAR LOS INPUT SEGUN TIPO DE ACTIVO
+        if (data['Activo_tipo'] == 1 || data['Activo_tipo'] == 2) {
+            desabilitarInputPc(false);
+            desabilitarInputProyector(true);
+            desabilitarInputImpresora(true);
+        } else if (data['Activo_tipo'] == 3) {
+            desabilitarInputPc(true);
+            desabilitarInputProyector(true);
+            desabilitarInputImpresora(false);
+            desabilitarIp(true);
+        } else if (data['Activo_tipo'] == 4) {
+            desabilitarInputPc(true);
+            desabilitarInputProyector(false);
+            desabilitarInputImpresora(true);
+            desabilitarIp(true);
+        }
+
+        //MOSTRANDO LA IMAGEN QUE TIENE CADA ACTIVO
+        $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/' + data['Imagen']);
+
+        cargarGeneral1(
+            data['Activo_referencia'],
+            data['PartidaCta'],
+            data['Empresa_id'],
+            data['numero_serie'],
+            data['Activo_id'],
+            data['FechaAdquisicion'],
+            data['Activo_factura'],
+            data['tipo_activo_id'],
+            data['IP']
+        );
+
+        cargarGeneral2(
+            data['Usuario'],
+            data['Modelo'],
+            data['Estructura1_id'],
+            data['Estructura2_id'],
+            data['Estructura3_id'],
+            data['Activo_descripcion'],
+            data['FechaCaducacion'],
+            data['Activo_eliminado'],
+            data['Imagen']
         );
 
         cargarEspComputadora(
@@ -479,7 +696,7 @@ jQuery(document).ready(function ($) {
                 return '0' + val;
         }
         var d = new Date();
-        $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+        $('input[type=date]').val(d.getFullYear() + "-" + zeroPadded(d.getMonth() + 1) + "-" + zeroPadded(d.getDate()));
 
         //ESTE CARGA FECHA Y HORA PERO DABA ERROR
         // d = new Date();
@@ -732,7 +949,7 @@ jQuery(document).ready(function ($) {
         $('input[name=ip]').val(ip);
     }
 
-    function cargarGeneral2(nombreUsuario, modelo, estructura1, estructura2, estructura3, activoDescripcion, fechaCaducacion, activoEliminado) {
+    function cargarGeneral2(nombreUsuario, modelo, estructura1, estructura2, estructura3, activoDescripcion, fechaCaducacion, activoEliminado,imagenBD) {
         $('input[name=nombreUsuario]').val(nombreUsuario);
         $('input[name=Modelo]').val(modelo);
         $('#Estructura1Id option[value=' + estructura1 + ']').prop('selected', true);
@@ -741,6 +958,7 @@ jQuery(document).ready(function ($) {
         $('textarea[name=ActivoDescripcion]').val(activoDescripcion);
         $('input[name=ActivoFechaCaduc]').val(fechaCaducacion);
         $('#ActivoEliminado option[value=' + activoEliminado + ']').prop('selected', true);
+        $('input[name=imagenBD]').val(imagenBD);
     }
 
     function cargarEspComputadora(procesador, gerenacion, ram, tipoRam, discoDuro, capacidad1, discoDuro2, capacidad2, office, so) {
@@ -789,7 +1007,7 @@ jQuery(document).ready(function ($) {
         $('textarea[name=ActivoDescripcionH]').val(descripcionActivo);
     }
 
-    function blockControl(desabilitar, required) {
+    function blockControl(desabilitar) {
         //INPUTS DE INFORMACION GENERAL ACTIVO
         $('input[name=ActivoReferencia]').attr('disabled', desabilitar);
         $('input[name=PartidaCta]').attr('disabled', desabilitar);

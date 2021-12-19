@@ -130,4 +130,91 @@ class activoEspecificacionDao{
             return $error->getMessage();
         } 
     }
+
+    public function modificarActEspCom($objeto){
+        $ae = $objeto;
+        $con = Conexion::conectar();
+        $sql = "UPDATE Activo_Especificacion SET
+            Procesador = ?,
+            Generacion = ?,
+            Ram = ?,
+            DiscoDuro = ?,
+            Modelo = ?,
+            SO = ?,
+            Office = ?,
+            IP = ?,
+            TonerN = '',
+            TonerM = '',
+            TonerC = '',
+            TonerA = '',
+            HorasUso = '',
+            HoraEco = '',
+            TipoRam = ?,
+            tambor = '',
+            fusor = '',
+            Capacidad_D1 = ?,
+            DiscoDuro2 = ?,
+            Capacidad_D2 = ?
+            WHERE Activo_id = ?";
+        $respuesta = $con->prepare($sql);
+        try{
+            $respuesta->execute([
+                $ae->getProcesador(),
+                $ae->getGeneracion(),
+                $ae->getRam(),
+                $ae->getDiscoDuro(),
+                $ae->getModelo(),
+                $ae->getSO(),
+                $ae->getOffice(),
+                $ae->getIP(),
+                $ae->getTipoRam(),
+                $ae->getCapacidad_D1(),
+                $ae->getDiscoDuro2(),
+                $ae->getCapacidad_D2(),
+                $ae->getActivoId(),
+            ]);
+            return $respuesta->rowCount();
+        }catch(PDOException $error){
+            return $error->getMessage();
+        } 
+    }
+
+    public function modificarActEspProy($objeto){
+        $ae = $objeto;
+        $con = Conexion::conectar();
+        $sql = "UPDATE Activo_Especificacion SET
+            Procesador = '',
+            Generacion = '',
+            Ram = '',
+            DiscoDuro = '',
+            Modelo = ?,
+            SO = '',
+            Office = '',
+            IP = '',
+            TonerN = '',
+            TonerM = '',
+            TonerC = '',
+            TonerA = '',
+            HorasUso = ?,
+            HoraEco = ?,
+            TipoRam = '',
+            tambor = '',
+            fusor = '',
+            Capacidad_D1 = '',
+            DiscoDuro2 = '',
+            Capacidad_D2 = ''
+            WHERE Activo_id = ?";
+        $respuesta = $con->prepare($sql);
+        try{
+            $respuesta->execute([
+                $ae->getModelo(),
+                $ae->getHorasUso(),
+                $ae->getHoraEco(),
+                $ae->getActivoId()
+            ]);
+            return $respuesta->rowCount();
+        }catch(PDOException $error){
+            return $error->getMessage();
+        } 
+    }
 }

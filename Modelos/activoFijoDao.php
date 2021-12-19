@@ -186,4 +186,58 @@ class activoFijoDAO
             return $error->getMessage();
         }
     }
+
+    public function modificarActivoFijo($objeto){
+        $a = $objeto;
+        $con = Conexion::conectar();
+        $sql = "UPDATE Activo SET
+        Activo_referencia = ?,
+        PartidaCta = ?,
+        Empresa_id = ?,
+        numero_serie = ?,
+        Activo_fecha_adq = ?,
+        Activo_factura = ?,
+        Activo_tipo = ?,
+        Activo_descripcion = ?,
+        Estructura1_id = ?,
+        Estructura2_id = ?,
+        Estructura3_id = ?,
+        Usuario_id = ?,
+        fecha = CURRENT_TIMESTAMP,
+        Activo_fecha_caduc = ?,
+        fecha_compra = ?,
+        Activo_eliminado = ?,
+        Estado = ?,
+        Responsable_codigo = ?,
+        Imagen = ?
+        WHERE Activo_id = ?";
+        $respuesta = $con->prepare($sql);
+        try {
+            $respuesta->execute([
+                $a->getActivoReferencia(),
+                $a->getPartidaCta(),
+                $a->getEmpresaId(),
+                $a->getNumeroSerie(),
+                date_create($a->getActivoFechaAdq())->format('d/m/y'),
+                $a->getActivoFactura(),
+                $a->getActivoTipo(),
+                $a->getActivoDescripcion(),
+                $a->getEstructura1Id(),
+                $a->getEstructura2Id(),
+                $a->getEstructura3Id(),
+                $a->getUsuarioId(),
+                date_create($a->getActivoFechaCaduc())->format('d/m/y'),
+                date_create($a->getActivoFechaAdq())->format('d/m/y'),
+                $a->getActivoEliminado(),
+                $a->getEstado(),
+                $a->getResponsableCodigo(),
+                $a->getImagen(),
+                $a->getActivoId()
+            ]);
+            return $respuesta->rowCount();
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }
+    }
+
 }

@@ -150,6 +150,89 @@ if ($_POST) {
                     echo json_encode("FailActiveEspe");
                 }
                 break;
+            case "modificar":
+                //VARIABLE DONDE SE ALMACENA EL ID TIPO ACTIVO
+                $tipoActivo = $_POST["tipoActivo"];
+                //ASIGNADO A LA FUNCION SETOBJETIVOACTIVOFIJO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                $objActivoFijoMod = setObjActivoFijoMod(
+                    $_POST['ActivoReferencia'],
+                    $_POST['PartidaCta'],
+                    $_POST['EmpresaId'],
+                    $_POST['numeroSerie'],
+                    str_replace('T', ' ', $_POST['ActivoFechaAdq']),
+                    $_POST['ActivoFactura'],
+                    $_POST['ActivoTipo'],
+                    $_POST['ActivoDescripcion'],
+                    $_POST['Estructura1Id'],
+                    $_POST['Estructura2Id'],
+                    $_POST['Estructura3Id'],
+                    $_POST['UsuarioId'],
+                    str_replace('T', ' ', $_POST['ActivoFechaCaduc']),
+                    $_POST['activoDel'],
+                    $_POST['activoInac'],
+                    $_POST['ResponsableId'],
+                    $_POST['ActivoId']
+                );
+                $actiMod = $activoFijo->modificarActivoFijo($objActivoFijoMod);
+                $updateActive = false;
+                if($actiMod != 0){
+                    switch ($tipoActivo) {
+                        case 1:
+                            //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                            $ObjActivoEspeCompMod = setObjActivoEspeCompMod(
+                                $_POST['Procesador'],
+                                $_POST['Generacion'],
+                                $_POST['Ram'],
+                                $_POST['DiscoDuro'],
+                                $_POST['Modelo'],
+                                $_POST['SO'],
+                                $_POST['Office'],
+                                $_POST['ip'],
+                                $_POST['TipoRam'],
+                                $_POST['CapacidadD1'],
+                                $_POST['DiscoDuro2'],
+                                $_POST['CapacidadD2'],
+                                $_POST['ActivoId']
+                            );
+
+                            if ($activoEspe->modificarActEspCom($ObjActivoEspeCompMod) == 0) {
+                                echo json_encode('FailModificarActivo');
+                            } else {
+                                $updateActive = true;
+                            }
+                        break;
+                        case 2:
+                            //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                            $ObjActivoEspeCompMod = setObjActivoEspeCompMod(
+                                $_POST['Procesador'],
+                                $_POST['Generacion'],
+                                $_POST['Ram'],
+                                $_POST['DiscoDuro'],
+                                $_POST['Modelo'],
+                                $_POST['SO'],
+                                $_POST['Office'],
+                                $_POST['ip'],
+                                $_POST['TipoRam'],
+                                $_POST['CapacidadD1'],
+                                $_POST['DiscoDuro2'],
+                                $_POST['CapacidadD2'],
+                                $_POST['ActivoId']
+                            );
+
+                            if ($activoEspe->modificarActEspCom($ObjActivoEspeCompMod) == 0) {
+                                echo json_encode('FailModificarActivo');
+                            } else {
+                                $updateActive = true;
+                            }
+                        break;
+                    }
+                    if($updateActive){
+                        echo json_encode('Modificado');
+                    }
+                }else{
+                    echo json_encode('FailModificarActivo');
+                }
+                break;
                 //MOSTRANDO TABLA ACTIVO FIJO
             case "getInfoActivo":
                 $resp = $activoFijo->tablaActivoFijo();
@@ -232,7 +315,7 @@ if ($_POST) {
                             echo json_encode('modificar');
                         }
                     }
-                }else if ($_POST['ultimoLinea'] == 0){
+                } else if ($_POST['ultimoLinea'] == 0) {
                     if ($activoHist->modificarHistorial($ObjModificarHistorico) == 0) {
                         //SI EL VALOR ES IGUAL A CERO MANDA ERROR
                         echo json_encode('FailHistoricoModificado');
@@ -251,12 +334,17 @@ if ($_POST) {
 function cargarImagen()
 {
     $nombreimg = $_FILES["Imagen"]["name"];
-    $archivo = $_FILES["Imagen"]["tmp_name"];
-    $ruta = "../Recursos/Multimedia/Imagenes/Upload/";
-    if (move_uploaded_file($archivo, $ruta . $nombreimg)) {
-        return $nombreimg;
-    } else {
-        return "error de carga de imagen";
+    if ($nombreimg != null) {
+        $archivo = $_FILES["Imagen"]["tmp_name"];
+        $ruta = "../Recursos/Multimedia/Imagenes/Upload/";
+        if (move_uploaded_file($archivo, $ruta . $nombreimg)) {
+            return $nombreimg;
+        } else {
+            return "error de carga de imagen";
+        }
+    }else{
+        $imagenBD = $_POST['imagenBD'];
+        return $imagenBD;
     }
 }
 
@@ -300,6 +388,49 @@ function setObjActivoFijo(
 
     return $objActivoFijo;
 }
+
+//OBJETO DONDE SETAMOS LOS VALORES PARA MODIFICAR EN LA TABLA ACTIVO FIJO
+function setObjActivoFijoMod(
+    $ActivoReferencia,
+    $PartidaCta,
+    $EmpresaId,
+    $NumeroSerie,
+    $ActivoFechaAdq,
+    $ActivoFactura,
+    $ActivoTipo,
+    $ActivoDescripcion,
+    $Estructura1Id,
+    $Estructura2Id,
+    $Estructura3Id,
+    $UsuarioId,
+    $ActivoFechaCaduc,
+    $ActivoEliminado,
+    $Estado,
+    $ResponsableCodigo,
+    $ActivoId
+) {
+    $objActivoFijoMod = new Activo_Fijo();
+    $objActivoFijoMod->setActivoReferencia($ActivoReferencia);
+    $objActivoFijoMod->setPartidaCta($PartidaCta);
+    $objActivoFijoMod->setEmpresaId($EmpresaId);
+    $objActivoFijoMod->setNumeroSerie($NumeroSerie);
+    $objActivoFijoMod->setActivoFechaAdq($ActivoFechaAdq);
+    $objActivoFijoMod->setActivoFactura($ActivoFactura);
+    $objActivoFijoMod->setActivoTipo($ActivoTipo);
+    $objActivoFijoMod->setActivoDescripcion($ActivoDescripcion);
+    $objActivoFijoMod->setEstructura1Id($Estructura1Id);
+    $objActivoFijoMod->setEstructura2Id($Estructura2Id);
+    $objActivoFijoMod->setEstructura3Id($Estructura3Id);
+    $objActivoFijoMod->setUsuarioId($UsuarioId);
+    $objActivoFijoMod->setActivoFechaCaduc($ActivoFechaCaduc);
+    $objActivoFijoMod->setActivoEliminado($ActivoEliminado);
+    $objActivoFijoMod->setEstado($Estado);
+    $objActivoFijoMod->setImagen(cargarImagen());
+    $objActivoFijoMod->setResponsableCodigo($ResponsableCodigo);
+    $objActivoFijoMod->setActivoId($ActivoId);
+    return $objActivoFijoMod;
+}
+
 //OBJETO DONDE SETEAMOS LOS VALORES PARA INSERTAR EN ACTIVO ESPECIFICACION SI ES COMPUTADORA
 function setObjActivoEspeComp(
     $ActivoId,
@@ -332,6 +463,40 @@ function setObjActivoEspeComp(
     $objActivoEspeComp->setIP($IP);
 
     return $objActivoEspeComp;
+}
+
+//OBJETO DONDE SETEAMOS LOS VALORES PARA MODIFICAR EN ACTIVO ESPECIFICACION SI ES COMPUTADORA
+function setObjActivoEspeCompMod(
+    $Procesador,
+    $Generacion,
+    $Ram,
+    $DiscoDuro,
+    $Modelo,
+    $SO,
+    $Office,
+    $IP,
+    $TipoRam,
+    $CapacidadD1,
+    $DiscoDuro2,
+    $CapacidadD2,
+    $ActivoId
+) {
+    $ObjActivoEspeCompMod = new Activo_Especificacion();
+
+    $ObjActivoEspeCompMod->setProcesador($Procesador);
+    $ObjActivoEspeCompMod->setGeneracion($Generacion);
+    $ObjActivoEspeCompMod->setRam($Ram);
+    $ObjActivoEspeCompMod->setDiscoDuro($DiscoDuro);
+    $ObjActivoEspeCompMod->setModelo($Modelo);
+    $ObjActivoEspeCompMod->setSO($SO);
+    $ObjActivoEspeCompMod->setOffice($Office);
+    $ObjActivoEspeCompMod->setIP($IP);
+    $ObjActivoEspeCompMod->setTipoRam($TipoRam);
+    $ObjActivoEspeCompMod->setCapacidad_D1($CapacidadD1);
+    $ObjActivoEspeCompMod->setDiscoDuro2($DiscoDuro2);
+    $ObjActivoEspeCompMod->setCapacidad_D2($CapacidadD2);
+    $ObjActivoEspeCompMod->setActivoId($ActivoId);
+    return $ObjActivoEspeCompMod;
 }
 
 //OBJETO DONDE SETEAMOS LOS VALORES PARA INSERTAR EN ACTIVO ESPECIFICACION SI ES UNA IMPRESORA

@@ -117,7 +117,7 @@ class historialActivoDao{
         $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([
-                $ah->getHistoricoFecha(),
+                date_create($ah->getHistoricoFecha())->format('d/m/y'),
                 $ah->getEstructura31Id(),
                 $ah->getResponsableId(),
                 $ah->getHistoricoComentario(),

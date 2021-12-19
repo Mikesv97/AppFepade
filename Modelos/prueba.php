@@ -7,13 +7,68 @@ include_once '../Modelos/activoEspecificacionDao.php';
 include_once '../Modelos/historialActivoDao.php';
 
 // $activoEspe = new activoEspecificacionDao();
-$activoHist = new historialActivoDao();
-// // // $us = new LoginDao();
-$nuser = new UsuarioNuevoDao();
+// $activoHist = new historialActivoDao();
+// // // // $us = new LoginDao();
+// $nuser = new UsuarioNuevoDao();
 
-$l = new LoginDao();
+// $l = new LoginDao();
 
-echo $l->eliminarEstadoNuevoUser("adriana",0);
+// echo $l->eliminarEstadoNuevoUser("adriana",0);
+
+$activoEspe = new activoEspecificacionDao();
+
+$ObjActivoEspeCompMod = setObjActivoEspeCompMod(
+    'Holis312',
+    'Holis312',
+    'Holis312',
+    'Holis312',
+    'Holis312',
+    'Holis312',
+    'Holis312',
+    'Holis312',
+    'Holis312',
+    'Holis312',
+    'Holis312',
+    'Holis312',
+    '1'
+);
+
+echo json_decode($activoEspe->modificarActEspCom($ObjActivoEspeCompMod));
+
+function setObjActivoEspeCompMod(
+    $Procesador,
+    $Generacion,
+    $Ram,
+    $DiscoDuro,
+    $Modelo,
+    $SO,
+    $Office,
+    $IP,
+    $TipoRam,
+    $CapacidadD1,
+    $DiscoDuro2,
+    $CapacidadD2,
+    $ActivoId
+) {
+    $ObjActivoEspeCompMod = new Activo_Especificacion();
+
+    $ObjActivoEspeCompMod->setProcesador($Procesador);
+    $ObjActivoEspeCompMod->setGeneracion($Generacion);
+    $ObjActivoEspeCompMod->setRam($Ram);
+    $ObjActivoEspeCompMod->setDiscoDuro($DiscoDuro);
+    $ObjActivoEspeCompMod->setModelo($Modelo);
+    $ObjActivoEspeCompMod->setSO($SO);
+    $ObjActivoEspeCompMod->setOffice($Office);
+    $ObjActivoEspeCompMod->setIP($IP);
+    $ObjActivoEspeCompMod->setTipoRam($TipoRam);
+    $ObjActivoEspeCompMod->setCapacidad_D1($CapacidadD1);
+    $ObjActivoEspeCompMod->setDiscoDuro2($DiscoDuro2);
+    $ObjActivoEspeCompMod->setCapacidad_D2($CapacidadD2);
+    $ObjActivoEspeCompMod->setActivoId($ActivoId);
+    return $ObjActivoEspeCompMod;
+}
+
+
 
 // $ObjHistorico = setObjHistorico(
 //     '286',
