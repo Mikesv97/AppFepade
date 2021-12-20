@@ -97,6 +97,7 @@ if ($_POST) {
                                 $objActivoEspeImpre = setObjActivoEspeImpre(
                                     $obtejerIdActivo,
                                     $_POST['Modelo'],
+                                    $_POST['ip'],
                                     $_POST['TonerN'],
                                     $_POST['TonerM'],
                                     $_POST['TonerC'],
@@ -175,7 +176,7 @@ if ($_POST) {
                 );
                 $actiMod = $activoFijo->modificarActivoFijo($objActivoFijoMod);
                 $updateActive = false;
-                if($actiMod != 0){
+                if ($actiMod != 0) {
                     switch ($tipoActivo) {
                         case 1:
                             //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
@@ -200,7 +201,7 @@ if ($_POST) {
                             } else {
                                 $updateActive = true;
                             }
-                        break;
+                            break;
                         case 2:
                             //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
                             $ObjActivoEspeCompMod = setObjActivoEspeCompMod(
@@ -224,12 +225,45 @@ if ($_POST) {
                             } else {
                                 $updateActive = true;
                             }
-                        break;
+                            break;
+                        case 3:
+                            $objActivoEspeImpreMod = setObjActivoEspeImpreMod(
+                                $_POST['Modelo'],
+                                $_POST['ip'],
+                                $_POST['TonerN'],
+                                $_POST['TonerM'],
+                                $_POST['TonerC'],
+                                $_POST['TonerA'],
+                                $_POST['tambor'],
+                                $_POST['fusor'],
+                                $_POST['ActivoId']
+                            );
+                            
+                            if ($activoEspe->modificarActEspImp($objActivoEspeImpreMod) == 0) {
+                                echo json_encode('FailModificarActivo');
+                            } else {
+                                $updateActive = true;
+                            }
+                            break;
+                        case 4:
+                            $objActivoEspeProyMod = setObjActivoEspeProyMod(
+                                $_POST['Modelo'],
+                                $_POST['HorasUso'],
+                                $_POST['HoraEco'],
+                                $_POST['ActivoId']
+                            );
+
+                            if ($activoEspe->modificarActEspProy($objActivoEspeProyMod) == 0) {
+                                echo json_encode('FailModificarActivo');
+                            } else {
+                                $updateActive = true;
+                            }
+                            break;
                     }
-                    if($updateActive){
+                    if ($updateActive) {
                         echo json_encode('Modificado');
                     }
-                }else{
+                } else {
                     echo json_encode('FailModificarActivo');
                 }
                 break;
@@ -342,7 +376,7 @@ function cargarImagen()
         } else {
             return "error de carga de imagen";
         }
-    }else{
+    } else {
         $imagenBD = $_POST['imagenBD'];
         return $imagenBD;
     }
@@ -503,6 +537,7 @@ function setObjActivoEspeCompMod(
 function setObjActivoEspeImpre(
     $ActivoId,
     $Modelo,
+    $IP,
     $TonerN,
     $TonerM,
     $TonerC,
@@ -513,6 +548,7 @@ function setObjActivoEspeImpre(
     $objActivoEspeImpre = new Activo_Especificacion();
     $objActivoEspeImpre->setActivoId($ActivoId);
     $objActivoEspeImpre->setModelo($Modelo);
+    $objActivoEspeImpre->setIP($IP);
     $objActivoEspeImpre->setTonerN($TonerN);
     $objActivoEspeImpre->setTonerM($TonerM);
     $objActivoEspeImpre->setTonerC($TonerC);
@@ -520,6 +556,30 @@ function setObjActivoEspeImpre(
     $objActivoEspeImpre->setTambor($tambor);
     $objActivoEspeImpre->setFusor($fusor);
     return $objActivoEspeImpre;
+}
+
+function setObjActivoEspeImpreMod(
+    $Modelo,
+    $IP,
+    $TonerN,
+    $TonerM,
+    $TonerC,
+    $TonerA,
+    $tambor,
+    $fusor,
+    $ActivoId
+) {
+    $objActivoEspeImpreMod = new Activo_Especificacion();
+    $objActivoEspeImpreMod->setModelo($Modelo);
+    $objActivoEspeImpreMod->setIP($IP);
+    $objActivoEspeImpreMod->setTonerN($TonerN);
+    $objActivoEspeImpreMod->setTonerM($TonerM);
+    $objActivoEspeImpreMod->setTonerC($TonerC);
+    $objActivoEspeImpreMod->setTonerA($TonerA);
+    $objActivoEspeImpreMod->setTambor($tambor);
+    $objActivoEspeImpreMod->setFusor($fusor);
+    $objActivoEspeImpreMod->setActivoId($ActivoId);
+    return $objActivoEspeImpreMod;
 }
 
 //OBJETO DONDE SETEAMOS LOS VALORES PARA INSERTAR EN ACTIVO ESPECIFICACION SI ES UN PROYECTOR
@@ -535,6 +595,20 @@ function setObjActivoEspeProy(
     $objActivoEspeProy->setHorasUso($HorasUso);
     $objActivoEspeProy->setHoraEco($HoraEco);
     return $objActivoEspeProy;
+}
+
+function setObjActivoEspeProyMod(
+    $Modelo,
+    $HorasUso,
+    $HoraEco,
+    $ActivoId
+) {
+    $objActivoEspeProyMod = new Activo_Especificacion();
+    $objActivoEspeProyMod->setModelo($Modelo);
+    $objActivoEspeProyMod->setHorasUso($HorasUso);
+    $objActivoEspeProyMod->setHoraEco($HoraEco);
+    $objActivoEspeProyMod->setActivoId($ActivoId);
+    return $objActivoEspeProyMod;
 }
 
 //OBJETO DONDE SETEAMOS LOS VALORES PARA INSERTAR EN HISTORIAL DE ACTIVO

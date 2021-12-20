@@ -83,12 +83,13 @@ class activoEspecificacionDao{
             TonerA,
             tambor,
             fusor) 
-            VALUES (?,'','','','',?,'','',?,?,?,?,?,?)";
+            VALUES (?,'','','','',?,'',?,?,?,?,?,?,?)";
         $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([
                 $aei->getActivoId(),
                 $aei->getModelo(),
+                $aei->getIP(),
                 $aei->getTonerN(),
                 $aei->getTonerM(),
                 $aei->getTonerC(),
@@ -172,6 +173,50 @@ class activoEspecificacionDao{
                 $ae->getDiscoDuro2(),
                 $ae->getCapacidad_D2(),
                 $ae->getActivoId(),
+            ]);
+            return $respuesta->rowCount();
+        }catch(PDOException $error){
+            return $error->getMessage();
+        } 
+    }
+
+    public function modificarActEspImp($objeto){
+        $ae = $objeto;
+        $con = Conexion::conectar();
+        $sql = "UPDATE Activo_Especificacion SET
+            Procesador = '',
+            Generacion = '',
+            Ram = '',
+            DiscoDuro = '',
+            Modelo = ?,
+            SO = '',
+            Office = '',
+            IP = ?,
+            TonerN = ?,
+            TonerM = ?,
+            TonerC = ?,
+            TonerA = ?,
+            HorasUso = '',
+            HoraEco = '',
+            TipoRam = '',
+            tambor = ?,
+            fusor = ?,
+            Capacidad_D1 = '',
+            DiscoDuro2 = '',
+            Capacidad_D2 = ''
+            WHERE Activo_id = ?";
+        $respuesta = $con->prepare($sql);
+        try{
+            $respuesta->execute([
+                $ae->getModelo(),
+                $ae->getIP(),
+                $ae->getTonerN(),
+                $ae->getTonerM(),
+                $ae->getTonerC(),
+                $ae->getTonerA(),
+                $ae->getTambor(),
+                $ae->getFusor(),
+                $ae->getActivoId()
             ]);
             return $respuesta->rowCount();
         }catch(PDOException $error){

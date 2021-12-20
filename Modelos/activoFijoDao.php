@@ -147,10 +147,9 @@ class activoFijoDAO
         }
     }
 
-    //CONVERT FECHA 
     public function tablaActivoFijo(){
         $con = Conexion::conectar();
-        $sql = "SELECT a.*,convert(varchar,a.Activo_fecha_adq,127) as FechaAdquisicion,convert(varchar,a.Activo_fecha_adq,127) as FechaCaducacion,b.*,c.Nombre_Responsable as Responsable, d.usuario_nombre as Usuario, e.* 
+        $sql = "SELECT a.*,convert(varchar,a.Activo_fecha_adq,23) as FechaAdquisicion,convert(varchar,a.Activo_fecha_adq,23) as FechaCaducacion,b.*,c.Nombre_Responsable as Responsable, d.usuario_nombre as Usuario, e.* 
         FROM Activo a 
         INNER JOIN Tipo_Activo b 
         ON a.Activo_tipo = b.tipo_activo_id

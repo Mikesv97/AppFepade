@@ -42,6 +42,7 @@ jQuery(document).ready(function ($) {
 
     //DESABILITANDO BOTON INSERTAR CUANDO SE CARGA LA PAGINA
     $('#btnInsertar').attr('disabled', true);
+    $('#btnModificar').attr('disabled', true);
     $('#btnMostrarHistorial').attr('disabled', true);
 
     //INVOCANDO FUNCION QUE DESABILITA LOS CONTROLES DEL FORMULARIO
@@ -52,6 +53,7 @@ jQuery(document).ready(function ($) {
         $('#activoHistorial').dataTable().fnDestroy();
         blockControl(false);
         $('#btnInsertar').attr('disabled', false);
+        $('#btnModificar').attr('disabled', true);
         $('#btnMostrarHistorial').attr('disabled', true);
         $("#formActivo")[0].reset();
         $('#ActivoEliminado').attr('checked', false);
@@ -66,7 +68,7 @@ jQuery(document).ready(function ($) {
                 return '0' + val;
         }
         var d = new Date();
-        $('input[type=date]').val(d.getFullYear() + "-" + zeroPadded(d.getMonth() + 1) + "-" + zeroPadded(d.getDate()));
+        $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
     });
 
     //EVENTO CHANGE QUE MUESTRA LA IMAGEN QUE SE AGREGAR EN EL INPUT FILE
@@ -117,6 +119,7 @@ jQuery(document).ready(function ($) {
                                 )
                                 $("#formActivo")[0].reset();
                                 $('#activoInformacion').DataTable().ajax.reload();
+                                $('#mostrarFormulario').addClass('collapse');
                                 $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
                                 break;
                             case "FailActiveEspe":
@@ -177,6 +180,7 @@ jQuery(document).ready(function ($) {
                                 )
                                 $("#formActivo")[0].reset();
                                 $('#activoInformacion').DataTable().ajax.reload();
+                                $('#mostrarFormulario').addClass('collapse');
                                 $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
                                 break;
                             case "FailModificarActivo":
@@ -383,6 +387,7 @@ jQuery(document).ready(function ($) {
 
         //DESABILITANDO EL BOTON INSERTAR ACTIVO CUANDO EL USUARIO CARGA LA INFORMACION DE UN ACTIVO
         $('#btnInsertar').attr('disabled', true);
+        $('#btnModificar').attr('disabled', true);
         $('#btnMostrarHistorial').attr('disabled', false);
 
         //ENVIANDO AL INICIO DEL FORMULARIO CUANDO EL USUARIO DE CLICK AL ACTIVO
@@ -533,6 +538,7 @@ jQuery(document).ready(function ($) {
 
         //DESABILITANDO EL BOTON INSERTAR ACTIVO CUANDO EL USUARIO CARGA LA INFORMACION DE UN ACTIVO
         $('#btnInsertar').attr('disabled', true);
+        $('#btnModificar').attr('disabled', false);
         $('#btnMostrarHistorial').attr('disabled', false);
 
         //ENVIANDO AL INICIO DEL FORMULARIO CUANDO EL USUARIO DE CLICK AL ACTIVO
@@ -569,7 +575,7 @@ jQuery(document).ready(function ($) {
             desabilitarInputPc(true);
             desabilitarInputProyector(true);
             desabilitarInputImpresora(false);
-            desabilitarIp(true);
+            desabilitarIp(false);
         } else if (data['Activo_tipo'] == 4) {
             desabilitarInputPc(true);
             desabilitarInputProyector(false);
@@ -696,7 +702,7 @@ jQuery(document).ready(function ($) {
                 return '0' + val;
         }
         var d = new Date();
-        $('input[type=date]').val(d.getFullYear() + "-" + zeroPadded(d.getMonth() + 1) + "-" + zeroPadded(d.getDate()));
+        $('input[type=datetime-local]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
 
         //ESTE CARGA FECHA Y HORA PERO DABA ERROR
         // d = new Date();
@@ -710,6 +716,7 @@ jQuery(document).ready(function ($) {
         //PONE EN EL INPUT GUARDARIDACTIVO2 EL VALOR DE ACTIVO_ID
         var ActivoIdHistorico = $('#guardarIdActivo2').val(historialId1);
 
+        //FUNCION PARA CARGAR LOS INPUT DE REFERENCIA Y DESCRIPCION SEGUN EL HISTORIAL DEL ACTIVO QUE CARGUEN
         cargarHistorico2(referencia, descripcion);
 
         $('#historial').dataTable().fnDestroy();
@@ -770,7 +777,7 @@ jQuery(document).ready(function ($) {
         console.log(data);
 
         //VARIABLES QUE SIRVEN PARA ACTUALIZAR EL ESTADO DEL ACTIVO EN LA TABLA ACTIVO
-        var totalFilas = table.rows().count();
+        var totalFilas = 1;
         var filaClick = parseInt(table.row(this).index()) + 1;
 
         //COMPROBACION DE CUAL ES EL ULTIMO HISTORICO INGRESADO
