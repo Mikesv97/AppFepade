@@ -40,7 +40,7 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    //DESABILITANDO BOTON INSERTAR CUANDO SE CARGA LA PAGINA
+    //DESABILITANDO BOTON INSERTAR, MODIFICAR Y MOSTRAR HISTORIAL CUANDO SE CARGA LA PAGINA
     $('#btnInsertar').attr('disabled', true);
     $('#btnModificar').attr('disabled', true);
     $('#btnMostrarHistorial').attr('disabled', true);
@@ -679,6 +679,7 @@ jQuery(document).ready(function ($) {
         $('#guardarIdActivo').val(data['Activo_id']);
     });
 
+    //BOTON PARA MOSTRAR EL HISTORIAL DEL ACTIVO SELECIONADO
     $('#btnMostrarHistorial').on('click', function () {
 
         //DEJANDO EL FORMULARIO DE HISTORICO EN LIMPIO SIEMPRE QUE LO MUESTREN
@@ -702,7 +703,7 @@ jQuery(document).ready(function ($) {
                 return '0' + val;
         }
         var d = new Date();
-        $('input[type=datetime-local]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+        $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
 
         //ESTE CARGA FECHA Y HORA PERO DABA ERROR
         // d = new Date();
@@ -769,6 +770,7 @@ jQuery(document).ready(function ($) {
         });
     });
 
+    //BOTON PARA CARGAR LOS INPUT CON LA INFORMACION DEL HISTORIAL SELECIONADO
     $('#historial tbody').on('click', '.btnMostrarHistorial', function () {
 
         var table = $('#historial').DataTable();
@@ -811,6 +813,7 @@ jQuery(document).ready(function ($) {
 
     });
 
+    //BOTON PARA MODIFICAR UN HISTIRAL SELECIONADO
     $('#btnModificarHostorico').on('click', function () {
 
         //VARIABLE PARA VERIFICAR SI lastHistoricoPosition ES VERDADERO O FALSO Y ASI ENTRAR A LA CONDICION DE ACTIVO CONTROLADOR
@@ -882,6 +885,7 @@ jQuery(document).ready(function ($) {
         })
     });
 
+    //BOTON PARA ELIMINAR UN HISTORIAL SELECIONADO
     $('#btnEliminarHistorico').on('click', function () {
 
         Swal.fire({
@@ -940,9 +944,6 @@ jQuery(document).ready(function ($) {
 
 
     });
-
-    // $('#historial tbody').on('click','#btnMostrarH', function(){
-    // });
 
     function cargarGeneral1(activoRerefencia, partidaContabilidad, empresaId, numeroSerie, activoId, fechaAdq, activoFactura, activoTipo, ip) {
         $('input[name=ActivoReferencia]').val(activoRerefencia);
