@@ -1,97 +1,93 @@
 <!DOCTYPE >
-    <html>
     <htm>
     <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Cambio De Contraseña</title>
-    <style>
-    a, h5{
-        display: inline-block;
-       
-    }
-    i{
-        margin-right: 5px;
-        color:#f7d727;
-        
-    }
-    .container{
-        width: 90%;
-        margin: 0 auto;
-    }
-    h5{
-        width: auto;
-    }
-    
-    a{
-        margin-left: 12px;
-        width: 200px;
-    }
-    .titulo{
-        background-color: rgba(218, 8, 8, 0.822);
-        color: white;
-        text-align: center;
-        text-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.5);
-        box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.5);
-    }
-    .contentMsj{
-        margin-top: 2em;
-        margin-bottom: 2em;
-    }
-    .spanClas{
-        background-color: rgba(226, 13, 13, 0.8);
-        text-shadow:0 1px 1px hsla(0, 0%, 0%, 0.5);
-        color:white;
-        padding: 1.5px;
-    }
-    .spanCodigo{
-        background-color:#f1b72f;
-        color: whitesmoke;
-        padding: 5px;
-        text-shadow:0 1px 1px hsla(0, 0%, 0%, 0.5);
-       
-    }
-    a{
-            text-decoration: none;
-            background-color: rgb(25, 53, 194);
-            border-radius: 10px;
-            color:white;
-            padding: 5px;
-            text-align: center;
-                border:whitesmoke solid 0.5px;
-                text-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.5);
-                box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.5);
-    }
-    a:hover{
-            background-color: rgba(70, 20, 207, 0.952);
-            transition: all ease-in-out 0.5s;
-        }
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Cambio De Contraseña</title>
+        <style>
+            .container{
+                width: 90%;
+                margin: 0 auto;
+            }
+            .contentMsj{
+                margin-top: 2em;
+                margin-bottom: 2em;
+            }
+            .contentHeader{
+            display: flex;
+            align-items: center;
+            align-content: center;
+            }
 
-        h3{
-            color:rgba(163, 161, 161, 0.959);
-        }
-    </style>
+            .himage{
+                width: 200px;
+                height: 200px;
+            }
+             p{
+
+        
+                margin-left: 2em;
+            }
+
+            h2{
+                text-align: center;
+            }
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 15px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+        </style>
     </head>
     <body>
     <div class="container">
-        <div>
-        <h1 class="titulo">
-            <img class="h" src="https://github.com/Mikesv97/AppFepade/blob/main/flecha.png?raw=true">
-            SOLICITUD DE CAMBIO DE CONTRASEÑA
-        </h1>
+        
+        <div class="contentHeader">
+            <img class="himage" src="../Recursos/Multimedia/Imagenes/logoFepadePDF.png">
+                <p>
+                    Sistema fepade activo fijo<br>
+                    Fundación empresarial<br>
+                    Para el desarrollo educativo<br>
+                    ISO 9901-2015
+                </p>
         </div>
-        <div class="contentMsj">
-            <h3 class="">Hola se ha solicitado cambio de contraseña en el sistema <span class="spanClas">ACTIVO FIJO-FEPADE</span></h3>
-            <h3 class="">
-            Tu código de validacion es el : <span class="spanCodigo"><strong>codigo1213213</strong></span>
-            </h3>
-            <h3 class="">Si no has sido tú por favor reportalo:</h3><a class="" href="http://localhost/appfepade/vistas/reportar.html">Reportar</a>    
-        </div>
-        <h1 class="titulo"><img class="h" src="https://github.com/Mikesv97/AppFepade/blob/main/flecha.png?raw=true">
-            FAVOR NO RESPONDER ESTE MENSAJE
-        </h1>
-        <img style="width: 100%;" src="https://raw.githubusercontent.com/Mikesv97/AppFepade/main/baner.jpg">
+        <hr>
+        <h2>Reporte de tipos de activos</h2>
+        <table>
+            <tr>
+                <td>Activo referencia</td>
+                <td>Empresa ID</td>
+                <td>Estructura1 id</td>
+                <td>Estructura2 id</td>
+                <td>Estructura3 id</td>
+                <td>Activo tipo</td>
+                <td>Fecha compra</td>
+                <td>Fecha Caducación</td>
+                <td>Estado</td>
+            </tr>
+            <tr>
+                <td>Activo referencia</td>
+                <td>Empresa ID</td>
+                <td>Estructura1 id</td>
+                <td>Estructura2 id</td>
+                <td>Estructura3 id</td>
+                <td>Activo tipo</td>
+                <td>Fecha compra</td>
+                <td>Fecha Caducación</td>
+                <td>Estado</td>
+            </tr>
+        </table>
     </div>
     </body>
     </html> 

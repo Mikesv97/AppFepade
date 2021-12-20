@@ -240,4 +240,49 @@ class activoFijoDAO
         }
     }
 
+    public function reporteTipoActivo($tipoActivo){
+        $con = Conexion::conectar();
+        $sql ="select * from activo where activo_tipo =?";
+        $respuesta = $con->prepare($sql);
+        try{
+            $respuesta->execute([$tipoActivo]);
+            $dato= $respuesta->fetchAll(PDO::FETCH_ASSOC);
+            $table ="
+            <table>
+                <tr>
+                    <td>Activo referencia</td>
+                    <td>Empresa ID</td>
+                    <td>Estructura1 id</td>
+                    <td>Estructura2 id</td>
+                    <td>Estructura3 id</td>
+                    <td>Activo tipo</td>
+                    <td>Fecha compra</td>
+                    <td>Fecha Caducación</td>
+                    <td>Estado</td>
+                </tr>
+            ";
+            foreach($dato as $d){
+                $table .= "
+                <tr>
+                    <td>".$d["Activo_referencia"]."</td>
+                    <td>".$d["Empresa_id"]."</td>
+                    <td>".$d["Estructura1_id"]."</td>
+                    <td>".$d["Estructura2_id"]."</td>
+                    <td>".$d["Estructura3_id"]."</td>
+                    <td>".$d["Activo_tipo"]."</td>
+                    <td>".$d["fecha_compra"]."</td>
+                    <td>".$d["Activo_fecha_caduc"]."</td>
+                    <td>".$d["Estado"]."</td>
+                </tr>
+                ";
+            }
+
+            $table.="</table>
+            </div>";
+            return $table;
+        } catch (PDOException $error) {
+            echo $error->getMessage();
+        }
+    }
+
 }
