@@ -1,0 +1,10 @@
+.btnLogin{
+    background-color: #b0191e;
+    color: white;
+  
+  }
+
+  #pdfRenderer{
+  min-width: 100% !important;
+   height: 600px;
+  }
