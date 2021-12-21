@@ -238,7 +238,7 @@ if ($_POST) {
                                 $_POST['fusor'],
                                 $_POST['ActivoId']
                             );
-                            
+
                             if ($activoEspe->modificarActEspImp($objActivoEspeImpreMod) == 0) {
                                 echo json_encode('FailModificarActivo');
                             } else {
@@ -265,6 +265,14 @@ if ($_POST) {
                     }
                 } else {
                     echo json_encode('FailModificarActivo');
+                }
+                break;
+            case "eliminar":
+                $id = $_POST['ActivoId'];
+                if ($activoFijo->eliminarrActivoFijo($id) == 0){
+                    echo json_encode('FailActivoEliminado');
+                }else{
+                    echo json_encode('EliminadoAct');
                 }
                 break;
                 //MOSTRANDO TABLA ACTIVO FIJO
@@ -297,6 +305,7 @@ if ($_POST) {
 
                         $ObjActualizarEstActivo = setObjActualizarEstActivo(
                             $_POST['activoInacH'],
+                            $_POST['ResponsableIdH'],
                             $_POST['guardarIdActivo2']
                         );
 
@@ -338,6 +347,7 @@ if ($_POST) {
                         //SETEANDO EL OBJETO ESTADO PARA ENVIAR LOS VALORES A INSERTAR EN ACTIVO
                         $ObjActualizarEstActivo = setObjActualizarEstActivo(
                             $_POST['activoInacH'],
+                            $_POST['ResponsableIdH'],
                             $_POST['guardarIdActivo2']
                         );
                         //EVALUAMOS QUE LOS DATOS DE ESTADO Y ACTIVOID SEAN DIFERENTE A 0
@@ -558,6 +568,7 @@ function setObjActivoEspeImpre(
     return $objActivoEspeImpre;
 }
 
+//OBJETO DONDE SETEAMOS LOS VALORES PARA MODIFICAR EN ACTIVO ESPECIFICACION SI ES UNA IMPRESORA
 function setObjActivoEspeImpreMod(
     $Modelo,
     $IP,
@@ -597,6 +608,7 @@ function setObjActivoEspeProy(
     return $objActivoEspeProy;
 }
 
+//OBJETO DONDE SETEAMOS LOS VALORES PARA MODICAR EN ACTIVO ESPECIFICACION SI ES UN PROYECTOR
 function setObjActivoEspeProyMod(
     $Modelo,
     $HorasUso,
@@ -630,6 +642,7 @@ function setObjActivoHistorial(
     return $objActivoHistorial;
 }
 
+//OBJETO DONDE SETEAMOS LOS VALORES PARA INSERTAR UN NUEVO HISTORICO DEL ACTIVO
 function setObjHistorico(
     $ActivoId,
     $Historico_fecha,
@@ -650,16 +663,20 @@ function setObjHistorico(
     return $ObjHistorico;
 }
 
+//OBJETO DONDE SETEAMOS LOS VALORES PARA ACTUALIZAR EL ESTADO Y EL RESPONSABLE EN LA TABLA ACTIVO
 function setObjActualizarEstActivo(
     $Estado,
+    $ResponsableId,
     $ActivoId
 ) {
     $ObjActualizarEstActivo = new Activo_Fijo();
     $ObjActualizarEstActivo->setEstado($Estado);
+    $ObjActualizarEstActivo->setResponsableCodigo($ResponsableId);
     $ObjActualizarEstActivo->setActivoId($ActivoId);
     return $ObjActualizarEstActivo;
 }
 
+//OBJETO DONDE SETEAMOS LOS VALORES PARA MODIFICAR UN HISTORICO DEL ACTIVO
 function setObjModificarHistorico(
     $historicoFecha,
     $Estructura31Id,

@@ -53,7 +53,7 @@ $date = date('d-m-Y');
         background: none;
     }
 
-    #ActivoReferenciaH{
+    #ActivoReferenciaH {
         font-weight: bold;
     }
 </style>
@@ -76,7 +76,7 @@ $date = date('d-m-Y');
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Components</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Registro de activos</a></li>
                 </ol>
             </div>
         </div>
@@ -148,9 +148,8 @@ $date = date('d-m-Y');
                                     <h5 class="my-2 label label-danger col-md-12">Información general de activo</h5>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label class="text-label">Usuario*</label>
                                             <input type="text" name="UsuarioId" value="<?= $idUSuario; ?>" hidden>
-                                            <input type="text" name="nombreUsuario" class="form-control" value="<?= $usuario; ?>" readonly>
+                                            <input type="text" name="nombreUsuario" class="form-control" value="<?= $usuario; ?>" hidden>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Modelo*</label>
@@ -212,13 +211,13 @@ $date = date('d-m-Y');
                                 </div>
                             </div>
                             <div class="row borde-top">
-                                <div class="col-md-6 borde">
+                                <div class="col-md-6 borde" id="ResCompAsig">
                                     <h5 class="my-2 label label-danger col-md-12">Responsable y comentarios de asignación</h5>
                                     <div class="form-row ">
                                         <div class="form-group col-md-6">
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" name="estado" id="estado">
-                                                <label class="form-check-label" for="ActivoEliminado">Inactivo</label>
+                                                <label class="form-check-label" for="estado">Inactivo</label>
                                             </div>
                                         </div>
                                         <div class="form-group col-md-6">
@@ -234,14 +233,14 @@ $date = date('d-m-Y');
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label class="text-label">Comentarios de asignación</label>
-                                            <textarea class="form-control comentarioAsig" name="HistoricoComentario" rows="3" maxlength="50"></textarea>
+                                            <textarea class="form-control comentarioAsig" name="HistoricoComentario" id="HistoricoComentario" rows="3" maxlength="50"></textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 borde">
                                     <div class="text-center">
                                         <h5 class="my-2 label label-danger col-md-12">Imagen de activo fijo</h5>
-                                        <input type="text" name="imagenBD" id="imagenBD">
+                                        <input type="text" name="imagenBD" id="imagenBD" hidden>
                                         <div>
                                             <img id="mostrarImagen" src="../Recursos/Multimedia/Imagenes/Upload/nodisponible.jpg">
                                         </div>
@@ -361,6 +360,7 @@ $date = date('d-m-Y');
                             </div>
                             <button type="submit" class="btn btn-tumblr my-4" name="btnInsertar" id="btnInsertar">Insertar</button>
                             <button type="button" class="btn btn-tumblr my-4" name="btnModificar" id="btnModificar">Modificar</button>
+                            <button type="button" class="btn btn-tumblr my-4" name="btnEliminar" id="btnEliminar">Eliminar</button>
                         </form>
                     </div>
                 </div>
@@ -401,9 +401,9 @@ $date = date('d-m-Y');
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Codigo contabilidad</th>
+                                        <th>Activo id</th>
                                         <th>Referencia</th>
+                                        <th>Codigo contabilidad</th>
                                         <th>Codigo proyecto</th>
                                         <th>Numero de serie</th>
                                         <th>Fecha adquisición</th>
@@ -432,7 +432,7 @@ $date = date('d-m-Y');
 </div>
 
 <!-- MODAL PARA HISTORIAL DE ACTIVO -->
-<div class="modal fade modalHistorial" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade modalHistorial" tabindex="-1" role="dialog" aria-hidden="true" id="probando">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -504,8 +504,8 @@ $date = date('d-m-Y');
                                     <textarea class="form-control descripcionActivo" name="HistoricoComentarioH" rows="3" maxlength="50"></textarea>
                                 </div>
 
-                                <div class="col-md-12">
-                                    <h5 class="my-2 label label-danger col-md-12">Historico de ubicaciones</h5>
+                                <div class="col-md-12 responsive-table"">
+                                    <h5 class=" my-2 label label-danger col-md-12">Historico de ubicaciones</h5>
                                     <div class="">
                                         <table id="historial" name="historial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
                                             <thead>

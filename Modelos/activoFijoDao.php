@@ -173,11 +173,12 @@ class activoFijoDAO
     public function updateEstado($objeto){
         $a = $objeto;
         $con = Conexion::conectar();
-        $sql = "UPDATE Activo SET Estado = ? WHERE Activo_id = ?";
+        $sql = "UPDATE Activo SET Estado = ?, Responsable_codigo = ? WHERE Activo_id = ?";
         $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([
                 $a->getEstado(),
+                $a->getResponsableCodigo(),
                 $a->getActivoId()
             ]);
             return $respuesta->rowCount();
@@ -239,9 +240,21 @@ class activoFijoDAO
         }
     }
 
+    public function eliminarrActivoFijo($id){
+        $con = Conexion::conectar();
+        $sql = "UPDATE Activo SET Activo_eliminado = 1 WHERE Activo_id = ?";
+        $respuesta = $con->prepare($sql);
+        try {
+            $respuesta->execute([$id]);
+            return $respuesta->rowCount();
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }
+    }
+
     public function reporteTipoActivo($tipoActivo){
         $con = Conexion::conectar();
-        $sql ="select * from activo where activo_tipo =?";
+        $sql ="select * from activo where Empresa_id =?";
         $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([$tipoActivo]);
