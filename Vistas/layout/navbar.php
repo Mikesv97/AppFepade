@@ -91,10 +91,7 @@
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Reportes</span></a>
                 <ul aria-expanded="false">
-                    <li><a href="nuevoUsuario.php">Por tipo de activo</a></li>
-                </ul>
-                <ul aria-expanded="false">
-                    <li><a href="nuevoUsuario.php">Activos totales</a></li>
+                    <li><a href="reportes.php">De activo</a></li>
                 </ul>
                 <ul aria-expanded="false">
                     <li><a href="nuevoUsuario.php">Toners</a></li>

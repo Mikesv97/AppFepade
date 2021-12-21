@@ -2,8 +2,10 @@
 include('layout/header.php');
 include('layout/navbar.php');
 ?>
-  <link href="../recursos/css/nuevoUsuario.css" rel="stylesheet">
-  <script src="../recursos/JS/nuevoUsuario.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.7/pdfobject.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.7/pdfobject.js"></script>
+  <link href="../recursos/css/reportes.css" rel="stylesheet">
+  <script src="../recursos/JS/reportes.js"></script>
 <div class="content-body">
     <div class="container-fluid">
 
@@ -23,8 +25,18 @@ include('layout/navbar.php');
             </div>
         </div>
         <!-- fin barra top -->
+        <!--combo box tipo activo -->
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <label for="sTipoActivoR">Filtrar por tipo de activo</label>
+                <select class="form-control" id="sTipoActivoR" name="sTipoActivoR">
+                    <option value="0">Seleccionar tipo activo... *</option>
+                </select>
+                <button type="button" class="btn btnLogin my-3">Generar reporte</button>
+            </div>
+        </div>
 
-
+        <div id="pdfRenderer"></div>
     </div>
 </div>
 <!-- Datatable -->
