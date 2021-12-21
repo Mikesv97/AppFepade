@@ -110,8 +110,8 @@ function desabilitarInputImpresora(desabilitar, requerido) {
     $('input[name=TonerM]').attr({'disabled': desabilitar, 'required': requerido})
     $('input[name=TonerC]').attr({'disabled': desabilitar, 'required': requerido})
     $('input[name=TonerA]').attr({'disabled': desabilitar, 'required': requerido})
-    $('input[name=tambor]').attr({'disabled': desabilitar, 'required': requerido})
-    $('input[name=fusor]').attr({'disabled': desabilitar, 'required': requerido})
+    $('input[name=tambor]').attr({'disabled': desabilitar})
+    $('input[name=fusor]').attr({'disabled': desabilitar})
 }
 
 function desabilitarIp(desabilitar, requerido){
