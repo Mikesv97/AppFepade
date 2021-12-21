@@ -161,14 +161,16 @@ class Reportes extends TCPDF{
         $html .="</div>";
 
         // print a block of text using Write()
-        $pdf->writeHTML($html, true, false, true, false, '');
+      $pdf->writeHTML($html, true, false, true, false, '');
+      $pdf->Output('pdf12.pdf', 'i');
+
         // ---------------------------------------------------------
-        $pdf_string = $pdf->Output('pdf12.pdf', 'S');
+       /* $pdf_string = $pdf->Output('pdf12.pdf', 'S');
         if(file_put_contents('../Recursos/Reportes/reporteTipoActivo_'.$fecha.'_'.$hora.'.pdf', $pdf_string)){
             echo "Reporte generado";
         }else{
             echo "Reporte no generado";
-        }
+        }*/
         //Close and output PDF document
       
 
