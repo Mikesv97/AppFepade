@@ -379,12 +379,12 @@ jQuery(document).ready(function ($) {
                 className: "numero_serie"
             },
             {
-                data: "Activo_fecha_adq",
-                className: "Activo_fecha_adq"
+                data: "FechaAdquisicion",
+                className: "FechaAdquisicion"
             },
             {
-                data: "Activo_fecha_caduc",
-                className: "Activo_fecha_caduc"
+                data: "FechaCaducacion",
+                className: "FechaCaducacion"
             },
             {
                 data: "Activo_factura",
@@ -996,8 +996,8 @@ jQuery(document).ready(function ($) {
             "order": [[0, "desc"]],//CON ESTO LE DECIMOS QUE PONGA LA COLUMNA DE FECHA HISTORICO DESCENDENTE
             "columns": [
                 {
-                    data: "Historico_fecha",
-                    className: "Historico_fecha"
+                    data: "fechaHistorico",
+                    className: "fechaHistorico"
                 },
                 {
                     data: "estructura31_nombre",
