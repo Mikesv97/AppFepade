@@ -89,6 +89,11 @@
                     <li><a href="nuevoUsuario.php">Registro de usuarios</a></li>
                 </ul>
             </li>
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Responsables</span></a>
+                <ul aria-expanded="false">
+                    <li><a href="ActivoResponsable.php">Registro de responsables</a></li>
+                </ul>
+            </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Reportes</span></a>
                 <ul aria-expanded="false">
                     <li><a href="reportes.php">De activo</a></li>
