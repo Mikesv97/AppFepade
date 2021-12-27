@@ -7,7 +7,7 @@ $usuario = $_SESSION["usuario"]["nombre"];
 $idUSuario = $_SESSION["usuario"]["id"];
 ?>
 <link href="../recursos/css/nuevoUsuario.css" rel="stylesheet">
-<script src="../Recursos/JS/"></script>
+<script src="../Recursos/JS/tipoActivoC.js"></script>
 <div class="content-body">
     <div class="container-fluid">
 
@@ -36,12 +36,11 @@ $idUSuario = $_SESSION["usuario"]["id"];
                     <h1 class="text-gray-900 my-2 mb-4">Nuevo tipo de activo</h1>
                 </div>
 
-
-                <form id="frmResponsable" class="my-4">
+                <form id="frmTipoActivo" class="my-4">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="txtNombreUser">ID*</label>
-                            <input type="text" class="form-control" id="tipoActivoId" name="tipoActivoId" placeholder="1" pattern=" 0+\.[0-9]*[1-9][0-9]*$" required>
+                            <input type="text" class="form-control" id="tipoActivoId" name="tipoActivoId" placeholder="1" pattern="[0-9]{1,4}" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="txtCorreoUsuario">Nombre de activo*</label>
@@ -64,7 +63,7 @@ $idUSuario = $_SESSION["usuario"]["id"];
         <div class="row page-titles mx-0">
             <div class="col-md-12 p-md-0">
                 <div class="table-responsive">
-                    <table id="tblResponsables" name="tblResponsables" class='table table-striped dt-responsive nowrap' style='width:100%;'>
+                    <table id="tblTipoActivo" name="tblTipoActivo" class='table table-striped dt-responsive nowrap' style='width:100%;'>
                         <thead>
                             <tr>
                                 <th>ID</th>

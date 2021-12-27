@@ -29,8 +29,8 @@ $(document).ready(function(){
             dataType: "json",
             data: { "key": "solicitarMenu","idRol": idRol},
             success: function (r) {
-               
                 for(let i=0; i<r.length; i++){
+                    console.log(r[i]["nombre_menu"]);
                     switch(r[i]["id_menu"]){
                         case "1":
                             var lista ='<li><a href="infor_activo_fijo.php">';
@@ -38,7 +38,7 @@ $(document).ready(function(){
                             $("#subMenuActivos").append(lista);
                         break;
                         case "2":
-                            var lista ='<li><a href="#">';
+                            var lista ='<li><a href="tipoActivo.php">';
                             lista += r[i]["nombre_menu"]+'</a></li>';
                             $("#subMenuActivos").append(lista);
                         break;

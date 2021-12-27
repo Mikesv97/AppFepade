@@ -4,11 +4,13 @@ jQuery(document).ready(function ($) {
     //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
     $('#btnInsertar').attr('disabled', false);
     $('#btnModificar').attr('disabled', true);
+    //QUITANDO READONLY AL INPUT DEL ID PARA QUE SE PUEDE ESCRIBIR
+    $('#tipoActivoId').attr('readonly', false);
 
-    //MOSTRAR TABLA DE RESPONSABLESS
-    $('#tblResponsables').DataTable({
+    //MOSTRAR TABLA DE TIPO ACTIVO
+    $('#tblTipoActivo').DataTable({
         "ajax": {
-            "url": "../Controladores/activoResponControlador.php",
+            "url": "../Controladores/tipoActivoControlador.php",
             "method": "post",
             "dataType": "json",
             "data": { "key": "mostrar" },
@@ -16,20 +18,20 @@ jQuery(document).ready(function ($) {
         },
         "columns": [
             {
-                data: "Responsable_codigo",
-                className: "Responsable_codigo"
+                data: "tipo_activo_id",
+                className: "tipo_activo_id"
             },
             {
-                data: "Codigo_responsable",
-                className: "Codigo_responsable"
+                data: "tipo_activo_nombre",
+                className: "tipo_activo_nombre"
             },
             {
-                data: "Nombre_Responsable",
-                className: "Nombre_Responsable"
+                data: "usuario_id",
+                className: "usuario_id"
             },
             {
-                data: "Estado",
-                className: "Estado"
+                data: "fecha",
+                className: "fecha"
             },
             {
                 data: null,
@@ -57,13 +59,13 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    //CUANDO SE INSERTA UN NUEVO RESPONSABLE
-    $('#frmResponsable').submit(function (e) {
+    //CUANDO SE INSERTA UN NUEVO TIPO ACTIVO
+    $('#frmTipoActivo').submit(function (e) {
 
         e.preventDefault();
         Swal.fire({
-            title: 'Ingresar responsable al sistema',
-            text: "Porfavor confirma para ingresar el nuevo responsable al sistema",
+            title: 'Ingresar tipo de activo al sistema',
+            text: "Porfavor confirma para ingresar el tipo de activo al sistema",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -72,11 +74,11 @@ jQuery(document).ready(function ($) {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                var formData = new FormData($('#frmResponsable')[0]);
+                var formData = new FormData($('#frmTipoActivo')[0]);
                 formData.append("key", "insertar");
                 $.ajax({
                     type: 'POST',
-                    url: "../Controladores/activoResponControlador.php",
+                    url: "../Controladores/tipoActivoControlador.php",
                     dataType: "json",
                     data: formData,
                     cache: false,
@@ -85,19 +87,19 @@ jQuery(document).ready(function ($) {
                     success: function (r) {
                         console.log(r);
                         switch (r) {
-                            case "InsertadoResponsable":
+                            case "InsertadoTipoActivo":
                                 Swal.fire(
-                                    'Responsable ingresado!',
-                                    'El reponsable ha sido ingresado al sistema',
+                                    'Tipo de activo ingresado!',
+                                    'El tipo de activo ha sido ingresado al sistema',
                                     'success'
                                 )
-                                $("#frmResponsable")[0].reset();
-                                $('#tblResponsables').DataTable().ajax.reload();
+                                $("#frmTipoActivo")[0].reset();
+                                $('#tblTipoActivo').DataTable().ajax.reload();
                                 break;
-                            case "FailResponsable":
+                            case "FailTipoActivo":
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta al nuevo responsable'
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta el tipo de activo'
                                         + ' si el problema persiste contacta a tu administrador o soporte IT.',
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
@@ -114,23 +116,22 @@ jQuery(document).ready(function ($) {
         })
     });
 
-    //CUANDO SE ELIMINA UN RESPONSABLE
-    $('#tblResponsables tbody').on('click', '.cargarEliminar', function () {
+    //CUANDO SE ELIMINA UN TIPO DE ACTIVO
+    $('#tblTipoActivo tbody').on('click', '.cargarEliminar', function () {
 
         //GUARDANDO LA INFORMACION DE LA TABLA EN LA VARIABLE DATA
-        var table = $('#tblResponsables').DataTable();
+        var table = $('#tblTipoActivo').DataTable();
         var data = table.row(this).data();
 
-        //LLENANDO LOS INPUT CON LA INFORMACION DEL RESPONSABLE QUE SE QUIERE ELIMINAR
-        cargarResponsable(
-            data['Responsable_codigo'],
-            data['Codigo_responsable'],
-            data['Nombre_Responsable'],
-            data['Estado']
+        //LLENANDO LOS INPUT CON LA INFORMACION DEL TIPO ACTIVO QUE SE QUIERE ELIMINAR
+        cargarTipoActivo(
+            data['tipo_activo_id'],
+            data['tipo_activo_nombre'],
+            data['usuario_id'],
         );
 
         Swal.fire({
-            title: '¿Estás seguro de eliminar este responsable?',
+            title: '¿Estás seguro de eliminar este tipo de activo?',
             text: "¡No podrás deshacer los cambios!",
             icon: 'warning',
             showCancelButton: true,
@@ -140,11 +141,11 @@ jQuery(document).ready(function ($) {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                var formData = new FormData($('#frmResponsable')[0]);
+                var formData = new FormData($('#frmTipoActivo')[0]);
                 formData.append("key", "eliminar");
                 $.ajax({
                     type: 'POST',
-                    url: "../Controladores/activoResponControlador.php",
+                    url: "../Controladores/tipoActivoControlador.php",
                     dataType: "json",
                     data: formData,
                     cache: false,
@@ -153,19 +154,19 @@ jQuery(document).ready(function ($) {
                     success: function (r) {
                         console.log(r);
                         switch (r) {
-                            case "DeleteResponsable":
+                            case "DeleteTipoActivo":
                                 Swal.fire(
-                                    'Responsable eliminado!',
-                                    'El responsable ha sido eliminado del sistema',
+                                    'Tipo de activo eliminado!',
+                                    'El tipo de activo ha sido eliminado del sistema',
                                     'success'
                                 )
-                                $("#frmResponsable")[0].reset();
-                                $('#tblResponsables').DataTable().ajax.reload();
+                                $("#frmTipoActivo")[0].reset();
+                                $('#tblTipoActivo').DataTable().ajax.reload();
                                 break;
-                            case "FailResponsable":
+                            case "FailTipoActivo":
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para eliminar el responsable del sistema'
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para eliminar el tipo de activo del sistema'
                                         + ' si el problema persiste contacta a tu administrador o soporte IT.',
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
@@ -180,46 +181,39 @@ jQuery(document).ready(function ($) {
 
             } else if (result.isDismissed) {
                 //SI EL USUARIO PRESIONA EL BOTON CANCELAR SE LIMPIA EL FORMULARIO
-                $("#frmResponsable")[0].reset();
+                $("#frmTipoActivo")[0].reset();
+                //QUITANDO READONLY AL INPUT DEL ID PARA QUE SE PUEDE ESCRIBIR
+                $('#tipoActivoId').attr('readonly', false);
             }
         })
     });
 
     //CUANDO LE DAL AL ICONO DE EDITAR CARGA LOS INPUT CON LOS DATOS DEL RESPONSABLE SELECIONADO
-    $('#tblResponsables tbody').on('click', '.cargarModificar', function () {
+    $('#tblTipoActivo tbody').on('click', '.cargarModificar', function () {
         //GUARDANDO LA INFORMACION DE LA TABLA EN LA VARIABLE DATA
-        var table = $('#tblResponsables').DataTable();
+        var table = $('#tblTipoActivo').DataTable();
         var data = table.row(this).data();
 
-        //LLENANDO LOS INPUT CON LA INFORMACION DEL RESPONSABLE QUE SE QUIERE ELIMINAR
-        cargarResponsable(
-            data['Responsable_codigo'],
-            data['Codigo_responsable'],
-            data['Nombre_Responsable'],
-            data['Estado']
+        //LLENANDO LOS INPUT CON LA INFORMACION DEL TIPO ACTIVO QUE SE QUIERE ELIMINAR
+        cargarTipoActivo(
+            data['tipo_activo_id'],
+            data['tipo_activo_nombre'],
+            data['usuario_id'],
         );
 
         //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
         $('#btnInsertar').attr('disabled', true);
         $('#btnModificar').attr('disabled', false);
+        //AGRENGADO READONLY AL INPUT DEL ID PARA QUE NO PUEDAN MODIFICARLO
+        $('#tipoActivoId').attr('readonly', true);
 
-    });
-
-    //CUANDO LE DAN CENCELAR SE LIMPIA EL FORMULARIO Y SE HABILITAN O DESABILITAN LOS BOTONES
-    $('#btnCancelar').on('click', function () {
-
-        //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
-        $('#btnInsertar').attr('disabled', false);
-        $('#btnModificar').attr('disabled', true);
-
-        $("#frmResponsable")[0].reset();
     });
 
     //CUANDO LE DAN AL BOTON MODIFICAR DEL FORMULARIO SE MODIFICAN LOS DATOS EN LA BASE DE DATOS
     $('#btnModificar').on('click', function () {
         Swal.fire({
-            title: 'Modificar responsable en el sistema',
-            text: "Porfavor confirma para modificar al responsable en el sistema",
+            title: 'Modificar tipo de activo en el sistema',
+            text: "Porfavor confirma para modificar el tipo de activo en el sistema",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -228,11 +222,11 @@ jQuery(document).ready(function ($) {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                var formData = new FormData($('#frmResponsable')[0]);
+                var formData = new FormData($('#frmTipoActivo')[0]);
                 formData.append("key", "modificar");
                 $.ajax({
                     type: 'POST',
-                    url: "../Controladores/activoResponControlador.php",
+                    url: "../Controladores/tipoActivoControlador.php",
                     dataType: "json",
                     data: formData,
                     cache: false,
@@ -241,24 +235,24 @@ jQuery(document).ready(function ($) {
                     success: function (r) {
                         console.log(r);
                         switch (r) {
-                            case "ModificadoResponsable":
+                            case "ModificadoTipoActivo":
                                 Swal.fire(
-                                    'Responsable modificado!',
-                                    'El reponsable ha sido modificado en el sistema',
+                                    'Tipo de activo modificado!',
+                                    'El tipo de activo ha sido modificado en el sistema',
                                     'success'
                                 )
-                                $("#frmResponsable")[0].reset();
-                                $('#tblResponsables').DataTable().ajax.reload();
+                                $("#frmTipoActivo")[0].reset();
+                                $('#tblTipoActivo').DataTable().ajax.reload();
 
                                 //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
                                 $('#btnInsertar').attr('disabled', false);
                                 $('#btnModificar').attr('disabled', true);
 
                                 break;
-                            case "FailResponsable":
+                            case "FailTipoActivo":
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para modificar al responsable'
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para modificar el tipo de activo'
                                         + ' si el problema persiste contacta a tu administrador o soporte IT.',
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
@@ -275,12 +269,23 @@ jQuery(document).ready(function ($) {
         })
     });
 
+    //CUANDO LE DAN CENCELAR SE LIMPIA EL FORMULARIO Y SE HABILITAN O DESABILITAN LOS BOTONES
+    $('#btnCancelar').on('click', function () {
+
+        //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
+        $('#btnInsertar').attr('disabled', false);
+        $('#btnModificar').attr('disabled', true);
+        //QUITANDO READONLY AL INPUT DEL ID PARA QUE SE PUEDE ESCRIBIR
+        $('#tipoActivoId').attr('readonly', false);
+        //LIMPIADO EL FORMULARIO
+        $("#frmTipoActivo")[0].reset();
+    });
+
     //FUNCION PARA CARGAR LOS INPUT DEL DESPONSABLE SELECIONADO
-    function cargarResponsable(ResponsableCodigo, CodigoResponsable, NombreResponsable, Estado) {
-        $('input[name=ResponsableCodigo]').val(ResponsableCodigo);
-        $('input[name=CodigoResponsable]').val(CodigoResponsable);
-        $('input[name=NombreResponsable]').val(NombreResponsable);
-        $('#Estado option[value=' + Estado + ']').prop('selected', true);
+    function cargarTipoActivo(tipoActivoId, tipoActivoNombre, usuarioId) {
+        $('input[name=tipoActivoId]').val(tipoActivoId);
+        $('input[name=tipoActivoNombre]').val(tipoActivoNombre);
+        $('input[name=usuarioId]').val(usuarioId);
     }
 
 });

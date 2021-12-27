@@ -4,7 +4,7 @@ $(document).ready(function () {
     desabilitarInputImpresora(true);
     desabilitarInputProyector(true);
     desabilitarIp(false, true)
-    //COMPRUEBA QUE TIPO DE ACTIVO SE SELECIONA
+    //COMPRUEBA QUE TIPO DE ACTIVO SE SELECIONA, HABIALITA O DESABILITA INPUT Y AGREGA REQUIRED O  LO QUITA
     $('#ActivoTipo').on('change', function () {
         tipo = $(this).val();
         switch (tipo) {
