@@ -23,7 +23,27 @@ class RolesDao{
             return $respuesta->fetchAll();
            
         }catch(PDOException $error){
-            return $error->getMessage();
+            echo $error->getMessage();
+        }
+    }
+
+    public function obtenerMenuRoles($idRol){     
+        //establecemos la coneccion
+        $this->con = Conexion::conectar();
+        //establecemos la consulta
+        $sql="select a.id_menu,a.nombre_menu from menu a inner join rol_menu b on a.id_menu = b.id_menu
+        where b.id_rol = ?";
+        //preparamos la consulta
+        $respuesta =$this->con->prepare($sql);
+        try{
+            //ejecutamos la consulta y seteamos parametros
+            $respuesta->execute([$idRol]);
+
+            //retornamos el arreglo
+            return $respuesta->fetchAll(PDO::FETCH_ASSOC);
+           
+        }catch(PDOException $error){
+            echo $error->getMessage();
         }
     }
 }
