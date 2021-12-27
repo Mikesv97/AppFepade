@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    $("#listaReportes").hide();
     //cuando carga la pag solicitamos menú según Rol del usuario
     solicitarMenuRol(idRol);
     //cuando hace click en cerrar sesión
@@ -28,8 +29,39 @@ $(document).ready(function(){
             dataType: "json",
             data: { "key": "solicitarMenu","idRol": idRol},
             success: function (r) {
+               
                 for(let i=0; i<r.length; i++){
-                    console.log(r[i]["nombre_menu"]);
+                    switch(r[i]["id_menu"]){
+                        case "1":
+                            var lista ='<li><a href="infor_activo_fijo.php">';
+                            lista += r[i]["nombre_menu"]+'</a></li>';
+                            $("#subMenuActivos").append(lista);
+                        break;
+                        case "2":
+                            var lista ='<li><a href="#">';
+                            lista += r[i]["nombre_menu"]+'</a></li>';
+                            $("#subMenuActivos").append(lista);
+                        break;
+                        case "3":
+                            var lista ='<li><a href="nuevoUsuario.php">';
+                            lista += r[i]["nombre_menu"]+'</a></li>';
+                            $("#subMenuUsuarioRol").append(lista);
+                        break;
+                        case "4":
+                            var lista ='<li><a href="#">';
+                            lista += r[i]["nombre_menu"]+'</a></li>';
+                            $("#subMenuUsuarioRol").append(lista);
+                        break;
+                        case "5":
+                            var lista ='<li><a href="ActivoResponsable.php">';
+                            lista += r[i]["nombre_menu"]+'</a></li>';
+                            $("#subMenuResp").append(lista);
+                        break;
+                        case "6":
+                            $("#listaReportes").show();
+                        break;
+                    }
+                   
                 }
                 
             },
