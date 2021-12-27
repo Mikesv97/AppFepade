@@ -1,4 +1,7 @@
 $(document).ready(function(){
+    //cuando carga la pag solicitamos menú según Rol del usuario
+    solicitarMenuRol(idRol);
+    //cuando hace click en cerrar sesión
     $("#cerrarLog").on("click",function(e){
         var dato = $("#nombreUser").text();
         e.preventDefault();
@@ -17,4 +20,23 @@ $(document).ready(function(){
             }
         });
     });
+
+    function solicitarMenuRol(idRol){
+        $.ajax({
+            url: "../Controladores/homeControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "solicitarMenu","idRol": idRol},
+            success: function (r) {
+                for(let i=0; i<r.length; i++){
+                    console.log(r[i]["nombre_menu"]);
+                }
+                
+            },
+            error: function (r) {
+                console.log(r.responseText);
+            }
+            
+        });
+    }
 });

@@ -45,7 +45,9 @@
                         </div>
                     </div>
                 </div>
-
+                <script>
+                    var idRol ="<?=$_SESSION["usuario"]["id_rol"]?>";
+                </script>
                 <ul class="navbar-nav header-right">
                     <li class="nav-item dropdown header-profile">
                         <span id="nombreUser"><?= $_SESSION["usuario"]["nombre"]; ?></span>

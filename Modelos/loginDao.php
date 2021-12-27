@@ -17,7 +17,7 @@ class LoginDao{
         //establecemos la coneccion
         $con = Conexion::conectar();
         //establecemos la consulta
-        $sql="select a.usuario_nuevo, a.usuario_clave , a.usuario_nombre, a.usuario_id, a.correo_electronico, b.rol_nombre
+        $sql="select a.usuario_nuevo, a.usuario_clave , a.usuario_nombre, a.usuario_id, a.correo_electronico, b.id_rol, b.rol_nombre
         from usuario a inner join roles b on a.id_rol = b.id_rol where  a.usuario_id=?";
         //preparamos la consulta
         $respuesta = $con->prepare($sql);
@@ -40,6 +40,7 @@ class LoginDao{
                         $_SESSION["usuario"]["id"]= $d["usuario_id"];
                         $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
                         $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
+                        $_SESSION["usuario"]["id_rol"]= $d["id_rol"];
                         $_SESSION["usuario"]["usuarioNuevo"]= $d["usuario_nuevo"];
 
                     }else  if($clave == $d["usuario_clave"]){
@@ -48,6 +49,7 @@ class LoginDao{
                         $_SESSION["usuario"]["id"]= $d["usuario_id"];
                         $_SESSION["usuario"]["correo"]= $d["correo_electronico"];
                         $_SESSION["usuario"]["rol"]= $d["rol_nombre"];
+                        $_SESSION["usuario"]["id_rol"]= $d["id_rol"];
                         $_SESSION["usuario"]["usuarioNuevo"]= $d["usuario_nuevo"];
                         
                     }else{
