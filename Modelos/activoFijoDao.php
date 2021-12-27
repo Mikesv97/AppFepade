@@ -254,7 +254,7 @@ class activoFijoDAO
 
     public function reporteTipoActivo($tipoActivo){
         $con = Conexion::conectar();
-        $sql ="select * from activo where Empresa_id =?";
+        $sql ="select * from activo";
         $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([$tipoActivo]);
