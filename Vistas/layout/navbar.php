@@ -94,6 +94,11 @@
                     <li><a href="ActivoResponsable.php">Registro de responsables</a></li>
                 </ul>
             </li>
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Tipo de activos</span></a>
+                <ul aria-expanded="false">
+                    <li><a href="tipoActivo.php">Registro tipo de activos</a></li>
+                </ul>
+            </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Reportes</span></a>
                 <ul aria-expanded="false">
                     <li><a href="reportes.php">De activo</a></li>

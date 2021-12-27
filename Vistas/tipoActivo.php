@@ -1,9 +1,13 @@
 <?php
 include('layout/header.php');
 include('layout/navbar.php');
+
+//variables que almacenan el nombre y id del usuario que inicia sesion
+$usuario = $_SESSION["usuario"]["nombre"];
+$idUSuario = $_SESSION["usuario"]["id"];
 ?>
 <link href="../recursos/css/nuevoUsuario.css" rel="stylesheet">
-<script src="../Recursos/JS/activoResponsable.js"></script>
+<script src="../Recursos/JS/"></script>
 <div class="content-body">
     <div class="container-fluid">
 
@@ -18,7 +22,7 @@ include('layout/navbar.php');
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Activo Responsable</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Tipo de activo</a></li>
                 </ol>
             </div>
         </div>
@@ -29,35 +33,28 @@ include('layout/navbar.php');
             <div class="col-sm-6 p-md-0">
                 <div class="text-center">
                     <img src="../recursos/multimedia/imagenes/logo.jpg" alt="logoFepade">
-                    <h1 class="text-gray-900 my-2 mb-4">Nuevo responsable</h1>
+                    <h1 class="text-gray-900 my-2 mb-4">Nuevo tipo de activo</h1>
                 </div>
 
 
                 <form id="frmResponsable" class="my-4">
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="txtNombreUser">ID *</label>
-                            <input type="text" class="form-control" id="ResponsableCodigo" name="ResponsableCodigo" readonly>
+                            <label for="txtNombreUser">ID*</label>
+                            <input type="text" class="form-control" id="tipoActivoId" name="tipoActivoId" placeholder="1" pattern=" 0+\.[0-9]*[1-9][0-9]*$" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="txtCorreoUsuario">Codigo Responsable *</label>
-                            <input type="text" class="form-control" id="CodigoResponsable" name="CodigoResponsable" placeholder="AEC123" maxlength="15" required>
+                            <label for="txtCorreoUsuario">Nombre de activo*</label>
+                            <input type="text" class="form-control" id="tipoActivoNombre" name="tipoActivoNombre" placeholder="PC,Laptop,etc..." maxlength="75" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="txtPassword1">Nombre de responsable *</label>
-                            <input type="text" class="form-control" id="NombreResponsable" name="NombreResponsable" placeholder="Nombre y Apellido" maxlength="200" required>
+                            <label for="txtPassword1">Usuario ID*</label>
+                            <input type="text" class="form-control" id="usuarioId" name="usuarioId" maxlength="15" value="<?= $idUSuario; ?>" readonly>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label class="text-label">Estado*</label>
-                            <select name="Estado" id="Estado" class="form-control">
-                                <option value="0">Activo</option>
-                                <option value="1">Inactivo</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btnLogin btn" id="btnInsertar" name="btnInsertar">Ingresar</button>
-                        <button type="button" class="btnLogin btn ml-2" id="btnModificar" name="btnModificar">Modificar</button>
-                        <button type="button" class="btnLogin btn ml-2" id="btnCancelar" name="btnCancelar">Cancelar</button>
                     </div>
+                    <button type="submit" class="btnLogin btn" id="btnInsertar" name="btnInsertar">Ingresar</button>
+                    <button type="button" class="btnLogin btn ml-2" id="btnModificar" name="btnModificar">Modificar</button>
+                    <button type="button" class="btnLogin btn ml-2" id="btnCancelar" name="btnCancelar">Cancelar</button>
                 </form>
             </div>
         </div>
@@ -71,9 +68,9 @@ include('layout/navbar.php');
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Codigo responsable</th>
-                                <th>Nombre de responsable</th>
-                                <th>Estado</th>
+                                <th>Nombre tipo activo</th>
+                                <th>Usuario ID</th>
+                                <th>Fecha</th>
                                 <th></th>
                                 <th></th>
                             </tr>
