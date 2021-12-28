@@ -433,7 +433,13 @@ jQuery(document).ready(function ($) {
                 data: null,
                 className: "center",
                 defaultContent: '<button type="button" class="btn btn-spotify" id="btnMostrar"><i class="fa fa-eye"></i></button>'
-                +'<button type="button" class="btn btn-facebook" id="btnEditar"><i class="fa fa-pencil-square-o"></i></button>'
+                    
+            },
+            {
+               
+                data: null,
+                className: "center",
+                defaultContent: '<button type="button" class="btn btn-facebook" id="btnEditar"><i class="fa fa-pencil-square-o"></i></button>'
                 +'<button type="button" class="btn btn-pinterest" id="btnBorrar"><i class="fa fa-trash-o"></i></button>'
                 
             },
@@ -462,7 +468,10 @@ jQuery(document).ready(function ($) {
         }
         
     });
-    
+
+    //validamos el rol para ocultar las columnas
+    alert(rol);
+    ocultarColumTableRol(rol);
 
     //CUANDO SE DA AL OJO DEL ACTIVO QUE SE QUIERE MOSTRAR
     $('#activoInformacion tbody').on('click', '#btnMostrar', function () {
@@ -1334,4 +1343,25 @@ jQuery(document).ready(function ($) {
         $('input[name=HoraEco]').attr('disabled', desabilitar);
     }
 
+    //función que oculta columnas según el rol que inicia sesión
+    function ocultarColumTableRol(rol){
+        var dt = $('#activoInformacion').DataTable();
+       
+        
+        //evaluamos por switch los diferentes roles del sistema
+        switch(rol){
+            case "admin":
+                //el admin puede editar y eliminar mostramos la columna
+                dt.columns(18).visible(true);
+            break;
+            case "Secretaria":
+                //la secretaria no puede editar ni eliminar, ocultamos columna
+                dt.columns(18).visible(false);
+            break;
+            case "Visitante":
+                //el visitante no puede hacer acciones crud, ocultamos columna
+                dt.columns(18).visible(false);
+            break;
+        }
+    }
 });

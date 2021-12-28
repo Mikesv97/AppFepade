@@ -7,6 +7,7 @@ jQuery(document).ready(function ($) {
     //QUITANDO READONLY AL INPUT DEL ID PARA QUE SE PUEDE ESCRIBIR
     $('#tipoActivoId').attr('readonly', false);
     $("#tblTipoActivo tr td.cargarEliminar").hide();
+    
     //MOSTRAR TABLA DE TIPO ACTIVO
     $('#tblTipoActivo').DataTable({
         "ajax": {
@@ -36,13 +37,11 @@ jQuery(document).ready(function ($) {
             {
                 data: null,
                 className: "center cargarModificar",
-                visible: true,
                 defaultContent: '<button id="btnEditar" type="button" class="btn btn-facebook btnEditarResp"><i class="fa fa-pencil-square-o"></i></button>'
             },
             {
                 data: null,
                 className: "center cargarEliminar",
-                visible: true,
                 defaultContent: '<button type="button" class="btn btn-pinterest btnEliminar" id="btnEliminarResp"><i class="fa fa-trash-o"></i></button>'
             },
         ],
