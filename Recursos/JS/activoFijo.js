@@ -1,5 +1,6 @@
 $.noConflict();
 jQuery(document).ready(function ($) {
+    var filasTabla = 0;
     //DESABILITANDO LOS INPUT DEPENDIENDO DEL TIPO DE ACTIVO QUE SE SELECCIONE, POR DEFECTO LOS DE COMPUTADORA Y LAPTOP ESTAN DISPONIBLES
     //SIEMPREU QUE SE CARAG LA PAGINA
     desabilitarInputPc(false, true);
@@ -349,6 +350,7 @@ jQuery(document).ready(function ($) {
 
     //EN LA CARGA DE LA PAGINA SE CARGA LA TABLA DE ACTIVO FIJO MEDIANTE 
     //AJAX CON DATATABLE
+  
     $('#activoInformacion').DataTable({
         "ajax": {
             "url": "../Controladores/activoFijoControlador.php",
@@ -427,16 +429,22 @@ jQuery(document).ready(function ($) {
                 className: "Activo_eliminado"
             },
             {
+               
                 data: null,
                 className: "center",
-                defaultContent: '<button type="button" class="btn btn-spotify btnMostrar" id="btnMostrar"><i class="fa fa-eye"></i></button> <button type="button" class="btn btn-facebook btnEditar" id="btnEditar"><i class="fa fa-pencil-square-o"></i></button> <button type="button" class="btn btn-pinterest btnBorrar" id="btnBorrar"><i class="fa fa-trash-o"></i></button> '
+                defaultContent: '<button type="button" class="btn btn-spotify" id="btnMostrar"><i class="fa fa-eye"></i></button>'
+                +'<button type="button" class="btn btn-facebook" id="btnEditar"><i class="fa fa-pencil-square-o"></i></button>'
+                +'<button type="button" class="btn btn-pinterest" id="btnBorrar"><i class="fa fa-trash-o"></i></button>'
+                
             },
             {
                 data: "Imagen",
                 "render": function (data) {
+                   
                     return '<img src="../Recursos/Multimedia/Imagenes/Upload/' + data + '" height="100px" width="100px" >';
                 }
             }
+            
 
         ],
         responsive: true,
@@ -452,7 +460,9 @@ jQuery(document).ready(function ($) {
                 "previous": "Anterior"
             }
         }
+        
     });
+    
 
     //CUANDO SE DA AL OJO DEL ACTIVO QUE SE QUIERE MOSTRAR
     $('#activoInformacion tbody').on('click', '#btnMostrar', function () {

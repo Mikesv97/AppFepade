@@ -131,25 +131,50 @@ $(document).ready(function(){
 
         switch(rol){
             case "Admin":
+                //botones de activo fijo
                 $("#btnIngresar").show();
                 $("#btnModificar").show();
                 $("#btnEliminar").show();
                 $("#btnModificarHostorico").show();
                 $("#btnEliminarHistorico").show();
+
+                //botones de tipo activo
+
+
+                //botones de usuario nuevo
+
+                //botones de responsable
+
             break;
             case "Secretaria":
+                //botones de activo fijo
                 $("#btnIngresar").show();
                 $("#btnModificar").hide();
                 $("#btnEliminar").hide();
+                $(".btnEditar").attr("disabled",true);
+                $("#btnBorrar").hide();
                 $("#btnModificarHostorico").hide();
                 $("#btnEliminarHistorico").hide();
             break;
             case "Visitante":
+                //botones de activo fijo
                 $("#btnIngresar").hide();
                 $("#btnModificar").hide();
                 $("#btnEliminar").hide();
+                $(".btnBorrar").hide();
                 $("#btnModificarHostorico").hide();
                 $("#btnEliminarHistorico").hide();
+                $(".btnEditar").attr("disabled",true);
+                
+                //botones de tipo activo
+                $("#btnInsertar").hide();
+                $("#btnModificar").hide();
+                $(".btnEliminar").hide();
+                $("#btnCancelar").hide();
+
+                //botones de usuario nuevo
+
+                //botones de responsable
             break;
         }
     }
