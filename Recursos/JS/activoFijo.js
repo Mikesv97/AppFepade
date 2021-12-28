@@ -470,7 +470,6 @@ jQuery(document).ready(function ($) {
     });
 
     //validamos el rol para ocultar las columnas
-    alert(rol);
     ocultarColumTableRol(rol);
 
     //CUANDO SE DA AL OJO DEL ACTIVO QUE SE QUIERE MOSTRAR
@@ -1343,24 +1342,24 @@ jQuery(document).ready(function ($) {
         $('input[name=HoraEco]').attr('disabled', desabilitar);
     }
 
-    //función que oculta columnas según el rol que inicia sesión
+    //función que oculta columnas de DataTable según el rol que inicia sesión
     function ocultarColumTableRol(rol){
-        var dt = $('#activoInformacion').DataTable();
+        var dtActivo = $('#activoInformacion').DataTable();
        
         
         //evaluamos por switch los diferentes roles del sistema
         switch(rol){
             case "admin":
                 //el admin puede editar y eliminar mostramos la columna
-                dt.columns(18).visible(true);
+                dtActivo.columns(18).visible(true);
             break;
             case "Secretaria":
                 //la secretaria no puede editar ni eliminar, ocultamos columna
-                dt.columns(18).visible(false);
+                dtActivo.columns(18).visible(false);
             break;
             case "Visitante":
                 //el visitante no puede hacer acciones crud, ocultamos columna
-                dt.columns(18).visible(false);
+                dtActivo.columns(18).visible(false);
             break;
         }
     }

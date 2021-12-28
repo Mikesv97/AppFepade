@@ -120,6 +120,8 @@ $(document).ready(function(){
         });
     }
 
+    //función que oculta el menú para mostrarlo mediante
+    //la función solicitarMenuRol() según el rol
     function ocultarMenu(){
         $("#listaActivos").hide();
         $("#listaUsuarioRoles").hide();
@@ -127,6 +129,7 @@ $(document).ready(function(){
         $("#listaReportes").hide();
     }
 
+    //función que oculta los btns según el rol
     function ocultarBtnsRol(rol){
 
         switch(rol){
@@ -161,15 +164,15 @@ $(document).ready(function(){
                 $("#btnIngresar").hide();
                 $("#btnModificar").hide();
                 $("#btnEliminar").hide();
-                $(".btnBorrar").hide();
+
+                //botones de hitorico activo
                 $("#btnModificarHostorico").hide();
                 $("#btnEliminarHistorico").hide();
-                $(".btnEditar").attr("disabled",true);
+                $("#btnInsertarHistorico").hide();
                 
                 //botones de tipo activo
                 $("#btnInsertar").hide();
                 $("#btnModificar").hide();
-                $(".btnEliminar").hide();
                 $("#btnCancelar").hide();
 
                 //botones de usuario nuevo

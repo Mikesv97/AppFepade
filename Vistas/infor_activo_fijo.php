@@ -536,7 +536,7 @@ $date = date('d-m-Y');
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-whatsapp" id="btnInsertar">Insertar</button>
+                    <button type="submit" class="btn btn-whatsapp" id="btnInsertarHistorico">Insertar</button>
                     <button type="button" class="btn btn-facebook" id="btnModificarHostorico">Modificar</button>
                     <button type="button" class="btn btn-pinterest" id="btnEliminarHistorico">Borrar</button>
                 </form>
