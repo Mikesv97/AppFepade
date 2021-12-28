@@ -46,4 +46,24 @@ class RolesDao{
             echo $error->getMessage();
         }
     }
+
+    public function obtenerAccRoles($idRol){     
+        //establecemos la coneccion
+        $this->con = Conexion::conectar();
+        //establecemos la consulta
+        $sql="select a.nombre_accion from acciones a inner join rol_acciones b on a.id_accion = b.id_accion
+        where b.id_rol = ?";
+        //preparamos la consulta
+        $respuesta =$this->con->prepare($sql);
+        try{
+            //ejecutamos la consulta y seteamos parametros
+            $respuesta->execute([$idRol]);
+
+            //retornamos el arreglo
+            return $respuesta->fetchAll(PDO::FETCH_ASSOC);
+           
+        }catch(PDOException $error){
+            echo $error->getMessage();
+        }
+    }
 }

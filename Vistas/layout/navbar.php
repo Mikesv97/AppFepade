@@ -47,6 +47,7 @@
                 </div>
                 <script>
                     var idRol ="<?=$_SESSION["usuario"]["id_rol"]?>";
+                    var rol ="<?=$_SESSION["usuario"]["rol"]?>";
                 </script>
                 <ul class="navbar-nav header-right">
                     <li class="nav-item dropdown header-profile">
@@ -81,17 +82,17 @@
     <div class="quixnav-scroll">
         <ul class="metismenu" id="menu">
             <li class="nav-label">Menu de navegación</li>
-            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Activos</span></a>
+            <li id="listaActivos"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Activos</span></a>
                 <ul aria-expanded="false" id="subMenuActivos">
                     
                 </ul>
             </li>
-            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Usuario y roles</span></a>
+            <li id="listaUsuarioRoles"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Usuario y roles</span></a>
                 <ul aria-expanded="false" id="subMenuUsuarioRol">
                     
                 </ul>
             </li>
-            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Responsables</span></a>
+            <li id="listaResponsable"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Responsables</span></a>
                 <ul aria-expanded="false" id="subMenuResp">
                     
                 </ul>

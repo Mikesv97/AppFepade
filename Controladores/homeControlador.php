@@ -13,6 +13,15 @@ if(isset($_POST["key"])){
                echo json_encode("ID Rol No Definido");
            }
         break;
+        case "soliAccRol":
+            $idRol = $_POST["idRol"];
+            $rDao= new RolesDao();
+            if(!empty($idRol)){
+                 echo json_encode($rDao->obtenerAccRoles($idRol));
+            }else{
+                echo json_encode("ID Rol No Definido");
+            }
+        break;
     }
 }
 ?>
