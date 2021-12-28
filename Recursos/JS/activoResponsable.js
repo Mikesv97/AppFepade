@@ -57,6 +57,8 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    //ocultamos columnas en base al rol
+    ocultarColumTableRol(rol);
     //CUANDO SE INSERTA UN NUEVO RESPONSABLE
     $('#frmResponsable').submit(function (e) {
 
@@ -282,5 +284,29 @@ jQuery(document).ready(function ($) {
         $('input[name=NombreResponsable]').val(NombreResponsable);
         $('#Estado option[value=' + Estado + ']').prop('selected', true);
     }
+
+        //función que oculta columnas de DataTable según el rol que inicia sesión
+        function ocultarColumTableRol(rol){
+            var dtResponsable = $('#tblResponsables').DataTable();
+               
+            //evaluamos por switch los diferentes roles del sistema
+            switch(rol){
+                case "admin":
+                    //el admin puede editar y eliminar mostramos la columna
+                    dtResponsable.columns(4).visible(true);
+                    dtResponsable.columns(5).visible(true);
+                break;
+                case "Secretaria":
+                    //la secretaria no puede editar ni eliminar, ocultamos columna
+                    dtResponsable.columns(4).visible(false);
+                    dtResponsable.columns(5).visible(false);
+                break;
+                case "Visitante":
+                    //el visitante no puede hacer acciones crud, ocultamos columna
+                    dtResponsable.columns(4).visible(false);
+                    dtResponsable.columns(5).visible(false);
+                break;
+            }
+        }
 
 });

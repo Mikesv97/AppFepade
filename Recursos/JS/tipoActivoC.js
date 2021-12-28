@@ -60,6 +60,8 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    //ocultamos columnas según rol
+    ocultarColumTableRol(rol);
 
     //CUANDO SE INSERTA UN NUEVO TIPO ACTIVO
     $('#frmTipoActivo').submit(function (e) {
@@ -290,5 +292,28 @@ jQuery(document).ready(function ($) {
         $('input[name=usuarioId]').val(usuarioId);
     }
     
-
+    //función que oculta columnas de DataTable según el rol que inicia sesión
+    function ocultarColumTableRol(rol){
+        var dtTipoActivo = $('#tblTipoActivo').DataTable();
+           
+        //evaluamos por switch los diferentes roles del sistema
+        switch(rol){
+            case "admin":
+                //el admin puede editar y eliminar mostramos la columna
+                dtTipoActivo.columns(4).visible(true);
+                dtTipoActivo.columns(5).visible(true);
+            break;
+            case "Secretaria":
+                //la secretaria no puede editar ni eliminar, ocultamos columna
+                dtTipoActivo.columns(4).visible(false);
+                dtTipoActivo.columns(5).visible(false);
+            break;
+            case "Visitante":
+                //el visitante no puede hacer acciones crud, ocultamos columna
+                dtTipoActivo.columns(4).visible(false);
+                dtTipoActivo.columns(5).visible(false);
+            break;
+        }
+    }
+    
 });

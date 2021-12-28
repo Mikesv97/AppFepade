@@ -27,8 +27,9 @@ $(document).ready(function(){
           })
     });
 
-      $("#frmNuevoUsuario")[0].reset();
-      $('#usuarios').DataTable().ajax.reload();
+    //ocultamos columnas en base al rol
+    ocultarColumTableRol(rol);
+    
     //cuando hace clic en el btn nuevo usuario
     $("#frmNuevoUsuario").submit(function(e){
         //cancelo submit del form
@@ -188,6 +189,7 @@ $(document).ready(function(){
                             showConfirmButton: false,
                             timer: 1500
                           })
+                        $("#frmNuevoUsuario")[0].reset();
                         $('#usuarios').DataTable().ajax.reload();
                     break;
                     
@@ -205,6 +207,30 @@ $(document).ready(function(){
         });          
     }
     
+    //función que oculta columnas de DataTable según el rol que inicia sesión
+    function ocultarColumTableRol(rol){
+        var dtUsuarios = $('#usuarios').DataTable();
+               
+        //evaluamos por switch los diferentes roles del sistema
+        switch(rol){
+            case "admin":
+                //el admin puede editar y eliminar mostramos la columna
+                dtUsuarios.columns(6).visible(true);
+            break;
+            case "Secretaria":
+                //la secretaria no puede editar ni eliminar, ocultamos columna
+                dtUsuarios.columns(6).visible(false);
+            break;
+            case "Visitante":
+                //el visitante no puede hacer acciones crud, ocultamos columna
+                dtUsuarios.columns(6).visible(false);
+            break;
+            }
+        }
 });
 
 //length
+/*
+    $("#frmNuevoUsuario")[0].reset();
+    $('#usuarios').DataTable().ajax.reload(); 
+*/

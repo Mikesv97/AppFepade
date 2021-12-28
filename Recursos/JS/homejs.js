@@ -176,6 +176,7 @@ $(document).ready(function(){
                 $("#btnCancelar").hide();
 
                 //botones de usuario nuevo
+                $("#btnNewUser").hide();
 
                 //botones de responsable
             break;
