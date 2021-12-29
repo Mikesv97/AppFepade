@@ -2,7 +2,7 @@ $(document).ready(function(){
     //ocultamos menú para mostrarlo según rol
     ocultarMenu();
     ocultarBtnsRol(rol);
-
+    $("#menuResp").click();
     //cuando carga la pag solicitamos menú según Rol del usuario
     solicitarMenuRol(idRol);
 

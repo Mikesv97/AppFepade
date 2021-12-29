@@ -17,7 +17,7 @@
     </a>
 
     <div class="nav-control">
-        <div class="hamburger">
+        <div id="menuResp"class="hamburger">
             <span class="line"></span><span class="line"></span><span class="line"></span>
         </div>
     </div>

@@ -4,7 +4,53 @@ $(document).ready(function ($) {
     cargarAcciones();
     cargarMenus();
 
+    /*Cuando se genere clic en el último elemento de la lista dentro del ID grupoCkbAcciones
+    desmarcamos los demás checkbox seleccionados, ya que el último elemento de la lista pertenece
+    a "Ninguna" lo que significa que el rol no podrá hacer ninguna acción en el sistema, porque así 
+    está en la tabla acciones en la BD, si esto se cambia, y la acción "ninguna" deja de ser
+    el último elemento, se debe ajustar al elemento que sea, ejm: first, second, etc. */
+    $("body").on("click","#grupoCkbAcciones li:last", function(){
 
+        /*como se hace clic en el último elemento de la lista que pertenece a ninguno obtenemos su valor */
+        var valNinguno = $(this).find(".ckbAcciones").val();
+         //evaluamos si el chekbox ninguno esta seleccionado
+        if($(this).find(".ckbAcciones").is(":checked")){
+            //si está seleccionado, recorremos todos los chekbox con clase .ckbAcciones 
+            $(".ckbAcciones:checkbox").each(function(index, elemento){
+            //preguntamos si el elemento actual del recorrido (0,1,2,etc)
+            //está seleccionado
+            if($(elemento).is(":checked")){
+                //si esta seleccionado, evaluamos que su valor no sea igual al del último elemento("ninguno")
+                if($(elemento).val() != valNinguno){
+                    //si su valor es difetente, quiere decir que el chekbox seleccionado
+                    //es diferente a ninguno, procedemos a desmarcarlo
+                    $(elemento).prop('checked',false);
+                }
+            }
+        });
+        } 
+
+    });
+
+    
+    //al submit evaluamos si los chekbox están seleccionados almenos 1 de cada tipo
+    $("#frmRoles").submit(function(e){
+        e.preventDefault();
+        var ckbAcc =$(".ckbAcciones:checkbox");
+        var countCkbAcc = parseInt(0);
+        var totalCkbAcc =  ckbAcc.length;
+        //verificamos si almenos un ckbx de acción está seleccionado
+        $(".ckbAcciones:checkbox").each(function(index, elemento){
+            if($(elemento).is(":checked")){
+                if(index != (totalCkbAcc-1)){
+                    console.log("se suma la accion "+$(elemento).next("label").text()+" con el valor: "+$(elemento).val());
+                }else{
+                    console.log("Solo se suma "+$(elemento).next("label").text()+" con el valor: "+$(elemento).val());
+                }
+            
+            }
+        });
+    });
 
     //función que solicita por ajax la carga de roles
     //y carga la tabla automáticamente con Ajax- DataTable
@@ -67,10 +113,9 @@ $(document).ready(function ($) {
                 var count = parseInt(0);
 
                for(let i=0; i<r.length; i++){
-                    var div ='<div class="checkContent">'
-                        +'<input type="checkbox" value="'+r[i]["id_accion"]+'" class="form-check-input" id="menuItem'+count+'">'
-                        +'<label class="form-check-label" for="menuItem'+count+'">'+r[i]["nombre_accion"]+'</label>'
-                        +'</div>';
+                    var div =
+                        '<li><input type="checkbox" value="'+r[i]["id_accion"]+'" class=" form-check-input checkContent ckbAcciones" id="accionItem'+count+'">'
+                        +'<label class="form-check-label checkContent" for="accionItem'+count+'">'+r[i]["nombre_accion"]+'</label></li>';
                     count++;
                     $("#grupoCkbAcciones").append(div);
                }
@@ -97,14 +142,12 @@ $(document).ready(function ($) {
             dataType: "json",
             data: { "key": "obtenerMenu"},
             success: function (r) {
-                console.log("longitud : "+r.length);
                 var count = parseInt(0);
 
                for(let i=0; i<r.length; i++){
-                    var div ='<div class="checkContent">'
-                        +'<input type="checkbox" valu="'+r[i]["id_menu"]+'" class="form-check-input" id="menuItem'+count+'">'
-                        +'<label class="form-check-label" for="menuItem'+count+'">'+r[i]["nombre_menu"]+'</label>'
-                        +'</div>';
+                    var div =
+                        '<li><input type="checkbox" value="'+r[i]["id_menu"]+'" class="form-check-input ckbMenu" id="menuItem'+count+'">'
+                        +'<label class="form-check-label" for="menuItem'+count+'">'+r[i]["nombre_menu"]+'</label></li>';
                     count++;
                     $("#grupoCkbMenu").append(div);
                }

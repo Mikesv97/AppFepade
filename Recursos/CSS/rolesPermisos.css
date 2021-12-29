@@ -1,11 +1,13 @@
 .checkContent{
-    display: inline-block;
-    width: 180px;
-    margin-top: 1em;
-    margin-right: 4em;
-    margin-bottom: 1em;
-}
 
+    margin-right: 4em;
+
+}
+#grupoCkbMenu, #grupoCkbAcciones{
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
 textarea {
     max-width: 480px !important;
     overflow: scroll;
