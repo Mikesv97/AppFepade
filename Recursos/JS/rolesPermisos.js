@@ -58,9 +58,27 @@ $(document).ready(function ($) {
         //obtenemos el array con las acciones seleccionadas para el rol
        var accionesArray = generarArrayAcciones();
 
-        for(let i=0; i<accionesArray.length; i++){
-            console.log("Seleccionaste el item #: "+i+" y su valor es: "+accionesArray[i]);
-        }
+       //obtenemos el array con el menú seleccionado para el rol
+       var menuArray = generarArrayMenu();
+
+       if(accionesArray ==0){
+        Swal.fire(
+            '¿Acciones para este rol?',
+            'Debes seleccionar al menos una acción para este rol',
+            'question'
+          )
+          $("#btnIngresar").blur();
+       }else if(menuArray ==0){
+        Swal.fire(
+            '¿Menú para este rol?',
+            'Debes seleccionar al menos un menú al que podrá acceder este rol',
+            'question'
+          )
+          $("#btnIngresar").blur();
+       }else{
+            //se envia ajax
+       }
+
     });
 
     //función que solicita por ajax la carga de roles
@@ -185,6 +203,8 @@ $(document).ready(function ($) {
         var accionesArray = [];
         //creamos contador para ir manejando el número de elementos seleccionados
         var count = parseInt(0);
+        //creamos una variable para controlar que se seleccione almenos un chekbox
+        var countSelectCkbx = parseInt(0);
         //recorremos y verificamos si almenos un ckbx de acción está seleccionado
         $(".ckbAcciones:checkbox").each(function(index, elemento){
             if($(elemento).is(":checked")){
@@ -195,15 +215,56 @@ $(document).ready(function ($) {
                     accionesArray[count] = $(elemento).val();
                     //incrementamos en 1 count
                     count++;
+                    //incrementamos en 1 la cantidad de ckbx seleccionados
+                    countSelectCkbx++;
                 }else{
                     //en caso sea el último simplemente se crea el array
-                    //con posición count (será 0 ya que si el último está seleccionado, los demás se desmarcan)
-                    accionesArray[count] = $(elemento).val();
+                    //con posición 0 (será 0 ya que si el último está seleccionado, los demás se desmarcan)
+                    accionesArray[0] = $(elemento).val();
+                    //incrementamos en 1 la cantidad de ckbx seleccionados
+                    countSelectCkbx++;
                 }
             
             }
         });
-        //retornamos el arreglo
-        return accionesArray;
+
+        if(countSelectCkbx ==0){
+            //si no se ha incrementado la cantidad de ckbx seleccionado
+            //retornamos 0 para pedir que seleccione almenos 1 opción
+            return 0;
+        }else{
+            //retornamos el arreglo
+            return accionesArray;
+        }
+
+    }
+
+    /* esta función recorre todos los chekbox con clase .ckbMenu
+    crea un array con cada valor seleccionado y lo retorna  */
+    function generarArrayMenu(){
+        //creamos el array
+        var menuArray = [];
+        //creamos contador para ir manejando el número de elementos seleccionados
+        var count = parseInt(0);
+        //creamos una variable para controlar que se seleccione almenos un chekbox
+        var countSelectCkbx = parseInt(0);
+        //recorremos y verificamos si almenos un ckbx de menu está seleccionado
+        $(".ckbMenu:checkbox").each(function(index, elemento){
+            if($(elemento).is(":checked")){
+                //si está seleccionado el elemento actual del recorrido, lo anexamos al array
+                menuArray[count] = $(elemento).val();
+                //incrementamos count y cantidad de chekbox seleccionados
+                count++;
+                countSelectCkbx++;
+            }
+        });
+
+        if(countSelectCkbx==0){
+            return 0;
+        }else{
+            //retornamos el arreglo
+            return menuArray;
+        }
+
     }
 });

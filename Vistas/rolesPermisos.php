@@ -48,7 +48,7 @@
 
                                 </ul>
                             </div>
-                            <button type="submit" class="btnLogin my-2 btn btn-primary" id="prueb">Ingresar</button>
+                            <button type="submit" class="btnLogin my-2 btn btn-primary" id="btnIngresar">Ingresar</button>
                          </form>
 
                          <!--TABLA ROLES-->
