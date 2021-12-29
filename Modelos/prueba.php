@@ -24,7 +24,7 @@ include_once "../Modelos/rolesDao.php";
 
 $rDao= new RolesDao();
 
-     echo json_encode($rDao->obtenerMenuRoles(1));
+     echo json_encode($rDao->obtenerRoles());
 
 
 ?>

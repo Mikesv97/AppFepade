@@ -58,7 +58,7 @@ $(document).ready(function(){
                             $("#listaUsuariosRoles").show();
                         break;
                         case "4":
-                            var lista ='<li><a href="#">';
+                            var lista ='<li><a href="rolesPermisos.php">';
                             lista += r[i]["nombre_menu"]+'</a></li>';
                             $("#subMenuUsuarioRol").append(lista);
                             $("#listaUsuarioRoles").show();

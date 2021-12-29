@@ -28,24 +28,24 @@
     <!--**********************************
         Scripts
     ***********************************-->
+    <!-- Datatable -->
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
+
     <!-- Required vendors -->
     <script src="../Recursos/vendor/global/global.min.js"></script>
     <script src="../Recursos/JS/scriptPlantilla/quixnav-init.js"></script>
     <script src="../Recursos/JS/scriptPlantilla/custom.min.js"></script>
-
-
     <script src="../Recursos/vendor/moment/moment.min.js"></script>
     <script src="../Recursos/vendor/pg-calendar/js/pignose.calendar.min.js"></script>
-
-    <script src="../Recursos/JS/dashboard/dashboard-2.js"></script>
-    
+    <script src="../Recursos/JS/dashboard/dashboard-2.js"></script> 
     <script src="../Recursos/vendor/jquery-steps/build/jquery.steps.min.js"></script>
     <script src="../Recursos/vendor/jquery-validation/jquery.validate.min.js"></script>
+
     <!-- Form validate init -->
     <script src="../Recursos/js/plugins-init/jquery.validate-init.js"></script>
-
-
-
     <!-- Form step init -->
     <script src="../Recursos/js/plugins-init/jquery-steps-init.js"></script>
 
