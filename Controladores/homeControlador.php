@@ -1,23 +1,24 @@
 <?php
 /* ESTE ES EL CONTROLADOR GENERAL QUE SE EJECUTA DESDE EL NAVABAR DEL SISTEMA PARA TODAS LAS VISTA EN GENERAL */
-include_once "../Modelos/rolesDao.php";
+include_once "../Modelos/rolMenuDao.php";
+include_once "../Modelos/rolAccionesDao.php";
 if(isset($_POST["key"])){
     $key=$_POST["key"];
     switch($key){
         case "solicitarMenu":
            $idRol = $_POST["idRol"];
-           $rDao= new RolesDao();
+           $rMenuDao= new RolMenuDao();
            if(!empty($idRol)){
-                echo json_encode($rDao->obtenerMenuRoles($idRol));
+                echo json_encode($rMenuDao->obtenerMenuRoles($idRol));
            }else{
                echo json_encode("ID Rol No Definido");
            }
         break;
         case "soliAccRol":
             $idRol = $_POST["idRol"];
-            $rDao= new RolesDao();
+            $rAccDao= new RolAccionesDao();
             if(!empty($idRol)){
-                 echo json_encode($rDao->obtenerAccRoles($idRol));
+                 echo json_encode($rAccDao->obtenerAccRoles($idRol));
             }else{
                 echo json_encode("ID Rol No Definido");
             }

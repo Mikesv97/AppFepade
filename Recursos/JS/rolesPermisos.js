@@ -1,7 +1,7 @@
 $.noConflict();
 jQuery(document).ready(function ($){
     //variables globales
-    
+    var error = null;
     $("#labelError").hide();
     cargarRoles();
     cargarAcciones();
@@ -54,8 +54,11 @@ jQuery(document).ready(function ($){
 
     /*al envento change del input nombre rol, validamos que no esté ingresado el rol*/
     $("#txtNombreRol").change(function(){
-        //obtenemos el valor ingresado
-        var rolIngresado = $(this).val();
+        //obtenemos el valor ingresado, convirtiendo a mayusculas el primer caracter
+        //para evitar que admin (ingresado por el usuario) != Admin (valor en BD)
+        //y mantener siempre la primer letra mayuscula.
+        var rolIngresado = convertirPrimerLetraMayus($(this).val());
+
         //llamamos a la función que envia ajax pidiendo roles
         //llamamos a la función y su parametro (el arreglo) que viene siendo el parametro callbalck 
         //definido cuando creamos la función
@@ -68,6 +71,7 @@ jQuery(document).ready(function ($){
                     $("#labelError").text("Rol ya ingresado en el sistema, por favor ingresa otro.");
                     $("#txtNombreRol").focus();
                     i=roles.length;
+                    error = rolIngresado;
                 }else{
                     //sino, ocultamos el error por si está visible
                     $("#labelError").hide();
@@ -78,10 +82,16 @@ jQuery(document).ready(function ($){
     });
 
     /*cuando presiona tecla ocultamos el error si está visible*/
-    $("#txtNombreRol").keypress(function(){
+    $("#txtNombreRol").keypress(function(e){
+        
         if($("#labelError").is(":visible")){
-            $("#labelError").hide();
+            
+            if($(this).val() != error){
+                $("#labelError").hide();
+            }
         }
+
+
     });
     //cuando se ejecuta el submit del form roles
     $("#frmRoles").submit(function(e){
@@ -118,7 +128,43 @@ jQuery(document).ready(function ($){
                 )
                 $("#btnIngresar").blur();
             }else{
+                    var nombreRol = $("#txtNombreRol").val();
+                    var descRol =  $("#txtDescRol").val();
+
                     //se envia ajax
+                    $.ajax({
+                        url:"../controladores/rolesPermisosControlador.php",
+                        method: "post",
+                        dataType: "json",
+                        data: { "key": "insertarRol",
+                        "nombreRol": nombreRol,
+                        "descRol": descRol, 
+                        "accionesArray": accionesArray,
+                        "menuArray": menuArray},
+                        success: function (r) {
+                            if(r == true){
+                                Swal.fire({
+                                    position: 'bottom-end',
+                                    icon: 'success',
+                                    title: 'Rol insertado con éxtio',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                  })
+                                $("#frmRoles")[0].reset();
+                                $('#tblRoles').DataTable().ajax.reload();
+                            }
+                        },
+                        error: function (r) {
+                            //console.log(r.responseText);
+                            Swal.fire({
+                                icon: 'error',
+                                title: "Problemas de comunicación",
+                                text: 'Parece tenemos problemas para comunicarnos con los servidores e insertar el rol'
+                                +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                                showConfirmButton: true
+                            })
+                        }
+                    });   
             }
         }
        
@@ -346,5 +392,15 @@ jQuery(document).ready(function ($){
         });
         
       
+    }
+
+    //esta función obtiene una cadena string, convierte su primer letra a mayuscula
+    //y retorna el nuevo valor
+    function convertirPrimerLetraMayus(valor){
+        var primerCaracter = valor.charAt().toUpperCase();
+        var restoDeLaCadena = valor.substring(1, valor.length);
+        var rolIngresado = primerCaracter.concat(restoDeLaCadena);
+
+        return rolIngresado;
     }
 });

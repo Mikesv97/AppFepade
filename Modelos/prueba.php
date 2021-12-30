@@ -7,24 +7,14 @@ include_once '../Modelos/activoEspecificacionDao.php';
 include_once '../Modelos/historialActivoDao.php';
 include_once "reportes.php";
 include_once "../Modelos/rolesDao.php";
-// $activoEspe = new activoEspecificacionDao();
-// $activoHist = new historialActivoDao();
-// // // // $us = new LoginDao();
-// $nuser = new UsuarioNuevoDao();
+include_once "../Modelos/rolAccionesDao.php";
 
-// $l = new LoginDao();
+$r = new RolAccionesDao();
+$a = new RolAcciones();
 
-// // echo $l->eliminarEstadoNuevoUser("adriana",0);
-// $t = new ActivoFijoDao();
-// $a = $t->reporteTipoActivo(1);
-// $fecha = Reportes::obtenerFecha();
-// $hora=Reportes::obtenerHora();
-// $tiempo= str_replace(":","-",$hora);
-// Reportes::reporteTipoActivo($a,$fecha,$tiempo);
+$a->setIdRol(7);
+$a->setIdAccion(2);
 
-$rDao= new RolesDao();
-
-     echo json_encode($rDao->obtenerRoles());
-
+echo json_encode($r->insertarRolAcciones($a));
 
 ?>
