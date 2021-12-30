@@ -91,4 +91,58 @@ class RolesDao{
         }
     }
 
+    public function editarRol($objeto){
+        $r = new Roles();
+        $r = $objeto;
+        //establecemos la coneccion
+        $con = Conexion::conectar();
+        //establecemos la consulta
+        $sql="update roles set rol_nombre =?, rol_descripcion=? where id_rol =?";
+        //preparamos la consulta
+        $respuesta = $con->prepare($sql);
+        try{
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([
+                $r->getNombreRol(),
+                $r->getDescripcionRol(),
+                $r->getIdRol()
+            ]);
+            //evaluamos cuantas filas fueron afectadas
+            if($respuesta->rowCount() > 0){
+                //cerramos conexion
+               Conexion::desconectar($respuesta);
+                //si se afectaron más de 0
+                return true;                 
+            }else{
+                return false;
+            }
+        }catch(PDOException $error){
+            echo $error->getMessage();
+        }
+    }
+
+    public function eliminarRol($idRol){
+        //establecemos la coneccion
+        $con = Conexion::conectar();
+        //establecemos la consulta
+        $sql="delete from roles where id_rol =?";
+        //preparamos la consulta
+        $respuesta = $con->prepare($sql);
+        try{
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([$idRol]);
+            //evaluamos cuantas filas fueron afectadas
+            if($respuesta->rowCount() > 0){
+                //cerramos conexion
+               Conexion::desconectar($respuesta);
+                //si se afectaron más de 0
+                return true;                 
+            }else{
+                return false;
+            }
+        }catch(PDOException $error){
+            echo $error->getMessage();
+        }
+    }
+
 }

@@ -93,11 +93,132 @@ if(isset($_POST["key"])){
             }
            
         break;
+        case "editarRol":
+            //variables de objetos y auxiliares
+            $rDao = new RolesDao();
+            $rAccRolDao = new RolAccionesDao();
+            $rMenuDao = new RolMenuDao();
+            $countRolAccInser =0;
+            $countRolMenuInser =0;
+            
+            //obtenemos obj rol
+            $oRol= cargarObjetoRol($_POST["idRolTbl"],$_POST["nombreRol"],$_POST["descRol"]);
+            //actualizamos el rol
+            $editRol = $rDao -> editarRol($oRol);
+
+            //si el edit da verdadero, insertamos las acciones de este nuevo rol
+            if($editRol){
+                //obtenemos el id del rol a editar
+                $idRolEdit = $_POST["idRolTbl"];
+                //eliminamos las acciones actuales del rol para insertar las nuevas
+                $delAccRol = $rAccRolDao->eliminarRolAcciones($idRolEdit);
+
+                //evaluamos si fue exitoso
+                if($delAccRol){
+                    //obtenemos obj acciones
+                    $accionesArray = $_POST["accionesArray"];
+
+                    //recorremos el objeto para insertar cada valor en tabla rol_accion
+                    for ($i=0; $i <count($accionesArray) ; $i++) { 
+                        //cargamos obj rolAcciones
+                        $oAcc = cargarObjetoRolAcciones($idRolEdit, $accionesArray[$i]);
+                        //insertamos la accion index actual (0,1,2 etc)
+                        $insertRolAcc= $rAccRolDao->insertarRolAcciones($oAcc);
+                        //si fue exitoso
+                        if($insertRolAcc){
+                            //incrementamos el contador de insert hechos
+                            $countRolAccInser++;
+                        }else{
+                            //por cualquier fallo en el insert se imprime el error
+                            echo json_encode($insertRolAcc);
+                            //y se detiene para que sea revisado
+                            die;
+                        }
+                    }
+
+                    //evaluamos que la cant de insertAcc sea igual al tamaño de los elementos del arrayAcc
+                    if($countRolAccInser == count($accionesArray)){
+                        //si es igual es que todos los insert se realizaron
+
+                        //obtenemos obj menu
+                        $menuArray = $_POST["menuArray"];
+                        
+                        //eliminamos el menu actual del rol, para insertar el nuevo
+                        $delMenuRol= $rMenuDao->eliminarRolMenu($idRolEdit);
+
+                        //evaluamos el exito o fallo
+                        if($delMenuRol){
+                            //recorremos el objeto para insertar cada valor en tabla rol_menu
+                            for ($j=0; $j <count($menuArray) ; $j++) { 
+                                //cargamos obj rolMenu
+                                $oMenu = cargarObjetoRolMenu($idRolEdit,$menuArray[$j]);
+
+                                //insertamos el menu index actual (0,1,2 etc)
+                                $insertRolMenu=$rMenuDao ->insertarRolMenu($oMenu);
+                                //si fue exitoso
+                                if($insertRolMenu){
+                                    //incrementamos el contador de insert hechos
+                                    $countRolMenuInser++;
+                                }else{
+                                    //por cualquier fallo en el insert se imprime el error
+                                    echo json_encode($insertRolMenu);
+                                    //y se detiene para que sea revisado
+                                    die;
+                                }
+                                
+                            }
+                        
+                            if($countRolMenuInser == count($menuArray)){
+                                echo json_encode(true);
+                            }
+                        }else{
+                            //imprimimos cualquier error
+                            echo json_encode($delMenuRol);
+                        }
+                    }
+
+                }else{
+                    //caso que no fue exitoso mandamos cualquier error
+                    echo json_encode($delAccRol);
+                }    
+            }else{
+                //caso contrario mandamos el error
+                echo json_encode($editRol);
+            }
+            
+        break;
+        case "eliminarRol":
+            $rDao = new RolesDao();
+            $idRol = $_POST["idRolTbl"];
+            $rAccRolDao = new RolAccionesDao();
+            $rMenuDao = new RolMenuDao();
+
+            //eliminamos las acciones del rol para evitar conflictos por FK_Rol
+            $delAccRol = $rAccRolDao->eliminarRolAcciones($idRol);
+            if($delAccRol){
+                //eliminamos el menu del rol para evitar conflictos por FK_Rol
+                $delMenuRol= $rMenuDao->eliminarRolMenu($idRol);
+                if($delMenuRol){
+                    $delRol = $rDao->eliminarRol($idRol);
+                    if($delRol){
+                        echo json_encode(true);
+                    }else{
+                        echo json_encode($delRol);
+                    }
+                }else{
+                    echo json_encode($delMenuRol);
+                }
+            }else{
+                echo json_encode($delAccRol);
+            }
+            
+        break;
     }
 }
 
-function cargarObjetoRol($nombre,$desc){
+function cargarObjetoRol($idRol,$nombre,$desc){
     $objRol = new Roles();
+    $objRol ->setIdRol($idRol);
     $objRol->setNombreROl($nombre);
     $objRol->setDescripcionRol($desc);
 

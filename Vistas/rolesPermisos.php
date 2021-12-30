@@ -31,6 +31,7 @@
                         <h2 class="text-center mb-3">Roles del sistema</h2>
                          <form id="frmRoles">
                             <div class="form-group">
+                                <input type="number" id="txtId" hidden>
                                 <label for="exampleInputEmail1"><strong>Nombre del rol</strong></label>
                                 <input type="text" class="form-control" id="txtNombreRol" maxlength="12" name="txtNombreRol"  placeholder="Nombre del rol max (12 caracteres)" required>
                             </div>
@@ -52,6 +53,7 @@
                                 </ul>
                             </div>
                             <button type="submit" class="btnLogin my-4 btn btn-primary" id="btnIngresar">Ingresar</button>
+                            <button type="button" class="btnLogin my-4 btn btn-primary" id="btnGuardar">Guardar</button>
                          </form>
 
                          <!--TABLA ROLES-->

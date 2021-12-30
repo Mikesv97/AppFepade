@@ -9,12 +9,12 @@ include_once "reportes.php";
 include_once "../Modelos/rolesDao.php";
 include_once "../Modelos/rolAccionesDao.php";
 
-$r = new RolAccionesDao();
-$a = new RolAcciones();
+$rDao = new RolesDao();
+$rAccRolDao = new RolAccionesDao();
+$rMenuDao = new RolMenuDao();
 
-$a->setIdRol(7);
-$a->setIdAccion(2);
+$oRol = new Roles();
 
-echo json_encode($r->insertarRolAcciones($a));
+echo json_encode($rDao -> editarRol($oRol));
 
 ?>

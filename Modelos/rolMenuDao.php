@@ -59,4 +59,32 @@ class RolMenuDao{
         }
     }
 
+    public function eliminarRolMenu($idRol){
+        $ra = new RolMenu();
+        $ra ->setIdRol($idRol);
+        //establecemos la coneccion
+        $con = Conexion::conectar();
+        //establecemos la consulta
+        $sql="delete from rol_menu where id_rol = ?";
+        //preparamos la consulta
+        $respuesta = $con->prepare($sql);
+        try{
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([
+                $ra->getIdRol()
+            ]);
+            //evaluamos cuantas filas fueron afectadas
+            if($respuesta->rowCount() > 0){
+                //cerramos conexion
+               Conexion::desconectar($respuesta);
+                //si se afectaron más de 0
+                return true;                 
+            }else{
+                return false;
+            }
+        }catch(PDOException $error){
+            echo $error->getMessage();
+        }
+    }
+
 }

@@ -2,7 +2,10 @@ $.noConflict();
 jQuery(document).ready(function ($){
     //variables globales
     var error = null;
+    var editarOn = false;
+    var rolEdit= null;
     $("#labelError").hide();
+    $("#btnGuardar").prop("disabled", true);
     cargarRoles();
     cargarAcciones();
     cargarMenus();
@@ -59,25 +62,49 @@ jQuery(document).ready(function ($){
         //y mantener siempre la primer letra mayuscula.
         var rolIngresado = convertirPrimerLetraMayus($(this).val());
 
-        //llamamos a la función que envia ajax pidiendo roles
-        //llamamos a la función y su parametro (el arreglo) que viene siendo el parametro callbalck 
-        //definido cuando creamos la función
-        validarRolNoRegistrado( function(roles){
-            //recorremos el arreglo y buscamos si el valor ingresado ya existe
-            for(let i=0; i<roles.length; i++){
-                if(roles[i]==rolIngresado){
-                    //si existe, lanzamos error
-                    $("#labelError").show();
-                    $("#labelError").text("Rol ya ingresado en el sistema, por favor ingresa otro.");
-                    $("#txtNombreRol").focus();
-                    i=roles.length;
-                    error = rolIngresado;
-                }else{
-                    //sino, ocultamos el error por si está visible
-                    $("#labelError").hide();
-                }
+        if(editarOn == true){
+            if(rolIngresado != rolEdit){
+                //llamamos a la función que envia ajax pidiendo roles
+                //llamamos a la función y su parametro (el arreglo) que viene siendo el parametro callbalck 
+                //definido cuando creamos la función
+                validarRolNoRegistrado(function(roles){
+                    //recorremos el arreglo y buscamos si el valor ingresado ya existe
+                    for(let i=0; i<roles.length; i++){
+                        if(roles[i]==rolIngresado){
+                            //si existe, lanzamos error
+                            $("#labelError").show();
+                            $("#labelError").text("Rol puta ingresado en el sistema, por favor ingresa otro.");
+                            $("#txtNombreRol").focus();
+                            i=roles.length;
+                            error = rolIngresado;
+                        }else{
+                            //sino, ocultamos el error por si está visible
+                            $("#labelError").hide();
+                        }
+                    }
+                });
             }
-        });
+        }else{
+            //llamamos a la función que envia ajax pidiendo roles
+            //llamamos a la función y su parametro (el arreglo) que viene siendo el parametro callbalck 
+            //definido cuando creamos la función
+            validarRolNoRegistrado( function(roles){
+                //recorremos el arreglo y buscamos si el valor ingresado ya existe
+                for(let i=0; i<roles.length; i++){
+                    if(roles[i]==rolIngresado){
+                        //si existe, lanzamos error
+                        $("#labelError").show();
+                        $("#labelError").text("Rol ya ingresado en el sistema, por favor ingresa otro.");
+                        $("#txtNombreRol").focus();
+                        i=roles.length;
+                        error = rolIngresado;
+                    }else{
+                        //sino, ocultamos el error por si está visible
+                        $("#labelError").hide();
+                    }
+                }
+            });
+        }
         
     });
 
@@ -174,10 +201,14 @@ jQuery(document).ready(function ($){
 
     //al click del ojo es para ver toda la información del rol
     $("#tblRoles tbody").on("click","#btnMostrar", function(){
-       //desabilitamos controles y mandamos al inicio del form al usuario
+       //deshabilitamos controles y mandamos al inicio del form al usuario
        $(location).attr('href', '#inicioForm');
        //deshabilitamos los controles
        disabledControles(true);
+       $("#btnIngresar").prop("disabled", true);
+       $("#btnGuardar").prop("disabled", true);
+      
+       
        //cargamos información de la tabla donde se hizo click
        var table = $('#tblRoles').DataTable();
        var data = table.row(this).data();
@@ -192,11 +223,186 @@ jQuery(document).ready(function ($){
        
     });
 
+    //al click del btn editar información de la fila en la tabla roles
+    $("#tblRoles tbody").on("click", "#btnEditar", function(){
+        //activamos bandera de que se quiere modificar para lo de el evento change del input nombre rol
+        editarOn = true;
+
+        //habilitamos controles y mandamos al inicio del form al usuario
+       $(location).attr('href', '#inicioForm');
+       //habilitamos los controles
+       disabledControles(false);
+       $("#btnIngresar").prop("disabled", true);
+       $("#btnGuardar").prop("disabled", false);
+      
+       
+       //cargamos información de la tabla donde se hizo click
+       var table = $('#tblRoles').DataTable();
+       var data = table.row(this).data();
+       
+       //pasamos el campo ID de la fila a la función que se encarga de poner cheque
+       //a los checkbox de menu según tenga asignado el rol seleccionado 
+       cargarCheckBoxMenuRol(data["id_rol"]);
+       cargarChekBoxAccionesRol(data["id_rol"]);
+       
+       $("#txtNombreRol").val(data["rol_nombre"]);
+       rolEdit = data["rol_nombre"];
+       $("#txtDescRol").val(data["rol_descripcion"]);
+       $("#txtId").val(data["id_rol"]);
+    });
+
+    //al click del btnGuardar enviamos información al controlador para actualizar en la BD
+    $("#btnGuardar").on("click", function(){
+        //preguntamos si está seguro de la acción a realizar
+        Swal.fire({
+            title: '¿Actualizar la información?',
+            text: "¿Seguro/a de ingresar esta información al sistema?, los cambios no serán reversibles"
+            +" una vez ingresados, por favor confirma la acción.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, Actualizarla!'
+          }).then((result) => {
+              ///si está seguro de hacerlo evaluamos la información
+            if (result.isConfirmed) {
+                if($("#labelError").is(":visible")){
+                    //si hay errores lanzamos alerta
+                    Swal.fire(
+                        'Errores Detectados',
+                        'Verifica que la información ingresada sea correcta y no tenga errores.',
+                        'info'
+                      )
+                      
+                }else{
+                    //obtenemos el array con las acciones seleccionadas para el rol
+                    var accionesArray = generarArrayAcciones();
+        
+                    //obtenemos el array con el menú seleccionado para el rol
+                    var menuArray = generarArrayMenu();
+        
+                    if(accionesArray ==0){
+                        Swal.fire(
+                            '¿Acciones para este rol?',
+                            'Debes seleccionar al menos una acción para este rol',
+                            'question'
+                        )
+                        $("#btnIngresar").blur();
+                    }else if(menuArray ==0){
+                        Swal.fire(
+                            '¿Menú para este rol?',
+                            'Debes seleccionar al menos un menú al que podrá acceder este rol',
+                            'question'
+                        )
+                        $("#btnIngresar").blur();
+                    }else{
+                            var nombreRol = $("#txtNombreRol").val();
+                            var descRol =  $("#txtDescRol").val();
+                            var idRolTbl = $("#txtId").val();
+                            //se envia ajax
+                            $.ajax({
+                                url:"../controladores/rolesPermisosControlador.php",
+                                method: "post",
+                                dataType: "json",
+                                data: { "key": "editarRol",
+                                "idRolTbl": idRolTbl,
+                                "nombreRol": nombreRol,
+                                "descRol": descRol, 
+                                "accionesArray": accionesArray,
+                                "menuArray": menuArray},
+                                success: function (r) {
+                                    console.log(r);
+                                    if(r == true){
+                                        Swal.fire({
+                                            position: 'bottom-end',
+                                            icon: 'success',
+                                            title: 'Rol editado con éxtio',
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                          })
+                                        $("#frmRoles")[0].reset();
+                                        $('#tblRoles').DataTable().ajax.reload();
+                                    }
+                                },
+                                error: function (r) {
+                                    console.log(r.responseText);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: "Problemas de comunicación",
+                                        text: 'Parece tenemos problemas para comunicarnos con los servidores y editar el rol'
+                                        +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                                        showConfirmButton: true
+                                    })
+                            }
+                        });   
+                    }
+                }
+
+            }
+          })
+    });
+
+    //al click del btn eliminar información de la fila en la tabla roles
+    $("#tblRoles tbody").on("click", "#btnEliminar", function(){
+        //preguntamos si está seguro
+        Swal.fire({
+            title: '¿Eliminar el registro?',
+            text: "¿Seguro/a de eliminar el registro?, la acción no será reversible, por facor"
+            +"confirma la acción.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, Eliminarlo!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                //cargamos información  de la tabla donde se hizo click
+                var table = $('#tblRoles').DataTable();
+                var data = table.row(this).data();
+                var idRolTbl = data["id_rol"];
+                //enviamos ajax
+                $.ajax({
+                    url:"../controladores/rolesPermisosControlador.php",
+                    method: "post",
+                    dataType: "json",
+                    data: { "key": "eliminarRol",
+                    "idRolTbl": idRolTbl},
+                    success: function (r) {
+                        console.log(r);
+                        if(r == true){
+                            Swal.fire({
+                                position: 'bottom-end',
+                                icon: 'success',
+                                title: 'Rol eliminado con éxtio',
+                                showConfirmButton: false,
+                                timer: 1500
+                              })
+                            $("#frmRoles")[0].reset();
+                            $('#tblRoles').DataTable().ajax.reload();
+                        }
+                    },
+                    error: function (r) {
+                        console.log(r.responseText);
+                        Swal.fire({
+                            icon: 'error',
+                            title: "Problemas de comunicación",
+                            text: 'Parece tenemos problemas para comunicarnos con los servidores y eliminar el rol'
+                            +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                            showConfirmButton: true
+                        })
+                    }
+                });  
+            }
+          })
+
+
+    });
+    
+
     function disabledControles(boolean){
 
         $("#txtNombreRol").prop("disabled", boolean);
         $("#txtDescRol").prop("disabled", boolean);
-        $("#btnIngresar").prop("disabled", boolean);
         $(".ckbAcciones:checkbox").prop("disabled",boolean);
         $(".ckbMenu:checkbox").prop("disabled",boolean);
     }
