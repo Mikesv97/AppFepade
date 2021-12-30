@@ -1356,7 +1356,11 @@ jQuery(document).ready(function ($) {
     //BOTON PARA LIMPIAR EL FORMULARIO Y PODER INGRESAR UN NUEVO HISTORIAL
     $('#btnNuevoHistorico').on('click', function (){
         //DEJANDO EL FORMULARIO DE HISTORICO EN LIMPIO
-        $("#formHistorico")[0].reset();
+        $('input[name=idArea]').val('');
+        $('#Estructura3IdH option[value=' + 1 + ']').prop('selected', true);
+        $('input[name=idResponsable]').val('');
+        $('#ResponsableIdH option[value=' + 1 + ']').prop('selected', true);        
+        $('textarea[name=HistoricoComentarioH]').val('');
 
         //HABILITANDO LOS INPUT CUANDO EL USUARIO QUIERE EDITAR EL HISTORIAL
         blockControlHistorial(false);
