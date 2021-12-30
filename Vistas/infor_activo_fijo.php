@@ -186,6 +186,7 @@ $date = date('d-m-Y');
                                                 }
                                                 ?>
                                             </select>
+                                            <p class="medium p-1 alertError" role="alert" id="labelError2"></p>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Descripción de activo*</label>
@@ -360,6 +361,7 @@ $date = date('d-m-Y');
                             <button type="submit" class="btn btn-tumblr my-4" name="btnInsertar" id="btnInsertar">Insertar</button>
                             <button type="button" class="btn btn-tumblr my-4" name="btnModificar" id="btnModificar">Modificar</button>
                             <button type="button" class="btn btn-tumblr my-4" name="btnEliminar" id="btnEliminar">Eliminar</button>
+                            <button type="button" class="btn btn-tumblr my-4" name="btnCancelar" id="btnCancelar">Cancelar</button>
                         </form>
                     </div>
                 </div>
@@ -376,12 +378,12 @@ $date = date('d-m-Y');
                                     <tr>
                                         <th>Activo id</th>
                                         <th>Referencia</th>
-                                        <th>Codigo contabilidad</th>
-                                        <th>Codigo proyecto</th>
-                                        <th>Numero de serie</th>
+                                        <th>Código contabilidad</th>
+                                        <th>Código proyecto</th>
+                                        <th>Número de serie</th>
                                         <th>Fecha adquisición</th>
                                         <th>Fecha de caducación</th>
-                                        <th>Numero de factura</th>
+                                        <th>Número de factura</th>
                                         <th>Tipo de activo</th>
                                         <th>IP</th>
                                         <th>Nombre de usuario</th>
@@ -403,12 +405,12 @@ $date = date('d-m-Y');
                                     <tr>
                                         <th>Activo id</th>
                                         <th>Referencia</th>
-                                        <th>Codigo contabilidad</th>
-                                        <th>Codigo proyecto</th>
-                                        <th>Numero de serie</th>
+                                        <th>Código contabilidad</th>
+                                        <th>Código proyecto</th>
+                                        <th>Número de serie</th>
                                         <th>Fecha adquisición</th>
                                         <th>Fecha de caducación</th>
-                                        <th>Numero de factura</th>
+                                        <th>Número de factura</th>
                                         <th>Tipo de activo</th>
                                         <th>IP</th>
                                         <th>Nombre de usuario</th>
@@ -437,6 +439,7 @@ $date = date('d-m-Y');
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
+                <a href="" id="inicioFormHistorial"></a>
                 <h5 class="modal-title">Historial de activo fijo</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
@@ -462,7 +465,7 @@ $date = date('d-m-Y');
                                 <div class="form-group col-md-7">
                                     <textarea class="form-control descripcionActivo" name="ActivoDescripcionH" rows="3" maxlength="1000" required readonly></textarea>
                                 </div>
-                                <label class="label label-danger col-md-12">Area</label>
+                                <label class="label label-danger col-md-12">Área</label>
                                 <div class="form-group col-md-3">
                                     <input type="text" class="form-control" name="idArea" id="idArea" readonly>
                                 </div>
@@ -515,7 +518,9 @@ $date = date('d-m-Y');
                                                     <th>Nombre de área</th>
                                                     <th>Área</th>
                                                     <th>Responsable</th>
-                                                    <th>Boton</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -527,7 +532,9 @@ $date = date('d-m-Y');
                                                     <th>Nombre de área</th>
                                                     <th>Área</th>
                                                     <th>Responsable</th>
-                                                    <th>Boton</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -536,13 +543,13 @@ $date = date('d-m-Y');
                             </div>
                         </div>
                     </div>
+                    <button type="button" class="btn btn-snapchat" id="btnNuevoHistorico">Nuevo Historial</button>
                     <button type="submit" class="btn btn-whatsapp" id="btnInsertarHistorico">Insertar</button>
                     <button type="button" class="btn btn-facebook" id="btnModificarHostorico">Modificar</button>
-                    <button type="button" class="btn btn-pinterest" id="btnEliminarHistorico">Borrar</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-google-plus" id="btnCerrar" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-google-plus" id="btnCerrar" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

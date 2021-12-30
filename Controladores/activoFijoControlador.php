@@ -306,6 +306,7 @@ if ($_POST) {
                         $ObjActualizarEstActivo = setObjActualizarEstActivo(
                             $_POST['activoInacH'],
                             $_POST['ResponsableIdH'],
+                            $_POST['Estructura3IdH'],
                             $_POST['guardarIdActivo2']
                         );
 
@@ -337,7 +338,7 @@ if ($_POST) {
                     $_POST['historicoId']
                 );
 
-                //SI ES LA ULTIMA LINEA DE LA TABLA HISTORICO ES LA QUE SE SELECCIONO SE DEBE ACTUALIZAR EL ESTADO EN LA TABLA ACTIVO
+                //SI ES LA PRIMERA LINEA DE LA TABLA HISTORICO ES LA QUE SE SELECCIONO SE DEBE ACTUALIZAR EL ESTADO EN LA TABLA ACTIVO
                 if ($_POST['ultimoLinea'] == 1) {
                     //EVALUAMOS LOS VALORES QUE VIENEN SETEADOS
                     if ($activoHist->modificarHistorial($ObjModificarHistorico) == 0) {
@@ -348,6 +349,7 @@ if ($_POST) {
                         $ObjActualizarEstActivo = setObjActualizarEstActivo(
                             $_POST['activoInacH'],
                             $_POST['ResponsableIdH'],
+                            $_POST['Estructura3IdH'],
                             $_POST['guardarIdActivo2']
                         );
                         //EVALUAMOS QUE LOS DATOS DE ESTADO Y ACTIVOID SEAN DIFERENTE A 0
@@ -667,12 +669,14 @@ function setObjHistorico(
 function setObjActualizarEstActivo(
     $Estado,
     $ResponsableId,
+    $Estructura3Id,
     $ActivoId
 ) {
     $ObjActualizarEstActivo = new Activo_Fijo();
     $ObjActualizarEstActivo->setEstado($Estado);
     $ObjActualizarEstActivo->setResponsableCodigo($ResponsableId);
     $ObjActualizarEstActivo->setActivoId($ActivoId);
+    $ObjActualizarEstActivo->setEstructura3Id($Estructura3Id);
     return $ObjActualizarEstActivo;
 }
 

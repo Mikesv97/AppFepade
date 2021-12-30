@@ -65,6 +65,8 @@ jQuery(document).ready(function ($) {
         $('#btnInsertar').attr('disabled', false);
         //DESABILITANDO BOTON MODIFICAR
         $('#btnModificar').attr('disabled', true);
+        //DESABILITANDO BOTON ELIMINAR
+        $('#btnEliminar').attr('disabled', true);
         //DESABILITANDO BOTON TRASLADAR ACTIVO
         $('#btnMostrarHistorial').attr('disabled', true);
         //LIMPIANDO EL FORMUARLIO SIEMPRE QUE DEN CLICK EN INGRESAR ACTIVO FIJO
@@ -76,6 +78,11 @@ jQuery(document).ready(function ($) {
         $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
         //AGREGANDO ESTILO AL INPUT CODIGO AUTOMATICO
         $('input[name=ActivoId]').addClass('desabilitado');
+        //MUESTRA EL SELECT PARA QUE EL USUARIO CAMBIE EL AREA DESDE EL FORMUALRIO ACTIVO
+        $("#Estructura3Id").show();
+        //OCULTANDO TEXTO QUE EL AREA DEBE SER CAMBIADA DESDE EL HISTORIAL DE ACTIVO 
+        $("#labelError2").hide();
+        $("#labelError2").text("El area debe ser cambiada en el historial del activo.");
 
         //PARA CARGAR LA FECHA ACTUAL EN EL INPUT DATE DE ACTIVO FIJO CON LA FECHA ACTUAL
         function zeroPadded(val) {
@@ -285,6 +292,13 @@ jQuery(document).ready(function ($) {
 
     });
 
+    //CUANDO SE CANCELA UN ACTIVO
+    $('#btnCancelar').on('click', function(){
+        $("#formActivo")[0].reset();
+        $('#mostrarFormulario').addClass('collapse');
+        $('#mostrarFormulario').removeClass('show');
+    });
+
     //CUANDO SE INSERTA EN HISTICO ACTIVO
     $('#formHistorico').submit(function (e) {
 
@@ -481,6 +495,12 @@ jQuery(document).ready(function ($) {
         //REMOVIEHNDO ESTILO AL INPUT CODIGO AUTOMATICO
         $('input[name=ActivoId]').removeClass('desabilitado');
 
+        //MUESTRA EL SELECT PARA QUE EL USUARIO CAMBIE EL AREA DESDE EL FORMUALRIO ACTIVO
+        $("#Estructura3Id").show();
+
+        //OCULTANDO TEXTO QUE EL AREA DEBE SER CAMBIADA DESDE EL HISTORIAL DE ACTIVO 
+        $("#labelError2").hide();
+
         //OCULTAMOS LOS COMENTARIOS, ASIGNACION Y ESTADO CUANDO QUIERAN MODIFICAR
         $('#ResCompAsig').attr('hidden', true);
 
@@ -637,6 +657,13 @@ jQuery(document).ready(function ($) {
 
         //INVOCANDO FUNCION PARA DESABILITAR CONTROLES DEL FORMULARIO
         blockControl(false);
+
+        //OCULTA EL SELECT PARA QUE EL USUARIO NO CAMBIE EL AREA DESDE EL FORMUALRIO ACTIVO
+        $("#Estructura3Id").hide();
+
+        //MOSTRANDO TEXTO QUE EL AREA DEBE SER CAMBIADA DESDE EL HISTORIAL DE ACTIVO 
+        $("#labelError2").show();
+        $("#labelError2").text("El area debe ser cambiada en el historial del activo.");
 
         //REMOVIEHNDO ESTILO AL INPUT CODIGO AUTOMATICO
         $('input[name=ActivoId]').removeClass('desabilitado');
@@ -966,6 +993,12 @@ jQuery(document).ready(function ($) {
         //DEJANDO EL FORMULARIO DE HISTORICO EN LIMPIO SIEMPRE QUE LO MUESTREN
         $("#formHistorico")[0].reset();
 
+        //DESABILITANDO BOTONES DE INSERTAR Y MODIFICAR
+        $("#btnModificarHostorico").attr('disabled', true);
+
+        //RESETENADO LOS INPUT CHECK
+        $('#estadoH').attr('checked', false);
+
         //MOSTRANDO EL ID DE ESTRUCTURA 31 EN EL INPUT IDAREA
         $('#Estructura3IdH').on('change', function () {
             $('#idArea').val(this.value);
@@ -1034,6 +1067,16 @@ jQuery(document).ready(function ($) {
                     className: "center btnMostrarHistorial",
                     defaultContent: '<button type="button" class="btn btn-spotify"><i class="fa fa-eye"></i></button>'
                 },
+                {
+                    data: null,
+                    className: "center btnEditarHistorial",
+                    defaultContent: '<button type="button" class="btn btn-facebook"><i class="fa fa-pencil-square-o"></i></button>'
+                },
+                {
+                    data: null,
+                    className: "center btnEliminarHistorial",
+                    defaultContent: '<button type="button" class="btn btn-pinterest"><i class="fa fa-trash-o"></i></button>'
+                },
             ],
             responsive: true,
             "language": {
@@ -1068,6 +1111,68 @@ jQuery(document).ready(function ($) {
         } else {
             lastHistoricoPosition = false;
         }
+
+        //HABILITANDO LOS INPUT
+        blockControlHistorial(false);
+
+        //ENVIANDO AL INICIO DEL FORMULARIO CUANDO EL USUARIO DE CLICK AL HISTORIAL
+        $(location).attr('href', '#inicioFormHistorial');
+
+        //DESABILITANDO BOTON MODIFICAR Y BOTON INSERTAR
+        $("#btnModificarHostorico").attr('disabled', true);
+        $("#btnInsertarHistorico").attr('disabled', true);
+
+        //DESABILITANDO LOS INPUT CUANDO EL USUARIO SOLAMENTE QUIERE VER LA INFORMACION
+        blockControlHistorial(true);
+
+        //CARGANDO LOS INPUT CON LA DATA DE LA TABLA HISTORIAL
+        cargarHistorico(
+            data['Activo_referencia'],
+            data['Descripcion'],
+            data['Estructura31_id'],
+            data['Responsable_id'],
+            data['fechaHistorico'],
+            data['Estado'],
+            data['Historico_comentario'],
+            data['Activo_id'],
+            data['Historico_id']
+        );
+
+        //EVALUA EL VALOR QUE VIENE DE LA COLUMNA ACTIVO ESTADO PARA PONER EL CHEKE O QUITARLO
+        if (data['Estado'] == 1) {
+            $('#estadoH').attr('checked', true);
+            inactivoH = 1;
+        } else {
+            $('#estadoH').attr('checked', false);
+            inactivoH = 0;
+        }
+
+    });
+
+    //BOTON PARA CARGAR LOS INPUT CON LA INFORMACION DEL HISTORIAL SELECIONADO
+    $('#historial tbody').on('click', '.btnEditarHistorial', function () {
+
+        //GUARDANDO LA INFORMACION ALMACENADA EN LA TABLA EN LA VARIABLE DATA
+        var table = $('#historial').DataTable();
+        var data = table.row(this).data();
+
+        //VARIABLES QUE SIRVEN PARA ACTUALIZAR EL ESTADO DEL ACTIVO EN LA TABLA ACTIVO
+        var totalFilas = 1;
+        var filaClick = parseInt(table.row(this).index()) + 1;
+
+        //COMPROBACION DE CUAL ES EL ULTIMO HISTORICO INGRESADO
+        if (filaClick == totalFilas) {
+            lastHistoricoPosition = true;
+        } else {
+            lastHistoricoPosition = false;
+        }
+
+        //HABILITANDO LOS INPUT CUANDO EL USUARIO QUIERE EDITAR EL HISTORIAL
+        blockControlHistorial(false);
+
+        //DESABILITANDO BOTONES DE INSERTAR Y MODIFICAR
+        $("#btnInsertarHistorico").attr('disabled', true);
+        $("#btnModificarHostorico").attr('disabled', false);
 
         //CARGANDO LOS INPUT CON LA DATA DE LA TABLA HISTORIAL
         cargarHistorico(
@@ -1166,7 +1271,24 @@ jQuery(document).ready(function ($) {
     });
 
     //BOTON PARA ELIMINAR UN HISTORIAL SELECIONADO
-    $('#btnEliminarHistorico').on('click', function () {
+    $('#historial tbody').on('click', '.btnEliminarHistorial', function (){
+
+        //GUARDANDO LA INFORMACION ALMACENADA EN LA TABLA EN LA VARIABLE DATA
+        var table = $('#historial').DataTable();
+        var data = table.row(this).data();
+
+        //CARGANDO LOS INPUT CON LA DATA DE LA TABLA HISTORIAL
+        cargarHistorico(
+            data['Activo_referencia'],
+            data['Descripcion'],
+            data['Estructura31_id'],
+            data['Responsable_id'],
+            data['fechaHistorico'],
+            data['Estado'],
+            data['Historico_comentario'],
+            data['Activo_id'],
+            data['Historico_id']
+        );
 
         Swal.fire({
             title: 'Eliminar historico del sistema',
@@ -1218,12 +1340,50 @@ jQuery(document).ready(function ($) {
                         console.log(r);
                     }
                 });
-
+            } else if (result.isDismissed) {
+                //SI EL USUARIO PRESIONA EL BOTON CANCELAR SE LIMPIA EL FORMULARIO
+                $("#formHistorico")[0].reset();
+                //CARGAOS LOS INPUT CON LOS VALORES DE REFERENCIA Y DESCRIPCION LUGO DE LIMPIAR EL FORMULARIO
+                var referencia = $('#ActivoReferencia').val();
+                var descripcion = $('#ActivoDescripcion').val();
+                cargarHistorico2(referencia, descripcion);
             }
         })
 
 
     });
+
+    //BOTON PARA LIMPIAR EL FORMULARIO Y PODER INGRESAR UN NUEVO HISTORIAL
+    $('#btnNuevoHistorico').on('click', function (){
+        //DEJANDO EL FORMULARIO DE HISTORICO EN LIMPIO
+        $("#formHistorico")[0].reset();
+
+        //HABILITANDO LOS INPUT CUANDO EL USUARIO QUIERE EDITAR EL HISTORIAL
+        blockControlHistorial(false);
+
+        //CARGANDO LA INFORMACION DE REFERENECIA Y DESCRIPCION EN LOS INPUT
+        var referencia = $('#ActivoReferencia').val();
+        var descripcion = $('#ActivoDescripcion').val();
+        cargarHistorico2(referencia, descripcion);
+
+        //DESABILITANDO BOTON MODIFICAR Y HABILITANDO BOTON INSERTAR
+        $("#btnModificarHostorico").attr('disabled', true);
+        $("#btnInsertarHistorico").attr('disabled', false);
+
+        //RESETENADO LOS INPUT CHECK
+        $('#estadoH').attr('checked', false);
+
+        //PARA CARGAR LA FECHA ACTUAL EN EL INPUT DATE DE HISTORIAL CON LA FECHA ACTUAL
+        function zeroPadded(val) {
+            if (val >= 10)
+                return val;
+            else
+                return '0' + val;
+        }
+        var d = new Date();
+        $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+    });
+
 
     function cargarGeneral1(activoRerefencia, partidaContabilidad, empresaId, numeroSerie, activoId, fechaAdq, activoFactura, activoTipo, ip) {
         $('input[name=ActivoReferencia]').val(activoRerefencia);
@@ -1297,6 +1457,7 @@ jQuery(document).ready(function ($) {
         $('textarea[name=ActivoDescripcionH]').val(descripcionActivo);
     }
 
+    //FUNCION PARA DESABILITAR LOS INPUT DE ACTIVO FIJO
     function blockControl(desabilitar) {
         //INPUTS DE INFORMACION GENERAL ACTIVO
         $('input[name=ActivoReferencia]').attr('disabled', desabilitar);
@@ -1340,6 +1501,15 @@ jQuery(document).ready(function ($) {
         $('input[name=fusor]').attr('disabled', desabilitar);
         $('input[name=HorasUso]').attr('disabled', desabilitar);
         $('input[name=HoraEco]').attr('disabled', desabilitar);
+    }
+
+    //FUNCION PARA DESABILITAR LOS INPUT DEL HISTORIAL
+    function blockControlHistorial(desabilitar){
+        $('#Estructura3IdH').attr('disabled', desabilitar);
+        $('#ResponsableIdH').attr('disabled', desabilitar);
+        $('input[name=fechaHistorico]').attr('disabled', desabilitar);
+        $('input[name=estadoH]').attr('disabled', desabilitar);
+        $('textarea[name=HistoricoComentarioH]').attr('disabled', desabilitar);
     }
 
     //función que oculta columnas de DataTable según el rol que inicia sesión

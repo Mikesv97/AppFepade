@@ -173,12 +173,13 @@ class activoFijoDAO
     public function updateEstado($objeto){
         $a = $objeto;
         $con = Conexion::conectar();
-        $sql = "UPDATE Activo SET Estado = ?, Responsable_codigo = ? WHERE Activo_id = ?";
+        $sql = "UPDATE Activo SET Estado = ?, Responsable_codigo = ?, Estructura3_id = ? WHERE Activo_id = ?";
         $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([
                 $a->getEstado(),
                 $a->getResponsableCodigo(),
+                $a->getEstructura3Id(),
                 $a->getActivoId()
             ]);
             return $respuesta->rowCount();
