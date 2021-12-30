@@ -6,9 +6,6 @@ $(document).ready(function(){
     //cuando carga la pag solicitamos menú según Rol del usuario
     solicitarMenuRol(idRol);
 
-    //cuando carga la pag solicitamos acciones según Rol del usuario
-    bloquearBtnRol(idRol);
-
     //cuando hace click en cerrar sesión
     $("#cerrarLog").on("click",function(e){
         var dato = $("#nombreUser").text();
@@ -91,42 +88,6 @@ $(document).ready(function(){
         });
     }
     
-    //función que solicita las acciones (CRUD) de la BD en base al rol logueado
-    function bloquearBtnRol(){
-        $.ajax({
-            url: "../Controladores/homeControlador.php",
-            method: "post",
-            dataType: "json",
-            data: { "key": "soliAccRol","idRol": idRol},
-            success: function (r) {
-                for(let i=0; i<r.length; i++){
-                    switch(r[i]["nombre_accion"]){
-                        case "Ingresar":
-                            //puede ingresar datos al sistema
-                        break;
-                        case "Editar":
-                            //puede editar los datos del sistema
-                        break;
-                        case "Eliminar":
-                            //puede eliminar datos del sistema
-                        break;
-                        case "Ninguna":
-                            //no puede realizar ninguna acción, es visitante
-                            //$("#verFormulario").attr("disabled",true);
-                            $("#btnModificar").attr("disabled",true);
-                        break;
-                    }
-                   
-                }
-                
-            },
-            error: function (r) {
-                console.log(r.responseText);
-            }
-            
-        });
-    }
-
     //función que oculta el menú para mostrarlo mediante
     //la función solicitarMenuRol() según el rol
     function ocultarMenu(){

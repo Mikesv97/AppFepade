@@ -14,7 +14,7 @@ class RolAccionesDao{
         //establecemos la coneccion
         $this->con = Conexion::conectar();
         //establecemos la consulta
-        $sql="select a.nombre_accion from acciones a inner join rol_acciones b on a.id_accion = b.id_accion
+        $sql="select a.id_accion, a.nombre_accion from acciones a inner join rol_acciones b on a.id_accion = b.id_accion
         where b.id_rol = ?";
         //preparamos la consulta
         $respuesta =$this->con->prepare($sql);

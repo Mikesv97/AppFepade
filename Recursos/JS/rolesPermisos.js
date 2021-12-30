@@ -178,11 +178,18 @@ jQuery(document).ready(function ($){
        $(location).attr('href', '#inicioForm');
        //deshabilitamos los controles
        disabledControles(true);
-       //cargamos información
+       //cargamos información de la tabla donde se hizo click
        var table = $('#tblRoles').DataTable();
        var data = table.row(this).data();
-
+       
+       //pasamos el campo ID de la fila a la función que se encarga de poner cheque
+       //a los checkbox de menu según tenga asignado el rol seleccionado 
        cargarCheckBoxMenuRol(data["id_rol"]);
+       cargarChekBoxAccionesRol(data["id_rol"]);
+       
+       $("#txtNombreRol").val(data["rol_nombre"]);
+       $("#txtDescRol").val(data["rol_descripcion"]);
+       
     });
 
     function disabledControles(boolean){
@@ -194,9 +201,10 @@ jQuery(document).ready(function ($){
         $(".ckbMenu:checkbox").prop("disabled",boolean);
     }
 
-    //función que solicita el menú según el idRol pasado como parametro
+    //función que solicita por ajax el menú según el idRol pasado como parametro
     //que sería el ID del rol seleccionado en la tabla
     //se comunica con homeControlador para reutilizar código.
+    //y carga los chekbox según la información obtenido de la BD para el rol seleccionado
     function cargarCheckBoxMenuRol(idRolTbl){
         $(".ckbMenu:checkbox").prop("checked", false);
         $.ajax({
@@ -223,12 +231,9 @@ jQuery(document).ready(function ($){
                        }
                    });
                 }
-
-
-                
             },
             error: function (r) {
-                console.log(r.responseText);
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
@@ -241,8 +246,49 @@ jQuery(document).ready(function ($){
         });
     }
 
-
-
+    //función que solicita las acciones del rol seleccionado
+    //para cargar los chekbox corrrespondiente
+    //se comunica con homecontrolador para reutilizar código
+    function cargarChekBoxAccionesRol(idRolTbl){
+        $(".ckbAcciones:checkbox").prop("checked", false);
+        $.ajax({
+            url: "../Controladores/homeControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "soliAccRol","idRol": idRolTbl},
+            success: function (r) {
+                if(r == "ID Rol No Definido"){
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Problemas Encontrados",
+                        text: 'Parece tenemos problemas, el ID del rol seleccionado no es encontrado en el sistema'
+                        +' por favor verifica que seleccionas un ID valido, si el problema persiste informa a tu administrador '
+                        +'o personal de TI.',
+                        showConfirmButton: true
+                    })
+                }else{
+                    $(".ckbAcciones:checkbox").each(function(index, elemento){
+                        for(let i=0; i<r.length; i++){
+                            if($(elemento).val() == r[i]["id_accion"]){
+                                $(elemento).prop("checked", true);
+                            } 
+                        } 
+                    });
+                }
+            },
+            error: function (r) {
+                console.log(r.responseText);
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece tenemos problemas para comunicarnos con los servidores y cargar las acciones asignadas a este rol'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+            
+        });
+    }
 
     //función que solicita por ajax la carga de roles
     //y carga la tabla automáticamente con Ajax- DataTable
