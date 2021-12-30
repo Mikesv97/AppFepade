@@ -4,10 +4,11 @@
 
 }
 
-input:disabled, textarea:disabled{
+input:disabled, textarea:disabled, .btn:disabled, .btn:disabled:hover{
     background-color: rgba(224, 224, 224, 0.836) !important;
     border: 1px solid black !important;
     font-weight: bold !important;
+    color: black;
 }
 .alertError{
 
