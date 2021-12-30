@@ -6,7 +6,7 @@ jQuery(document).ready(function ($){
     cargarRoles();
     cargarAcciones();
     cargarMenus();
-
+  
     //cuando se genere click en el último elemento de la lista
     //desmarcamos los demás chekbox de la misma lista (más detalles dentro de la función, al final.)
     $("body").on("click","#grupoCkbAcciones li:last", function(){
@@ -171,6 +171,79 @@ jQuery(document).ready(function ($){
 
     });
 
+
+    //al click del ojo es para ver toda la información del rol
+    $("#tblRoles tbody").on("click","#btnMostrar", function(){
+       //desabilitamos controles y mandamos al inicio del form al usuario
+       $(location).attr('href', '#inicioForm');
+       //deshabilitamos los controles
+       disabledControles(true);
+       //cargamos información
+       var table = $('#tblRoles').DataTable();
+       var data = table.row(this).data();
+
+       cargarCheckBoxMenuRol(data["id_rol"]);
+    });
+
+    function disabledControles(boolean){
+
+        $("#txtNombreRol").prop("disabled", boolean);
+        $("#txtDescRol").prop("disabled", boolean);
+        $("#btnIngresar").prop("disabled", boolean);
+        $(".ckbAcciones:checkbox").prop("disabled",boolean);
+        $(".ckbMenu:checkbox").prop("disabled",boolean);
+    }
+
+    //función que solicita el menú según el idRol pasado como parametro
+    //que sería el ID del rol seleccionado en la tabla
+    //se comunica con homeControlador para reutilizar código.
+    function cargarCheckBoxMenuRol(idRolTbl){
+        $(".ckbMenu:checkbox").prop("checked", false);
+        $.ajax({
+            url: "../Controladores/homeControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "solicitarMenu","idRol": idRolTbl},
+            success: function (r) {
+                if(r == "ID Rol No Definido"){
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Problemas Encontrados",
+                        text: 'Parece tenemos problemas, el ID del rol seleccionado no es encontrado en el sistema'
+                        +' por favor verifica que seleccionas un ID valido, si el problema persiste informa a tu administrador '
+                        +'o personal de TI.',
+                        showConfirmButton: true
+                    })
+                }else{
+                    $(".ckbMenu:checkbox").each(function(index, elemento){                    
+                        for(let i=0; i<r.length; i++){
+                           if($(elemento).val() == r[i]["id_menu"]){
+                               $(elemento).prop("checked", true);
+                           }
+                       }
+                   });
+                }
+
+
+                
+            },
+            error: function (r) {
+                console.log(r.responseText);
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece tenemos problemas para comunicarnos con los servidores y cargar el menú asignado para este rol'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+            
+        });
+    }
+
+
+
+
     //función que solicita por ajax la carga de roles
     //y carga la tabla automáticamente con Ajax- DataTable
     function  cargarRoles() {
@@ -195,6 +268,13 @@ jQuery(document).ready(function ($){
                     {
                         data: "rol_descripcion",
                         className: "rolDescripcion"
+                    },
+                    {
+               
+                        data: null,
+                        className: "center",
+                        defaultContent: '<button type="button" class="btn btn-spotify" id="btnMostrar"><i class="fa fa-eye"></i></button>'
+                            
                     },
                     {
                         data: null,

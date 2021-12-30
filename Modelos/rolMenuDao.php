@@ -21,7 +21,7 @@ class RolMenuDao{
         try{
             //ejecutamos la consulta y seteamos parametros
             $respuesta->execute([$idRol]);
-
+            
             //retornamos el arreglo
             return $respuesta->fetchAll(PDO::FETCH_ASSOC);
            
@@ -29,6 +29,7 @@ class RolMenuDao{
             echo $error->getMessage();
         }
     }
+
     public function insertarRolMenu($objeto){
         $rm = new RolMenu();
         $rm = $objeto;

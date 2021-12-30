@@ -12,6 +12,7 @@
                 <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
+                        <a href="" id="inicioForm"></a>
                             <h4>Bienvenido <?=$_SESSION["usuario"]["nombre"];?>!</h4>
                             <p class="mb-0">Rol: <?=$_SESSION["usuario"]["rol"];?></p>
                         </div>
@@ -26,24 +27,25 @@
 
                 <div class="row page-titles mx-0">
                     <div class="col-md-6 p-md-0 mx-auto">
-                        <h2 class="text-center">Roles del sistema</h2>
+                        
+                        <h2 class="text-center mb-3">Roles del sistema</h2>
                          <form id="frmRoles">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Nombre del rol</label>
+                                <label for="exampleInputEmail1"><strong>Nombre del rol</strong></label>
                                 <input type="text" class="form-control" id="txtNombreRol" maxlength="12" name="txtNombreRol"  placeholder="Nombre del rol max (12 caracteres)" required>
                             </div>
                             <div class="form-group">
-                                <label for="txtDescRol">Descripción del rol</label>
+                                <label for="txtDescRol"><strong>Descripción del rol</strong></label>
                                 <textarea class="form-control" id="txtDescRol" name="txtDescRol" maxlength="255" placeholder="Descripcioón de rol max (255 caracteres)" required></textarea>
                             </div>
                             <div class="col-md-12"><p class="alertError my-2" role="alert" id="labelError"></p></div>
-                            <label for="grupoCheckBox">Selecciona las acciones que tendrá este rol en el sistema</label>
+                            <label for="grupoCheckBox"><strong>Selecciona las acciones que tendrá este rol en el sistema</strong></label>
                             <div class="form-check" id="grupoCkbAcciones">
                             <ul id="grupoCkbAcciones">
 
                                 </ul>
                             </div>
-                            <label class="my-3" for="grupoCheckBox">Selecciona el menú al que tendrá acceso este rol en el sistema</label>
+                            <label class="my-3" for="grupoCheckBox"><strong>Selecciona el menú al que tendrá acceso este rol en el sistema</strong></label>
                             <div class="form-check" >
                                 <ul id="grupoCkbMenu">
 
@@ -60,6 +62,7 @@
                                         <th>Rol id</th>
                                         <th>Nombre rol</th>
                                         <th>Descripción</th>
+                                        <th>Ver más detalles</th>
                                         <th>Acción</th>
                                     </tr>
                                 </thead>

@@ -3,6 +3,11 @@
     margin-right: 4em;
 
 }
+
+input:disabled, textarea:disabled{
+    background-color: rgba(224, 224, 224, 0.836) !important;
+    border: 1px solid black !important;
+}
 .alertError{
 
     color: rgb(255, 4, 4);

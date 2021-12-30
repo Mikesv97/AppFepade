@@ -79,6 +79,13 @@ $(document).ready(function(){
             },
             error: function (r) {
                 console.log(r.responseText);
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece que tenemos problemas para comunicarnos con los servidores y cargar los checkbox del menú'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
             }
             
         });
