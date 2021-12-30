@@ -3,6 +3,13 @@
     margin-right: 4em;
 
 }
+.alertError{
+
+    color: rgb(255, 4, 4);
+    font-size: 16px !important;
+    padding: 0 !important;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.080);
+  }
 #grupoCkbMenu, #grupoCkbAcciones{
     columns: 2;
     -webkit-columns: 2;

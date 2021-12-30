@@ -36,6 +36,7 @@
                                 <label for="txtDescRol">Descripción del rol</label>
                                 <textarea class="form-control" id="txtDescRol" name="txtDescRol" maxlength="255" placeholder="Descripcioón de rol max (255 caracteres)" required></textarea>
                             </div>
+                            <div class="col-md-12"><p class="alertError my-2" role="alert" id="labelError"></p></div>
                             <label for="grupoCheckBox">Selecciona las acciones que tendrá este rol en el sistema</label>
                             <div class="form-check" id="grupoCkbAcciones">
                             <ul id="grupoCkbAcciones">
@@ -48,7 +49,7 @@
 
                                 </ul>
                             </div>
-                            <button type="submit" class="btnLogin my-2 btn btn-primary" id="btnIngresar">Ingresar</button>
+                            <button type="submit" class="btnLogin my-4 btn btn-primary" id="btnIngresar">Ingresar</button>
                          </form>
 
                          <!--TABLA ROLES-->

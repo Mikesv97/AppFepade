@@ -1,5 +1,8 @@
-$(document).ready(function ($) {
-
+$.noConflict();
+jQuery(document).ready(function ($){
+    //variables globales
+    
+    $("#labelError").hide();
     cargarRoles();
     cargarAcciones();
     cargarMenus();
@@ -49,35 +52,76 @@ $(document).ready(function ($) {
 
     });
 
-    
+    /*al envento change del input nombre rol, validamos que no esté ingresado el rol*/
+    $("#txtNombreRol").change(function(){
+        //obtenemos el valor ingresado
+        var rolIngresado = $(this).val();
+        //llamamos a la función que envia ajax pidiendo roles
+        //llamamos a la función y su parametro (el arreglo) que viene siendo el parametro callbalck 
+        //definido cuando creamos la función
+        validarRolNoRegistrado( function(roles){
+            //recorremos el arreglo y buscamos si el valor ingresado ya existe
+            for(let i=0; i<roles.length; i++){
+                if(roles[i]==rolIngresado){
+                    //si existe, lanzamos error
+                    $("#labelError").show();
+                    $("#labelError").text("Rol ya ingresado en el sistema, por favor ingresa otro.");
+                    $("#txtNombreRol").focus();
+                    i=roles.length;
+                }else{
+                    //sino, ocultamos el error por si está visible
+                    $("#labelError").hide();
+                }
+            }
+        });
+        
+    });
+
+    /*cuando presiona tecla ocultamos el error si está visible*/
+    $("#txtNombreRol").keypress(function(){
+        if($("#labelError").is(":visible")){
+            $("#labelError").hide();
+        }
+    });
     //cuando se ejecuta el submit del form roles
     $("#frmRoles").submit(function(e){
+   
         //evitamos el evento
         e.preventDefault();
-        
-        //obtenemos el array con las acciones seleccionadas para el rol
-       var accionesArray = generarArrayAcciones();
 
-       //obtenemos el array con el menú seleccionado para el rol
-       var menuArray = generarArrayMenu();
+        if($("#labelError").is(":visible")){
+            Swal.fire(
+                'Errores Detectados',
+                'Verifica que la información ingresada sea correcta y no tenga errores.',
+                'info'
+              )
+              
+        }else{
+            //obtenemos el array con las acciones seleccionadas para el rol
+            var accionesArray = generarArrayAcciones();
 
-       if(accionesArray ==0){
-        Swal.fire(
-            '¿Acciones para este rol?',
-            'Debes seleccionar al menos una acción para este rol',
-            'question'
-          )
-          $("#btnIngresar").blur();
-       }else if(menuArray ==0){
-        Swal.fire(
-            '¿Menú para este rol?',
-            'Debes seleccionar al menos un menú al que podrá acceder este rol',
-            'question'
-          )
-          $("#btnIngresar").blur();
-       }else{
-            //se envia ajax
-       }
+            //obtenemos el array con el menú seleccionado para el rol
+            var menuArray = generarArrayMenu();
+
+            if(accionesArray ==0){
+                Swal.fire(
+                    '¿Acciones para este rol?',
+                    'Debes seleccionar al menos una acción para este rol',
+                    'question'
+                )
+                $("#btnIngresar").blur();
+            }else if(menuArray ==0){
+                Swal.fire(
+                    '¿Menú para este rol?',
+                    'Debes seleccionar al menos un menú al que podrá acceder este rol',
+                    'question'
+                )
+                $("#btnIngresar").blur();
+            }else{
+                    //se envia ajax
+            }
+        }
+       
 
     });
 
@@ -266,5 +310,41 @@ $(document).ready(function ($) {
             return menuArray;
         }
 
+    }
+
+    /*esta función solicita la carga de roles de BD, crea array y lo retorna por función
+    callback de ajax  para validar que no se ingrese un rol repetido */
+    function validarRolNoRegistrado(callback){
+        //pasamos un parametro que serpa una función en este caso callback
+        $.ajax({
+            url:"../controladores/rolesPermisosControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "obtenerRoles"},
+            success: function (r) {
+                //si tiene respuesta validad del server creamos arreglo
+                var roles = [];
+                for(let i =0; i<r.length; i++){
+                    //llenamos arreglo con los datos
+                    roles[i] = r[i]["rol_nombre"];
+     
+                }
+                //llamamos al parametro que pasa a ser una función que resive el parametro que es
+                //el arreglo creado
+                callback(roles);
+            },
+            error: function (r) {
+                console.log(r)
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece tenemos problemas para comunicarnos con los servidores y validar los roles ingresados en el sistema'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+        });
+        
+      
     }
 });
