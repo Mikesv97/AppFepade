@@ -4,6 +4,10 @@
 
 }
 
+input[type="search"]{
+    width: 130px !important;
+}
+
 input:disabled, textarea:disabled, .btn:disabled, .btn:disabled:hover{
     background-color: rgba(224, 224, 224, 0.836) !important;
     border: 1px solid black !important;

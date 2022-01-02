@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="row page-titles mx-0">
-                    <div class="col-md-6 p-md-0 mx-auto">
+                    <div class="col-md-5 p-md-0 mx-auto">
                         
                         <h2 class="text-center mb-3">Roles del sistema</h2>
                          <form id="frmRoles">
@@ -74,20 +74,25 @@
                             </table>
                         </div>
                     </div>
-                    <div class="borderIzq offset-md-1 col-md-5">
+                    <div class="borderIzq  col-md-6">
                         <div class="ml">
                         <h2 class="text-center">Menú del sistema</h2>
                          <form id="frmRoles">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Nombre del menú</label>
-                                <input type="text" class="form-control" id="txtNombreRol" maxlength="12" name="txtNombreRol"  placeholder="Nombre del rol max (12 caracteres)">
+                                <label><strong>Nombre del menú</strong></label>
+                                <input type="text" class="mn-2 form-control" id="txtNombreMenu" maxlength="50" name="txtNombreMenu"  placeholder="Nombre del menú max (50 caracteres)" required>
+                                <label class="my-1"><strong>Dirección a la que apunta</strong></label>
+                                <input type="text" class="form-control" id="txtDirecciónWeb" maxlength="255" name="txtDirecciónWeb"  placeholder="https://www.direccion.com  ó  direccion.extensión" required>
+                                <label class="my-1"><strong>Menú padre</strong></label>
+                                <input type="text" class="form-control" id="txtMenuPadre" maxlength="50" name="txtMenuPadre"  placeholder="Activos, reportes, usuarios y roles, etc" required>
                             </div>
-                            <button type="submit" class="btnLogin my-2 btn btn-primary">Ingresar</button>
+                            <button type="submit" id="btnIngresarMenu" class="btnLogin my-2 btn btn-primary">Ingresar</button>
+                            <button type="button" id="btnGuardarMenu" class="btnLogin my-2 btn btn-primary">Guardar</button>
                          </form>
 
                          <!--TABLA ROLES-->
                          <div class="table-responsive">
-                            <table id="tblRoles" class='table table-striped dt-responsive nowrap'>
+                            <table id="tblMenus" class='table table-striped dt-responsive nowrap'>
                                 <thead>
                                     <tr>
                                         <th>Menú id</th>

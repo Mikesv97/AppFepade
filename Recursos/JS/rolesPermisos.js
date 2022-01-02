@@ -6,9 +6,11 @@ jQuery(document).ready(function ($){
     var rolEdit= null;
     $("#labelError").hide();
     $("#btnGuardar").prop("disabled", true);
+    $("#btnGuardarMenu").prop("disabled", true);
     cargarRoles();
     cargarAcciones();
     cargarMenus();
+    cargarTblMenu();
   
     //cuando se genere click en el último elemento de la lista
     //desmarcamos los demás chekbox de la misma lista (más detalles dentro de la función, al final.)
@@ -551,6 +553,68 @@ jQuery(document).ready(function ($){
                 }
             });
     }
+
+    //función que solicita por ajax la carga de menu
+    //y carga la tabla automáticamente con Ajax- DataTable
+    function  cargarTblMenu() {
+        $.noConflict();
+        $('#tblMenus').DataTable({
+                "ajax":{
+                    "url": "../controladores/rolesPermisosControlador.php",
+                    "method": "post",
+                    "dataType": "json",
+                    "data": { "key": "obtenerMenu" },
+                    "dataSrc": ""
+                },
+                "columns": [
+                    {
+                        data: "id_menu",
+                        className: "idMenu"
+                    },
+                    {
+                        data: "nombre_menu",
+                        className: "nombreMenu"
+                    },
+                    {
+                        data: "direccion_web",
+                        className: "direccionWeb"
+                    },
+                    {
+                        data: "menu_padre",
+                        className: "menuPadre"
+                    },
+                    {
+               
+                        data: null,
+                        className: "center",
+                        defaultContent: '<button type="button" class="btn btn-spotify" id="btnMostrar"><i class="fa fa-eye"></i></button>'
+                            
+                    },
+                    {
+                        data: null,
+                        className: "center",
+                        defaultContent: 
+                        '<button id="btnEditar" class="btn btn-warning noHover">Editar</button>'
+                        +'<button id="btnEliminar" class="mx-2 btn btn-danger noHover">Eliminar</button>'
+                    }
+                ],
+                responsive: true,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se han encontrado datos - intente nuevamente",
+                    "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay datos disponibles",
+                    "infoFiltered": "(Filtrado de _MAX_ activos totales)",
+                    "search": "Buscar",
+                    "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                    }
+                }
+            });
+    }
+
+
 
     //función que solicita las acciones (CRUD) de la BD para cargar los
     //chekbox en la vista roles y permisos
