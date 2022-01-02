@@ -14,8 +14,8 @@ class RolMenuDao{
         //establecemos la coneccion
         $this->con = Conexion::conectar();
         //establecemos la consulta
-        $sql="select a.id_menu,a.nombre_menu from menu a inner join rol_menu b on a.id_menu = b.id_menu
-        where b.id_rol = ?";
+        $sql="select a.id_menu,a.nombre_menu, a.direccion_web, a.menu_padre from menu a 
+        inner join rol_menu b on a.id_menu = b.id_menu where b.id_rol = ?";
         //preparamos la consulta
         $respuesta =$this->con->prepare($sql);
         try{

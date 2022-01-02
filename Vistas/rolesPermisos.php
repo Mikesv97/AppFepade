@@ -74,7 +74,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="borderIzq offset-md-1 col-md-5 p-md-0 mx-auto">
+                    <div class="borderIzq offset-md-1 col-md-5">
                         <div class="ml">
                         <h2 class="text-center">Menú del sistema</h2>
                          <form id="frmRoles">
@@ -87,11 +87,14 @@
 
                          <!--TABLA ROLES-->
                          <div class="table-responsive">
-                            <table id="tblRoles" class='table table-striped dt-responsive nowrap' style='width:100%;'>
+                            <table id="tblRoles" class='table table-striped dt-responsive nowrap'>
                                 <thead>
                                     <tr>
                                         <th>Menú id</th>
                                         <th>Nombre menú</th>
+                                        <th>Dirección web</th>
+                                        <th>Contenedor padre</th>
+                                        <th>Ver más detalles</th>
                                         <th>Acción</th>
                                     </tr>
                                 </thead>

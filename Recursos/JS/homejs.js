@@ -35,38 +35,26 @@ $(document).ready(function(){
             data: { "key": "solicitarMenu","idRol": idRol},
             success: function (r) {
                 for(let i=0; i<r.length; i++){
-                    switch(r[i]["id_menu"]){
-                        case "1":
-                            var lista ='<li><a href="infor_activo_fijo.php">';
+                    switch(r[i]["menu_padre"]){
+                        case "activos":
+                            var lista ='<li><a href="'+r[i]["direccion_web"]+'">';
                             lista += r[i]["nombre_menu"]+'</a></li>';
                             $("#subMenuActivos").append(lista);
                             $("#listaActivos").show();
                         break;
-                        case "2":
-                            var lista ='<li><a href="tipoActivo.php">';
-                            lista += r[i]["nombre_menu"]+'</a></li>';
-                            $("#subMenuActivos").append(lista);
-                            $("#listaActivos").show();
-                        break;
-                        case "3":
-                            var lista ='<li><a href="nuevoUsuario.php">';
-                            lista += r[i]["nombre_menu"]+'</a></li>';
-                            $("#subMenuUsuarioRol").append(lista);
-                            $("#listaUsuariosRoles").show();
-                        break;
-                        case "4":
-                            var lista ='<li><a href="rolesPermisos.php">';
+                        case "usuarios y roles":
+                            var lista ='<li><a href="'+r[i]["direccion_web"]+'">';
                             lista += r[i]["nombre_menu"]+'</a></li>';
                             $("#subMenuUsuarioRol").append(lista);
                             $("#listaUsuarioRoles").show();
                         break;
-                        case "5":
-                            var lista ='<li><a href="ActivoResponsable.php">';
+                        case "responsables":
+                            var lista ='<li><a href="'+r[i]["direccion_web"]+'">';
                             lista += r[i]["nombre_menu"]+'</a></li>';
                             $("#subMenuResp").append(lista);
                             $("#listaResponsable").show();
                         break;
-                        case "6":
+                        case "reportes":
                             $("#listaReportes").show();
                         break;
                     }
