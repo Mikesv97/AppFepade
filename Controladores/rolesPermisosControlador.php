@@ -221,6 +221,7 @@ if(isset($_POST["key"])){
         case "insertarMenu":
             $mDao = new MenuDao();
             $objMenu = cargarObtjetoMenu(
+                null,
                 $_POST["nombreMenu"],
                 $_POST["direccionWeb"],
                 $_POST["menuPadre"]);

@@ -322,7 +322,7 @@ jQuery(document).ready(function ($){
                     }
                 },
                 error: function (r) {
-                    //console.log(r.responseText);
+                    console.log(r.responseText);
                     Swal.fire({
                         icon: 'error',
                         title: "Problemas de comunicación",
