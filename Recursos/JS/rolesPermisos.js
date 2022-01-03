@@ -572,7 +572,7 @@ jQuery(document).ready(function ($){
                                     Swal.fire({
                                         position: 'bottom-end',
                                         icon: 'success',
-                                        title: 'Rol editado con éxtio',
+                                        title: 'Menú editado con éxtio',
                                         showConfirmButton: false,
                                         timer: 1500
                                     })
