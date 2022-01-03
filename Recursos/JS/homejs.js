@@ -26,55 +26,7 @@ $(document).ready(function(){
         });
     });
 
-    //función que solicita el menú de la BD en base al rol logueado
-    function solicitarMenuRol(idRol){
-        $.ajax({
-            url: "../Controladores/homeControlador.php",
-            method: "post",
-            dataType: "json",
-            data: { "key": "solicitarMenu","idRol": idRol},
-            success: function (r) {
-                for(let i=0; i<r.length; i++){
-                    switch(r[i]["menu_padre"]){
-                        case "activos":
-                            var lista ='<li><a href="'+r[i]["direccion_web"]+'">';
-                            lista += r[i]["nombre_menu"]+'</a></li>';
-                            $("#subMenuActivos").append(lista);
-                            $("#listaActivos").show();
-                        break;
-                        case "usuarios y roles":
-                            var lista ='<li><a href="'+r[i]["direccion_web"]+'">';
-                            lista += r[i]["nombre_menu"]+'</a></li>';
-                            $("#subMenuUsuarioRol").append(lista);
-                            $("#listaUsuarioRoles").show();
-                        break;
-                        case "responsables":
-                            var lista ='<li><a href="'+r[i]["direccion_web"]+'">';
-                            lista += r[i]["nombre_menu"]+'</a></li>';
-                            $("#subMenuResp").append(lista);
-                            $("#listaResponsable").show();
-                        break;
-                        case "reportes":
-                            $("#listaReportes").show();
-                        break;
-                    }
-                   
-                }
-                
-            },
-            error: function (r) {
-                console.log(r.responseText);
-                Swal.fire({
-                    icon: 'error',
-                    title: "Problemas de comunicación",
-                    text: 'Parece que tenemos problemas para comunicarnos con los servidores y cargar los checkbox del menú'
-                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
-                    showConfirmButton: true
-                })
-            }
-            
-        });
-    }
+
     
     //función que oculta el menú para mostrarlo mediante
     //la función solicitarMenuRol() según el rol
@@ -139,3 +91,55 @@ $(document).ready(function(){
         }
     }
 });
+//función que solicita el menú de la BD en base al rol logueado
+    function  solicitarMenuRol(idRol){
+        $("#subMenuActivos li").remove();
+        $("#subMenuUsuarioRol li").remove();
+        $("#subMenuResp li").remove();
+        $.ajax({
+            url: "../Controladores/homeControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "solicitarMenu","idRol": idRol},
+            success: function (r) {
+                for(let i=0; i<r.length; i++){
+                    switch(r[i]["menu_padre"]){
+                        case "activos":
+                            var lista ='<li><a href="'+r[i]["direccion_web"]+'">';
+                            lista += r[i]["nombre_menu"]+'</a></li>';
+                            $("#subMenuActivos").append(lista);
+                            $("#listaActivos").show();
+                        break;
+                        case "usuarios y roles":
+                            var lista ='<li><a href="'+r[i]["direccion_web"]+'">';
+                            lista += r[i]["nombre_menu"]+'</a></li>';
+                            $("#subMenuUsuarioRol").append(lista);
+                            $("#listaUsuarioRoles").show();
+                        break;
+                        case "responsables":
+                            var lista ='<li><a href="'+r[i]["direccion_web"]+'">';
+                            lista += r[i]["nombre_menu"]+'</a></li>';
+                            $("#subMenuResp").append(lista);
+                            $("#listaResponsable").show();
+                        break;
+                        case "reportes":
+                            $("#listaReportes").show();
+                        break;
+                    }
+                   
+                }
+                
+            },
+            error: function (r) {
+                console.log(r.responseText);
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece que tenemos problemas para comunicarnos con los servidores y cargar los checkbox del menú'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+            
+        });
+    }

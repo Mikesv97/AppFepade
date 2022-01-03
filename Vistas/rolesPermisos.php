@@ -77,6 +77,12 @@
                     <div class="borderIzq  col-md-6">
                         <div class="ml">
                         <h2 class="text-center">Menú del sistema</h2>
+                        <p class="advertensia">
+                            <spam class="msjRed">Importante:</spam> al ingresar un nuevo menú este no aparecerá reflejado en las 
+                            opciones de navegación de la web, <spam class="msjRed">debes actualizar el o los roles</spam> que podrán
+                            acceder a este nuevo menú para que salga reflejado cuando se inicie sesión 
+                            con dicho rol.
+                        </p>
                          <form id="frmMenu">
                             <div class="form-group">
                             <input type="number" id="txtIdMenu" hidden>

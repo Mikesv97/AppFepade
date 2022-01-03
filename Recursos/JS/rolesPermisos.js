@@ -506,6 +506,7 @@ jQuery(document).ready(function ($){
                                           })
                                         $("#frmRoles")[0].reset();
                                         $('#tblRoles').DataTable().ajax.reload();
+                                        solicitarMenuRol(idRol);    
                                         editarOn = false;
                                         rolEdit = null;
                                     }
@@ -696,7 +697,7 @@ jQuery(document).ready(function ($){
                             Swal.fire({
                                 position: 'bottom-end',
                                 icon: 'success',
-                                title: 'Rol eliminado con éxtio',
+                                title: 'Menú eliminado con éxtio',
                                 showConfirmButton: false,
                                 timer: 1500
                                 })
