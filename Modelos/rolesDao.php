@@ -145,4 +145,20 @@ class RolesDao{
         }
     }
 
+    public function verificarRolAsignado($idRol){
+            //establecemos la coneccion
+        $con = Conexion::conectar();
+        //establecemos la consulta
+        $sql="select count(*) as rol_asignado from Usuario where id_rol = ?";
+        //preparamos la consulta
+        $respuesta = $con->prepare($sql);
+        try{
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([$idRol]);
+            //evaluamos cuantas filas fueron afectadas
+            return $respuesta->fetchColumn();
+        }catch(PDOException $error){
+            echo $error->getMessage();
+        }
+    }
 }

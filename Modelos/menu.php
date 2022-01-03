@@ -4,6 +4,8 @@ class Menu {
 
     private $idMenu;
     private $nombreMenu;
+    private $direccionWeb;
+    private $menuPadre;
 
 
     public function __construct()
@@ -29,6 +31,25 @@ class Menu {
     {
         $this->nombreMenu = $nombreMenu;
     }
+    public function getDireccionWeb()
+    {
+        return $this->direccionWeb;
+    }
+
+    public function setDireccionWeb($direccionWeb)
+    {
+        $this->direccionWeb = $direccionWeb;
+    }
+    public function getMenuPadre()
+    {
+        return $this->menuPadre;
+    }
+
+    public function setMenuPadre($menuPadre)
+    {
+        $this->menuPadre = $menuPadre;
+    }
+
 
 }
 ?>

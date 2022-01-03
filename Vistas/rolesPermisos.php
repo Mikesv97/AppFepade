@@ -32,7 +32,7 @@
                          <form id="frmRoles">
                             <div class="form-group">
                                 <input type="number" id="txtId" hidden>
-                                <label for="exampleInputEmail1"><strong>Nombre del rol</strong></label>
+                                <label><strong>Nombre del rol</strong></label>
                                 <input type="text" class="form-control" id="txtNombreRol" maxlength="12" name="txtNombreRol"  placeholder="Nombre del rol max (12 caracteres)" required>
                             </div>
                             <div class="form-group">
@@ -77,16 +77,18 @@
                     <div class="borderIzq  col-md-6">
                         <div class="ml">
                         <h2 class="text-center">Menú del sistema</h2>
-                         <form id="frmRoles">
+                         <form id="frmMenu">
                             <div class="form-group">
+                            <input type="number" id="txtIdMenu" hidden>
                                 <label><strong>Nombre del menú</strong></label>
                                 <input type="text" class="mn-2 form-control" id="txtNombreMenu" maxlength="50" name="txtNombreMenu"  placeholder="Nombre del menú max (50 caracteres)" required>
                                 <label class="my-1"><strong>Dirección a la que apunta</strong></label>
-                                <input type="text" class="form-control" id="txtDirecciónWeb" maxlength="255" name="txtDirecciónWeb"  placeholder="https://www.direccion.com  ó  direccion.extensión" required>
+                                <input type="text" class="form-control" id="txtDireccionWeb" maxlength="255" name="txtDirecciónWeb"  placeholder="https://www.direccion.com  ||  nombre.extensión" required>
                                 <label class="my-1"><strong>Menú padre</strong></label>
                                 <input type="text" class="form-control" id="txtMenuPadre" maxlength="50" name="txtMenuPadre"  placeholder="Activos, reportes, usuarios y roles, etc" required>
                             </div>
-                            <button type="submit" id="btnIngresarMenu" class="btnLogin my-2 btn btn-primary">Ingresar</button>
+                            <div class="col-md-12"><p class="alertError my-2 mb-2" role="alert" id="labelErrorMenu"></p></div>
+                            <button type="submit" id="btnIngresarMenu" class="btnLogin my-2 btn btn-primary">Ingresar menú</button>
                             <button type="button" id="btnGuardarMenu" class="btnLogin my-2 btn btn-primary">Guardar</button>
                          </form>
 

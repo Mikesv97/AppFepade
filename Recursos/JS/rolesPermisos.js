@@ -4,9 +4,13 @@ jQuery(document).ready(function ($){
     var error = null;
     var editarOn = false;
     var rolEdit= null;
+    var menuEdit= null;
+ 
     $("#labelError").hide();
+    $("#labelErrorMenu").hide();
     $("#btnGuardar").prop("disabled", true);
     $("#btnGuardarMenu").prop("disabled", true);
+
     cargarRoles();
     cargarAcciones();
     cargarMenus();
@@ -63,6 +67,9 @@ jQuery(document).ready(function ($){
         //para evitar que admin (ingresado por el usuario) != Admin (valor en BD)
         //y mantener siempre la primer letra mayuscula.
         var rolIngresado = convertirPrimerLetraMayus($(this).val());
+        if(rolIngresado == rolEdit){
+            $("#labelError").hide();
+        }
 
         if(editarOn == true){
             if(rolIngresado != rolEdit){
@@ -110,8 +117,64 @@ jQuery(document).ready(function ($){
         
     });
 
-    /*cuando presiona tecla ocultamos el error si está visible*/
-    $("#txtNombreRol").keypress(function(e){
+
+    /*al envento change del input nombre menu, validamos que no esté ingresado el menu*/
+    $("#txtNombreMenu").change(function(){
+        //obtenemos el valor ingresado, convirtiendo a mayusculas el primer caracter
+        //para evitar que menu (ingresado por el usuario) != Menu (valor en BD)
+        //y mantener siempre la primer letra mayuscula.
+        var menuIngresado = convertirPrimerLetraMayus($(this).val());
+        if(menuIngresado == menuEdit){
+            $("#labelErrorMenu").hide();
+        }
+        if(editarOn == true){
+            if(menuIngresado != menuEdit){
+                //llamamos a la función que envia ajax pidiendo roles
+                //llamamos a la función y su parametro (el arreglo) que viene siendo el parametro callbalck 
+                //definido cuando creamos la función
+                validarMenuNoRegistrado(function(menu){
+                    //recorremos el arreglo y buscamos si el valor ingresado ya existe
+                    for(let i=0; i<menu.length; i++){
+                        if(menu[i]==menuIngresado){
+                            //si existe, lanzamos error
+                            $("#labelErrorMenu").show();
+                            $("#labelErrorMenu").text("Menú ya ingresado en el sistema, por favor ingresa otro.");
+                            $("#txtNombreMenu").focus();
+                            i=menu.length;
+                            error = menuIngresado;
+                        }else{
+                            //sino, ocultamos el error por si está visible
+                            $("#labelError").hide();
+                        }
+                    }
+                });
+            }
+        }else{
+            //llamamos a la función que envia ajax pidiendo menu
+            //llamamos a la función y su parametro (el arreglo) que viene siendo el parametro callbalck 
+            //definido cuando creamos la función
+            validarMenuNoRegistrado( function(menu){
+                //recorremos el arreglo y buscamos si el valor ingresado ya existe
+                for(let i=0; i<menu.length; i++){
+                    if(menu[i]==menuIngresado){
+                        //si existe, lanzamos error
+                        $("#labelErrorMenu").show();
+                        $("#labelErrorMenu").text("Menú ya ingresado en el sistema, por favor ingresa otro.");
+                        $("#txtNombreMenú").focus();
+                        i=menu.length;
+                        error = menuIngresado;
+                    }else{
+                        //sino, ocultamos el error por si está visible
+                        $("#labelErrorMenu").hide();
+                    }
+                }
+            });
+        }
+        
+    });
+
+    /*cuando presiona tecla en el input nombre rol ocultamos el error si está visible*/
+    $("#txtNombreRol").keypress(function(){
         
         if($("#labelError").is(":visible")){
             
@@ -122,6 +185,20 @@ jQuery(document).ready(function ($){
 
 
     });
+
+    /*cuando presiona tecla en el input nombre menu ocultamos el error si está visible*/
+    $("#txtNombreMenu").keypress(function(){
+        
+        if($("#labelError").is(":visible")){
+                
+            if($(this).val() != error){
+                $("#labelError").hide();
+            }
+        }
+    
+    
+    });
+
     //cuando se ejecuta el submit del form roles
     $("#frmRoles").submit(function(e){
    
@@ -184,7 +261,7 @@ jQuery(document).ready(function ($){
                             }
                         },
                         error: function (r) {
-                            //console.log(r.responseText);
+                            console.log(r.responseText);
                             Swal.fire({
                                 icon: 'error',
                                 title: "Problemas de comunicación",
@@ -200,6 +277,66 @@ jQuery(document).ready(function ($){
 
     });
 
+    //cuando se ejecuta el submit del form roles
+    $("#frmMenu").submit(function(e){
+   
+        //evitamos el evento
+        e.preventDefault();
+    
+        if($("#labelErrorMenu").is(":visible")){
+             Swal.fire(
+                'Errores Detectados',
+                'Verifica que la información ingresada sea correcta y no tenga errores.',
+                'info'
+                )
+                  
+        }else{
+            var menu = $("#txtNombreMenu").val();
+            var nombreMenu = convertirPrimerLetraMayus(menu);
+            var direccionWeb = $("#txtDireccionWeb").val();
+            var menuPadre = $("#txtMenuPadre").val();
+
+            //se envia ajax
+            $.ajax({
+                url:"../controladores/rolesPermisosControlador.php",
+                method: "post",
+                dataType: "json",
+                data: { "key": "insertarMenu",
+                "nombreMenu": nombreMenu,
+                "direccionWeb": direccionWeb,
+                "menuPadre": menuPadre.toLowerCase()},
+                success: function (r) {
+                    if(r == true){
+                        Swal.fire({
+                            position: 'bottom-end',
+                            icon: 'success',
+                            title: 'Menú insertado con éxtio',
+                            showConfirmButton: false,
+                            timer: 1500
+                            })
+                        $("#frmMenu")[0].reset();
+                        $("#grupoCkbMenu li").remove();
+                        cargarMenus();
+                        $('#tblMenus').DataTable().ajax.reload();
+
+                    }
+                },
+                error: function (r) {
+                    //console.log(r.responseText);
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Problemas de comunicación",
+                        text: 'Parece tenemos problemas para comunicarnos con los servidores e insertar el menú'
+                         +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                        showConfirmButton: true
+                    })
+                }
+            });   
+                
+        }
+           
+    
+    });
 
     //al click del ojo es para ver toda la información del rol
     $("#tblRoles tbody").on("click","#btnMostrar", function(){
@@ -225,8 +362,29 @@ jQuery(document).ready(function ($){
        
     });
 
+    //al click del ojo es para ver toda la información del menú
+    $("#tblMenus tbody").on("click","#btnMostrar", function(){
+         //deshabilitamos controles y mandamos al inicio del form al usuario
+        $(location).attr('href', '#inicioForm');
+        //deshabilitamos los controles
+        disabledControlesMenu(true);
+        $("#btnIngresarMenu").prop("disabled", true);
+        $("#btnGuardarMenu").prop("disabled", true);
+           
+            
+        //cargamos información de la tabla donde se hizo click
+        var table = $('#tblMenus').DataTable();
+        var data = table.row(this).data();
+            
+        $("#txtNombreMenu").val(data["nombre_menu"]);
+        $("#txtDireccionWeb").val(data["direccion_web"]);
+        $("#txtMenuPadre").val(data["menu_padre"]);
+            
+    });
+
     //al click del btn editar información de la fila en la tabla roles
     $("#tblRoles tbody").on("click", "#btnEditar", function(){
+        $("#labelError").hide();
         //activamos bandera de que se quiere modificar para lo de el evento change del input nombre rol
         editarOn = true;
 
@@ -251,6 +409,30 @@ jQuery(document).ready(function ($){
        rolEdit = data["rol_nombre"];
        $("#txtDescRol").val(data["rol_descripcion"]);
        $("#txtId").val(data["id_rol"]);
+    });
+
+    //al click del btn editar es para editar la info del menú
+    $("#tblMenus tbody").on("click","#btnEditar", function(){
+        $("#labelErrorMenu").hide();
+        editarOn = true;
+        //habilitamos controles y mandamos al inicio del form al usuario
+        $(location).attr('href', '#inicioForm');
+        //habilitamos los controles
+        disabledControlesMenu(false);
+        $("#btnIngresarMenu").prop("disabled", true);
+        $("#btnGuardarMenu").prop("disabled", false);
+ 
+        //cargamos información de la tabla donde se hizo click
+        var table = $('#tblMenus').DataTable();
+        var data = table.row(this).data();
+               
+        $("#txtNombreMenu").val(data["nombre_menu"]);
+        $("#txtDireccionWeb").val(data["direccion_web"]);
+        $("#txtMenuPadre").val(data["menu_padre"]);
+        $("#txtIdMenu").val(data["id_menu"]);
+
+        menuEdit = data["nombre_menu"];
+               
     });
 
     //al click del btnGuardar enviamos información al controlador para actualizar en la BD
@@ -324,6 +506,8 @@ jQuery(document).ready(function ($){
                                           })
                                         $("#frmRoles")[0].reset();
                                         $('#tblRoles').DataTable().ajax.reload();
+                                        editarOn = false;
+                                        rolEdit = null;
                                     }
                                 },
                                 error: function (r) {
@@ -342,6 +526,78 @@ jQuery(document).ready(function ($){
 
             }
           })
+    });
+
+    //al click del btnGuardar enviamos información al controlador para actualizar en la BD
+    $("#btnGuardarMenu").on("click", function(){
+        //preguntamos si está seguro de la acción a realizar
+        Swal.fire({
+            title: '¿Actualizar la información?',
+                text: "¿Seguro/a de ingresar esta información al sistema?, los cambios no serán reversibles"
+                +" una vez ingresados, por favor confirma la acción.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, Actualizarla!'
+            }).then((result) => {
+                ///si está seguro de hacerlo evaluamos la información
+                if (result.isConfirmed) {
+                    if($("#labelError").is(":visible")){
+                        //si hay errores lanzamos alerta
+                        Swal.fire(
+                            'Errores Detectados',
+                            'Verifica que la información ingresada sea correcta y no tenga errores.',
+                            'info'
+                        )      
+                    }else{
+                        var idMenu = $("#txtIdMenu").val();
+                        var menu = $("#txtNombreMenu").val();
+                        var nombreMenu = convertirPrimerLetraMayus(menu);
+                        var direccionWeb = $("#txtDireccionWeb").val();
+                        var menuPadre = $("#txtMenuPadre").val();
+                        //se envia ajax
+                        $.ajax({
+                            url:"../controladores/rolesPermisosControlador.php",
+                            method: "post",
+                            dataType: "json",
+                            data: { "key": "editarMenu",
+                            "idMenu": idMenu,
+                            "nombreMenu": nombreMenu,
+                            "direccionWeb": direccionWeb,
+                            "menuPadre": menuPadre},
+                            success: function (r) {
+                                console.log(r);
+                                if(r == true){
+                                    Swal.fire({
+                                        position: 'bottom-end',
+                                        icon: 'success',
+                                        title: 'Rol editado con éxtio',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    $("#frmMenu")[0].reset();
+                                    $("#grupoCkbMenu li").remove();
+                                    cargarMenus();
+                                    $('#tblMenus').DataTable().ajax.reload();
+                                    editarOn = false;
+                                }
+                            },
+                            error: function (r) {
+                                console.log(r.responseText);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: "Problemas de comunicación",
+                                    text: 'Parece tenemos problemas para comunicarnos con los servidores y editar el menú'
+                                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                                    showConfirmButton: true
+                                })
+                            }
+                        });   
+                        
+                    }
+                }
+              })
     });
 
     //al click del btn eliminar información de la fila en la tabla roles
@@ -381,6 +637,15 @@ jQuery(document).ready(function ($){
                               })
                             $("#frmRoles")[0].reset();
                             $('#tblRoles').DataTable().ajax.reload();
+                        }else if(r="rolAsignado"){
+                            Swal.fire({
+                                icon: 'error',
+                                title: "Rol ya asignado",
+                                text: 'No se puede eliminar un rol el cual ya fue asignado a uno o más usuarios, por favor'
+                                +' elimina el/los usuarios con este rol primero para poder eliminarlo, si crees que se trata de un error'
+                                +' contacta con tu administrado o personal de TI.',
+                                showConfirmButton: true
+                            })
                         }
                     },
                     error: function (r) {
@@ -399,6 +664,71 @@ jQuery(document).ready(function ($){
 
 
     });
+
+    //al click del btn eliminar información de la fila en la tabla roles
+    $("#tblMenus tbody").on("click", "#btnEliminar", function(){
+        //preguntamos si está seguro
+        Swal.fire({
+                title: '¿Eliminar el registro?',
+                text: "¿Seguro/a de eliminar el registro?, la acción no será reversible, por facor"
+                +"confirma la acción.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, Eliminarlo!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                //cargamos información  de la tabla donde se hizo click
+                var table = $('#tblMenus').DataTable();
+                var data = table.row(this).data();
+                var idMenuTbl = data["id_menu"];
+                //enviamos ajax
+                $.ajax({
+                    url:"../controladores/rolesPermisosControlador.php",
+                    method: "post",
+                    dataType: "json",
+                    data: { "key": "eliminarMenu",
+                    "idMenuTbl": idMenuTbl},
+                    success: function (r) {
+                        console.log(r);
+                        if(r == true){
+                            Swal.fire({
+                                position: 'bottom-end',
+                                icon: 'success',
+                                title: 'Rol eliminado con éxtio',
+                                showConfirmButton: false,
+                                timer: 1500
+                                })
+                                $("#frmMenu")[0].reset();
+                                $("#grupoCkbMenu li").remove();
+                                cargarMenus();
+                                $('#tblMenus').DataTable().ajax.reload();
+                        }else if(r="menuAsignado"){
+                            Swal.fire({
+                                icon: 'error',
+                                title: "Menú ya asignado",
+                                text: 'No se puede eliminar un menú el cual ya fue asignado a uno o más roles'
+                                +' primero debes quitar la asignación de este menú de los roles que lo tienen asignado para poder eliminarlo, si crees que se trata de un error'
+                                +' contacta con tu administrado o personal de TI.',
+                                showConfirmButton: true
+                            })
+                        }
+                    },
+                    error: function (r) {
+                        console.log(r.responseText);
+                        Swal.fire({
+                            icon: 'error',
+                            title: "Problemas de comunicación",
+                            text: 'Parece tenemos problemas para comunicarnos con los servidores y eliminar el menú'
+                            +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                            showConfirmButton: true
+                        })
+                    }
+                });  
+            }
+        })
+    });
     
 
     function disabledControles(boolean){
@@ -408,6 +738,15 @@ jQuery(document).ready(function ($){
         $(".ckbAcciones:checkbox").prop("disabled",boolean);
         $(".ckbMenu:checkbox").prop("disabled",boolean);
     }
+
+    function disabledControlesMenu(boolean){
+
+        $("#txtNombreMenu").prop("disabled", boolean);
+        $("#txtDireccionWeb").prop("disabled", boolean);
+        $("#txtMenuPadre").prop("disabled", boolean);
+
+    }
+
 
     //función que solicita por ajax el menú según el idRol pasado como parametro
     //que sería el ID del rol seleccionado en la tabla
@@ -790,13 +1129,48 @@ jQuery(document).ready(function ($){
       
     }
 
+    function validarMenuNoRegistrado(callback){
+        //pasamos un parametro que serpa una función en este caso callback
+        $.ajax({
+            url:"../controladores/rolesPermisosControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "obtenerMenu"},
+            success: function (r) {
+                //si tiene respuesta validad del server creamos arreglo
+                var menu = [];
+                for(let i =0; i<r.length; i++){
+                    //llenamos arreglo con los datos
+                    menu[i] = r[i]["nombre_menu"];
+     
+                }
+                //llamamos al parametro que pasa a ser una función que resive el parametro que es
+                //el arreglo creado
+                callback(menu);
+            },
+            error: function (r) {
+                console.log(r)
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece tenemos problemas para comunicarnos con los servidores y validar los roles ingresados en el sistema'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+        });
+        
+      
+    }
+
     //esta función obtiene una cadena string, convierte su primer letra a mayuscula
     //y retorna el nuevo valor
     function convertirPrimerLetraMayus(valor){
-        var primerCaracter = valor.charAt().toUpperCase();
-        var restoDeLaCadena = valor.substring(1, valor.length);
-        var rolIngresado = primerCaracter.concat(restoDeLaCadena);
+        var valorLower = valor.toLowerCase();
+        var primerCaracter = valorLower.charAt().toUpperCase();
+        var restoDeLaCadena = valorLower.substring(1, valor.length);
+        var nuevoValor = primerCaracter.concat(restoDeLaCadena);
 
-        return rolIngresado;
+        return nuevoValor;
     }
 });
