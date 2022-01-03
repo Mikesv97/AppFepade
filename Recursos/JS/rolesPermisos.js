@@ -709,7 +709,7 @@ jQuery(document).ready(function ($){
                                 icon: 'error',
                                 title: "Menú ya asignado",
                                 text: 'No se puede eliminar un menú el cual ya fue asignado a uno o más roles'
-                                +' primero debes quitar la asignación de este menú de los roles que lo tienen asignado para poder eliminarlo, si crees que se trata de un error'
+                                +' primero debes quitar la asignación de este menú de los roles que lo tienen asignado Ya para poder eliminarlo, si crees que se trata de un error'
                                 +' contacta con tu administrado o personal de TI.',
                                 showConfirmButton: true
                             })
