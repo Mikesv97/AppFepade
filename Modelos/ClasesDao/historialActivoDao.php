@@ -1,6 +1,6 @@
 <?php
-include_once "historialActivo.php";
-include_once 'conexion.php';
+include_once dirname(__DIR__, 1)."/clases/historialActivo.php";
+include_once dirname(__DIR__, 1).'/conexion.php';
 
 class historialActivoDao{
 

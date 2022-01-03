@@ -1,6 +1,6 @@
 <?php
-include "menu.php";
-include_once 'conexion.php';
+include dirname(__DIR__, 1)."/clases/menu.php";
+include_once dirname(__DIR__, 1).'/conexion.php';
 
 class MenuDao{
     private $con;

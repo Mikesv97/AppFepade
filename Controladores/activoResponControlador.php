@@ -1,6 +1,6 @@
 <?php
 
-include_once '../Modelos/activoResponsableDAO.php';
+include_once dirname(__DIR__, 1).'/Modelos/clasesDao/activoResponsableDAO.php';
 
 $activoResponsable = new activoResponsableDao();
 

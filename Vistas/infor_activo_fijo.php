@@ -1,7 +1,7 @@
 <?php
 include('layout/header.php');
 include('layout/navbar.php');
-include_once '../Modelos/activoFijoDao.php';
+include_once dirname(__DIR__, 1).'/Modelos/clasesDao/activoFijoDao.php';
 $obj = new activoFijoDAO();
 
 //variables que almacenan el nombre y id del usuario que inicia sesion

@@ -1,9 +1,10 @@
 <?php
-include_once "../Modelos/rolesDao.php";
-include_once "../Modelos/menuDao.php";
-include_once "../Modelos/accionesDao.php";
-include_once "../Modelos/rolAccionesDao.php";
-include_once "../Modelos/rolMenuDao.php";
+include_once dirname(__DIR__, 1)."/Modelos/clasesDao/rolesDao.php";
+include_once dirname(__DIR__, 1)."/Modelos/clasesDao/menuDao.php";
+include_once dirname(__DIR__, 1)."/Modelos/clasesDao/accionesDao.php";
+include_once dirname(__DIR__, 1)."/Modelos/clasesDao/rolAccionesDao.php";
+include_once dirname(__DIR__, 1)."/Modelos/clasesDao/rolMenuDao.php";
+
 if(isset($_POST["key"])){
     $key=$_POST["key"];
     switch($key){

@@ -1,7 +1,7 @@
 <?php
 session_start();
-include "../Modelos/rolesDao.php";
-include "../Modelos/usuarioNuevoDao.php";
+include dirname(__DIR__, 1)."/Modelos/clasesDao/rolesDao.php";
+include dirname(__DIR__, 1)."/Modelos/clasesDao/usuarioNuevoDao.php";
 
 if(isset($_POST["key"])){   
     $key=$_POST["key"];

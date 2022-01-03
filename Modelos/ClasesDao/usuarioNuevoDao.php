@@ -1,6 +1,6 @@
 <?php
-include "usuarioNuevo.php";
-include_once 'conexion.php';
+include dirname(__DIR__, 1)."/clases/usuarioNuevo.php";
+include_once dirname(__DIR__, 1).'/conexion.php';
 class UsuarioNuevoDao{
 
 

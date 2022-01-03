@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'conexion.php';
+include_once dirname(__DIR__, 1)."/conexion.php";
 
 class LoginDao{
     private $codGenerado;

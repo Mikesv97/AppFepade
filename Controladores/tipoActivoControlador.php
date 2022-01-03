@@ -1,6 +1,7 @@
 <?php
 
-include_once '../Modelos/tipoActivoDao.php';
+include_once dirname(__DIR__, 1).'/Modelos/clasesDao/tipoActivoDao.php';
+
 $tipoActivo = new tipoActivoDao();
 
 if ($_POST) {

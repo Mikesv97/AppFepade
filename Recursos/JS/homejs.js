@@ -1,7 +1,5 @@
 $(document).ready(function(){
-    //ocultamos menú para mostrarlo según rol
-    ocultarMenu();
-    ocultarBtnsRol(rol);
+    ocultarBtnsRol();
 
     //cuando carga la pag solicitamos menú según Rol del usuario
     solicitarMenuRol(idRol);
@@ -26,70 +24,72 @@ $(document).ready(function(){
         });
     });
 
-
-    
-    //función que oculta el menú para mostrarlo mediante
-    //la función solicitarMenuRol() según el rol
-    function ocultarMenu(){
-        $("#listaActivos").hide();
-        $("#listaUsuarioRoles").hide();
-        $("#listaResponsable").hide();
-        $("#listaReportes").hide();
-    }
-
-    //función que oculta los btns según el rol
-    function ocultarBtnsRol(rol){
-
-        switch(rol){
-            case "Admin":
-                //botones de activo fijo
-                $("#btnIngresar").show();
-                $("#btnModificar").show();
-                $("#btnEliminar").show();
-                $("#btnModificarHostorico").show();
-                $("#btnEliminarHistorico").show();
-
-                //botones de tipo activo
-
-
-                //botones de usuario nuevo
-
-                //botones de responsable
-
-            break;
-            case "Secretaria":
-                //botones de activo fijo
-                $("#btnModificar").hide();
-                $("#btnEliminar").hide();
-                //botones de hitorico activo
-                $("#btnModificarHostorico").hide();
-                //botones de tipo activo
-                $("#btnModificar").hide();
-            break;
-            case "Visitante":
-                //botones de activo fijo
-                $("#btnIngresar").hide();
-                $("#btnModificar").hide();
-                $("#btnEliminar").hide();
-                $("#btnCancelar").hide();
-                //botones de hitorico activo
-                $("#btnModificarHostorico").hide();
-                $("#btnNuevoHistorico").hide();
-                $("#btnInsertarHistorico").hide();
+   //función que oculta los btns según el rol
+    function ocultarBtnsRol(){
+        $.ajax({
+            url: "../Controladores/homeControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "soliAccRol","idRol": idRol},
+            success: function (r) {
+                for(let i=0; i<r.length; i++){
+                    switch(r[i]["nombre_accion"].toLowerCase()){
+                        case "ingresar":
+                            $("#btnIngresar").show();
+                            $("#btnInsertar").show();
+                            $("#btnNuevoHistorico").show();
+                            $("#btnInsertarHistorico").show();
+                            $("#btnIngresarMenu").show();
+                            $("#btnNewUser").show();  
+                            $("#btnCancelar").show();          
+                        break;
+                        case "editar":
+                            $("#btnModificar").show();
+                            $("#btnModificarHostorico").show();
+                            $("#btnGuardar").show();
+                            $("#btnGuardarMenu").show();
+                            $("#btnCancelar").show();
+                        break;
+                        case "eliminar":
+                            $("#btnEliminar").show();
+                        break;
+                        case "ninguna":
+                            $("#btnIngresar").hide();
+                            $("#btnInsertar").hide();
+                            $("#btnNuevoHistorico").hide();
+                            $("#btnInsertarHistorico").hide();
+                            $("#btnIngresarMenu").hide();
+                            $("#btnNewUser").hide();
+                            $("#btnModificar").hide();
+                            $("#btnModificarHostorico").hide();
+                            $("#btnGuardar").hide();
+                            $("#btnGuardarMenu").hide();
+                            $("#btnEliminar").hide();
+                            $("#btnCancelar").hide();
+                        break;
+                    }
+                   
+                }
                 
-                //botones de tipo activo
-                $("#btnInsertar").hide();
-                $("#btnModificar").hide();
-                $("#btnCancelar").hide();
-
-                //botones de usuario nuevo
-                $("#btnNewUser").hide();
-
-                //botones de responsable
-            break;
-        }
+            },
+            error: function (r) {
+                console.log(r.responseText);
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece que tenemos problemas para comunicarnos con los servidores y validar las acciones permitidas para el rol del usuario'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+            
+        });
+       
     }
+
 });
+
+
 //función que solicita el menú de la BD en base al rol logueado
     function  solicitarMenuRol(idRol){
         $("#subMenuActivos li").remove();

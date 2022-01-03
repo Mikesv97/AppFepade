@@ -1,7 +1,7 @@
 <?php
 
-include_once '../Modelos/loginDao.php';
-include_once '../Modelos/sendMail.php';
+include_once dirname(__DIR__, 1).'/Modelos/clasesDao/loginDao.php';
+include_once  dirname(__DIR__, 1).'/Modelos/sendMail.php';
 $usDao = new LoginDao();
 if(isset($_POST["key"])){   
         $key=$_POST["key"];

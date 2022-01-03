@@ -1,7 +1,7 @@
 <?php
-include_once '../Modelos/activoFijoDao.php';
-include_once '../Modelos/activoEspecificacionDao.php';
-include_once '../Modelos/historialActivoDao.php';
+include_once dirname(__DIR__, 1).'/Modelos/clasesDao/activoFijoDao.php';
+include_once dirname(__DIR__, 1).'/Modelos/clasesDao/activoEspecificacionDao.php';
+include_once dirname(__DIR__, 1).'/Modelos/clasesDao/historialActivoDao.php';
 
 $activoFijo = new activoFijoDAO();
 $activoEspe = new activoEspecificacionDao();

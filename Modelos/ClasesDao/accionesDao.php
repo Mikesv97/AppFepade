@@ -1,6 +1,6 @@
 <?php
-include "acciones.php";
-include_once 'conexion.php';
+include dirname(__DIR__, 1)."/clases/acciones.php";
+include_once  dirname(__DIR__,1).'/conexion.php';
 
 class AccionesDao{
     private $con;

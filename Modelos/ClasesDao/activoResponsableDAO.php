@@ -1,29 +1,27 @@
 <?php
 
-include 'tipoActivo.php';
-include_once 'conexion.php';
+include dirname(__DIR__, 1).'/clases/activoResponsable.php';
+include_once dirname(__DIR__, 1).'/conexion.php';
 
-class tipoActivoDao{
+class activoResponsableDao{
 
-    public function __construct()
-    {
+    public function __construct(){
     }
 
-    public function insertarTipoActivo($objeto){
+    public function insertarResponsable($objeto){
         $re = $objeto;
         $con = Conexion::conectar();
-        $sql = "INSERT INTO Tipo_Activo(
-            tipo_activo_id,
-            tipo_activo_nombre,
-            usuario_id,
-            fecha)
-            VALUES (?,?,?,CURRENT_TIMESTAMP)";
+        $sql = "INSERT INTO Activo_responsable(
+            Codigo_responsable,
+            Nombre_Responsable,
+            Estado)
+            VALUES (?,?,?)";
         $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([
-                $re->getTipoActivoId(),
-                $re->getTipoActivoNombre(),
-                $re->getUsuarioId()
+                $re->getCodigoResponsable(),
+                $re->getNombreResponsable(),
+                $re->getEstado()
             ]);
             return $respuesta->rowCount();
         }catch(PDOException $error){
@@ -31,20 +29,21 @@ class tipoActivoDao{
         }
     }
 
-    public function modificarTipoActivo($objeto){
+    public function modificarResponsable($objeto){
         $re = $objeto;
         $con = Conexion::conectar();
-        $sql = "UPDATE Tipo_Activo SET
-            tipo_activo_nombre = ?,
-            usuario_id = ?,
-            fecha = CURRENT_TIMESTAMP
-            WHERE tipo_activo_id = ?";
+        $sql = "UPDATE Activo_responsable SET
+            Codigo_responsable = ?,
+            Nombre_Responsable = ?,
+            Estado = ?
+            WHERE Responsable_codigo = ?";
         $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([
-                $re->getTipoActivoNombre(),
-                $re->getUsuarioId(),
-                $re->getTipoActivoId()
+                $re->getCodigoResponsable(),
+                $re->getNombreResponsable(),
+                $re->getEstado(),
+                $re->getResponsableCodigo()
             ]);
             return $respuesta->rowCount();
         }catch(PDOException $error){
@@ -52,9 +51,9 @@ class tipoActivoDao{
         }
     }
 
-    public function eliminarTipoActivo($id){
+    public function eliminarResponsable($id){
         $con = Conexion::conectar();
-        $sql = "DELETE FROM Tipo_Activo WHERE tipo_activo_id = ?";
+        $sql = "DELETE FROM Activo_responsable WHERE Responsable_codigo = ?";
         $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute([$id]);
@@ -64,9 +63,9 @@ class tipoActivoDao{
         }
     }
 
-    public function mostrarTipoActivo(){
+    public function mostrarActivoResponsable(){
         $con = Conexion::conectar();
-        $sql = "SELECT * FROM Tipo_Activo";
+        $sql = "SELECT * FROM Activo_responsable";
         $respuesta = $con->prepare($sql);
         try{
             $respuesta->execute();
