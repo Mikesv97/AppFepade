@@ -201,6 +201,9 @@ jQuery(document).ready(function ($) {
             data['Estado']
         );
 
+        //ENVIANDO AL INICIO DEL FORMULARIO CUANDO EL USUARIO DE CLICK EN EDITAR
+        $(location).attr('href', '#inicioFormRespon');
+
         //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
         $('#btnInsertar').attr('disabled', true);
         $('#btnModificar').attr('disabled', false);
@@ -285,28 +288,28 @@ jQuery(document).ready(function ($) {
         $('#Estado option[value=' + Estado + ']').prop('selected', true);
     }
 
-        //función que oculta columnas de DataTable según el rol que inicia sesión
-        function ocultarColumTableRol(rol){
-            var dtResponsable = $('#tblResponsables').DataTable();
-               
-            //evaluamos por switch los diferentes roles del sistema
-            switch(rol){
-                case "admin":
-                    //el admin puede editar y eliminar mostramos la columna
-                    dtResponsable.columns(4).visible(true);
-                    dtResponsable.columns(5).visible(true);
+    //función que oculta columnas de DataTable según el rol que inicia sesión
+    function ocultarColumTableRol(rol) {
+        var dtResponsable = $('#tblResponsables').DataTable();
+
+        //evaluamos por switch los diferentes roles del sistema
+        switch (rol) {
+            case "admin":
+                //el admin puede editar y eliminar mostramos la columna
+                dtResponsable.columns(4).visible(true);
+                dtResponsable.columns(5).visible(true);
                 break;
-                case "Secretaria":
-                    //la secretaria no puede editar ni eliminar, ocultamos columna
-                    dtResponsable.columns(4).visible(false);
-                    dtResponsable.columns(5).visible(false);
+            case "Secretaria":
+                //la secretaria no puede editar ni eliminar, ocultamos columna
+                dtResponsable.columns(4).visible(false);
+                dtResponsable.columns(5).visible(false);
                 break;
-                case "Visitante":
-                    //el visitante no puede hacer acciones crud, ocultamos columna
-                    dtResponsable.columns(4).visible(false);
-                    dtResponsable.columns(5).visible(false);
+            case "Visitante":
+                //el visitante no puede hacer acciones crud, ocultamos columna
+                dtResponsable.columns(4).visible(false);
+                dtResponsable.columns(5).visible(false);
                 break;
-            }
         }
+    }
 
 });

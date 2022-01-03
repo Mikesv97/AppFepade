@@ -59,23 +59,22 @@ $(document).ready(function(){
             break;
             case "Secretaria":
                 //botones de activo fijo
-                $("#btnIngresar").show();
                 $("#btnModificar").hide();
                 $("#btnEliminar").hide();
-                $(".btnEditar").attr("disabled",true);
-                $("#btnBorrar").hide();
+                //botones de hitorico activo
                 $("#btnModificarHostorico").hide();
-                $("#btnEliminarHistorico").hide();
+                //botones de tipo activo
+                $("#btnModificar").hide();
             break;
             case "Visitante":
                 //botones de activo fijo
                 $("#btnIngresar").hide();
                 $("#btnModificar").hide();
                 $("#btnEliminar").hide();
-
+                $("#btnCancelar").hide();
                 //botones de hitorico activo
                 $("#btnModificarHostorico").hide();
-                $("#btnEliminarHistorico").hide();
+                $("#btnNuevoHistorico").hide();
                 $("#btnInsertarHistorico").hide();
                 
                 //botones de tipo activo

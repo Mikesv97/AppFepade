@@ -10,7 +10,7 @@ $idUSuario = $_SESSION["usuario"]["id"];
 <script src="../Recursos/JS/tipoActivoC.js"></script>
 <div class="content-body">
     <div class="container-fluid">
-
+    <a href="" id="inicioFormTipoAct"></a>
         <!--barra top -->
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">

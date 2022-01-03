@@ -205,6 +205,9 @@ jQuery(document).ready(function ($) {
             data['usuario_id'],
         );
 
+        //ENVIANDO AL INICIO DEL FORMULARIO CUANDO EL USUARIO DE CLICK EN EDITAR
+        $(location).attr('href', '#inicioFormTipoAct');
+
         //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
         $('#btnInsertar').attr('disabled', true);
         $('#btnModificar').attr('disabled', false);

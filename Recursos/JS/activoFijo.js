@@ -1092,7 +1092,10 @@ jQuery(document).ready(function ($) {
                 }
             }
         });
-    });
+
+        //VALIDAMOS EL ROL PARA OCULTAR LAS COLUMNAS
+        ocultarColumTableRol2(rol);
+    }); 
 
     //BOTON PARA CARGAR LOS INPUT CON LA INFORMACION DEL HISTORIAL SELECIONADO
     $('#historial tbody').on('click', '.btnMostrarHistorial', function () {
@@ -1169,6 +1172,9 @@ jQuery(document).ready(function ($) {
 
         //HABILITANDO LOS INPUT CUANDO EL USUARIO QUIERE EDITAR EL HISTORIAL
         blockControlHistorial(false);
+
+        //ENVIANDO AL INICIO DEL FORMULARIO CUANDO EL USUARIO DE CLICK AL HISTORIAL
+        $(location).attr('href', '#inicioFormHistorial');
 
         //DESABILITANDO BOTONES DE INSERTAR Y MODIFICAR
         $("#btnInsertarHistorico").attr('disabled', true);
@@ -1534,6 +1540,31 @@ jQuery(document).ready(function ($) {
             case "Visitante":
                 //el visitante no puede hacer acciones crud, ocultamos columna
                 dtActivo.columns(18).visible(false);
+            break;
+        }
+    }
+
+    //función que oculta columnas de DataTable según el rol que inicia sesión
+    function ocultarColumTableRol2(rol){
+        var dtActivo = $('#historial').DataTable();
+       
+        
+        //evaluamos por switch los diferentes roles del sistema
+        switch(rol){
+            case "admin":
+                //el admin puede editar y eliminar mostramos la columna
+                dtActivo.columns(5).visible(true);
+                dtActivo.columns(6).visible(true);
+            break;
+            case "Secretaria":
+                //la secretaria no puede editar ni eliminar, ocultamos columna
+                dtActivo.columns(5).visible(false);
+                dtActivo.columns(6).visible(false);
+            break;
+            case "Visitante":
+                //el visitante no puede hacer acciones crud, ocultamos columna
+                dtActivo.columns(5).visible(false);
+                dtActivo.columns(6).visible(false);
             break;
         }
     }

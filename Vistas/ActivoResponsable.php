@@ -6,7 +6,7 @@ include('layout/navbar.php');
 <script src="../Recursos/JS/activoResponsable.js"></script>
 <div class="content-body">
     <div class="container-fluid">
-
+    <a href="" id="inicioFormRespon"></a>
         <!--barra top -->
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
