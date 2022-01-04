@@ -44,6 +44,9 @@ if (isset($_REQUEST["s"])) {
                                     <div class="text-center just">
                                         <img src="../recursos/multimedia/imagenes/logo.jpg" alt="logoFepade">
                                         <h1 class="h3 text-gray-900 my-2 mb-4">Cambio de contraseña no solicitada</h1>
+                                        <?php
+                                            echo $_POST['nombre'];
+                                        ?>
                                     </div>
                                     <form id="frmLogin" class="user">
                                         <div class="form-group">

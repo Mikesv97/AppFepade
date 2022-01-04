@@ -121,7 +121,11 @@ class SendMail {
                 <h3 class="">
                 Tu código de validacion es el : <span class="spanCodigo"><strong>'.$codigo.'</strong></span>
                 </h3>
-                <h3 class="">Si no has sido tú por favor reportalo:</h3><a class="" href="http://localhost/appfepade/vistas/reportar.html">Reportar</a>    
+                <h3 class="">Si no has sido tú por favor reportalo:</h3><a class="" href="http://localhost/appfepade/vistas/reportar.html">Reportar</a>
+                <form action="http://localhost/appfepade/vistas/reportar.php" method="POST">
+                    <input type="text" name="nombre" value="probando">
+                    <button type="submit" name="btnReportar">REPORTAR</button>
+                </form>    
             </div>
             <h1 class="titulo"><img class="h" src="https://github.com/Mikesv97/AppFepade/blob/main/flecha.png?raw=true">
                 Favor no responder a este mensaje.
