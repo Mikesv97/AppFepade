@@ -394,7 +394,8 @@ $date = date('d-m-Y');
                                         <th>Descripción de activo</th>
                                         <th>Activo Eliminado</th>
                                         <th>Cargar Información</th>
-                                        <th>Acciones</th>
+                                        <th>Editar</th>
+                                        <th>Eliminar</th>
                                         <th>Imagen</th>
                                     </tr>
                                 </thead>
@@ -421,7 +422,8 @@ $date = date('d-m-Y');
                                         <th>Descripción de activo</th>
                                         <th>Activo Eliminado</th>
                                         <th>Cargar Información</th>
-                                        <th>Acciones</th>
+                                        <th>Editar</th>
+                                        <th>Eliminar</th>
                                         <th>Imagen</th>
                                     </tr>
                                 </tfoot>

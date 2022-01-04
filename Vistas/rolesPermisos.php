@@ -65,7 +65,8 @@
                                         <th>Nombre rol</th>
                                         <th>Descripción</th>
                                         <th>Ver más detalles</th>
-                                        <th>Acción</th>
+                                        <th>Editar</th>
+                                        <th>Eliminar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -108,7 +109,8 @@
                                         <th>Dirección web</th>
                                         <th>Contenedor padre</th>
                                         <th>Ver más detalles</th>
-                                        <th>Acción</th>
+                                        <th>Editar</th>
+                                        <th>Eliminar</th>
                                     </tr>
                                 </thead>
                                 <tbody>

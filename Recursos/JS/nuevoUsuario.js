@@ -28,7 +28,7 @@ $(document).ready(function(){
     });
 
     //ocultamos columnas en base al rol
-    ocultarColumTableRol(rol);
+    ocultarColumTableUsuario();
     
     //cuando hace clic en el btn nuevo usuario
     $("#frmNuevoUsuario").submit(function(e){
@@ -208,29 +208,42 @@ $(document).ready(function(){
     }
     
     //función que oculta columnas de DataTable según el rol que inicia sesión
-    function ocultarColumTableRol(rol){
-        var dtUsuarios = $('#usuarios').DataTable();
-               
-        //evaluamos por switch los diferentes roles del sistema
-        switch(rol){
-            case "admin":
-                //el admin puede editar y eliminar mostramos la columna
-                dtUsuarios.columns(6).visible(true);
-            break;
-            case "Secretaria":
-                //la secretaria no puede editar ni eliminar, ocultamos columna
-                dtUsuarios.columns(6).visible(false);
-            break;
-            case "Visitante":
-                //el visitante no puede hacer acciones crud, ocultamos columna
-                dtUsuarios.columns(6).visible(false);
-            break;
-            }
-        }
-});
+    function ocultarColumTableUsuario(){
+        //creamos instancia a las tablas para acceder a sus columnas
+        var dt= $('#usuarios').DataTable();
 
-//length
-/*
-    $("#frmNuevoUsuario")[0].reset();
-    $('#usuarios').DataTable().ajax.reload(); 
-*/
+        //ocultamos columnas de inicio para mostrarlas según sus permisos
+        dt.columns(6).visible(false);
+ 
+        //solicitamos acciones del rol del usuario que inicio sesión
+        $.ajax({
+            url: "../Controladores/homeControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "soliAccRol","idRol": idRol},
+            success: function (r) {
+                //validamos cada acción y vamos mostrando sus columnas.
+                for(let i=0; i<r.length; i++){
+                    switch(r[i]["nombre_accion"].toLowerCase()){
+                        case "eliminar":
+                            dt.columns(6).visible(true);
+                        break;
+                    }
+                   
+                }
+                
+            },
+            error: function (r) {
+                console.log(r.responseText);
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece que tenemos problemas para comunicarnos con los servidores y validar las acciones permitidas para el rol del usuario'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+            
+        });
+    }
+});

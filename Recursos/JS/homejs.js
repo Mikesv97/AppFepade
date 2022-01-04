@@ -26,12 +26,29 @@ $(document).ready(function(){
 
    //función que oculta los btns según el rol
     function ocultarBtnsRol(){
+        //ocultamos todos los botones
+        $("#btnIngresar").hide();
+        $("#btnInsertar").hide();
+        $("#btnNuevoHistorico").hide();
+        $("#btnInsertarHistorico").hide();
+        $("#btnIngresarMenu").hide();
+        $("#btnNewUser").hide();
+        $("#btnModificar").hide();
+        $("#btnModificarHostorico").hide();
+        $("#btnGuardar").hide();
+        $("#btnGuardarMenu").hide();
+        $("#btnEliminar").hide();
+        $("#btnCancelar").hide();
+
+        //validamos mediante ajax la acciones permitadas para el rol del usuario
+        //que inicio sesión
         $.ajax({
             url: "../Controladores/homeControlador.php",
             method: "post",
             dataType: "json",
             data: { "key": "soliAccRol","idRol": idRol},
             success: function (r) {
+                //validamos cada acción y vamos mostrando sus respectivos btns.
                 for(let i=0; i<r.length; i++){
                     switch(r[i]["nombre_accion"].toLowerCase()){
                         case "ingresar":
@@ -53,20 +70,6 @@ $(document).ready(function(){
                         case "eliminar":
                             $("#btnEliminar").show();
                         break;
-                        case "ninguna":
-                            $("#btnIngresar").hide();
-                            $("#btnInsertar").hide();
-                            $("#btnNuevoHistorico").hide();
-                            $("#btnInsertarHistorico").hide();
-                            $("#btnIngresarMenu").hide();
-                            $("#btnNewUser").hide();
-                            $("#btnModificar").hide();
-                            $("#btnModificarHostorico").hide();
-                            $("#btnGuardar").hide();
-                            $("#btnGuardarMenu").hide();
-                            $("#btnEliminar").hide();
-                            $("#btnCancelar").hide();
-                        break;
                     }
                    
                 }
@@ -86,7 +89,6 @@ $(document).ready(function(){
         });
        
     }
-
 });
 
 

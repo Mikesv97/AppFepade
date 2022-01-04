@@ -15,6 +15,9 @@ jQuery(document).ready(function ($){
     cargarAcciones();
     cargarMenus();
     cargarTblMenu();
+    ocultarColumTableRolesMenu();
+   
+   
   
     //cuando se genere click en el último elemento de la lista
     //desmarcamos los demás chekbox de la misma lista (más detalles dentro de la función, al final.)
@@ -875,7 +878,12 @@ jQuery(document).ready(function ($){
                         className: "center",
                         defaultContent: 
                         '<button id="btnEditar" class="btn btn-warning noHover">Editar</button>'
-                        +'<button id="btnEliminar" class="mx-2 btn btn-danger noHover">Eliminar</button>'
+                    },
+                    {
+                        data: null,
+                        className: "center",
+                        defaultContent: 
+                        '<button id="btnEliminar" class="mx-2 btn btn-danger noHover">Eliminar</button>'
                     }
                 ],
                 responsive: true,
@@ -935,7 +943,12 @@ jQuery(document).ready(function ($){
                         className: "center",
                         defaultContent: 
                         '<button id="btnEditar" class="btn btn-warning noHover">Editar</button>'
-                        +'<button id="btnEliminar" class="mx-2 btn btn-danger noHover">Eliminar</button>'
+                    },
+                    {
+                        data: null,
+                        className: "center",
+                        defaultContent: 
+                        '<button id="btnEliminar" class="mx-2 btn btn-danger noHover">Eliminar</button>'
                     }
                 ],
                 responsive: true,
@@ -953,8 +966,6 @@ jQuery(document).ready(function ($){
                 }
             });
     }
-
-
 
     //función que solicita las acciones (CRUD) de la BD para cargar los
     //chekbox en la vista roles y permisos
@@ -1174,4 +1185,58 @@ jQuery(document).ready(function ($){
 
         return nuevoValor;
     }
+
+    //función que oculta columna de las tablas roles y menu según las acciones
+    //permitidas del rol del usuario que inicia sesión
+    function ocultarColumTableRolesMenu(){
+        //creamos instancia a las tablas para acceder a sus columnas
+        var dtRoles= $('#tblRoles').DataTable();
+        var dtMenu = $('#tblMenus').DataTable();
+
+        //ocultamos columnas de inicio para mostrarlas según sus permisos
+        dtRoles.columns(4).visible(false);
+        dtRoles.columns(5).visible(false);
+
+        dtMenu.columns(5).visible(false);
+        dtMenu.columns(6).visible(false);
+ 
+        //solicitamos acciones del rol del usuario que inicio sesión
+        $.ajax({
+            url: "../Controladores/homeControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "soliAccRol","idRol": idRol},
+            success: function (r) {
+                //validamos cada acción y vamos mostrando sus columnas.
+                for(let i=0; i<r.length; i++){
+                    switch(r[i]["nombre_accion"].toLowerCase()){
+                        case "editar":
+                            dtRoles.columns(4).visible(true);
+                            dtMenu.columns(5).visible(true);
+                        break;
+                        case "eliminar":
+                            dtRoles.columns(5).visible(true);
+                            dtMenu.columns(6).visible(true);
+                        break;
+                    }
+                   
+                }
+                
+            },
+            error: function (r) {
+                console.log(r.responseText);
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece que tenemos problemas para comunicarnos con los servidores y validar las acciones permitidas para el rol del usuario'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+            
+        });
+    }
+
+
+    
 });

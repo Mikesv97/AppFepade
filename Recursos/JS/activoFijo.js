@@ -454,7 +454,15 @@ jQuery(document).ready(function ($) {
                 data: null,
                 className: "center",
                 defaultContent: '<button type="button" class="btn btn-facebook" id="btnEditar"><i class="fa fa-pencil-square-o"></i></button>'
-                +'<button type="button" class="btn btn-pinterest" id="btnBorrar"><i class="fa fa-trash-o"></i></button>'
+                
+                
+            },
+            {
+               
+                data: null,
+                className: "center",
+                defaultContent: '<button type="button" class="btn btn-pinterest" id="btnBorrar"><i class="fa fa-trash-o"></i></button>'
+                
                 
             },
             {
@@ -484,7 +492,7 @@ jQuery(document).ready(function ($) {
     });
 
     //validamos el rol para ocultar las columnas
-    ocultarColumTableRol(rol);
+    ocultarColumTableActivo();
 
     //CUANDO SE DA AL OJO DEL ACTIVO QUE SE QUIERE MOSTRAR
     $('#activoInformacion tbody').on('click', '#btnMostrar', function () {
@@ -989,7 +997,7 @@ jQuery(document).ready(function ($) {
 
     //BOTON PARA MOSTRAR EL HISTORIAL DEL ACTIVO SELECIONADO
     $('#btnMostrarHistorial').on('click', function () {
-
+       
         //DEJANDO EL FORMULARIO DE HISTORICO EN LIMPIO SIEMPRE QUE LO MUESTREN
         $("#formHistorico")[0].reset();
 
@@ -1035,6 +1043,7 @@ jQuery(document).ready(function ($) {
         cargarHistorico2(referencia, descripcion);
 
         $('#historial').dataTable().fnDestroy();
+
         //DATATABLE QUE SE ENCUENTRA EN MODAL CONTIENE EL HISTORIAL DE CADA ACTIVO FIJO SEGUN EL ACTIVO ID QUE RECIBE
         $('#historial').DataTable({
             "ajax": {
@@ -1094,7 +1103,8 @@ jQuery(document).ready(function ($) {
         });
 
         //VALIDAMOS EL ROL PARA OCULTAR LAS COLUMNAS
-        ocultarColumTableRol2(rol);
+        
+        ocultarColumTableHistorial();
     }); 
 
     //BOTON PARA CARGAR LOS INPUT CON LA INFORMACION DEL HISTORIAL SELECIONADO
@@ -1523,49 +1533,92 @@ jQuery(document).ready(function ($) {
     }
 
     //función que oculta columnas de DataTable según el rol que inicia sesión
-    function ocultarColumTableRol(rol){
+    function ocultarColumTableActivo(){
+        //creamos instancia a las tablas para acceder a sus columnas
         var dtActivo = $('#activoInformacion').DataTable();
-       
-        
-        //evaluamos por switch los diferentes roles del sistema
-        switch(rol){
-            case "admin":
-                //el admin puede editar y eliminar mostramos la columna
-                dtActivo.columns(18).visible(true);
-            break;
-            case "Secretaria":
-                //la secretaria no puede editar ni eliminar, ocultamos columna
-                dtActivo.columns(18).visible(false);
-            break;
-            case "Visitante":
-                //el visitante no puede hacer acciones crud, ocultamos columna
-                dtActivo.columns(18).visible(false);
-            break;
-        }
+
+        //ocultamos columnas de inicio para mostrarlas según sus permisos
+        dtActivo.columns(18).visible(false);
+        dtActivo.columns(19).visible(false);
+
+        //solicitamos acciones del rol del usuario que inicio sesión
+        $.ajax({
+            url: "../Controladores/homeControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "soliAccRol","idRol": idRol},
+            success: function (r) {
+                //validamos cada acción y vamos mostrando sus columnas.
+                for(let i=0; i<r.length; i++){
+                    switch(r[i]["nombre_accion"].toLowerCase()){
+                        case "editar":
+                            dtActivo.columns(18).visible(true);
+                            
+                        break;
+                        case "eliminar":
+                            dtActivo.columns(19).visible(true);
+                        break;
+                    }
+                   
+                }
+                
+            },
+            error: function (r) {
+                console.log(r.responseText);
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece que tenemos problemas para comunicarnos con los servidores y validar las acciones permitidas para el rol del usuario'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+            
+        });
     }
 
-    //función que oculta columnas de DataTable según el rol que inicia sesión
-    function ocultarColumTableRol2(rol){
-        var dtActivo = $('#historial').DataTable();
-       
-        
-        //evaluamos por switch los diferentes roles del sistema
-        switch(rol){
-            case "admin":
-                //el admin puede editar y eliminar mostramos la columna
-                dtActivo.columns(5).visible(true);
-                dtActivo.columns(6).visible(true);
-            break;
-            case "Secretaria":
-                //la secretaria no puede editar ni eliminar, ocultamos columna
-                dtActivo.columns(5).visible(false);
-                dtActivo.columns(6).visible(false);
-            break;
-            case "Visitante":
-                //el visitante no puede hacer acciones crud, ocultamos columna
-                dtActivo.columns(5).visible(false);
-                dtActivo.columns(6).visible(false);
-            break;
-        }
+
+    function ocultarColumTableHistorial(){
+        //creamos instancia a las tablas para acceder a sus columnas
+        var dtHistorial = $('#historial').DataTable();
+
+        //ocultamos columnas de inicio para mostrarlas según sus permisos
+        dtHistorial.columns(5).visible(false);
+        dtHistorial.columns(6).visible(false);
+
+        //solicitamos acciones del rol del usuario que inicio sesión
+        $.ajax({
+            url: "../Controladores/homeControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "soliAccRol","idRol": idRol},
+            success: function (r) {
+                //validamos cada acción y vamos mostrando sus columnas.
+                for(let i=0; i<r.length; i++){
+                    switch(r[i]["nombre_accion"].toLowerCase()){
+                        case "editar":
+                            
+                            dtHistorial.columns(5).visible(true);
+                        break;
+                        case "eliminar":
+                            dtHistorial.columns(6).visible(true);
+                        break;
+                    }
+                   
+                }
+                
+            },
+            error: function (r) {
+                console.log(r.responseText);
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece que tenemos problemas para comunicarnos con los servidores y validar las acciones permitidas para el rol del usuario'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+            
+        });
     }
 });
