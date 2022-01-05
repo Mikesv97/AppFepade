@@ -85,7 +85,7 @@ jQuery(document).ready(function ($){
                         if(roles[i]==rolIngresado){
                             //si existe, lanzamos error
                             $("#labelError").show();
-                            $("#labelError").text("Rol puta ingresado en el sistema, por favor ingresa otro.");
+                            $("#labelError").text("Rol ya ingresado en el sistema, por favor ingresa otro.");
                             $("#txtNombreRol").focus();
                             i=roles.length;
                             error = rolIngresado;
@@ -509,6 +509,8 @@ jQuery(document).ready(function ($){
                                           })
                                         $("#frmRoles")[0].reset();
                                         $('#tblRoles').DataTable().ajax.reload();
+                                        $('#btnIngresar').prop("disabled", false);
+                                        $('#btnGuardar').prop("disabled", true);
                                         solicitarMenuRol(idRol);    
                                         editarOn = false;
                                         rolEdit = null;
@@ -584,6 +586,8 @@ jQuery(document).ready(function ($){
                                     $("#grupoCkbMenu li").remove();
                                     cargarMenus();
                                     $('#tblMenus').DataTable().ajax.reload();
+                                    $('#btnIngresarMenu').prop("disabled", false);
+                                    $('#btnGuardarMenu').prop("disabled", true);
                                     editarOn = false;
                                 }
                             },

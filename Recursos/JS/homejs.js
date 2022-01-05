@@ -92,7 +92,7 @@ $(document).ready(function(){
 });
 
 
-//función que solicita el menú de la BD en base al rol logueado
+    //función que solicita el menú de la BD en base al rol logueado
     function  solicitarMenuRol(idRol){
         $("#subMenuActivos li").remove();
         $("#subMenuUsuarioRol li").remove();

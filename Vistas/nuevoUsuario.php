@@ -4,11 +4,13 @@ include('layout/navbar.php');
 ?>
   <link href="../recursos/css/nuevoUsuario.css" rel="stylesheet">
   <script src="../recursos/JS/nuevoUsuario.js"></script>
+  
 <div class="content-body">
     <div class="container-fluid">
 
         <!--barra top -->
         <div class="row page-titles mx-0">
+            <a id="inicioForm" href="#"></a>
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
                     <h4>Bienvenido <?=$_SESSION["usuario"]["nombre"];?>!</h4>
@@ -66,6 +68,7 @@ include('layout/navbar.php');
                             <p class="my-2 p-1 gold" id="lbError"></p>
                         </div>                     
                         <button type="submit" class="btnLogin btn" id="btnNewUser">Registrar usuario</button>
+                        <button type="submit" class="mx-2 btnLogin btn" id="btnGuardar">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -85,7 +88,8 @@ include('layout/navbar.php');
                             <th>Correo</th>
                             <th>Rol</th>
                             <th>Usuario Responsable</th>
-                            <th>Acción</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>

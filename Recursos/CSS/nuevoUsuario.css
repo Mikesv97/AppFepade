@@ -20,3 +20,10 @@
     color: #cf0c13 !important;
     text-shadow: 0 1px 1px rgba(90, 92, 105, .5);
   }
+
+  input:disabled,.btn:disabled, .btn:disabled:hover{
+    background-color: rgba(224, 224, 224, 0.836) !important;
+    border: 1px solid black !important;
+    font-weight: bold !important;
+    color: black;
+}

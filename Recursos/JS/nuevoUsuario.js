@@ -1,12 +1,15 @@
 
 $(document).ready(function(){
+    var editUser = false;
+    var error= null;
     //llamamos las funciones que deben ejecutarse en la carga de la pag.
     cargarRoles();
     esconderControles();
     cargarUsuario();
+    $("#btnGuardar").prop("disabled", true);
 
-    $("body").on("click","#btnEliminar",function(e){
-        e.preventDefault();
+    $("body").on("click","#btnEliminar",function(){
+
         $("#btnEliminar").blur();
         Swal.fire({
             title: '¿Estás seguro de eliminar este usuario?',
@@ -27,47 +30,159 @@ $(document).ready(function(){
           })
     });
 
+    $("body").on("click","#btnEditar",function(){
+        $(location).attr('href', '#inicioForm');
+        //instanciamos la tabla
+        var table = $("#usuarios").DataTable();
+        //obtenemos la info de la linea donde se hizo click
+        var data = table.row(this).data();
+
+        //cargamos datos
+        $("#txtNombreUser").val(data["usuario_nombre"]);
+        $("#txtCorreoUsuario").val(data["correo_electronico"]);
+        $('select[name=selectRol]').find('option:contains('+data["rol_nombre"]+')').prop('selected', true);
+        $("#txtIdUser").val(data["usuario_id"]);
+
+        //deshabilitamos controles que no deben poder ser editados
+        $("#txtIdUser").prop("disabled", true);
+        $("#txtPassword1").prop("disabled", true);
+        $("#txtPassword2").prop("disabled", true);
+        $("#btnNewUser").prop("disabled", true);
+        $("#btnGuardar").prop("disabled", false);
+
+        //quitamos el required de contraseñas ya que no pueden ser editadas
+        //por ende no pueden ser requeridas si se va a editar la información
+        //así mantener el submit del form y validar correo.
+
+        $("#txtPassword1").prop("required", false);
+        $("#txtPassword2").prop("requried", false);
+
+        //focus en el nombre del usuario
+        $("#txtNombreUser").focus();
+
+        editUser = true;
+    });
+
     //ocultamos columnas en base al rol
     ocultarColumTableUsuario();
-    
-    //cuando hace clic en el btn nuevo usuario
-    $("#frmNuevoUsuario").submit(function(e){
-        //cancelo submit del form
-        //el submit es para que el required funcione
-        e.preventDefault();
-        if($("#txtPassword1").val() != $("#txtPassword2").val()){
-            $("#lbError").text("Las contraseñas no coinciden");
-            $("#lbError").show();
-        }else if($("#selectRol").val() =="0"){
-            $("#lbError").text("Debes escoger un rol para el usuario");
-            $("#lbError").show();
-        }else{
-            //obtenemos los datos del form
-            var data = $("#frmNuevoUsuario").serialize();
-            $.ajax({
-                url:"../controladores/controladorNuevoUsuario.php",
-                method: "post",
-                dataType: "json",
-                data: { "key": "insertarUsuario","data": data },
-                success: function (r) {
-                    Swal.fire({
-                        position: 'bottom-end',
-                        icon: 'success',
-                        title: 'Usuario creado con éxtio',
-                        showConfirmButton: false,
-                        timer: 1500
-                      })
-                      $("#frmNuevoUsuario")[0].reset();
-                      $('#usuarios').DataTable().ajax.reload();
-                },
-                error: function (r) {
-                    console.log(r);
-                }
-            });
+
+    //al cambio del select rol ocultamos error si está visible
+    //y si el valor es diferente a 0 ("default");
+    $("#selectRol").change(function(){
+        if(!$("#lbError").is(":visible")){
+            if($("#selectRol").val() != 0){
+                $("#lbError").hide();
+            }
         }
     });
-    
-    
+
+    //al cambio de valor del campo correo validamos que no este ingresado
+    $("#txtCorreoUsuario").change(function(){
+
+        //si se ingresa otro correo, se oculta el error
+        if(error != $(this).val().toLowerCase()){
+            $("#lbError").hide();
+            error=null;
+        }
+
+        var correoIngresado = $(this).val().toLowerCase();
+        validarCorreoNoRegistrado(function(correos){
+            //recorremos el arreglo y buscamos si el valor ingresado ya existe
+            for(let i=0; i<correos.length; i++){
+                if(correos[i].toLowerCase()==correoIngresado){
+                    //si existe, lanzamos error
+                    $("#lbError").show();
+                    $("#lbError").text("Correo ya ingresado en el sistema, por favor ingresa otro.");
+                    $("#txtCorreoUsuario").val("");
+                    $("#txtCorreoUsuario").focus();
+                    i=correos.length;
+                    error = correoIngresado;
+                }else{
+                    //sino, ocultamos el error por si está visible
+                    $("#lbError").hide();
+                }
+            }
+        });
+        
+    });
+
+ 
+
+
+
+    //cuando hace clic en el btn nuevo usuario
+    $("#frmNuevoUsuario").submit(function(e){
+        e.preventDefault();
+        if($("#lbError").is(":visible")){
+            Swal.fire({
+                title: 'Errores detectados',
+                text: "Asegurate que la información ingresada no contenga errores.",
+                icon: 'warning',
+                showConfirmButton: true,
+            })
+        }else{
+            //cancelo submit del form
+            //el submit es para que el required funcione
+            
+            if(editUser){
+                Swal.fire({
+                    title: '¿Estás seguro de editar este usuario?',
+                    text: "¡No podrás deshacer los cambios!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, Editar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        //$("#txtNombreUser").val(data["usuario_nombre"]);
+                        //$("#txtCorreoUsuario").val(data["correo_electronico"]);
+                    // $('select[name=selectRol]').find('option:contains('+data["rol_nombre"]+')').prop('selected', true);
+                    // $("#txtIdUser").val(data["usuario_id"]);
+        
+                        alert("editas al usuario")
+                        editUser = false;
+                    // $("#txtPassword1").prop("disabled", true);
+                    // $("#txtPassword2").prop("disabled", true);
+        
+                    }
+                })
+            }else{
+                if($("#txtPassword1").val() != $("#txtPassword2").val()){
+                    $("#lbError").text("Las contraseñas no coinciden");
+                    $("#lbError").show();
+                }else if($("#selectRol").val() =="0"){
+                    $("#lbError").text("Debes escoger un rol para el usuario");
+                    $("#lbError").show();
+                }else{
+                    //obtenemos los datos del form
+                    var data = $("#frmNuevoUsuario").serialize();
+                    $.ajax({
+                        url:"../controladores/controladorNuevoUsuario.php",
+                        method: "post",
+                        dataType: "json",
+                        data: { "key": "insertarUsuario","data": data },
+                        success: function (r) {
+                            Swal.fire({
+                                position: 'bottom-end',
+                                icon: 'success',
+                                title: 'Usuario creado con éxtio',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            $("#frmNuevoUsuario")[0].reset();
+                            $('#usuarios').DataTable().ajax.reload();
+                            
+                        },
+                        error: function (r) {
+                            console.log(r);
+                        }
+                    });
+                }
+            }
+        }
+        
+    });
 
     //función que solicita la carga de roles y setea el select en la vista
     function cargarRoles(){
@@ -128,6 +243,11 @@ $(document).ready(function(){
                     {
                         data: "usuario_responsable",
                         className: "usuarioResponsable"
+                    },
+                    {
+                        data: null,
+                        className: "center",
+                        defaultContent: '<button id="btnEditar" class="btn btn-warning noHover">Editar</button>'
                     },
                     {
                         data: null,
@@ -246,4 +366,76 @@ $(document).ready(function(){
             
         });
     }
+
+    //función que valida que el correo no este repetido
+    function validarCorreoNoRegistrado(callback){
+        //pasamos un parametro que serpa una función en este caso callback
+        $.ajax({
+            url:"../controladores/controladorNuevoUsuario.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "getUsuarios"},
+            success: function (r) {
+                //si tiene respuesta validad del server creamos arreglo
+                var correos = [];
+                for(let i =0; i<r.length; i++){
+                    //llenamos arreglo con los datos
+                    correos[i] = r[i]["correo_electronico"];
+     
+                }
+                //llamamos al parametro que pasa a ser una función que resive el parametro que es
+                //el arreglo creado
+                callback(correos);
+            },
+            error: function (r) {
+                console.log(r)
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece tenemos problemas para comunicarnos con los servidores y validar que el correo ingresado no se encuentre en el sistema'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+        });
+        
+      
+    }
+
+    function validarUserIdNoRegistrado(callback){
+        //pasamos un parametro que serpa una función en este caso callback
+        $.ajax({
+            url:"../controladores/controladorNuevoUsuario.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "getUsuarios"},
+            success: function (r) {
+                //si tiene respuesta validad del server creamos arreglo
+                var userId = [];
+                for(let i =0; i<r.length; i++){
+                    //llenamos arreglo con los datos
+                    userId[i] = r[i]["usuario_id"];
+                    
+     
+                }
+                //llamamos al parametro que pasa a ser una función que resive el parametro que es
+                //el arreglo creado
+                callback(userId);
+            },
+            error: function (r) {
+                console.log(r)
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece tenemos problemas para comunicarnos con los servidores y validar que el usuario ID ingresado no se encuentre en el sistema'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+        });
+        
+      
+    }
+
+
 });

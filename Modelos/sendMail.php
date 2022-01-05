@@ -16,13 +16,13 @@ class SendMail {
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp-mail.outlook.com';                      //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'activofijo@fepade.edu.sv';                     //SMTP username
-        $mail->Password   = 'zOoM98$$';                               //SMTP password
+        $mail->Username   = 'douglas.figueroa20@itca.edu.sv';                     //SMTP username
+        $mail->Password   = 'xxxxxxxx';                               //SMTP password
         $mail->SMTPSecure = 'tls';            //Enable implicit TLS encryption
         $mail->Port       = 25;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
         $mail->CharSet = 'UTF-8';
         //Recipients
-        $mail->setFrom('activofijo@fepade.edu.sv', 'Sistema FEPADE');
+        $mail->setFrom('douglas.figueroa20@itca.edu.sv', 'Sistema FEPADE');
         $mail->addAddress($correo);     //Add a recipient
         //$mail->addAddress('ellen@example.com');               //Name is optional
         //$mail->addReplyTo('info@example.com', 'Information');
@@ -120,12 +120,7 @@ class SendMail {
                 <h3 class="">Hola se ha solicitado cambio de contraseña en el sistema <span class="spanClas">Ativo fijo</span></h3>
                 <h3 class="">
                 Tu código de validacion es el : <span class="spanCodigo"><strong>'.$codigo.'</strong></span>
-                </h3>
-                <h3 class="">Si no has sido tú por favor reportalo:</h3><a class="" href="http://localhost/appfepade/vistas/reportar.html">Reportar</a>
-                <form action="http://localhost/appfepade/vistas/reportar.php" method="POST">
-                    <input type="text" name="nombre" value="probando">
-                    <button type="submit" name="btnReportar">REPORTAR</button>
-                </form>    
+                </h3>   
             </div>
             <h1 class="titulo"><img class="h" src="https://github.com/Mikesv97/AppFepade/blob/main/flecha.png?raw=true">
                 Favor no responder a este mensaje.
