@@ -29,7 +29,6 @@ if(isset($_POST["key"])){
                 $data["txtCorreoUsuario"],
                 $data["selectRol"],
                 $idBitacora,
-                "fepadeDefault.png",
                 1
             );
              
@@ -49,13 +48,39 @@ if(isset($_POST["key"])){
         break;
         case "enviarCodigo":
         break;
-        case "cambiarPass":
+        case "editarUsuario":
+            $userDao= new UsuarioNuevoDao();
+            //seteamos el objeto con los datos a actualizar
+            $user = setearObjeto($_POST["idUser"],
+            null,
+            $_POST["nombreUser"],
+            $_POST["correoUser"],
+            $_POST["idRolUser"],
+            null,
+            0);
 
+            //actualizamos bitacora
+            $actBit = $userDao->actualizarBitacoraUs($user->getUsuarioId(), $_SESSION["usuario"]["nombre"]);
+
+            //evaluamos la insersion
+            if($actBit){
+                //actualizamos el usuario
+                $actUser = $userDao->actualizarUsuario($user);
+
+                if($actUser){
+                    echo json_encode(true);
+                }else{
+                    echo json_encode($actUser);
+                }
+            }else{
+                //envamos el error o contenido diferente a exitoso
+                echo json_encode($actBit);
+            }
         break;
     }
 }
 
-function setearObjeto($id,$clave, $nombre, $correo, $idRol,$idBitacora,$foto,$usuarioNuevo){
+function setearObjeto($id,$clave, $nombre, $correo, $idRol,$idBitacora,$usuarioNuevo){
     $user = new UsuarioNuevo();
 
     $user->setUsuarioId($id);
@@ -65,7 +90,6 @@ function setearObjeto($id,$clave, $nombre, $correo, $idRol,$idBitacora,$foto,$us
     $user->setIdRol($idRol);  
     $user->setRemember(0);
     $user->setIdBitacora($idBitacora);
-    $user->setFotoUsuario($foto);
     $user->setUsuarioNuevo($usuarioNuevo);
 
     return $user;

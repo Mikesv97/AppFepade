@@ -50,7 +50,9 @@ $idUSuario = $_SESSION["usuario"]["id"];
                             <label for="txtPassword1">Usuario ID*</label>
                             <input type="text" class="form-control" id="usuarioId" name="usuarioId" maxlength="15" value="<?= $idUSuario; ?>" readonly>
                         </div>
+                        
                     </div>
+                    <div class="col-md-12"><p class="alertError my-2" role="alert" id="lbError"></p></div>
                     <button type="submit" class="btnLogin btn" id="btnInsertar" name="btnInsertar">Ingresar</button>
                     <button type="button" class="btnLogin btn ml-2" id="btnModificar" name="btnModificar">Modificar</button>
                     <button type="button" class="btnLogin btn ml-2" id="btnCancelar" name="btnCancelar">Cancelar</button>

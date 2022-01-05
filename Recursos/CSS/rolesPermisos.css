@@ -30,7 +30,8 @@ input:disabled, textarea:disabled, .btn:disabled, .btn:disabled:hover{
     font-size: 16px !important;
     padding: 0 !important;
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.080);
-  }
+}
+
 #grupoCkbMenu, #grupoCkbAcciones{
     columns: 2;
     -webkit-columns: 2;

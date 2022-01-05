@@ -69,7 +69,7 @@ $(document).ready(function(){
     //al cambio del select rol ocultamos error si está visible
     //y si el valor es diferente a 0 ("default");
     $("#selectRol").change(function(){
-        if(!$("#lbError").is(":visible")){
+        if($("#lbError").is(":visible")){
             if($("#selectRol").val() != 0){
                 $("#lbError").hide();
             }
@@ -115,10 +115,20 @@ $(document).ready(function(){
         }
         validarUserIdNoRegistrado();
     });
+
+    $("#txtPassword2").change(function(){
+        if($("#txtPassword1").val() != $("#txtPassword2").val()){
+            $("#lbError").show();
+            $("#lbError").text("Las contraseñas no coinciden.");
+            $("#txtPassword1").val("");
+            $("#txtPassword1").focus();
+            $("#txtPassword2").val("");
+           
+        }else{
+            $("#lbError").hide();
+        }
+    });
  
-
-
-
     //cuando hace clic en el btn nuevo usuario
     $("#frmNuevoUsuario").submit(function(e){
         e.preventDefault();
@@ -144,23 +154,72 @@ $(document).ready(function(){
                     confirmButtonText: '¡Sí, Editar!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        //$("#txtNombreUser").val(data["usuario_nombre"]);
-                        //$("#txtCorreoUsuario").val(data["correo_electronico"]);
-                    // $('select[name=selectRol]').find('option:contains('+data["rol_nombre"]+')').prop('selected', true);
-                    // $("#txtIdUser").val(data["usuario_id"]);
-        
-                        alert("editas al usuario")
-                        editUser = false;
-                    // $("#txtPassword1").prop("disabled", true);
-                    // $("#txtPassword2").prop("disabled", true);
-        
+                        if($("#selectRol").val() =="0"){
+                            $("#lbError").text("Debes escoger un rol para el usuario");
+                            $("#lbError").show();
+                        }else{
+                            var nombreUser= $("#txtNombreUser").val();
+                            var correoUser = $("#txtCorreoUsuario").val();
+                            var idUser = $("#txtIdUser").val();
+                            var selectRol = $("#selectRol").val();
+
+                            $.ajax({
+                                url:"../controladores/controladorNuevoUsuario.php",
+                                method: "post",
+                                dataType: "json",
+                                data: { "key": "editarUsuario",
+                                "nombreUser": nombreUser,
+                                "correoUser": correoUser,
+                                "idRolUser": selectRol,
+                                "idUser": idUser },
+                                success: function (r) {
+                                    if(r){
+                                        Swal.fire({
+                                            position: 'bottom-end',
+                                            icon: 'success',
+                                            title: 'Usuario editado con éxtio',
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        })
+
+                                        $("#frmNuevoUsuario")[0].reset();
+                                        $('#usuarios').DataTable().ajax.reload();
+                                        $("#txtPassword1").prop("disabled", false);
+                                        $("#txtPassword2").prop("disabled", false);
+                                        $("#txtIdUser").prop("disabled", false);
+                                        $("#btnNewUser").prop("disabled", false);
+                                        $("#btnGuardar").prop("disabled", true);
+
+                                        editUser = false;
+                                    }else{
+                                        // console.log(r);
+                                        Swal.fire({
+                                            position: 'bottom-end',
+                                            icon: 'error',
+                                            title: 'Usuario no editado',
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        })
+                                    }
+                                    
+                                },
+                                error: function (r) {
+                                    console.log(r.responseText);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: "Problemas de comunicación",
+                                        text: 'Parece tenemos problemas para comunicarnos con los servidores y editar el usuario'
+                                        +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                                        showConfirmButton: true
+                                    })
+                                }
+                            });
+                        }       
                     }
                 })
             }else{
-                if($("#txtPassword1").val() != $("#txtPassword2").val()){
-                    $("#lbError").text("Las contraseñas no coinciden");
-                    $("#lbError").show();
-                }else if($("#selectRol").val() =="0"){
+                
+                if($("#selectRol").val() =="0"){
                     $("#lbError").text("Debes escoger un rol para el usuario");
                     $("#lbError").show();
                 }else{
@@ -172,19 +231,36 @@ $(document).ready(function(){
                         dataType: "json",
                         data: { "key": "insertarUsuario","data": data },
                         success: function (r) {
-                            Swal.fire({
-                                position: 'bottom-end',
-                                icon: 'success',
-                                title: 'Usuario creado con éxtio',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                            $("#frmNuevoUsuario")[0].reset();
-                            $('#usuarios').DataTable().ajax.reload();
+                            if(r){
+                                Swal.fire({
+                                    position: 'bottom-end',
+                                    icon: 'success',
+                                    title: 'Usuario creado con éxtio',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                $("#frmNuevoUsuario")[0].reset();
+                                $('#usuarios').DataTable().ajax.reload();
+                            }else{
+                               // console.log(r);
+                                Swal.fire({
+                                    position: 'bottom-end',
+                                    icon: 'error',
+                                    title: 'Usuario no insertado',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
                             
                         },
                         error: function (r) {
-                            console.log(r);
+                            Swal.fire({
+                                icon: 'error',
+                                title: "Problemas de comunicación",
+                                text: 'Parece tenemos problemas para comunicarnos con los servidores e insertar el usuario'
+                                +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                                showConfirmButton: true
+                            })
                         }
                     });
                 }
@@ -208,6 +284,13 @@ $(document).ready(function(){
             },
             error: function (r) {
                 console.log(r);
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece tenemos problemas para comunicarnos con los servidores y cargar los roles en el menú despegable'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
             }
         });
     }
@@ -343,6 +426,7 @@ $(document).ready(function(){
 
         //ocultamos columnas de inicio para mostrarlas según sus permisos
         dt.columns(6).visible(false);
+        dt.columns(7).visible(false);
  
         //solicitamos acciones del rol del usuario que inicio sesión
         $.ajax({
@@ -355,6 +439,9 @@ $(document).ready(function(){
                 for(let i=0; i<r.length; i++){
                     switch(r[i]["nombre_accion"].toLowerCase()){
                         case "eliminar":
+                            dt.columns(7).visible(true);
+                        break;
+                        case "editar":
                             dt.columns(6).visible(true);
                         break;
                     }
@@ -363,7 +450,7 @@ $(document).ready(function(){
                 
             },
             error: function (r) {
-                console.log(r.responseText);
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
@@ -397,7 +484,7 @@ $(document).ready(function(){
                 callback(correos);
             },
             error: function (r) {
-                console.log(r)
+                //console.log(r)
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
@@ -411,6 +498,7 @@ $(document).ready(function(){
       
     }
 
+    //función que valida que el id del usuario no esté registrado
     function validarUserIdNoRegistrado(){
         //pasamos un parametro que serpa una función en este caso callback
         $.ajax({
@@ -423,12 +511,12 @@ $(document).ready(function(){
                 var userId = $("#txtIdUser").val().toLowerCase();
                 for(let i =0; i<r.length; i++){
                    if(userId.trim()== r[i]["usuario_id"].trim().toLowerCase()){
-                                           //si existe, lanzamos error
+                    //si existe, lanzamos error
                     $("#lbError").show();
                     $("#lbError").text("Usuario ya ingresado en el sistema, por favor ingresa otro.");
                     $("#txtIdUser").val("");
                     $("#txtIdUser").focus();
-                    i=userId.length;
+                    i=r.length;
                     error = userId;
                    }
                 }
@@ -437,7 +525,7 @@ $(document).ready(function(){
     
             },
             error: function (r) {
-                console.log(r)
+                //console.log(r)
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",

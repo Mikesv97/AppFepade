@@ -15,7 +15,7 @@ class UsuarioNuevoDao{
         //establecemos la coneccion
         $con = Conexion::conectar();
         //establecemos la consulta
-        $sql="insert into usuario values (?,?,?,CURRENT_TIMESTAMP,?,?,?, ?,?,?)";
+        $sql="insert into usuario values (?,?,?,CURRENT_TIMESTAMP,?,?,?, ?,?)";
         //preparamos la consulta
         $respuesta = $con->prepare($sql);
         try{
@@ -28,7 +28,6 @@ class UsuarioNuevoDao{
                 $usuario->getIdRol(),
                 $usuario->getRemember(),
                 $usuario->getIdBitacora(),
-                $usuario->getFotoUsuario(),
                 $usuario->getUsuarioNuevo()
             ]);
 
@@ -43,7 +42,41 @@ class UsuarioNuevoDao{
                 return false;
             }
         }catch(PDOException $error){
-            return $error->getMessage();
+            echo $error->getMessage();
+        }
+    }
+
+    public function actualizarUsuario($objeto){
+        $usuario = new UsuarioNuevo();
+        $usuario = $objeto;
+        //establecemos la coneccion
+        $con = Conexion::conectar();
+        //establecemos la consulta
+        $sql="update usuario set usuario_nombre =?, usuario_fecha=CURRENT_TIMESTAMP,correo_electronico =?,
+        id_rol=? where usuario_id =?";
+        //preparamos la consulta
+        $respuesta = $con->prepare($sql);
+        try{
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([
+                $usuario->getUsuarioNombre(),
+                $usuario->getCorreoElectronico(),
+                $usuario->getIdRol(), 
+                $usuario->getUsuarioId()
+            ]);
+
+
+            //evaluamos cuantas filas fueron afectadas
+            if($respuesta->rowCount() > 0){
+                //cerramos conexion
+               Conexion::desconectar($respuesta);
+                //si se afectaron más de 0
+                return true;                 
+            }else{
+                return false;
+            }
+        }catch(PDOException $error){
+            echo $error->getMessage();
         }
     }
 
@@ -69,7 +102,33 @@ class UsuarioNuevoDao{
                 return false;
             }
         }catch(PDOException $error){
-            return $error->getMessage();
+            echo $error->getMessage();
+        }
+    }
+
+    public function actualizarBitacoraUs($usuario, $responsable){
+        //establecemos la coneccion
+        $con = Conexion::conectar();
+        //establecemos la consulta
+        $sql="update bitacora_usuarios set usuario_responsable =? where usuario_id = ?";
+        //preparamos la consulta
+        $respuesta = $con->prepare($sql);
+        try{
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([$responsable,$usuario]);
+
+
+            //evaluamos cuantas filas fueron afectadas
+            if($respuesta->rowCount() > 0){
+                //cerramos conexion
+                Conexion::desconectar($respuesta);
+                //si se afectaron más de 0
+                return true;                 
+            }else{
+                return false;
+            }
+        }catch(PDOException $error){
+            echo $error->getMessage();
         }
     }
 
@@ -86,7 +145,7 @@ class UsuarioNuevoDao{
             return $respuesta->fetchColumn();
 
         }catch(PDOException $error){
-            return $error->getMessage();
+            echo $error->getMessage();
         }
     }
 
@@ -104,7 +163,7 @@ class UsuarioNuevoDao{
             return $respuesta->fetchAll();
            
         }catch(PDOException $error){
-            return $error->getMessage();
+            echo $error->getMessage();
         }
     }
 
@@ -142,7 +201,7 @@ class UsuarioNuevoDao{
                         return false;
                     }
                 }catch(PDOException $error){
-                    return $error->getMessage();
+                    echo $error->getMessage();
                 }
             }else{//como tiene sesión activa retornamos clave para error en alerta.
                 return "userSesOn";
@@ -179,7 +238,7 @@ class UsuarioNuevoDao{
             }
                         
         }catch(PDOException $error){
-            return $error->getMessage();
+            echo $error->getMessage();
         }
     }
     
@@ -198,7 +257,7 @@ class UsuarioNuevoDao{
             return $respuesta->rowCount();
                         
         }catch(PDOException $error){
-            return $error->getMessage();
+            echo $error->getMessage();
         }
     }
 }

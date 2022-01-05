@@ -1,12 +1,16 @@
 $.noConflict();
 jQuery(document).ready(function ($) {
-
+    var error = null;
+    var editTipAct = false;
+    var nameEditTipAct = null;
     //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
     $('#btnInsertar').attr('disabled', false);
     $('#btnModificar').attr('disabled', true);
     //QUITANDO READONLY AL INPUT DEL ID PARA QUE SE PUEDE ESCRIBIR
     $('#tipoActivoId').attr('readonly', false);
     $("#tblTipoActivo tr td.cargarEliminar").hide();
+    $("#usuarioId").prop("readonly", true);
+    $("#lbError").hide();
     
     //MOSTRAR TABLA DE TIPO ACTIVO
     $('#tblTipoActivo').DataTable({
@@ -60,6 +64,43 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    //al cambio de input id tipo activo evaluamos que no se repita 
+    $("#tipoActivoId").change(function(){
+        //si se ingresa otro ID, se oculta el error
+        if(error != $(this).val()){
+            $("#lbError").hide();
+             error=null;
+        }
+        validarIdTipoActNoRegistrado();
+    });
+
+    //al cambio de input id tipo activo evaluamos que no se repita
+    $("#tipoActivoNombre").change(function(){
+        if(editTipAct){
+            if($(this).val() == nameEditTipAct){
+                $("#lbError").hide();
+                error=null;
+            }else{
+                validarNombreTipoActNoRegistrado();
+            }
+        }else{
+
+            validarNombreTipoActNoRegistrado();
+        } 
+
+        //si se ingresa otro nombre, se oculta el error
+        if(error != $(this).val().toLowerCase()){
+            $("#lbError").hide();
+            error=null;
+        }
+        
+
+    });
+
+    $("#tipoActivoNombre").on("click", function(){
+        $("#lbError").hide();
+    })
+
     //ocultamos columnas según rol
     ocultarColumTableTipoAct();
 
@@ -67,62 +108,73 @@ jQuery(document).ready(function ($) {
     $('#frmTipoActivo').submit(function (e) {
 
         e.preventDefault();
-        Swal.fire({
-            title: 'Ingresar tipo de activo al sistema',
-            text: "Porfavor confirma para ingresar el tipo de activo al sistema",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Aceptar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-
-                var formData = new FormData($('#frmTipoActivo')[0]);
-                formData.append("key", "insertar");
-                $.ajax({
-                    type: 'POST',
-                    url: "../Controladores/tipoActivoControlador.php",
-                    dataType: "json",
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function (r) {
-                        console.log(r);
-                        switch (r) {
-                            case "InsertadoTipoActivo":
-                                Swal.fire(
-                                    'Tipo de activo ingresado!',
-                                    'El tipo de activo ha sido ingresado al sistema',
-                                    'success'
-                                )
-                                $("#frmTipoActivo")[0].reset();
-                                $('#tblTipoActivo').DataTable().ajax.reload();
-                                break;
-                            case "FailTipoActivo":
-                                Swal.fire({
-                                    title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta el tipo de activo'
-                                        + ' si el problema persiste contacta a tu administrador o soporte IT.',
-                                    icon: 'error',
-                                    confirmButtonText: 'Aceptar',
-                                })
-                                break;
+        if($("#lbError").is(":visible")){
+            Swal.fire({
+                title: 'Errores detectados',
+                text: "Asegurate que la información ingresada no contenga errores.",
+                icon: 'warning',
+                showConfirmButton: true,
+            })
+        }else{
+            Swal.fire({
+                title: 'Ingresar tipo de activo al sistema',
+                text: "Porfavor confirma para ingresar el tipo de activo al sistema",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+    
+                    var formData = new FormData($('#frmTipoActivo')[0]);
+                    formData.append("key", "insertar");
+                    $.ajax({
+                        type: 'POST',
+                        url: "../Controladores/tipoActivoControlador.php",
+                        dataType: "json",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (r) {
+                            console.log(r);
+                            switch (r) {
+                                case "InsertadoTipoActivo":
+                                    Swal.fire(
+                                        'Tipo de activo ingresado!',
+                                        'El tipo de activo ha sido ingresado al sistema',
+                                        'success'
+                                    )
+                                    $("#frmTipoActivo")[0].reset();
+                                    $('#tblTipoActivo').DataTable().ajax.reload();
+                                    error=null;
+                                    break;
+                                case "FailTipoActivo":
+                                    Swal.fire({
+                                        title: '¡Problemas técnicos!',
+                                        text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta el tipo de activo'
+                                            + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                                        icon: 'error',
+                                        confirmButtonText: 'Aceptar',
+                                    })
+                                    break;
+                            }
+                        },
+                        error: function (r) {
+                            console.log(r);
                         }
-                    },
-                    error: function (r) {
-                        console.log(r);
-                    }
-                });
-
-            }
-        })
+                    });
+    
+                }
+            })
+        }
+        
     });
 
     //CUANDO SE ELIMINA UN TIPO DE ACTIVO
     $('#tblTipoActivo tbody').on('click', '.cargarEliminar', function () {
-
+        $("#tipoActivoId").prop("readonly", true);
         //GUARDANDO LA INFORMACION DE LA TABLA EN LA VARIABLE DATA
         var table = $('#tblTipoActivo').DataTable();
         var data = table.row(this).data();
@@ -166,6 +218,7 @@ jQuery(document).ready(function ($) {
                                 )
                                 $("#frmTipoActivo")[0].reset();
                                 $('#tblTipoActivo').DataTable().ajax.reload();
+                                $("#tipoActivoId").prop("readonly", false);
                                 break;
                             case "FailTipoActivo":
                                 Swal.fire({
@@ -180,6 +233,13 @@ jQuery(document).ready(function ($) {
                     },
                     error: function (r) {
                         console.log(r);
+                        Swal.fire({
+                            title: '¡Problemas técnicos!',
+                            text: '¡Vaya! Parece que tenemos dificultades técnicas para eliminar el tipo de activo del sistema'
+                                + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                        })
                     }
                 });
 
@@ -188,21 +248,24 @@ jQuery(document).ready(function ($) {
                 $("#frmTipoActivo")[0].reset();
                 //QUITANDO READONLY AL INPUT DEL ID PARA QUE SE PUEDE ESCRIBIR
                 $('#tipoActivoId').attr('readonly', false);
+                $("#tipoActivoId").prop("readonly", false);
             }
         })
     });
 
     //CUANDO LE DAL AL ICONO DE EDITAR CARGA LOS INPUT CON LOS DATOS DEL RESPONSABLE SELECIONADO
     $('#tblTipoActivo tbody').on('click', '.cargarModificar', function () {
+        $("#tipoActivoId").prop("readonly", true);
+        $("#lbError").hide();
         //GUARDANDO LA INFORMACION DE LA TABLA EN LA VARIABLE DATA
         var table = $('#tblTipoActivo').DataTable();
         var data = table.row(this).data();
 
         //LLENANDO LOS INPUT CON LA INFORMACION DEL TIPO ACTIVO QUE SE QUIERE ELIMINAR
         cargarTipoActivo(
-            data['tipo_activo_id'],
-            data['tipo_activo_nombre'],
-            data['usuario_id'],
+            data['tipo_activo_id'].trim(),
+            data['tipo_activo_nombre'].trim(),
+            data['usuario_id'].trim(),
         );
 
         //ENVIANDO AL INICIO DEL FORMULARIO CUANDO EL USUARIO DE CLICK EN EDITAR
@@ -213,67 +276,87 @@ jQuery(document).ready(function ($) {
         $('#btnModificar').attr('disabled', false);
         //AGRENGADO READONLY AL INPUT DEL ID PARA QUE NO PUEDAN MODIFICARLO
         $('#tipoActivoId').attr('readonly', true);
+        editTipAct=true;
+        nameEditTipAct =data["tipo_activo_nombre"].trim();
 
     });
 
     //CUANDO LE DAN AL BOTON MODIFICAR DEL FORMULARIO SE MODIFICAN LOS DATOS EN LA BASE DE DATOS
     $('#btnModificar').on('click', function () {
-        Swal.fire({
-            title: 'Modificar tipo de activo en el sistema',
-            text: "Porfavor confirma para modificar el tipo de activo en el sistema",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Aceptar'
-        }).then((result) => {
-            if (result.isConfirmed) {
 
-                var formData = new FormData($('#frmTipoActivo')[0]);
-                formData.append("key", "modificar");
-                $.ajax({
-                    type: 'POST',
-                    url: "../Controladores/tipoActivoControlador.php",
-                    dataType: "json",
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function (r) {
-                        console.log(r);
-                        switch (r) {
-                            case "ModificadoTipoActivo":
-                                Swal.fire(
-                                    'Tipo de activo modificado!',
-                                    'El tipo de activo ha sido modificado en el sistema',
-                                    'success'
-                                )
-                                $("#frmTipoActivo")[0].reset();
-                                $('#tblTipoActivo').DataTable().ajax.reload();
 
-                                //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
-                                $('#btnInsertar').attr('disabled', false);
-                                $('#btnModificar').attr('disabled', true);
-
-                                break;
-                            case "FailTipoActivo":
-                                Swal.fire({
-                                    title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para modificar el tipo de activo'
-                                        + ' si el problema persiste contacta a tu administrador o soporte IT.',
-                                    icon: 'error',
-                                    confirmButtonText: 'Aceptar',
-                                })
-                                break;
-                        }
-                    },
-                    error: function (r) {
-                        console.log(r);
+            if($("#lbError").is(":visible")){
+                Swal.fire({
+                    title: 'Errores detectados',
+                    text: "Asegurate que la información ingresada no contenga errores.",
+                    icon: 'warning',
+                    showConfirmButton: true,
+                })
+            }else{
+                Swal.fire({
+                    title: 'Modificar tipo de activo en el sistema',
+                    text: "Porfavor confirma para modificar el tipo de activo en el sistema",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+        
+                        var formData = new FormData($('#frmTipoActivo')[0]);
+                        formData.append("key", "modificar");
+                        $.ajax({
+                            type: 'POST',
+                            url: "../Controladores/tipoActivoControlador.php",
+                            dataType: "json",
+                            data: formData,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            success: function (r) {
+                                console.log(r);
+                                switch (r) {
+                                    case "ModificadoTipoActivo":
+                                        Swal.fire(
+                                            'Tipo de activo modificado!',
+                                            'El tipo de activo ha sido modificado en el sistema',
+                                            'success'
+                                        )
+                                        $("#frmTipoActivo")[0].reset();
+                                        $('#tblTipoActivo').DataTable().ajax.reload();
+        
+                                        //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
+                                        $('#btnInsertar').attr('disabled', false);
+                                        $('#btnModificar').attr('disabled', true);
+                                        $("#tipoActivoId").prop("readonly", false);
+                                        error=null;
+                                        editTipAct=false;
+                                        nameEditTipAct=null;
+        
+                                        break;
+                                    case "FailTipoActivo":
+                                        Swal.fire({
+                                            title: '¡Problemas técnicos!',
+                                            text: '¡Vaya! Parece que tenemos dificultades técnicas para modificar el tipo de activo'
+                                                + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                                            icon: 'error',
+                                            confirmButtonText: 'Aceptar',
+                                        })
+                                        break;
+                                }
+                            },
+                            error: function (r) {
+                                console.log(r);
+                            }
+                        });
+        
                     }
-                });
-
+                })
             }
-        })
+        
+        
+        
     });
 
     //CUANDO LE DAN CENCELAR SE LIMPIA EL FORMULARIO Y SE HABILITAN O DESABILITAN LOS BOTONES
@@ -341,5 +424,87 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    
+    //función que valida que el id del usuario no esté registrado
+    function validarIdTipoActNoRegistrado(){
+        //pasamos un parametro que serpa una función en este caso callback
+        $.ajax({
+            url:"../controladores/tipoActivoControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "mostrar"},
+            success: function (r) {
+                //si tiene respuesta validad del server creamos arreglo
+                var tipoActId = $("#tipoActivoId").val();
+                for(let i =0; i<r.length; i++){
+                    if(tipoActId== r[i]["tipo_activo_id"]){
+                                               //si existe, lanzamos error
+                    $("#lbError").show();
+                    $("#lbError").text("El id ingresado para este activo ya está registrado, intenta con otro.");
+                    $("#tipoActivoId").val("");
+                    $("#tipoActivoId").focus();
+                    i=r.length;
+                    error = tipoActId;
+                    }
+                }
+                //llamamos al parametro que pasa a ser una función que resive el parametro que es
+                //el arreglo creado
+        
+            },
+            error: function (r) {
+                //console.log(r)
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece tenemos problemas para comunicarnos con los servidores y validar que el usuario ID ingresado no se encuentre en el sistema'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+        });
+            
+          
+    }
+
+    //función que valida que el id del usuario no esté registrado
+    function validarNombreTipoActNoRegistrado(){
+        //pasamos un parametro que serpa una función en este caso callback
+        $.ajax({
+            url:"../controladores/tipoActivoControlador.php",
+            method: "post",
+            dataType: "json",
+            data: { "key": "mostrar"},
+            success: function (r) {
+                //si tiene respuesta validad del server creamos arreglo
+                var tipoActNombre = $("#tipoActivoNombre").val().toLowerCase().trim();
+                //en caso no este editar activo solo vemos que el valor no se repita
+                for(let i =0; i<r.length; i++){
+                    if(tipoActNombre== r[i]["tipo_activo_nombre"].trim().toLowerCase()){
+                    //si existe, lanzamos error
+                    $("#lbError").show();
+                    $("#lbError").text("El nombre del activo ingresado ya está registrado, intenta con otro.");
+                    $("#tipoActivoNombre").val("");
+                    $("#tipoActivoNombre").focus();
+                    i=r.length;
+                    error = tipoActNombre;
+                    }
+                }
+
+                //llamamos al parametro que pasa a ser una función que resive el parametro que es
+                //el arreglo creado
+        
+            },
+            error: function (r) {
+                //console.log(r)
+                Swal.fire({
+                    icon: 'error',
+                    title: "Problemas de comunicación",
+                    text: 'Parece tenemos problemas para comunicarnos con los servidores y validar que el usuario ID ingresado no se encuentre en el sistema'
+                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                    showConfirmButton: true
+                })
+            }
+        });
+            
+          
+    }
 });

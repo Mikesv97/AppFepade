@@ -10,7 +10,6 @@ Class UsuarioNuevo {
     private $idRol;
     private $remember;
     private $idBitacora;
-    private $fotoUsuario;
     private $usuarioNuevo;
 
 
@@ -99,15 +98,6 @@ Class UsuarioNuevo {
         $this->idBitacora= $idBitacora;
     }
 
-    public function getFotoUsuario()
-    {
-        return $this->fotoUsuario;
-    }
-
-    public function setFotoUsuario($fotoUsuario)
-    {
-        $this->fotoUsuario= $fotoUsuario;
-    }
     public function getUsuarioNuevo()
     {
         return $this->usuarioNuevo;
