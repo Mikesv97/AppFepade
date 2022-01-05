@@ -10,7 +10,7 @@
             Nav header start
         ***********************************-->
 <div class="nav-header">
-    <a href="index2.html" class="brand-logo">
+    <a href="home.php" class="brand-logo">
         <img class="logo-abbr" src="../Recursos/Multimedia/Imagenes/logo.png" alt="">
         <img class="logo-compact" src="../Recursos/Multimedia/Imagenes/logo-text.png" alt="">
         <img class="brand-title" src="../Recursos/Multimedia/Imagenes/logo-text.png" alt="">
