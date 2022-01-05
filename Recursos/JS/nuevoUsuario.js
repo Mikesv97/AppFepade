@@ -106,6 +106,15 @@ $(document).ready(function(){
         
     });
 
+    $("#txtIdUser").change(function(){
+        
+        //si se ingresa otro correo, se oculta el error
+        if(error != $(this).val().toLowerCase()){
+            $("#lbError").hide();
+            error=null;
+        }
+        validarUserIdNoRegistrado();
+    });
  
 
 
@@ -402,7 +411,7 @@ $(document).ready(function(){
       
     }
 
-    function validarUserIdNoRegistrado(callback){
+    function validarUserIdNoRegistrado(){
         //pasamos un parametro que serpa una función en este caso callback
         $.ajax({
             url:"../controladores/controladorNuevoUsuario.php",
@@ -411,16 +420,21 @@ $(document).ready(function(){
             data: { "key": "getUsuarios"},
             success: function (r) {
                 //si tiene respuesta validad del server creamos arreglo
-                var userId = [];
+                var userId = $("#txtIdUser").val().toLowerCase();
                 for(let i =0; i<r.length; i++){
-                    //llenamos arreglo con los datos
-                    userId[i] = r[i]["usuario_id"];
-                    
-     
+                   if(userId.trim()== r[i]["usuario_id"].trim().toLowerCase()){
+                                           //si existe, lanzamos error
+                    $("#lbError").show();
+                    $("#lbError").text("Usuario ya ingresado en el sistema, por favor ingresa otro.");
+                    $("#txtIdUser").val("");
+                    $("#txtIdUser").focus();
+                    i=userId.length;
+                    error = userId;
+                   }
                 }
                 //llamamos al parametro que pasa a ser una función que resive el parametro que es
                 //el arreglo creado
-                callback(userId);
+    
             },
             error: function (r) {
                 console.log(r)
