@@ -81,7 +81,8 @@ jQuery(document).ready(function ($) {
     //cuando deje de escribir el usuario esperamo x segundos
     //validamos que el valor no este repetido
     $("#tipoActivoNombre").keyup(function(){
-        if($(this).val().trim().toLowerCase()==nameEditTipAct){
+        
+        if($(this).val().trim().toLowerCase()== nameEditTipAct){
             $("#lbError").hide();
         }else{
             clearTimeout(typingTimer);

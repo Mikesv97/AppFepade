@@ -84,6 +84,7 @@ $(document).ready(function(){
     //que el valor del correo no se repita
     $("#txtCorreoUsuario").keyup(function(){
         var correoIngresado = $(this).val().trim().toLowerCase();
+        
         if($(this).val().trim().toLowerCase() == correoEdit){
             $("#lbError").hide();
         }else{
