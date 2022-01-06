@@ -65,7 +65,7 @@ include('layout/navbar.php');
                                     <option value="0">Escoger rol... *</option>
                                 </select>
                             </div>
-                            <p class="my-2 p-1 gold" id="lbError"></p>
+                            <div class="col-md-12"><p class="alertError my-2" role="alert" id="lbError"></p></div>
                         </div>                     
                         <button type="submit" class="btnLogin btn" id="btnNewUser">Registrar usuario</button>
                         <button type="submit" class="mx-2 btnLogin btn" id="btnGuardar">Guardar</button>

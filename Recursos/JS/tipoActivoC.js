@@ -1,8 +1,10 @@
 $.noConflict();
 jQuery(document).ready(function ($) {
-    var error = null;
     var editTipAct = false;
     var nameEditTipAct = null;
+    var typingTimer;                //identificador del tiempo
+    var doneTypingInterval = 350;  //tiemp en ms (.3 seconds)
+
     //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
     $('#btnInsertar').attr('disabled', false);
     $('#btnModificar').attr('disabled', true);
@@ -64,50 +66,39 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    //al cambio de input id tipo activo evaluamos que no se repita 
-    $("#tipoActivoId").change(function(){
-        //si se ingresa otro ID, se oculta el error
-        if(error != $(this).val()){
-            $("#lbError").hide();
-             error=null;
+    //cuando deje de escribir el usuario esperamo x segundos
+    //validamos que el valor no este repetido
+    $("#tipoActivoId").keyup(function(){
+        clearTimeout(typingTimer);
+        if ($('#tipoActivoId').val()) {
+            typingTimer = setTimeout(validarIdTipoActNoRegistrado, doneTypingInterval);
         }
-        validarIdTipoActNoRegistrado();
+
     });
 
-    //al cambio de input id tipo activo evaluamos que no se repita
-    $("#tipoActivoNombre").change(function(){
-        if(editTipAct){
-            if($(this).val() == nameEditTipAct){
-                $("#lbError").hide();
-                error=null;
-            }else{
-                validarNombreTipoActNoRegistrado();
-            }
+
+    
+    //cuando deje de escribir el usuario esperamo x segundos
+    //validamos que el valor no este repetido
+    $("#tipoActivoNombre").keyup(function(){
+        if($(this).val().trim().toLowerCase()==nameEditTipAct){
+            $("#lbError").hide();
         }else{
-
-            validarNombreTipoActNoRegistrado();
-        } 
-
-        //si se ingresa otro nombre, se oculta el error
-        if(error != $(this).val().toLowerCase()){
-            $("#lbError").hide();
-            error=null;
+            clearTimeout(typingTimer);
+            if ($('#tipoActivoNombre').val()) {
+                typingTimer = setTimeout(validarNombreTipoActNoRegistrado, doneTypingInterval);
+            }    
         }
-        
-
+ 
     });
-
-    $("#tipoActivoNombre").on("click", function(){
-        $("#lbError").hide();
-    })
-
     //ocultamos columnas según rol
     ocultarColumTableTipoAct();
 
     //CUANDO SE INSERTA UN NUEVO TIPO ACTIVO
     $('#frmTipoActivo').submit(function (e) {
-
+        //detenemos el envio del form
         e.preventDefault();
+        //si hay errores mandamos alerta
         if($("#lbError").is(":visible")){
             Swal.fire({
                 title: 'Errores detectados',
@@ -116,6 +107,7 @@ jQuery(document).ready(function ($) {
                 showConfirmButton: true,
             })
         }else{
+            //en caso que no, se pregunta si quiere insertarlo
             Swal.fire({
                 title: 'Ingresar tipo de activo al sistema',
                 text: "Porfavor confirma para ingresar el tipo de activo al sistema",
@@ -148,7 +140,6 @@ jQuery(document).ready(function ($) {
                                     )
                                     $("#frmTipoActivo")[0].reset();
                                     $('#tblTipoActivo').DataTable().ajax.reload();
-                                    error=null;
                                     break;
                                 case "FailTipoActivo":
                                     Swal.fire({
@@ -163,6 +154,13 @@ jQuery(document).ready(function ($) {
                         },
                         error: function (r) {
                             console.log(r);
+                            Swal.fire({
+                                title: '¡Problemas técnicos!',
+                                text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta el tipo de activo'
+                                    + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                                icon: 'error',
+                                confirmButtonText: 'Aceptar',
+                            })
                         }
                     });
     
@@ -255,7 +253,9 @@ jQuery(document).ready(function ($) {
 
     //CUANDO LE DAL AL ICONO DE EDITAR CARGA LOS INPUT CON LOS DATOS DEL RESPONSABLE SELECIONADO
     $('#tblTipoActivo tbody').on('click', '.cargarModificar', function () {
+        //al dar en modificar deshabilitamos el id del tipo de activo
         $("#tipoActivoId").prop("readonly", true);
+        //ocultamos errores en caso estuviera
         $("#lbError").hide();
         //GUARDANDO LA INFORMACION DE LA TABLA EN LA VARIABLE DATA
         var table = $('#tblTipoActivo').DataTable();
@@ -276,16 +276,19 @@ jQuery(document).ready(function ($) {
         $('#btnModificar').attr('disabled', false);
         //AGRENGADO READONLY AL INPUT DEL ID PARA QUE NO PUEDAN MODIFICARLO
         $('#tipoActivoId').attr('readonly', true);
+        //activamos bandera de que se quiere editar
         editTipAct=true;
-        nameEditTipAct =data["tipo_activo_nombre"].trim();
+        //obtenemos el correo que se edita para excluirlo de la busqueda cuando
+        //se lanza el evento change del input respetivo y se busca que no se repita
+        nameEditTipAct =data["tipo_activo_nombre"].trim().toLowerCase();
 
     });
 
     //CUANDO LE DAN AL BOTON MODIFICAR DEL FORMULARIO SE MODIFICAN LOS DATOS EN LA BASE DE DATOS
     $('#btnModificar').on('click', function () {
-
-
+        //evaluamos que no se encuentren errores despleglados
             if($("#lbError").is(":visible")){
+                //si los hay mandamos alerta
                 Swal.fire({
                     title: 'Errores detectados',
                     text: "Asegurate que la información ingresada no contenga errores.",
@@ -293,6 +296,7 @@ jQuery(document).ready(function ($) {
                     showConfirmButton: true,
                 })
             }else{
+                //si no hay preguntamos si quiere modificar
                 Swal.fire({
                     title: 'Modificar tipo de activo en el sistema',
                     text: "Porfavor confirma para modificar el tipo de activo en el sistema",
@@ -303,7 +307,7 @@ jQuery(document).ready(function ($) {
                     confirmButtonText: 'Aceptar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-        
+                        //si lo desea hacer mandamos datos por ajax
                         var formData = new FormData($('#frmTipoActivo')[0]);
                         formData.append("key", "modificar");
                         $.ajax({
@@ -330,7 +334,7 @@ jQuery(document).ready(function ($) {
                                         $('#btnInsertar').attr('disabled', false);
                                         $('#btnModificar').attr('disabled', true);
                                         $("#tipoActivoId").prop("readonly", false);
-                                        error=null;
+  
                                         editTipAct=false;
                                         nameEditTipAct=null;
         
@@ -347,7 +351,14 @@ jQuery(document).ready(function ($) {
                                 }
                             },
                             error: function (r) {
-                                console.log(r);
+                                console.log(r.responseText);
+                                Swal.fire({
+                                    title: '¡Problemas técnicos!',
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para modificar el tipo de activo'
+                                        + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar',
+                                })
                             }
                         });
         
@@ -433,21 +444,25 @@ jQuery(document).ready(function ($) {
             dataType: "json",
             data: { "key": "mostrar"},
             success: function (r) {
-                //si tiene respuesta validad del server creamos arreglo
+                //obtenemos valor del input
                 var tipoActId = $("#tipoActivoId").val();
+
+                //recorremos la respuesta del server
                 for(let i =0; i<r.length; i++){
                     if(tipoActId== r[i]["tipo_activo_id"]){
-                                               //si existe, lanzamos error
-                    $("#lbError").show();
-                    $("#lbError").text("El id ingresado para este activo ya está registrado, intenta con otro.");
-                    $("#tipoActivoId").val("");
-                    $("#tipoActivoId").focus();
-                    i=r.length;
-                    error = tipoActId;
+                        //si existe, lanzamos error
+                        $("#lbError").show();
+                        $("#lbError").text("El id ingresado para este activo ya está registrado, intenta con otro.");
+                        $("#tipoActivoId").val("");
+                        $("#tipoActivoId").focus();
+                        i=r.length;
+                        error="idActivo";
+                    }else{
+                        //si no existe ocultamos error
+                        $("#lbError").hide();
+                        error = null;
                     }
                 }
-                //llamamos al parametro que pasa a ser una función que resive el parametro que es
-                //el arreglo creado
         
             },
             error: function (r) {
@@ -455,7 +470,7 @@ jQuery(document).ready(function ($) {
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
-                    text: 'Parece tenemos problemas para comunicarnos con los servidores y validar que el usuario ID ingresado no se encuentre en el sistema'
+                    text: 'Parece tenemos problemas para comunicarnos con los servidores y validar que el ID ingresado para el tipo del activo no se encuentre en el sistema'
                     +' por favor verifica tu conexión de internet e intenta de nuevo.',
                     showConfirmButton: true
                 })
@@ -474,31 +489,32 @@ jQuery(document).ready(function ($) {
             dataType: "json",
             data: { "key": "mostrar"},
             success: function (r) {
-                //si tiene respuesta validad del server creamos arreglo
+                //obtenemos valor del input, pasamos a miniscula, y quitamos espacios
                 var tipoActNombre = $("#tipoActivoNombre").val().toLowerCase().trim();
-                //en caso no este editar activo solo vemos que el valor no se repita
+               
+                //recorremos la respuesta del server
                 for(let i =0; i<r.length; i++){
                     if(tipoActNombre== r[i]["tipo_activo_nombre"].trim().toLowerCase()){
-                    //si existe, lanzamos error
-                    $("#lbError").show();
-                    $("#lbError").text("El nombre del activo ingresado ya está registrado, intenta con otro.");
-                    $("#tipoActivoNombre").val("");
-                    $("#tipoActivoNombre").focus();
-                    i=r.length;
-                    error = tipoActNombre;
+                        //si existe, lanzamos error
+                        $("#lbError").show();
+                        $("#lbError").text("El nombre del activo ingresado ya está registrado, intenta con otro.");
+                        $("#tipoActivoNombre").val("");
+                        $("#tipoActivoNombre").focus();
+                        i=r.length;
+                        error="nameActivo";
+                    }else{
+                        //si no existe ocultamos error
+                        $("#lbError").hide();
+                        error = null;
                     }
                 }
-
-                //llamamos al parametro que pasa a ser una función que resive el parametro que es
-                //el arreglo creado
-        
             },
             error: function (r) {
                 //console.log(r)
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
-                    text: 'Parece tenemos problemas para comunicarnos con los servidores y validar que el usuario ID ingresado no se encuentre en el sistema'
+                    text: 'Parece tenemos problemas para comunicarnos con los servidores y validar que el nombre del tipo de activo no se encuentre en el sistema'
                     +' por favor verifica tu conexión de internet e intenta de nuevo.',
                     showConfirmButton: true
                 })

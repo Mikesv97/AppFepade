@@ -1,10 +1,10 @@
 $.noConflict();
 jQuery(document).ready(function ($){
     //variables globales
-    var error = null;
-    var editarOn = false;
     var rolEdit= null;
     var menuEdit= null;
+    var typingTimer;                //identificador del tiempo
+    var doneTypingInterval = 1500;  //tiemp en ms (1 seconds)
  
     $("#labelError").hide();
     $("#labelErrorMenu").hide();
@@ -64,142 +64,69 @@ jQuery(document).ready(function ($){
 
     });
 
-    /*al envento change del input nombre rol, validamos que no esté ingresado el rol*/
-    $("#txtNombreRol").change(function(){
-        //obtenemos el valor ingresado, convirtiendo a mayusculas el primer caracter
-        //para evitar que admin (ingresado por el usuario) != Admin (valor en BD)
-        //y mantener siempre la primer letra mayuscula.
-        var rolIngresado = convertirPrimerLetraMayus($(this).val());
-        if(rolIngresado == rolEdit){
-            $("#labelError").hide();
-        }
-
-        if(editarOn == true){
-            if(rolIngresado != rolEdit){
-                //llamamos a la función que envia ajax pidiendo roles
-                //llamamos a la función y su parametro (el arreglo) que viene siendo el parametro callbalck 
-                //definido cuando creamos la función
-                validarRolNoRegistrado(function(roles){
+    
+    //cuando deje de escribir el usuario esperamo x segundos
+    //validamos que el valor no este repetido
+    $("#txtNombreRol").keyup(function(){
+        var rolIngresado =$(this).val().trim().toLowerCase();
+        if( rolIngresado==rolEdit){
+            $("#lbError").hide();
+        }else{
+            clearTimeout(typingTimer);
+            if ($('#txtNombreRol').val()) {
+                typingTimer = setTimeout(validarRolNoRegistrado(function(roles){
                     //recorremos el arreglo y buscamos si el valor ingresado ya existe
                     for(let i=0; i<roles.length; i++){
-                        if(roles[i]==rolIngresado){
+                        if(roles[i].trim().toLowerCase()==rolIngresado){
+                            
                             //si existe, lanzamos error
                             $("#labelError").show();
                             $("#labelError").text("Rol ya ingresado en el sistema, por favor ingresa otro.");
+                            $("#txtNombreRol").val("");
                             $("#txtNombreRol").focus();
                             i=roles.length;
-                            error = rolIngresado;
                         }else{
                             //sino, ocultamos el error por si está visible
                             $("#labelError").hide();
                         }
                     }
-                });
-            }
-        }else{
-            //llamamos a la función que envia ajax pidiendo roles
-            //llamamos a la función y su parametro (el arreglo) que viene siendo el parametro callbalck 
-            //definido cuando creamos la función
-            validarRolNoRegistrado( function(roles){
-                //recorremos el arreglo y buscamos si el valor ingresado ya existe
-                for(let i=0; i<roles.length; i++){
-                    if(roles[i]==rolIngresado){
-                        //si existe, lanzamos error
-                        $("#labelError").show();
-                        $("#labelError").text("Rol ya ingresado en el sistema, por favor ingresa otro.");
-                        $("#txtNombreRol").focus();
-                        i=roles.length;
-                        error = rolIngresado;
-                    }else{
-                        //sino, ocultamos el error por si está visible
-                        $("#labelError").hide();
-                    }
-                }
-            });
+                }), doneTypingInterval);
+            }    
         }
-        
+ 
     });
 
+    
+    //cuando deje de escribir el usuario esperamo x segundos
+    //validamos que el valor no este repetido
+    $("#txtNombreMenu").keyup(function(){
+        var menuIngresado = $(this).val().trim().toLowerCase();
 
-    /*al envento change del input nombre menu, validamos que no esté ingresado el menu*/
-    $("#txtNombreMenu").change(function(){
-        //obtenemos el valor ingresado, convirtiendo a mayusculas el primer caracter
-        //para evitar que menu (ingresado por el usuario) != Menu (valor en BD)
-        //y mantener siempre la primer letra mayuscula.
-        var menuIngresado = convertirPrimerLetraMayus($(this).val());
-        if(menuIngresado == menuEdit){
-            $("#labelErrorMenu").hide();
-        }
-        if(editarOn == true){
-            if(menuIngresado != menuEdit){
-                //llamamos a la función que envia ajax pidiendo roles
-                //llamamos a la función y su parametro (el arreglo) que viene siendo el parametro callbalck 
-                //definido cuando creamos la función
-                validarMenuNoRegistrado(function(menu){
+        if(menuIngresado==menuEdit){
+            $("#lbError").hide();
+        }else{
+            clearTimeout(typingTimer);
+            if ($('#txtNombreMenu').val()) {
+                
+                typingTimer = setTimeout(validarMenuNoRegistrado(function(menu){
                     //recorremos el arreglo y buscamos si el valor ingresado ya existe
                     for(let i=0; i<menu.length; i++){
-                        if(menu[i]==menuIngresado){
+                        if(menu[i].trim().toLowerCase()==menuIngresado){
                             //si existe, lanzamos error
                             $("#labelErrorMenu").show();
                             $("#labelErrorMenu").text("Menú ya ingresado en el sistema, por favor ingresa otro.");
+                            $("#txtNombreMenu").val("");
                             $("#txtNombreMenu").focus();
                             i=menu.length;
-                            error = menuIngresado;
                         }else{
                             //sino, ocultamos el error por si está visible
-                            $("#labelError").hide();
+                            $("#labelErrorMenu").hide();
                         }
                     }
-                });
-            }
-        }else{
-            //llamamos a la función que envia ajax pidiendo menu
-            //llamamos a la función y su parametro (el arreglo) que viene siendo el parametro callbalck 
-            //definido cuando creamos la función
-            validarMenuNoRegistrado( function(menu){
-                //recorremos el arreglo y buscamos si el valor ingresado ya existe
-                for(let i=0; i<menu.length; i++){
-                    if(menu[i]==menuIngresado){
-                        //si existe, lanzamos error
-                        $("#labelErrorMenu").show();
-                        $("#labelErrorMenu").text("Menú ya ingresado en el sistema, por favor ingresa otro.");
-                        $("#txtNombreMenú").focus();
-                        i=menu.length;
-                        error = menuIngresado;
-                    }else{
-                        //sino, ocultamos el error por si está visible
-                        $("#labelErrorMenu").hide();
-                    }
-                }
-            });
+                }), doneTypingInterval);
+            }    
         }
-        
-    });
-
-    /*cuando presiona tecla en el input nombre rol ocultamos el error si está visible*/
-    $("#txtNombreRol").keypress(function(){
-        
-        if($("#labelError").is(":visible")){
-            
-            if($(this).val() != error){
-                $("#labelError").hide();
-            }
-        }
-
-
-    });
-
-    /*cuando presiona tecla en el input nombre menu ocultamos el error si está visible*/
-    $("#txtNombreMenu").keypress(function(){
-        
-        if($("#labelError").is(":visible")){
-                
-            if($(this).val() != error){
-                $("#labelError").hide();
-            }
-        }
-    
-    
+ 
     });
 
     //cuando se ejecuta el submit del form roles
@@ -409,9 +336,10 @@ jQuery(document).ready(function ($){
        cargarChekBoxAccionesRol(data["id_rol"]);
        
        $("#txtNombreRol").val(data["rol_nombre"]);
-       rolEdit = data["rol_nombre"];
        $("#txtDescRol").val(data["rol_descripcion"]);
        $("#txtId").val(data["id_rol"]);
+
+       rolEdit = data["rol_nombre"].trim().toLowerCase();
     });
 
     //al click del btn editar es para editar la info del menú
@@ -434,7 +362,7 @@ jQuery(document).ready(function ($){
         $("#txtMenuPadre").val(data["menu_padre"]);
         $("#txtIdMenu").val(data["id_menu"]);
 
-        menuEdit = data["nombre_menu"];
+        menuEdit = data["nombre_menu"].trim().toLowerCase();
                
     });
 
@@ -512,7 +440,6 @@ jQuery(document).ready(function ($){
                                         $('#btnIngresar').prop("disabled", false);
                                         $('#btnGuardar').prop("disabled", true);
                                         solicitarMenuRol(idRol);    
-                                        editarOn = false;
                                         rolEdit = null;
                                     }
                                 },
@@ -588,7 +515,7 @@ jQuery(document).ready(function ($){
                                     $('#tblMenus').DataTable().ajax.reload();
                                     $('#btnIngresarMenu').prop("disabled", false);
                                     $('#btnGuardarMenu').prop("disabled", true);
-                                    editarOn = false;
+                                    menuEdit =null;
                                 }
                             },
                             error: function (r) {
@@ -1158,7 +1085,7 @@ jQuery(document).ready(function ($){
                 for(let i =0; i<r.length; i++){
                     //llenamos arreglo con los datos
                     menu[i] = r[i]["nombre_menu"];
-     
+                   
                 }
                 //llamamos al parametro que pasa a ser una función que resive el parametro que es
                 //el arreglo creado

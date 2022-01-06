@@ -36,10 +36,7 @@ include('layout/navbar.php');
                 <form id="frmResponsable" class="my-4">
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="txtNombreUser">ID *</label>
-                            <input type="text" class="form-control" id="ResponsableCodigo" name="ResponsableCodigo" readonly>
-                        </div>
-                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" id="ResponsableCodigo" name="ResponsableCodigo" readonly hidden>
                             <label for="txtCorreoUsuario">Codigo Responsable *</label>
                             <input type="text" class="form-control" id="CodigoResponsable" name="CodigoResponsable" placeholder="AEC123" maxlength="15" required>
                         </div>
@@ -54,10 +51,13 @@ include('layout/navbar.php');
                                 <option value="1">Inactivo</option>
                             </select>
                         </div>
-                        <button type="submit" class="btnLogin btn" id="btnInsertar" name="btnInsertar">Ingresar</button>
-                        <button type="button" class="btnLogin btn ml-2" id="btnModificar" name="btnModificar">Modificar</button>
-                        <button type="button" class="btnLogin btn ml-2" id="btnCancelar" name="btnCancelar">Cancelar</button>
-                    </div>
+                        <div class="col-md-12"><p class="alertError my-2" role="alert" id="lbError"></p></div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btnLogin btn" id="btnInsertar" name="btnInsertar">Ingresar</button>
+                            <button type="button" class="btnLogin btn ml-2" id="btnModificar" name="btnModificar">Modificar</button>
+                            <button type="button" class="btnLogin btn ml-2" id="btnCancelar" name="btnCancelar">Cancelar</button>
+                        </div>
+                        </div>
                 </form>
             </div>
         </div>

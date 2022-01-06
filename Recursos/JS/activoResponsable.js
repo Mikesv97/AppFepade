@@ -1,6 +1,8 @@
 $.noConflict();
 jQuery(document).ready(function ($) {
-
+    var codRespEdit = null;
+    var typingTimer;                //identificador del tiempo
+    var doneTypingInterval = 600;  //tiemp en ms (0.6 seconds)
     //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
     $('#btnInsertar').attr('disabled', false);
     $('#btnModificar').attr('disabled', true);
@@ -116,6 +118,22 @@ jQuery(document).ready(function ($) {
         })
     });
 
+    //cuando deje de escribir el usuario esperamo x segundos
+    //validamos que el valor no este repetido
+    $("#CodigoResponsable").keyup(function(){
+        var codIngresado = $(this).val().trim().toLowerCase();
+
+        if(codIngresado==codRespEdit){
+            $("#lbError").hide();
+        }else{
+            clearTimeout(typingTimer);
+            if ($('#CodigoResponsable').val()) {
+                typingTimer = setTimeout(validarCodResptNoRegistrado, doneTypingInterval);
+            }    
+        }
+ 
+    });
+
     //CUANDO SE ELIMINA UN RESPONSABLE
     $('#tblResponsables tbody').on('click', '.cargarEliminar', function () {
 
@@ -207,6 +225,8 @@ jQuery(document).ready(function ($) {
         //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
         $('#btnInsertar').attr('disabled', true);
         $('#btnModificar').attr('disabled', false);
+        $("#CodigoResponsable").prop("readonly",true);
+        codRespEdit = data["Codigo_responsable"].trim().toLowerCase();
 
     });
 
@@ -258,6 +278,9 @@ jQuery(document).ready(function ($) {
                                 //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
                                 $('#btnInsertar').attr('disabled', false);
                                 $('#btnModificar').attr('disabled', true);
+                                $("#CodigoResponsable").prop("readonly",false);
+                                codRespEdit=null;
+                                
 
                                 break;
                             case "FailResponsable":
@@ -332,5 +355,47 @@ jQuery(document).ready(function ($) {
             
         });
     }
+
+        //función que valida que el id del usuario no esté registrado
+        function validarCodResptNoRegistrado(){
+            //pasamos un parametro que serpa una función en este caso callback
+            $.ajax({
+                url:"../controladores/activoResponControlador.php",
+                method: "post",
+                dataType: "json",
+                data: { "key": "mostrar"},
+                success: function (r) {
+                    //obtenemos valor del input, pasamos a miniscula, y quitamos espacios
+                    var tipoActNombre = $("#CodigoResponsable").val().toLowerCase().trim();
+                   
+                    //recorremos la respuesta del server
+                    for(let i =0; i<r.length; i++){
+                        if(tipoActNombre== r[i]["Codigo_responsable"].trim().toLowerCase()){
+                            //si existe, lanzamos error
+                            $("#lbError").show();
+                            $("#lbError").text("El código de responsable ya está registrado, intenta con otro.");
+                            $("#CodigoResponsable").val("");
+                            $("#CodigoResponsable").focus();
+                            i=r.length;
+                        }else{
+                            //si no existe ocultamos error
+                            $("#lbError").hide();
+                        }
+                    }
+                },
+                error: function (r) {
+                    //console.log(r)
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Problemas de comunicación",
+                        text: 'Parece tenemos problemas para comunicarnos con los servidores y validar que el código de responsable no se encuentre en el sistema'
+                        +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                        showConfirmButton: true
+                    })
+                }
+            });
+                
+              
+        }
 
 });

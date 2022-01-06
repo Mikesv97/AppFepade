@@ -1,7 +1,10 @@
 
 $(document).ready(function(){
     var editUser = false;
-    var error= null;
+    var correoEdit = null;
+    var typingTimer;                //identificador del tiempo
+    var doneTypingIntervalCorreo = 3000;  //tiemp en ms (3 seconds)
+    var doneTypingIntervalUser = 1000;  //tiemp en ms (3 seconds)
     //llamamos las funciones que deben ejecutarse en la carga de la pag.
     cargarRoles();
     esconderControles();
@@ -61,6 +64,7 @@ $(document).ready(function(){
         $("#txtNombreUser").focus();
 
         editUser = true;
+        correoEdit = data["correo_electronico"].trim().toLowerCase();
     });
 
     //ocultamos columnas en base al rol
@@ -76,46 +80,46 @@ $(document).ready(function(){
         }
     });
 
-    //al cambio de valor del campo correo validamos que no este ingresado
-    $("#txtCorreoUsuario").change(function(){
-
-        //si se ingresa otro correo, se oculta el error
-        if(error != $(this).val().toLowerCase()){
+    //cuando deje de escribir el usuario, 0.3 segundos despues validamos 
+    //que el valor del correo no se repita
+    $("#txtCorreoUsuario").keyup(function(){
+        var correoIngresado = $(this).val().trim().toLowerCase();
+        if($(this).val().trim().toLowerCase() == correoEdit){
             $("#lbError").hide();
-            error=null;
-        }
-
-        var correoIngresado = $(this).val().toLowerCase();
-        validarCorreoNoRegistrado(function(correos){
-            //recorremos el arreglo y buscamos si el valor ingresado ya existe
-            for(let i=0; i<correos.length; i++){
-                if(correos[i].toLowerCase()==correoIngresado){
-                    //si existe, lanzamos error
-                    $("#lbError").show();
-                    $("#lbError").text("Correo ya ingresado en el sistema, por favor ingresa otro.");
-                    $("#txtCorreoUsuario").val("");
-                    $("#txtCorreoUsuario").focus();
-                    i=correos.length;
-                    error = correoIngresado;
-                }else{
-                    //sino, ocultamos el error por si está visible
-                    $("#lbError").hide();
-                }
+        }else{
+            clearTimeout(typingTimer);
+            if ($('#txtCorreoUsuario').val()) {
+                typingTimer = setTimeout( validarCorreoNoRegistrado(function(correos){
+                    //recorremos el arreglo y buscamos si el valor ingresado ya existe
+                    for(let i=0; i<correos.length; i++){
+                        if(correos[i].toLowerCase()==correoIngresado){
+                            //si existe, lanzamos error
+                            $("#lbError").show();
+                            $("#lbError").text("Correo ya ingresado en el sistema, por favor ingresa otro.");
+                            $("#txtCorreoUsuario").val("");
+                            $("#txtCorreoUsuario").focus();
+                            i=correos.length;
+                        }else{
+                            //sino, ocultamos el error por si está visible
+                            $("#lbError").hide();
+                        }
+                    }
+                }), doneTypingIntervalCorreo);
             }
-        });
-        
-    });
-
-    $("#txtIdUser").change(function(){
-        
-        //si se ingresa otro correo, se oculta el error
-        if(error != $(this).val().toLowerCase()){
-            $("#lbError").hide();
-            error=null;
         }
-        validarUserIdNoRegistrado();
+
     });
 
+    //cuando deje de escribir el usuario, 0.3 segundos despues validamos 
+    //que el valor del usuario id no se repita
+    $("#txtIdUser").keyup(function(){
+        clearTimeout(typingTimer);
+        if ($('#txtIdUser').val()) {
+            typingTimer = setTimeout(validarUserIdNoRegistrado, doneTypingIntervalUser);
+        }
+    });
+
+    //al cambio del password 2 verificamos que sea iguales tanto el 1 como el 2
     $("#txtPassword2").change(function(){
         if($("#txtPassword1").val() != $("#txtPassword2").val()){
             $("#lbError").show();
@@ -131,7 +135,9 @@ $(document).ready(function(){
  
     //cuando hace clic en el btn nuevo usuario
     $("#frmNuevoUsuario").submit(function(e){
+        //cancelamos el envio de form
         e.preventDefault();
+        //si esta visible el error lanzamos alerta
         if($("#lbError").is(":visible")){
             Swal.fire({
                 title: 'Errores detectados',
@@ -140,10 +146,9 @@ $(document).ready(function(){
                 showConfirmButton: true,
             })
         }else{
-            //cancelo submit del form
-            //el submit es para que el required funcione
-            
+            //si se ha hecho click en editar
             if(editUser){
+                //preguntamos si quiere editarlo
                 Swal.fire({
                     title: '¿Estás seguro de editar este usuario?',
                     text: "¡No podrás deshacer los cambios!",
@@ -154,15 +159,18 @@ $(document).ready(function(){
                     confirmButtonText: '¡Sí, Editar!'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        //en caso confirme, verificamos que este un rol seleccionado
                         if($("#selectRol").val() =="0"){
+                            //si no está marcamos error
                             $("#lbError").text("Debes escoger un rol para el usuario");
                             $("#lbError").show();
                         }else{
+                            //si selecciono un rol obtenemos valores
                             var nombreUser= $("#txtNombreUser").val();
                             var correoUser = $("#txtCorreoUsuario").val();
                             var idUser = $("#txtIdUser").val();
                             var selectRol = $("#selectRol").val();
-
+                            //enviamos por ajax
                             $.ajax({
                                 url:"../controladores/controladorNuevoUsuario.php",
                                 method: "post",
@@ -181,16 +189,24 @@ $(document).ready(function(){
                                             showConfirmButton: false,
                                             timer: 1500
                                         })
-
+                                        //limpiamos form y recargamos tabla
                                         $("#frmNuevoUsuario")[0].reset();
                                         $('#usuarios').DataTable().ajax.reload();
+                                        //habilitamos los campos
                                         $("#txtPassword1").prop("disabled", false);
                                         $("#txtPassword2").prop("disabled", false);
                                         $("#txtIdUser").prop("disabled", false);
                                         $("#btnNewUser").prop("disabled", false);
+
+                                        //deshabilitamos el de guardar
                                         $("#btnGuardar").prop("disabled", true);
 
+                                        //regresamos el required a los campos password
+                                        $("#txtPassword1").prop("required", true);
+                                        $("#txtPassword2").prop("requried", true);
+                                        //limpiamos variables
                                         editUser = false;
+                                        correoEdit=null;
                                     }else{
                                         // console.log(r);
                                         Swal.fire({
@@ -218,13 +234,15 @@ $(document).ready(function(){
                     }
                 })
             }else{
-                
+                //si no se ha hecho click en editar evaluamos que el rol haya sido seleccionado
                 if($("#selectRol").val() =="0"){
+                    //si no ha cambiado valor al default mandamos error
                     $("#lbError").text("Debes escoger un rol para el usuario");
                     $("#lbError").show();
                 }else{
                     //obtenemos los datos del form
                     var data = $("#frmNuevoUsuario").serialize();
+                    //mandamos por ajax
                     $.ajax({
                         url:"../controladores/controladorNuevoUsuario.php",
                         method: "post",
@@ -239,6 +257,7 @@ $(document).ready(function(){
                                     showConfirmButton: false,
                                     timer: 1500
                                 })
+                                //limpiamos y recargamos tabla
                                 $("#frmNuevoUsuario")[0].reset();
                                 $('#usuarios').DataTable().ajax.reload();
                             }else{
@@ -517,11 +536,11 @@ $(document).ready(function(){
                     $("#txtIdUser").val("");
                     $("#txtIdUser").focus();
                     i=r.length;
-                    error = userId;
+                   }else{
+                    //si no existe ocultamos error
+                    $("#lbError").hide();
                    }
                 }
-                //llamamos al parametro que pasa a ser una función que resive el parametro que es
-                //el arreglo creado
     
             },
             error: function (r) {
