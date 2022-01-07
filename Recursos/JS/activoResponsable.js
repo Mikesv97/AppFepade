@@ -6,6 +6,7 @@ jQuery(document).ready(function ($) {
     //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
     $('#btnInsertar').attr('disabled', false);
     $('#btnModificar').attr('disabled', true);
+    $("#lbError").hide();
 
     //MOSTRAR TABLA DE RESPONSABLESS
     $('#tblResponsables').DataTable({
@@ -232,7 +233,7 @@ jQuery(document).ready(function ($) {
 
     //CUANDO LE DAN CENCELAR SE LIMPIA EL FORMULARIO Y SE HABILITAN O DESABILITAN LOS BOTONES
     $('#btnCancelar').on('click', function () {
-
+        $("#lbError").hide();
         //HABILITANDO Y DESABILITANDO EL BOTON INSERTAR Y MODIFICAR
         $('#btnInsertar').attr('disabled', false);
         $('#btnModificar').attr('disabled', true);

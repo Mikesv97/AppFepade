@@ -1,7 +1,8 @@
 
   .text-gray-900 {
-    color: #cf2225 !important;
+    color: #b0291c !important;
     text-shadow: 0 1px 1px rgba(90, 92, 105, .2);
+    border-bottom: 4px solid #cd8e01;
   }
 
   .btnLogin{
@@ -34,4 +35,63 @@ input:read-only{
   font-size: 16px !important;
   padding: 0 !important;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.080);
+}
+
+.outLineRed{
+  border: 1px solid #c91a1a;
+  background-color: white;
+  color:#c91a1a;
+  
+}
+
+.outLineRed:hover{
+  border: 1px solid white;
+  background-color: #cc8e00;
+  color:white;
+  transition: 0.2s all ease;
+  font-weight: bold;
+}
+.outLineRed:disabled, .outLineRed:disabled:hover {
+  border: 1px solid #abaaa8;
+  background-color: #abaaa8;
+  color:black;
+}
+
+.rol{
+  font-weight: bold;
+  text-shadow:0 0 6pm rgba(0, 0, 0, 0.5);
+}
+
+@media only screen and (max-width: 699px) {
+  .outLineRed{
+    border: 1px solid #c91a1a;
+    background-color: white;
+    color:#c91a1a;
+    margin:0 auto;
+    width: 100%;
+    
+  }
+
+}
+
+@media only screen and (min-width: 700px) {
+  
+  div.col-md-3{
+      display: inline-block !important;
+      width: auto;
+      padding: 0;
+      
+  }
+
+  div.col-md-4{
+    display: inline-block !important;
+    margin-right: 1em;
+    width: auto;
+    padding: 0;
+  }
+
+  .respMr{
+    margin-right: 0.5em !important;
+  }
+
 }

@@ -12,7 +12,7 @@ include('layout/navbar.php');
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
                     <h4>Bienvenido <?= $_SESSION["usuario"]["nombre"]; ?>!</h4>
-                    <p class="mb-0">Rol: <?= $_SESSION["usuario"]["rol"]; ?></p>
+                    <span class="mb-0 rol">Rol: <?= $_SESSION["usuario"]["rol"]; ?></span>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -28,8 +28,7 @@ include('layout/navbar.php');
         <div class="row page-titles mx-0 justify-content-center">
             <div class="col-sm-6 p-md-0">
                 <div class="text-center">
-                    <img src="../recursos/multimedia/imagenes/logo.jpg" alt="logoFepade">
-                    <h1 class="text-gray-900 my-2 mb-4">Nuevo responsable</h1>
+                    <h1 class="text-gray-900 my-4 mb-4">Nuevo responsable</h1>
                 </div>
 
 
@@ -51,12 +50,16 @@ include('layout/navbar.php');
                                 <option value="1">Inactivo</option>
                             </select>
                         </div>
-                        <div class="col-md-12"><p class="alertError my-2" role="alert" id="lbError"></p></div>
-                        <div class="col-md-12">
-                            <button type="submit" class="btnLogin btn" id="btnInsertar" name="btnInsertar">Ingresar</button>
-                            <button type="button" class="btnLogin btn ml-2" id="btnModificar" name="btnModificar">Modificar</button>
-                            <button type="button" class="btnLogin btn ml-2" id="btnCancelar" name="btnCancelar">Cancelar</button>
+                        <div class="col-md-12 respMr"><p class="alertError my-2" role="alert" id="lbError"></p></div>
+                    </div>
+                        <div class="col-md-4 respMr">
+                            <button type="submit" class="outLineRed btn" id="btnInsertar" name="btnInsertar">Ingresar</button>      
                         </div>
+                        <div class="col-md-4 respMr">
+                            <button type="button" class="outLineRed btn" id="btnModificar" name="btnModificar">Modificar</button>
+                        </div>
+                        <div class="col-md-4 respMr">
+                            <button type="button" class="outLineRed btn" id="btnCancelar" name="btnCancelar">Cancelar</button>
                         </div>
                 </form>
             </div>

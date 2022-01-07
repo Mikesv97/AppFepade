@@ -8,7 +8,7 @@ $obj = new activoFijoDAO();
 $usuario = $_SESSION["usuario"]["nombre"];
 $idUSuario = $_SESSION["usuario"]["id"];
 //variable que genera la fecha actual
-$date = date('d-m-Y');
+
 ?>
 
 <!-- script para mostrar o ocultar los campos segun, el tipo de activo que se ingresara -->
@@ -56,6 +56,52 @@ $date = date('d-m-Y');
     #ActivoReferenciaH {
         font-weight: bold;
     }
+    .outLineRed{
+        border: 1px solid #c91a1a;
+        background-color: white;
+        color:#c91a1a;
+        
+    }
+
+    .outLineRed:hover{
+        border: 1px solid white;
+        background-color: #cc8e00;
+        color:white;
+        transition: 0.2s all ease;
+        font-weight: bold;
+    }
+    .outLineRed:disabled, .outLineRed:disabled:hover {
+        border: 1px solid #abaaa8;
+        background-color: #abaaa8;
+        color:black;
+    }
+
+div.col-md-3{
+    display: inline-block;
+}
+
+@media only screen and (max-width: 699px) {
+  #mostrarImagen{
+    max-width: 300px;
+  }
+  .outLineRed{
+      width: 100%;
+  }
+  
+}
+
+@media only screen and (min-width: 700px) {
+
+    div.marginR{
+        display: inline-block;
+        margin:0;
+        width: auto;
+        margin-right: 1em !important;
+        padding:0;
+    }
+}
+
+
 </style>
 
 <!--**********************************
@@ -67,8 +113,7 @@ $date = date('d-m-Y');
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
                     <h4>Bienvenido <?= $usuario; ?>!</h4>
-                    <p class="mb-0">Rol: <?= $_SESSION["usuario"]["rol"]; ?></p>
-                   <p class="mb-0">Hora: <?= $date; ?></p>
+                    <p class="mb-0 rol">Rol: <?= $_SESSION["usuario"]["rol"]; ?></p>
                     <a href="" id="inicioForm"></a>
                 </div>
             </div>
@@ -81,7 +126,7 @@ $date = date('d-m-Y');
         </div>
         <!-- row -->
         <div class="row">
-            <button type="button" class="btn btn-tumblr mb-5 ml-4" data-toggle="collapse" href="#mostrarFormulario" aria-controls="mostrarFormulario" id="verFormulario">
+            <button type="button" class="btn btn-dark mb-5 ml-4" data-toggle="collapse" href="#mostrarFormulario" aria-controls="mostrarFormulario" id="verFormulario">
                 Ingresar activo fijo
             </button>
             <div class="col-xl-12 col-xxl-12 collapse" id="mostrarFormulario">
@@ -94,7 +139,7 @@ $date = date('d-m-Y');
                             <div class="row">
                                 <div class="col-md-6 borde">
                                     <!-- INICIO PRIMERA COLUMNA DEL FORM -->
-                                    <h5 class="my-2 label label-danger col-md-12">Información general de activo</h5>
+                                    <h5 class="my-2 label label-dark col-md-12">Información general de activo</h5>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Referencia*</label>
@@ -144,7 +189,7 @@ $date = date('d-m-Y');
                                 </div>
                                 <div class="col-md-6">
                                     <!-- INICIO SEGUNDA COLUNMA DEL FORM -->
-                                    <h5 class="my-2 label label-danger col-md-12">Información general de activo</h5>
+                                    <h5 class="my-2 label label-dark col-md-12">Información general de activo</h5>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <input type="text" name="UsuarioId" value="<?= $idUSuario; ?>" hidden>
@@ -212,7 +257,7 @@ $date = date('d-m-Y');
                             </div>
                             <div class="row borde-top">
                                 <div class="col-md-6 borde" id="ResCompAsig">
-                                    <h5 class="my-2 label label-danger col-md-12">Responsable y comentarios de asignación</h5>
+                                    <h5 class="my-2 label label-dark col-md-12">Responsable y comentarios de asignación</h5>
                                     <div class="form-row ">
                                         <div class="form-group col-md-6">
                                             <div class="form-check">
@@ -239,7 +284,7 @@ $date = date('d-m-Y');
                                 </div>
                                 <div class="col-md-6 borde">
                                     <div class="text-center">
-                                        <h5 class="my-2 label label-danger col-md-12">Imagen de activo fijo</h5>
+                                        <h5 class="my-2 label label-dark col-md-12">Imagen de activo fijo</h5>
                                         <input type="text" name="imagenBD" id="imagenBD" hidden>
                                         <div>
                                             <img id="mostrarImagen" src="../Recursos/Multimedia/Imagenes/Upload/nodisponible.jpg">
@@ -249,7 +294,7 @@ $date = date('d-m-Y');
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <h5 class="my-2 label label-danger col-md-12">Especificaciones computadora</h5>
+                                    <h5 class="my-2 label label-dark col-md-12">Especificaciones computadora</h5>
                                     <div class="form-row my-2 ">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Procesador*</label>
@@ -294,7 +339,7 @@ $date = date('d-m-Y');
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <h5 class="my-2 label label-danger col-md-12">Especificaciones impresora</h5>
+                                    <h5 class="my-2 label label-dark col-md-12">Especificaciones impresora</h5>
                                     <div class="form-row my-2">
                                         <div class="form-group col-md-6">
                                             <label class="text-label">Toner negro*</label>
@@ -320,7 +365,7 @@ $date = date('d-m-Y');
                                             <label class="text-label">Fusor</label>
                                             <input type="text" name="fusor" class="form-control" maxlength="50">
                                         </div>
-                                        <h5 class="my-4 label label-danger col-md-12">Especificaciones proyector</h5>
+                                        <h5 class="my-4 label label-dark col-md-12">Especificaciones proyector</h5>
 
                                         <div class="form-group col-md-12">
                                             <label class="text-label">Horas de uso*</label>
@@ -333,7 +378,7 @@ $date = date('d-m-Y');
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <h5 class="my-2 label label-danger col-md-12">Historial activo</h5>
+                                    <h5 class="my-2 label label-dark col-md-12">Historial activo</h5>
                                     <div class="" id="prueba">
                                         <table id="activoHistorial" name="activoHistorial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
                                             <thead>
@@ -354,14 +399,22 @@ $date = date('d-m-Y');
                                                 </tr>
                                             </tfoot>
                                         </table>
-                                        <button type="button" id="btnMostrarHistorial" class="btn btn-facebook btn-block" data-toggle="modal" data-target=".modalHistorial">Transladar activo</button>
+                                        <button type="button" id="btnMostrarHistorial" class="btn btn-warning btn-block" data-toggle="modal" data-target=".modalHistorial">Transladar activo</button>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-tumblr my-4" name="btnInsertar" id="btnInsertar">Insertar</button>
-                            <button type="button" class="btn btn-tumblr my-4" name="btnModificar" id="btnModificar">Modificar</button>
-                            <button type="button" class="btn btn-tumblr my-4" name="btnEliminar" id="btnEliminar">Eliminar</button>
-                            <button type="button" class="btn btn-tumblr my-4" name="btnCancelar" id="btnCancelar">Cancelar</button>
+                            <div class="col-md-3 marginR">
+                                <button type="submit" class="btn outLineRed my-4" name="btnInsertar" id="btnInsertar">Insertar</button>
+                            </div>
+                            <div class="col-md-3 marginR">
+                                <button type="button" class="btn outLineRed my-4" name="btnModificar" id="btnModificar">Modificar</button>
+                            </div>
+                            <div class="col-md-3 marginR">
+                                <button type="button" class="btn outLineRed my-4" name="btnEliminar" id="btnEliminar">Eliminar</button>
+                            </div>
+                            <div class="col-md-3 marginR">
+                                <button type="button" class="btn outLineRed my-4" name="btnCancelar" id="btnCancelar">Cancelar</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -460,14 +513,14 @@ $date = date('d-m-Y');
                                 <input type="text" name="UsuarioIdH" value="<?= $idUSuario; ?>" hidden>
                                 <!-- INPUT QUE GUARDA EL ID HISTORICO PARA ELIMINAR UN HISTORICO -->
                                 <input type="text" name="historicoId" id="historicoId" hidden>
-                                <label class="label label-danger col-md-12">Activo</label>
+                                <label class="label label-dark col-md-12">Activo</label>
                                 <div class="form-group col-md-5">
                                     <input type="text" name="ActivoReferenciaH" id="ActivoReferenciaH" class="form-control" maxlength="30" required readonly>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <textarea class="form-control descripcionActivo" name="ActivoDescripcionH" rows="3" maxlength="1000" required readonly></textarea>
                                 </div>
-                                <label class="label label-danger col-md-12">Área</label>
+                                <label class="label label-dark col-md-12">Área</label>
                                 <div class="form-group col-md-3">
                                     <input type="text" class="form-control" name="idArea" id="idArea" readonly>
                                 </div>
@@ -481,7 +534,7 @@ $date = date('d-m-Y');
                                         ?>
                                     </select>
                                 </div>
-                                <label class="label label-danger col-md-12">Responsable</label>
+                                <label class="label label-dark col-md-12">Responsable</label>
                                 <div class="form-group col-md-3">
                                     <input type="text" class="form-control" name="idResponsable" id="idResponsable" readonly>
                                 </div>
@@ -495,7 +548,7 @@ $date = date('d-m-Y');
                                         ?>
                                     </select>
                                 </div>
-                                <label class="label label-danger col-md-12">Fecha y estado de activo</label>
+                                <label class="label label-dark col-md-12">Fecha y estado de activo</label>
                                 <div class="form-group col-md-6">
                                     <input id="fechaHistorico" type="date" name="fechaHistorico" class="form-control" required>
                                 </div>
@@ -506,12 +559,12 @@ $date = date('d-m-Y');
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="label label-danger col-md-12">Comentarios de asignación</label>
+                                    <label class="label label-dark col-md-12">Comentarios de asignación</label>
                                     <textarea class="form-control descripcionActivo" name="HistoricoComentarioH" rows="3" maxlength="50"></textarea>
                                 </div>
 
-                                <div class="col-md-12 responsive-table"">
-                                    <h5 class=" my-2 label label-danger col-md-12">Historico de ubicaciones</h5>
+                                <div class="col-md-12 responsive-table">
+                                    <h5 class=" my-2 label label-dark col-md-12">Historico de ubicaciones</h5>
                                     <div class="">
                                         <table id="historial" name="historial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
                                             <thead>
@@ -545,9 +598,15 @@ $date = date('d-m-Y');
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-snapchat" id="btnNuevoHistorico">Nuevo Historial</button>
-                    <button type="submit" class="btn btn-whatsapp" id="btnInsertarHistorico">Insertar</button>
-                    <button type="button" class="btn btn-facebook" id="btnModificarHostorico">Modificar</button>
+                    <div class="col-md-4 marginR">
+                        <button type="button" class="btn outLineRed my-3" id="btnNuevoHistorico">Nuevo Historial</button>
+                    </div>
+                    <div class="col-md-4 marginR">
+                        <button type="submit" class="btn outLineRed my-3" id="btnInsertarHistorico">Insertar</button>
+                    </div>
+                    <div class="col-md-4 marginR">
+                        <button type="button" class="btn outLineRed my-3" id="btnModificarHostorico">Modificar</button>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

@@ -1,5 +1,5 @@
  <?php
-    session_start();
+
     include('layout/header.php');
     include('layout/navbar.php');
  ?>
@@ -13,7 +13,7 @@
                 <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                        <a href="" id="inicioForm"></a>
+                            <a href="" id="inicioForm"></a>
                             <h4>Bienvenido <?=$_SESSION["usuario"]["nombre"];?>!</h4>
                             <p class="mb-0">Rol: <?=$_SESSION["usuario"]["rol"];?></p>
                         </div>
@@ -29,7 +29,7 @@
                 <div class="row page-titles mx-0">
                     <div class="col-md-5 p-md-0 mx-auto">
                         
-                        <h2 class="text-center mb-3">Roles del sistema</h2>
+                        <h2 class="text-center mb-5 text-gray-900 my-4">Roles del sistema</h2>
                          <form id="frmRoles">
                             <div class="form-group">
                                 <input type="number" id="txtId" hidden>
@@ -53,8 +53,15 @@
 
                                 </ul>
                             </div>
-                            <button type="submit" class="btnLogin my-4 btn btn-primary" id="btnIngresar">Ingresar</button>
-                            <button type="button" class="btnLogin my-4 btn btn-primary" id="btnGuardar">Guardar</button>
+                            <div class="col-md-4">
+                                <button type="submit" class="outLineRed my-3 btn" id="btnIngresar">Ingresar</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="outLineRed my-3 btn" id="btnGuardar">Guardar</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="my-3 mb-3 outLineRed btn" id="btnCancelar">Cancelar</button>
+                            </div>
                          </form>
 
                          <!--TABLA ROLES-->
@@ -78,7 +85,7 @@
                     </div>
                     <div class="borderIzq  col-md-6">
                         <div class="ml">
-                        <h2 class="text-center">Menú del sistema</h2>
+                        <h2 class="text-center text-gray-900 my-4 mb-5">Menú del sistema</h2>
                         <p class="advertensia">
                             <spam class="msjRed">Importante:</spam> al ingresar un nuevo menú este no aparecerá reflejado en las 
                             opciones de navegación de la web, <spam class="msjRed">debes actualizar el o los roles</spam> que podrán
@@ -96,8 +103,15 @@
                                 <input type="text" class="form-control" id="txtMenuPadre" maxlength="50" name="txtMenuPadre"  placeholder="Activos, reportes, usuarios y roles, etc" required>
                             </div>
                             <div class="col-md-12"><p class="alertError my-2 mb-2" role="alert" id="labelErrorMenu"></p></div>
-                            <button type="submit" id="btnIngresarMenu" class="btnLogin my-2 btn btn-primary">Ingresar menú</button>
-                            <button type="button" id="btnGuardarMenu" class="btnLogin my-2 btn btn-primary">Guardar</button>
+                            <div class="col-md-4">
+                                <button type="submit" id="btnIngresarMenu" class="outLineRed my-3 btn btn-primary">Ingresar menú</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" id="btnGuardarMenu" class="outLineRed my-3 btn btn-primary">Guardar</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="outLineRed btn my-3 mb-3" id="btnCancelarMenu">Cancelar</button>  
+                            </div>
                          </form>
 
                          <!--TABLA ROLES-->

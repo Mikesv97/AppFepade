@@ -16,9 +16,25 @@ jQuery(document).ready(function ($){
     cargarMenus();
     cargarTblMenu();
     ocultarColumTableRolesMenu();
-   
-   
-  
+
+    //al click cancelar de roles
+    $("#btnCancelar").on("click", function(){
+        $("#labelError").hide();
+        $("#frmRoles")[0].reset();
+        $("#btnIngresar").prop("disabled", false);
+        $("#btnGuardar").prop("disabled", true);
+        disabledControles(false);
+
+    });
+    
+    //al click cancelar de menú
+    $("#btnCancelarMenu").on("click", function(){
+        $("#frmMenu")[0].reset();
+        $("#btnIngresarMenu").prop("disabled", false);
+        $("#btnGuardarMenu").prop("disabled", true);
+        disabledControlesMenu(false);
+
+    });
     //cuando se genere click en el último elemento de la lista
     //desmarcamos los demás chekbox de la misma lista (más detalles dentro de la función, al final.)
     $("body").on("click","#grupoCkbAcciones li:last", function(){

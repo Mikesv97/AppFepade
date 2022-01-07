@@ -8,6 +8,12 @@ input[type="search"]{
     width: 130px !important;
 }
 
+.text-gray-900 {
+    color: #b0291c !important;
+    text-shadow: 0 1px 1px rgba(90, 92, 105, .2);
+    border-bottom: 4px solid #cd8e01;
+  }
+
 .msjRed{
     color: red;
     font-weight: bold;
@@ -54,15 +60,50 @@ textarea {
     margin-left: 2em;
 }
 
-.btnLogin{
-    background-color: #b0191e;
-    color: white;
-    border: none;
-  }
-
-  .btnLogin:hover{
-    transition: all 0.5s ease-in-out;
-    background-color: #cf0c13;
-    color: white;
+.outLineRed{
+    border: 1px solid #c91a1a;
+    background-color: white;
+    color:#c91a1a;
+    
   }
   
+  .outLineRed:hover{
+    border: 1px solid white;
+    background-color: #cc8e00;
+    color:white;
+    transition: 0.2s all ease;
+    font-weight: bold;
+  }
+  .outLineRed:disabled, .outLineRed:disabled:hover {
+    border: 1px solid #abaaa8;
+    background-color: #abaaa8;
+    color:black;
+  }
+  
+  .rol{
+    font-weight: bold;
+    text-shadow:0 0 6pm rgba(0, 0, 0, 0.5);
+  }
+
+  @media only screen and (max-width: 699px) {
+    .outLineRed{
+      border: 1px solid #c91a1a;
+      background-color: white;
+      color:#c91a1a;
+      margin:0 auto;
+      width: 100%;
+      
+    }
+  
+  }
+
+  @media only screen and (min-width: 700px) {
+    div.col-md-4{
+        display: inline-block !important;
+        margin:0 ;
+        width: auto;
+        margin-right: 1em !important;
+        padding: 0;
+        
+    }
+  }

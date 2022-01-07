@@ -280,6 +280,11 @@ p {
   margin-top: 0;
   margin-bottom: 1rem; }
 
+.copyright > p {
+  color: white  !important;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.03);
+  
+}
 abbr[title],
 abbr[data-original-title] {
   text-decoration: underline;
@@ -8031,14 +8036,15 @@ a {
 
 .footer {
   padding-left: 17.1875rem;
-  background-color: rgba(88, 115, 254, 0.04); }
+  background-color: black; 
+  }
   .footer .copyright {
     padding: 0.9375rem; }
     .footer .copyright p {
       text-align: center;
       margin: 0; }
     .footer .copyright a {
-      color: #593bdb; }
+      color: #cc8e00; }
 
 [data-sidebar-style="mini"] .nav-control,
 [data-layout="horizontal"] .nav-control {
@@ -8060,11 +8066,11 @@ a {
   position: absolute;
   left: 0;
   top: 0;
-  background-color: #343957;
+  background-color: #b60e0e;/*fondo del logo*/
   transition: all .2s ease;
   z-index: 4; }
   .nav-header .logo-abbr {
-    max-width: 30px; }
+    max-width: 60px; }
   .nav-header .logo-compact {
     display: none; }
   @media only screen and (min-width: 1800px) {
@@ -8096,7 +8102,7 @@ a {
         justify-content: center; } }
   .nav-header .brand-title {
     margin-left: 15px;
-    max-width: 75px; }
+    max-width: 135px; }
     [data-theme-version="dark"] .nav-header .brand-title {
       background-position: 0 120%; }
 
@@ -10293,7 +10299,8 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.05rem;
-  color: white;  
+  /*color: white;  */
+  color: gold;
   font-weight: bold;
 }
 
@@ -10318,7 +10325,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   top: 5rem;
   padding-top: 0;
   z-index: 2;
-  background-color: #282b3a;
+  background-color: #9a0404; /*color de barra menu*/
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   transition: all .2s ease; }
   .quixnav .quixnav-scroll {
@@ -10351,12 +10358,14 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
         position: relative;
         top: -2px; }
       .quixnav .metismenu > li > a {
-        color: #bdbdc7; }
+        color: white; /*color texto menu contenedor padre*/
+        }
       .quixnav .metismenu > li:hover > a, .quixnav .metismenu > li:focus > a, .quixnav .metismenu > li.mm-active > a {
-        background-color: #f0ad16;
-        color: #fff; }
+        background-color: #cc8e00; /*hover menu*/
+        color: #fff; 
+        font-weight: bold;}
       .quixnav .metismenu > li.mm-active ul {
-        background-color: rgba(88, 115, 254, 0.04); }
+        background-color: #982626; /*fondo sub menu*/ }
         .quixnav .metismenu > li.mm-active ul ul {
           background-color: rgba(88, 115, 254, 0.04); }
     .quixnav .metismenu li {
@@ -10367,10 +10376,12 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
       .quixnav .metismenu ul a {
         padding-left: 54px;
         font-weight: 300; 
-        background-color: #3f4457}
+        background-color: rgba(167, 16, 16, 0.49);
+        font-weight: bold;}
         .quixnav .metismenu ul a:hover, .quixnav .metismenu ul a:focus, .quixnav .metismenu ul a.mm-active {
           text-decoration: none;
-          color: #fff; }
+          color: #fff; 
+          font-weight: bold;}/*hover del sub menu*/
         [direction="rtl"] .quixnav .metismenu ul a {
           padding-right: 54px; }
       .quixnav .metismenu ul ul a {
@@ -15064,13 +15075,15 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   margin-bottom: 5px; }
   .badge-demo .badge:last-child {
     margin-right: 0; }
-
+.rol{
+  font-weight: bold;
+  text-shadow:0 0 6pm rgba(0, 0, 0, 0.5);
+}
 .bootstrap-badge-buttons button {
   margin-right: .2rem;
   margin-bottom: 1rem; }
   .bootstrap-badge-buttons button:last-child {
     margin-right: 0; }
-
 .page-titles {
   padding: 0.9375rem 1.25rem;
   background: #fff;
@@ -15088,11 +15101,13 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   .page-titles h4 {
     margin-bottom: 0;
     margin-top: 0;
-    color: #593bdb;
-    font-size: 1.25rem; }
+    color: #cf242a;/*color texto bienvenida*/
+    font-size: 1.25rem;
+    font-weight: bold; }
     .page-titles h4 span {
-      font-size: 0.875rem;
-      font-weight: 400; }
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: #cc8e00 }
   .page-titles .breadcrumb {
     margin-bottom: 0;
     padding: 0;

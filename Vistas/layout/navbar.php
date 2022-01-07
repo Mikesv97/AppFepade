@@ -5,15 +5,20 @@
             header("Location: ../vistas/primerLogin.php");
         }
     }
+
+    $Object = new DateTime();
+    $Object->setTimezone(new DateTimeZone('America/El_Salvador'));
+    $hora = $Object->format("d-m-Y h:s a"); 
+    
 ?>
 <!--**********************************
             Nav header start
         ***********************************-->
 <div class="nav-header">
     <a href="home.php" class="brand-logo">
-        <img class="logo-abbr" src="../Recursos/Multimedia/Imagenes/logo.png" alt="">
-        <img class="logo-compact" src="../Recursos/Multimedia/Imagenes/logo-text.png" alt="">
-        <img class="brand-title" src="../Recursos/Multimedia/Imagenes/logo-text.png" alt="">
+        <img class="logo-abbr" src="../Recursos/Multimedia/Imagenes/imgLogoFepadeHeader.png" alt="">
+        
+        <img class="brand-title" src="../Recursos/Multimedia/Imagenes/imgTextFepadeHeader.png" alt="">
     </a>
 
     <div class="nav-control">
@@ -68,7 +73,7 @@
 <!--**********************************
             Sidebar start
         ***********************************-->
-<div class="quixnav">
+<div class="quixnav shodow">
     <div class="quixnav-scroll">
         <ul class="metismenu" id="menu">
             <li class="nav-label">Menu de navegación</li>

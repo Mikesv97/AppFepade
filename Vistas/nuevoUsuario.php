@@ -30,7 +30,7 @@ include('layout/navbar.php');
         <div class="row page-titles mx-0 justify-content-center">
             <div class="col-sm-6 p-md-0">
                 <div class="text-center">
-                    <img src="../recursos/multimedia/imagenes/logo.jpg" alt="logoFepade"><h1 class="text-gray-900 my-2 mb-4">Nuevo usuario</h1>
+                    <h1 class="text-gray-900 my-2 mb-4">Nuevo usuario</h1>
                 </div>
 
 
@@ -66,9 +66,16 @@ include('layout/navbar.php');
                                 </select>
                             </div>
                             <div class="col-md-12"><p class="alertError my-2" role="alert" id="lbError"></p></div>
-                        </div>                     
-                        <button type="submit" class="btnLogin btn" id="btnNewUser">Registrar usuario</button>
-                        <button type="submit" class="mx-2 btnLogin btn" id="btnGuardar">Guardar</button>
+                        </div> 
+                        <div class="col-md-4">
+                            <button type="submit" class="outLineRed btn my-3" id="btnNewUser">Ingresar</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="outLineRed btn my-3" id="btnGuardar">Guardar</button>
+                        </div>  
+                        <div class="col-md-4">
+                            <button type="button" class="outLineRed btn my-3" id="btnCancelar">Cancelar</button>
+                        </div>                 
                     </div>
                 </form>
             </div>

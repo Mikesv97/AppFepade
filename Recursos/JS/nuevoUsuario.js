@@ -133,7 +133,30 @@ $(document).ready(function(){
             $("#lbError").hide();
         }
     });
- 
+    
+    //cuando le da cancelar 
+    $("#btnCancelar").on("click", function(){
+        $("#lbError").hide();
+        //limpiamos form
+        $("#frmNuevoUsuario")[0].reset();
+        //habilitamos los campos
+        $("#txtPassword1").prop("disabled", false);
+        $("#txtPassword2").prop("disabled", false);
+        $("#txtIdUser").prop("disabled", false);
+        $("#btnNewUser").prop("disabled", false);
+        
+        //deshabilitamos el de guardar
+        $("#btnGuardar").prop("disabled", true);
+        
+        //regresamos el required a los campos password
+        $("#txtPassword1").prop("required", true);
+        $("#txtPassword2").prop("requried", true);
+        
+        //limpiamos variables
+        editUser = false;
+        correoEdit=null;
+       
+    });
     //cuando hace clic en el btn nuevo usuario
     $("#frmNuevoUsuario").submit(function(e){
         //cancelamos el envio de form

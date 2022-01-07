@@ -15,8 +15,9 @@ $idUSuario = $_SESSION["usuario"]["id"];
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Bienvenido <?= $_SESSION["usuario"]["nombre"]; ?>!</h4>
-                    <p class="mb-0">Rol: <?= $_SESSION["usuario"]["rol"]; ?></p>
+                    <h4>Bienvenido <?= $usuario; ?>!</h4>
+                    <p class="mb-0 rol">Rol: <?= $_SESSION["usuario"]["rol"]; ?></p>
+                    <a href="" id="inicioForm"></a>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -32,8 +33,7 @@ $idUSuario = $_SESSION["usuario"]["id"];
         <div class="row page-titles mx-0 justify-content-center">
             <div class="col-sm-6 p-md-0">
                 <div class="text-center">
-                    <img src="../recursos/multimedia/imagenes/logo.jpg" alt="logoFepade">
-                    <h1 class="text-gray-900 my-2 mb-4">Nuevo tipo de activo</h1>
+                    <div class="vistaTitulo"><h1  class="text-gray-900 my-2 mb-4">Nuevo tipo de activo</h1></div>
                 </div>
 
                 <form id="frmTipoActivo" class="my-4">
@@ -53,9 +53,15 @@ $idUSuario = $_SESSION["usuario"]["id"];
                         
                     </div>
                     <div class="col-md-12"><p class="alertError my-2" role="alert" id="lbError"></p></div>
-                    <button type="submit" class="btnLogin btn" id="btnInsertar" name="btnInsertar">Ingresar</button>
-                    <button type="button" class="btnLogin btn ml-2" id="btnModificar" name="btnModificar">Modificar</button>
-                    <button type="button" class="btnLogin btn ml-2" id="btnCancelar" name="btnCancelar">Cancelar</button>
+                    <div class="col-md-4 my-3 respMr">
+                        <button type="submit" class="outLineRed btn" id="btnInsertar" name="btnInsertar">Ingresar</button>
+                    </div>
+                    <div class="col-md-4 my-3 respMr">
+                        <button type="button" class="outLineRed btn" id="btnModificar" name="btnModificar">Modificar</button>
+                    </div>
+                    <div class="col-md-4 my-3 respMr">
+                        <button type="button" class="outLineRed btn" id="btnCancelar" name="btnCancelar">Cancelar</button>
+                    </div>
                 </form>
             </div>
         </div>

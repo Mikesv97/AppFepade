@@ -15,8 +15,8 @@ try{
 
 
     $creport->DiscardSavedData();
-    $creport->RecordSelectionFormula = "{invoice.invoiceid} = 20070128114815";
-    $creport->ReadRecords();
+    //$creport->RecordSelectionFormula = "{invoice.invoiceid} = 20070128114815";
+   // $creport->ReadRecords();
 
     $creport->ExportOptions->DiskFileName = $my_pdf;
     $creport->ExportOptions->FormatType = 31;

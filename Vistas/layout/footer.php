@@ -1,12 +1,54 @@
 <!--**********************************
             Footer start
         ***********************************-->
-        <div class="footer">
-            <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
-                <p>Distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a></p>
+<style>
+.imgFooter{
+    max-width:260px;
+    margin-left: 18em;
+}
+.copy>p{
+    color:white;
+    margin-top: 1em;
+}
+
+.copy >p> span {
+    color:gold;
+    
+}
+
+.piePag{
+    background-color:black;
+    padding: 10px;
+}
+
+@media only screen and (max-width: 1199px) {
+    .imgFooter{
+        max-width:260px;
+        margin-left: 4em;
+        margin: 0 auto;
+        display:block;
+    }
+
+    .copy>p{
+        color:white;
+        margin: 0 auto;
+        display:block;
+    }
+
+}
+</style>
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center piePag">
+            <div class="col-md-6 text-center">
+                <img src="../recursos/multimedia/imagenes/logoFepade.png" class="imgFooter" alt="">
+            </div>
+            <div class="col-md-6 text-center copy">
+                <p>
+                    Copyright &copy; <?=  date("Y");?> FEPADE El Salvador | Diseñado por <span>Douglas Méndez y Alan Castillo</span>
+                </p>
             </div>
         </div>
+    </div>
         <!--**********************************
             Footer end
         ***********************************-->
