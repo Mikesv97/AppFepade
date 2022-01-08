@@ -27,11 +27,19 @@ include('layout/navbar.php');
         <!-- fin barra top -->
         <!--combo box tipo activo -->
         <div class="row page-titles mx-0">
-            <div class="col-sm-6 p-md-0">
-                <label for="sTipoActivoR">Filtrar por tipo de activo</label>
+            <div class="col-md-6 p-md-0">
+                <label for="sTipoActivoR">Seleccionar tipo de activo</label>
                 <select class="form-control" id="sTipoActivoR" name="sTipoActivoR">
                     <option value="0">Seleccionar tipo activo... *</option>
                 </select>
+            </div>
+            <div class="col-md-6 p-md-0">
+                <label for="sTipoActivoR">Seleccionar área</label>
+                <select class="form-control" id="sTipoActivoR" name="sTipoActivoR">
+                    <option value="0">Seleccionar área... *</option>
+                </select>
+            </div>
+            <div class="col-md-12">
                 <button type="button" class="btn btnLogin my-3">Generar reporte</button>
             </div>
         </div>

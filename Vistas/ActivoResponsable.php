@@ -50,15 +50,15 @@ include('layout/navbar.php');
                                 <option value="1">Inactivo</option>
                             </select>
                         </div>
-                        <div class="col-md-12 respMr"><p class="alertError my-2" role="alert" id="lbError"></p></div>
+                        <div class="col-md-12 my-2 respMr"><p class="alertError my-2" role="alert" id="lbError"></p></div>
                     </div>
-                        <div class="col-md-4 respMr">
+                        <div class="col-md-4 respMr my-2">
                             <button type="submit" class="outLineRed btn" id="btnInsertar" name="btnInsertar">Ingresar</button>      
                         </div>
-                        <div class="col-md-4 respMr">
+                        <div class="col-md-4 respMr my-2">
                             <button type="button" class="outLineRed btn" id="btnModificar" name="btnModificar">Modificar</button>
                         </div>
-                        <div class="col-md-4 respMr">
+                        <div class="col-md-4 respMr my-2">
                             <button type="button" class="outLineRed btn" id="btnCancelar" name="btnCancelar">Cancelar</button>
                         </div>
                 </form>

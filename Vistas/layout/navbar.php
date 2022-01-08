@@ -72,6 +72,7 @@
 
 <!--**********************************
             Sidebar start
+            área de menú
         ***********************************-->
 <div class="quixnav shodow">
     <div class="quixnav-scroll">
@@ -92,13 +93,7 @@
                     
                 </ul>
             </li>
-            <li id="listaReportes"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Reportes</span></a>
-                <ul aria-expanded="false" id="subMenuReportes">
-                    <li><a href="reportes.php">De activo</a></li>
-                    <li><a href="nuevoUsuario.php">Toners</a></li>
-                    <li><a href="nuevoUsuario.php">Para revisión de áreas</a></li>
-                    <li><a href="nuevoUsuario.php">Para mantenimiento</a></li>
-                </ul>
+            <li id="listaReportes"><a  href="reportes.php" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Reportes</span></a>
             </li>
             
         </ul>

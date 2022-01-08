@@ -104,7 +104,7 @@
                             </div>
                             <div class="col-md-12"><p class="alertError my-2 mb-2" role="alert" id="labelErrorMenu"></p></div>
                             <div class="col-md-4">
-                                <button type="submit" id="btnIngresarMenu" class="outLineRed my-3 btn btn-primary">Ingresar menú</button>
+                                <button type="submit" id="btnIngresarMenu" class="outLineRed my-3 btn btn-primary">Ingresar</button>
                             </div>
                             <div class="col-md-4">
                                 <button type="button" id="btnGuardarMenu" class="outLineRed my-3 btn btn-primary">Guardar</button>
