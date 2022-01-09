@@ -105,6 +105,7 @@ class ReportesDao
                             .'<td class="w8">'.$fila[$i]["TonerC"].'</td>'
                             .'<td class="w8">'.$fila[$i]["TonerA"].'</td>'
                           .'</tr>';
+
                           $countImp++;
                         break;
                         case "Proyector":
@@ -123,18 +124,35 @@ class ReportesDao
                     }
 
                 }
-                $tr='<tr>'
-                .'<td class="wt">No Hay Datos</td>'
-                .'</tr>';
-            if($countPC==0 && $countLap==0 && $countProyec==0 && $countProyec=0){
+            
+            //creamos una fila para cuando no hay datos
+            $tr='<tr>'
+            .'<td colspan="12">No hay datos según los filtros seleccionados</td>'
+            .'</tr>';
 
-                $tablaImp .=$tr;
-                $tablaLaptop.=$tr;
+            $tr2='<tr>'
+            .'<td colspan="9">No hay datos según los filtros seleccionados</td>'
+            .'</tr>';
+
+            //evaluamos en cual tipo de activo no hay datos
+            //y concatenamos la fila no hay datos
+            if($countPC==0 ){
                 $tablaPC.=$tr;
-                $tablaProyector.=$tr;
-            }else if(){
-
             }
+            
+            if($countLap==0){
+                $tablaLaptop.=$tr;
+            }
+
+            if($countProyec==0){
+                $tablaProyector.=$tr;
+            }
+            
+            
+            if($countImp==0){
+                $tablaImp .=$tr;
+            }
+
             //cerramos las respectivas tablas de cada tipo
             $tablaImp .="</table>";
             $tablaLaptop.="</table>";
