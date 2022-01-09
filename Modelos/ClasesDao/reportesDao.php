@@ -221,25 +221,36 @@ class ReportesDao
                 .'<td colspan="12">No hay datos según los filtros seleccionados</td>'
                 .'</tr>';
                 
-                //evaluamos en cual tipo de activo no hay datos
-                //y concatenamos la fila "no hay datos"
-                if($countPC==0 ){
+                //evaluamos en cual tipo de activo es seleccionado por usuario
+                //concatenamos fila no hay datos + estilos
+                //se debe agregar un if o un switch en caso gusten así para evaluar
+                //cada tipo activo en BD
+                if($tipAct==1 ){
                     $tablaPC.=$tr;
+                    $tablaPC.="</table>";
+                    $html =$tablaPC.$rpt->getEtiquetaStyleRpt();
                 }
                             
-                if($countLap==0){
+                if($tipAct==2){
                     $tablaLaptop.=$tr;
+                    $tablaLaptop.="</table>";
+                    $html =$tablaLaptop.$rpt->getEtiquetaStyleRpt();
                 }
                 
-                if($countProyec==0){
+                if($tipAct==3){
                     $tablaProyector.=$tr;
+                    $tablaProyector.="</table>";
+                    $html =$tablaProyector.$rpt->getEtiquetaStyleRpt();
                 }
                             
                             
-                if($countImp==0){
+                if($tipAct==4){
                     $tablaImp .=$tr;
+                    $tablaImp .="</table>";
+                    $html = $tablaImp.$rpt->getEtiquetaStyleRpt();
                 }
 
+                return $html;
             }else{
                 //si los hay
                 //recorremos y creamos las respectivas tablas
@@ -314,9 +325,8 @@ class ReportesDao
                         break;
                     }
 
-                }   
-            }
-                        
+                }
+            
             //cerramos las respectivas tablas de cada tipo
             $tablaImp .="</table>";
             $tablaLaptop.="</table>";
@@ -346,6 +356,7 @@ class ReportesDao
 
             //retornamos todas las tablas juntas con estilos para imprimir por tcpdf
             return $html;
+            }
 
         }catch(PDOException $error){
             echo $error->getMessage();
