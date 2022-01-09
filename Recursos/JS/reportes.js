@@ -26,6 +26,7 @@ function cargarCmbTipoActivos(){
                var option = '<option value="'+r[i]["tipo_activo_id"]+'">'+r[i]["tipo_activo_nombre"]+'</option>';
 
                $("#sTipoActivoR").append(option);
+               $("#sTipoActivoR2").append(option);
            }
         },
         error: function (r) {

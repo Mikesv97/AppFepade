@@ -1,9 +1,9 @@
 <?php
 require  "conexion.php";
-include_once dirname(__DIR__, 1).'/Modelos/clases/reportesPlantilla.php';
-include_once dirname(__DIR__, 1).'/Modelos/clasesDao/reportesDao.php';
+include_once dirname(__DIR__, 1) . '/Modelos/clases/reportesPlantilla.php';
+include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
 
- if(isset($_POST["btnRptActArea"])){
+if (isset($_POST["btnRptActArea"])) {
 
     $tipoAct = $_POST["sTipoActivoR"];
     $area=$_POST["sAreaR"];
@@ -22,6 +22,21 @@ include_once dirname(__DIR__, 1).'/Modelos/clasesDao/reportesDao.php';
 
  }
 
+if (isset($_POST["btnRptActTipoActivo"])) {
+
+    $tipoActRpt = $_POST["sTipoActivoR2"];
+
+    $r = new ReportesDao();
+    $resp = $r->getDataRptActivosTipo($tipoActRpt);
+
+    echo $resp;
+    die;
+
+    $r->generarRptPdfTipAct($resp,$tipoActRpt);
+}
+
+ 
+
 
 
 
@@ -31,12 +46,3 @@ $resp = $r->getDataRptActivosTipo($tipoActivo);
 
 
 $r->generarRptPdfTipAct($resp,$tipoActivo);*/
-
-?>
-
-
-
-
-
-
-

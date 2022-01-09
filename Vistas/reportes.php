@@ -1,13 +1,13 @@
 <?php
 include('layout/header.php');
 include('layout/navbar.php');
-include_once dirname(__DIR__, 1).'/Modelos/clasesDao/reportesDao.php';
+include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
 
 ?>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.7/pdfobject.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.7/pdfobject.js"></script>
-  <link href="../recursos/css/reportes.css" rel="stylesheet">
-  <script src="../recursos/JS/reportes.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.7/pdfobject.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.7/pdfobject.js"></script>
+<link href="../recursos/css/reportes.css" rel="stylesheet">
+<script src="../recursos/JS/reportes.js"></script>
 <div class="content-body">
     <div class="container-fluid">
 
@@ -15,11 +15,11 @@ include_once dirname(__DIR__, 1).'/Modelos/clasesDao/reportesDao.php';
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Bienvenido <?=$_SESSION["usuario"]["nombre"];?>!</h4>
-                    <p class="mb-0">Rol: <?=$_SESSION["usuario"]["rol"];?></p>
+                    <h4>Bienvenido <?= $_SESSION["usuario"]["nombre"]; ?>!</h4>
+                    <p class="mb-0">Rol: <?= $_SESSION["usuario"]["rol"]; ?></p>
                 </div>
-                </div>
-                <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Layout</a></li>
                     <li class="breadcrumb-item active"><a href="javascript:void(0)">Nuevo usuario</a></li>
@@ -47,9 +47,22 @@ include_once dirname(__DIR__, 1).'/Modelos/clasesDao/reportesDao.php';
             </div>
             </form>
         </div>
-        <?php
 
-?>
+        <div class="row page-titles mx-0">
+            <div class="col-md-6 p-md-0">
+                <form name="formulario" method="post" action="../Modelos/reporteGenerado.php" target="_blank">
+                <label for="sTipoActivoR">Seleccionar tipo de activo</label>
+                    <select class="form-control" id="sTipoActivoR2" name="sTipoActivoR2">
+                    </select>
+            </div>
+            <div class="col-md-12">
+                <button type="submit" name="btnRptActTipoActivo" class="btn btnLogin my-3">Generar reporte</button>
+                </form>
+            </div>
+
+        </div>
+
+
     </div>
 </div>
 <!-- Datatable -->
