@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include_once "../Recursos/lib/TCPDF/tcpdf.php";
 class Reportes extends TCPDF{
     //Page header

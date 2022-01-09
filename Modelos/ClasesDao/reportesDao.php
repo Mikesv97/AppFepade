@@ -132,8 +132,6 @@ class ReportesDao
                 $tablaLaptop.=$tr;
                 $tablaPC.=$tr;
                 $tablaProyector.=$tr;
-            }else if(){
-
             }
             //cerramos las respectivas tablas de cada tipo
             $tablaImp .="</table>";
