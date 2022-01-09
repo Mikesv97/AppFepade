@@ -2,9 +2,9 @@
 require  "conexion.php";
 include dirname(__DIR__, 1)."/recursos/lib/TCPDF/tcpdf.php";
 include_once dirname(__DIR__, 1).'/Modelos/clasesDao/activoFijoDao.php';
-$area ="Administración";
+$area ="administracion";
 $r = new ActivoFijoDao();
- $resp = $r->getDataRpt();
+ $resp = $r->getDataRpt($area);
  $style="
  <style>
  table{
@@ -34,7 +34,7 @@ $r = new ActivoFijoDao();
     width: 7%;
 }
 .w{
-    width: 8.5%;
+    width: 9%;
 
 }
 

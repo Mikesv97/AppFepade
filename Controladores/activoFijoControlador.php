@@ -377,8 +377,7 @@ if ($_POST) {
                 echo json_encode($resp);
             break;
             case "getDataRpt":
-                $resp = $activoFijo->getDataArea();
-                echo json_encode($resp);
+
             break;
         }
     }
