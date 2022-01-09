@@ -25,7 +25,7 @@ class ReportesPlantilla extends TCPDF{
         // Position at 15 mm from bottom
         $this->SetY(-15);
         // Set font
-        $this->SetFont('helvetica', 'I', 8);
+        $this->SetFont('helvetica', 'I', 10);
         // Page number
         $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
     }
@@ -42,7 +42,9 @@ class ReportesPlantilla extends TCPDF{
            font-size: 9.5px;
            padding:1px;
         }
-       
+       .wt{
+           width: 100%;
+       }
         th{
            background-color: #474746;
            color: white;

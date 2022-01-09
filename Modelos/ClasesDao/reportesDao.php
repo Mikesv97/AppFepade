@@ -12,12 +12,16 @@ class ReportesDao
     //función que solicita los datos de la BD para generar tablas para los reportes
     //recibe el área para filtrar por área
     public function getDataRptActivosArea($area){
-
+        //variables auxliares
+        $countPC = 0;
+        $countLap = 0;
+        $countProyec=0;
+        $countImp=0;
         //creamos el objeto de la plantilla html de rpt
         $rpt = new ReportesPlantilla();
         //obtenemos la maqueta de headers de las tablas para cada tipo de activo
         $tablaPC = $rpt->getHeaderTablaRptPc();
-        $tablaLaptop = $rpt->getHeaderTablaRptPc();
+        $tablaLaptop = $rpt->getHeaderTablaRptLap();
         $tablaProyector = $rpt->getHeaderTablaRptProyector();
         $tablaImp = $rpt->getHeaderTablaRptImpresor();
 
@@ -67,7 +71,7 @@ class ReportesDao
                             .'<td class="w8">'.$fila[$i]["numero_serie"].'</td>'
                           .'</tr>';
                 
-                         
+                         $countPC++;
                         break;
                         case "Laptop":
                             //si tipo activo nombre es laptop concatenamos valores a tabla latop
@@ -86,7 +90,7 @@ class ReportesDao
                             .'<td class="w8">'.$fila[$i]["numero_serie"].'</td>'
                           .'</tr>';
                 
-                           
+                           $countLap++;
                         break;
                         case "Impresor":
                             //si tipo activo nombre es impresora concatenamos valores a tabla impresora
@@ -101,6 +105,7 @@ class ReportesDao
                             .'<td class="w8">'.$fila[$i]["TonerC"].'</td>'
                             .'<td class="w8">'.$fila[$i]["TonerA"].'</td>'
                           .'</tr>';
+                          $countImp++;
                         break;
                         case "Proyector":
                             //si tipo activo nombre es proyector concatenamos valores a tabla proyector
@@ -113,12 +118,23 @@ class ReportesDao
                             .'<td class="w">'.$fila[$i]["HorasUso"].'</td>'
                             .'<td class="w8">'.$fila[$i]["HoraEco"].'</td>'
                           .'</tr>';
+                          $countProyec++;
                         break;
                     }
 
                 }
+                $tr='<tr>'
+                .'<td class="wt">No Hay Datos</td>'
+                .'</tr>';
+            if($countPC==0 && $countLap==0 && $countProyec==0 && $countProyec=0){
 
+                $tablaImp .=$tr;
+                $tablaLaptop.=$tr;
+                $tablaPC.=$tr;
+                $tablaProyector.=$tr;
+            }else if(){
 
+            }
             //cerramos las respectivas tablas de cada tipo
             $tablaImp .="</table>";
             $tablaLaptop.="</table>";
@@ -250,19 +266,20 @@ class ReportesDao
 
     }
 
-    public function generarReportePdf2($html,$tipoActivo){
+    public function generarRptPdfTipAct($html,$tipoActivo){
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
         $pdf->Ln(60);
         $pdf->SetFont("","B",20);
-        $pdf->Cell(80,10,"Área: ".$tipoActivo,0,1,"L");
+        $pdf->Cell(80,10,"Tipo De Activo: ".$tipoActivo,0,0,"L");
+        $pdf->Cell(196,10,"Cantidad: ".$tipoActivo,0,1,"R");
         $pdf->Ln(5);
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Output();
 
     }
 
-    public function generarReportePdf($html,$area){
+    public function generarRptPdfArea($html,$area){
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
         $pdf->Ln(60);
@@ -270,10 +287,6 @@ class ReportesDao
         $pdf->Cell(80,10,"Área: ".$area,0,1,"L");
         $pdf->Ln(5);
         $pdf->writeHTML($html, true, false, true, false, '');
-        var_dump(array(
-            "data" => "demo"
-        ));
-        ob_end_clean();
         $pdf->Output();
 
     }
