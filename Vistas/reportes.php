@@ -30,13 +30,12 @@ include('layout/navbar.php');
             <div class="col-md-6 p-md-0">
                 <label for="sTipoActivoR">Seleccionar tipo de activo</label>
                 <select class="form-control" id="sTipoActivoR" name="sTipoActivoR">
-                    <option value="0">Seleccionar tipo activo... *</option>
+                    <option value="0">Todos</option>
                 </select>
             </div>
             <div class="col-md-6 p-md-0">
                 <label for="sTipoActivoR">Seleccionar área</label>
-                <select class="form-control" id="sTipoActivoR" name="sTipoActivoR">
-                    <option value="0">Seleccionar área... *</option>
+                <select class="form-control" id="sAreas" name="sTipoActivoR">
                 </select>
             </div>
             <div class="col-md-12">
