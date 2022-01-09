@@ -9,8 +9,11 @@ class ReportesDao
     {
     }
 
-    //función que solicita los datos de la BD para generar tablas para los reportes
-    //recibe el área para filtrar por área
+/*   -------    INICIAN FUNCIONES PARA SOLICITAR DATOS A LA BASE DE DATOS -------
+     -------         SEGÚN LOS FILTROS SELECCIONADOS POR EL USUARIO       -------         */
+
+
+    //solicita los datos de la BD para generar tablas filtrado por área
     public function getDataRptActivosArea($area){
         //variables auxliares
         $countPC = 0;
@@ -135,7 +138,7 @@ class ReportesDao
             .'</tr>';
 
             //evaluamos en cual tipo de activo no hay datos
-            //y concatenamos la fila no hay datos
+            //y concatenamos la fila "no hay datos"
             if($countPC==0 ){
                 $tablaPC.=$tr;
             }
@@ -171,6 +174,7 @@ class ReportesDao
      
     }
 
+    //solicita los datos de la BD para generar tablas filtrado por tipo activo
     public function getDataRptActivosTipo($tipoActivo){
         //creamos el objeto de la plantilla html de rpt
         $rpt = new ReportesPlantilla();
@@ -284,6 +288,21 @@ class ReportesDao
 
     }
 
+
+
+
+
+
+
+
+
+
+    
+
+    /*   ------- INICIAN FUNCIONES PARA GENERAR LOS REPORTES QUE SE IMPRIMEN EN EL NAVEGADOR -------
+     -------         SEGÚN LOS DATOS GENERADOS DE LA BD      -------         */
+
+    //genera reporte de todos los activo filtrado solamente por área
     public function generarRptPdfTipAct($html,$tipoActivo){
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
@@ -297,6 +316,8 @@ class ReportesDao
 
     }
 
+
+     //genera reporte tipo activo todos filtrado solamente por tipo activo
     public function generarRptPdfArea($html,$area){
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
