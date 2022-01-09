@@ -7,6 +7,7 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.7/pdfobject.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.7/pdfobject.js"></script>
 <link href="../recursos/css/reportes.css" rel="stylesheet">
+<link href="../Recursos/CSS/nuevoUsuario.css" rel="stylesheet">
 <script src="../recursos/JS/reportes.js"></script>
 <div class="content-body">
     <div class="container-fluid">
@@ -29,6 +30,10 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
         <!-- fin barra top -->
         <!--combo box tipo activo -->
         <div class="row page-titles mx-0">
+            <div class="col-md-12 text-center mb-5 my-3">
+                <h3 class="titulo">Reporte de activos por área y tipo de activo</h3>
+                <hr class="lineaTituloL">
+            </div>
             <div class="col-md-6 p-md-0">
                 <form name="formulario" method="post" action="../Modelos/reporteGenerado.php" target="_blank">
                     <input type="hidden" name="hdnNameArea" id="hdnNameArea">
@@ -43,21 +48,25 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
                 </select>
             </div>
             <div class="col-md-12">
-                <button type="submit" name="btnRptActArea" class="btn btnLogin my-3">Generar reporte</button>
+                <button type="submit" name="btnRptActArea" class="btn outLineRed my-3">Generar reporte</button>
             </div>
             </form>
         </div>
 
         <div class="row page-titles mx-0">
+            <div class="col-md-12 text-center mb-5 my-3">
+                <h3 class="titulo">Reporte de activos por tipo de activo</h3>
+                <hr class="lineaTitulo">
+            </div>
             <div class="col-md-6 p-md-0">
                 <form name="formulario" method="post" action="../Modelos/reporteGenerado.php" target="_blank">
-                <input type="hidden" name="hdnNameTipAct" id="hdnNameTipAct">
-                <label for="sTipoActivoR">Seleccionar tipo de activo</label>
+                    <input type="hidden" name="hdnNameTipAct" id="hdnNameTipAct">
+                    <label for="sTipoActivoR">Seleccionar tipo de activo</label>
                     <select class="form-control" id="sTipoActivoR2" name="sTipoActivoR2">
                     </select>
             </div>
             <div class="col-md-12">
-                <button type="submit" name="btnRptActTipoActivo" class="btn btnLogin my-3">Generar reporte</button>
+                <button type="submit" name="btnRptActTipoActivo" class="btn outLineRed my-3">Generar reporte</button>
                 </form>
             </div>
 

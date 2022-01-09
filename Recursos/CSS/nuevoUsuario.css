@@ -5,6 +5,20 @@
     border-bottom: 4px solid #cd8e01;
   }
 
+  .lineaTitulo {
+    color: #b0291c !important;
+    text-shadow: 0 1px 1px rgba(90, 92, 105, .2);
+    border-bottom: 4px solid #cd8e01;
+    width: 30%;
+  }
+
+  .lineaTituloL {
+    color: #b0291c !important;
+    text-shadow: 0 1px 1px rgba(90, 92, 105, .2);
+    border-bottom: 4px solid #cd8e01;
+    width: 35%;
+  }
+
   .btnLogin{
     background-color: #d6242a;
     color: white;
@@ -70,6 +84,20 @@ input:read-only{
     margin:0 auto;
     width: 100%;
     
+  }
+
+  .lineaTitulo {
+    color: #b0291c !important;
+    text-shadow: 0 1px 1px rgba(90, 92, 105, .2);
+    border-bottom: 4px solid #cd8e01;
+    width: auto;
+  }
+
+  .lineaTituloL {
+    color: #b0291c !important;
+    text-shadow: 0 1px 1px rgba(90, 92, 105, .2);
+    border-bottom: 4px solid #cd8e01;
+    width: auto;
   }
 
 }

@@ -426,6 +426,44 @@ class ReportesDao
             $respuesta->execute([$tipoActivo]);
             //convertimos a un arreglo los datos obtenidos de BD
             $fila =  $respuesta->fetchAll(PDO::FETCH_ASSOC);
+
+            if(sizeof($fila)==0){
+                //si no hay
+                //creamos una fila para cuando no hay datos
+                $tr='<tr>'
+                .'<td colspan="12">No hay datos según los filtros seleccionados</td>'
+                .'</tr>';
+               
+                //evaluamos en cual tipo de activo es seleccionado por usuario
+                //concatenamos fila no hay datos + estilos
+                //se debe agregar un if o un switch en caso gusten así para evaluar
+                //cada tipo activo en BD
+                if($tipoActivo==1 ){
+                    $tablaPC.=$tr;
+                    $tablaPC.="</table>";
+                    $html =$tablaPC.$rpt->getEtiquetaStyleRpt();
+                }
+                           
+                if($tipoActivo==2){
+                    $tablaLaptop.=$tr;
+                    $tablaLaptop.="</table>";
+                    $html =$tablaLaptop.$rpt->getEtiquetaStyleRpt();
+                }
+               
+                if($tipoActivo==3){
+                    $tablaProyector.=$tr;
+                    $tablaProyector.="</table>";
+                    $html =$tablaProyector.$rpt->getEtiquetaStyleRpt();
+                }
+                           
+                           
+                if($tipoActivo==4){
+                    $tablaImp .=$tr;
+                    $tablaImp .="</table>";
+                    $html = $tablaImp.$rpt->getEtiquetaStyleRpt();
+                }
+                return $html;
+            }
             //recorremos y creamos las respectivas tablas
                 for ($i=0; $i <sizeof($fila) ; $i++) { 
                     switch(trim($fila[$i]["tipo_activo_nombre"])){
