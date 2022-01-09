@@ -43,7 +43,7 @@ include_once dirname(__DIR__, 1).'/Modelos/clasesDao/reportesDao.php';
                 </select>
             </div>
             <div class="col-md-12">
-                <button type="submit" name="btnReporte" class="btn btnLogin my-3">Generar reporte</button>
+                <button type="submit" name="btnRptActArea" class="btn btnLogin my-3">Generar reporte</button>
             </div>
             </form>
         </div>
