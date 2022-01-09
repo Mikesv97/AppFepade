@@ -11,6 +11,10 @@ $(document).ready(function(){
     $("#sAreas").change(function(){
         $("#hdnNameArea").val($("#sAreas option:selected").text().trim());
     });
+
+    $("#sTipoActivoR2").change(function(){
+        $("#hdnNameTipAct").val($("#sTipoActivoR2 option:selected").text().trim());
+    });
 });
 
 
@@ -24,7 +28,9 @@ function cargarCmbTipoActivos(){
         success: function (r) {
            for(let i=0; i<r.length; i++){
                var option = '<option value="'+r[i]["tipo_activo_id"]+'">'+r[i]["tipo_activo_nombre"]+'</option>';
-
+                if(i==0){
+                    $('#hdnNameTipAct').val(r[i]["tipo_activo_nombre"]);
+                }
                $("#sTipoActivoR").append(option);
                $("#sTipoActivoR2").append(option);
            }

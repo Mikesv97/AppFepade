@@ -25,11 +25,14 @@ if (isset($_POST["btnRptActArea"])) {
 if (isset($_POST["btnRptActTipoActivo"])) {
 
     $tipoActRpt = $_POST["sTipoActivoR2"];
+    $tipoActNombre=$_POST["hdnNameTipAct"];
 
     $r = new ReportesDao();
-    $resp = $r->getDataRptActivosTipo($tipoActRpt);
 
-    $r->generarRptPdfTipAct($resp,$tipoActRpt);
+    $totalActivos = $r->contTotalTipAct($tipoActRpt);
+
+    $resp = $r->getDataRptActivosTipo($tipoActRpt);
+    $r->generarRptPdfTipAct($resp,$tipoActNombre,$totalActivos);
 }
 
  

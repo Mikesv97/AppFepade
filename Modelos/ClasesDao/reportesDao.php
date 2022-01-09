@@ -353,6 +353,27 @@ class ReportesDao
      
     }
 
+    //FUNCION QUE CUENTA LA CANTIDAD TOTAL DE TIPO DE ACTIVO SELECICONADO
+    public function contTotalTipAct($tipoActivo){
+        //establecemos la coneccion
+        $con = Conexion::conectar();
+        //establecemos la consulta
+        $sql="SELECT count(*) as cantidad from activo where Activo_tipo = ?";
+        //preparamos la consulta
+        $respuesta = $con->prepare($sql);
+        try{
+
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([$tipoActivo]);
+            //retornamos la cantidad de registro con el correo ingresado
+            //solo puede ser 1 si hay o 0 si no hay
+            return $respuesta->fetchColumn();
+
+        }catch(PDOException $error){
+            echo $error->getMessage();
+        }
+    }
+
     //solicita los datos de la BD para generar tablas filtrado por tipo activo
     public function getDataRptActivosTipo($tipoActivo){
         //variables auxliares
@@ -519,13 +540,13 @@ class ReportesDao
 
 
      //genera reporte <<activo>> filtrado solamente por <<tipo activo>>
-    public function generarRptPdfTipAct($html,$tipoActivo){
+    public function generarRptPdfTipAct($html,$tipoActivo,$cantActivo){
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
         $pdf->Ln(60);
         $pdf->SetFont("","B",20);
         $pdf->Cell(80,10,"Tipo De Activo: ".$tipoActivo,0,0,"L");
-        $pdf->Cell(196,10,"Cantidad: ".$tipoActivo,0,1,"R");
+        $pdf->Cell(196,10,"Cantidad: ".$cantActivo,0,1,"R");
         $pdf->Ln(5);
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Output();

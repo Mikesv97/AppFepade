@@ -51,6 +51,7 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
         <div class="row page-titles mx-0">
             <div class="col-md-6 p-md-0">
                 <form name="formulario" method="post" action="../Modelos/reporteGenerado.php" target="_blank">
+                <input type="hidden" name="hdnNameTipAct" id="hdnNameTipAct">
                 <label for="sTipoActivoR">Seleccionar tipo de activo</label>
                     <select class="form-control" id="sTipoActivoR2" name="sTipoActivoR2">
                     </select>
