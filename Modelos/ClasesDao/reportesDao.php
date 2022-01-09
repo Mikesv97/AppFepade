@@ -9,10 +9,13 @@ class ReportesDao
     {
     }
 
+    //función que solicita los datos de la BD para generar tablas para los reportes
+    //recibe el área para filtrar por área
     public function getDataRptActivosArea($area){
 
         //creamos el objeto de la plantilla html de rpt
         $rpt = new ReportesPlantilla();
+        //obtenemos la maqueta de headers de las tablas para cada tipo de activo
         $tablaPC = $rpt->getHeaderTablaRptPc();
         $tablaLaptop = $rpt->getHeaderTablaRptPc();
         $tablaProyector = $rpt->getHeaderTablaRptProyector();
@@ -33,7 +36,7 @@ class ReportesDao
         dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
         dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
         dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
-        where dbo.Estructura31.estructura31_nombre=?
+        where dbo.Estructura31.estructura31_id=?
         ORDER BY dbo.Activo.Estructura2_id";
 
         //preparamos la consulta
@@ -42,11 +45,13 @@ class ReportesDao
         try{
             //ejecutamos la consulta y seteamos parametros 
             $respuesta->execute([$area]);
+            //convertimos a un arreglo los datos obtenidos de BD
             $fila =  $respuesta->fetchAll(PDO::FETCH_ASSOC);
             //recorremos y creamos las respectivas tablas
                 for ($i=0; $i <sizeof($fila) ; $i++) { 
                     switch(trim($fila[$i]["tipo_activo_nombre"])){
                         case "PC":
+                            //si tipo activo nombre es pc concatenamos valores a tabla pc
                             $tablaPC  .='<tr>'
                             .'<td class="w3">'.$fila[$i]["Activo_id"].'</td>'
                             .'<td class="w15">'.$fila[$i]["Activo_descripcion"].'</td>'
@@ -65,6 +70,7 @@ class ReportesDao
                          
                         break;
                         case "Laptop":
+                            //si tipo activo nombre es laptop concatenamos valores a tabla latop
                             $tablaLaptop .='<tr>'
                             .'<td class="w3">'.$fila[$i]["Activo_id"].'</td>'
                             .'<td class="w15">'.$fila[$i]["Activo_descripcion"].'</td>'
@@ -83,12 +89,13 @@ class ReportesDao
                            
                         break;
                         case "Impresor":
+                            //si tipo activo nombre es impresora concatenamos valores a tabla impresora
                             $tablaImp .='<tr>'
                             .'<td class="w3">'.$fila[$i]["Activo_id"].'</td>'
                             .'<td class="w15">'.$fila[$i]["Activo_descripcion"].'</td>'
                             .'<td class="w10">'.$fila[$i]["Nombre_responsable"].'</td>'
                             .'<td class="wip">'.$fila[$i]["IP"].'</td>'
-                            .'<td class="w8">'.$fila[$i]["Modelo"].'</td>'
+                            .'<td class="wip">'.$fila[$i]["Modelo"].'</td>'
                             .'<td class="w8">'.$fila[$i]["TonerN"].'</td>'
                             .'<td class="w8">'.$fila[$i]["TonerM"].'</td>'
                             .'<td class="w8">'.$fila[$i]["TonerC"].'</td>'
@@ -96,6 +103,7 @@ class ReportesDao
                           .'</tr>';
                         break;
                         case "Proyector":
+                            //si tipo activo nombre es proyector concatenamos valores a tabla proyector
                             $tablaProyector .='<tr>'
                             .'<td class="w3">'.$fila[$i]["Activo_id"].'</td>'
                             .'<td class="w15">'.$fila[$i]["Activo_descripcion"].'</td>'
@@ -122,6 +130,7 @@ class ReportesDao
 
             //retornamos todas las tablas juntas con estilos para imprimir por tcpdf
             return $html;
+            
         }catch(PDOException $error){
             echo $error->getMessage();
         }
@@ -136,6 +145,10 @@ class ReportesDao
         $pdf->Cell(80,10,"Área: ".$area,0,1,"L");
         $pdf->Ln(5);
         $pdf->writeHTML($html, true, false, true, false, '');
+        var_dump(array(
+            "data" => "demo"
+        ));
+        ob_end_clean();
         $pdf->Output();
 
     }

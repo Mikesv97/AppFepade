@@ -1,6 +1,8 @@
 <?php
 include('layout/header.php');
 include('layout/navbar.php');
+include_once dirname(__DIR__, 1).'/Modelos/clasesDao/reportesDao.php';
+
 ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.7/pdfobject.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.7/pdfobject.js"></script>
@@ -28,22 +30,26 @@ include('layout/navbar.php');
         <!--combo box tipo activo -->
         <div class="row page-titles mx-0">
             <div class="col-md-6 p-md-0">
-                <label for="sTipoActivoR">Seleccionar tipo de activo</label>
-                <select class="form-control" id="sTipoActivoR" name="sTipoActivoR">
-                    <option value="0">Todos</option>
-                </select>
+                <form name="formulario" method="post" action="../Modelos/prueba.php">
+                    <input type="hidden" name="hdnNameArea" id="hdnNameArea">
+                    <label for="sTipoActivoR">Seleccionar tipo de activo</label>
+                    <select class="form-control" id="sTipoActivoR" name="sTipoActivoR">
+                        <option value="0">Todos</option>
+                    </select>
             </div>
             <div class="col-md-6 p-md-0">
                 <label for="sTipoActivoR">Seleccionar área</label>
-                <select class="form-control" id="sAreas" name="sTipoActivoR">
+                <select class="form-control" id="sAreas" name="sAreaR">
                 </select>
             </div>
             <div class="col-md-12">
-                <button type="button" class="btn btnLogin my-3">Generar reporte</button>
+                <button type="submit" name="btnReporte" class="btn btnLogin my-3">Generar reporte</button>
             </div>
+            </form>
         </div>
+        <?php
 
-        <div id="pdfRenderer"></div>
+?>
     </div>
 </div>
 <!-- Datatable -->

@@ -1,13 +1,20 @@
 $(document).ready(function(){
-    //PDFObject.embed("../recursos/reportes/reporteTipoActivo_19-12-2021_06-12-46 pm.pdf", "#pdfRenderer");
+   //cargamos el select de tipo de activos
     cargarCmbTipoActivos();
     
+    //cargamos el select de áreas
     cargarCmbAreasActivos();
 
+    //al cambio de option en selec pasamos valor
+    //al input escondido para manejar impresión de nombre de área
+    //en el reporte
+    $("#sAreas").change(function(){
+        $("#hdnNameArea").val($("#sAreas option:selected").text().trim());
+    });
 });
 
 
-//carga el select de tipo activo
+//solicita datos y carga el select de tipo activo
 function cargarCmbTipoActivos(){
     $.ajax({
         url:"../controladores/tipoActivoControlador.php",
@@ -15,7 +22,6 @@ function cargarCmbTipoActivos(){
         dataType: "json",
         data: { "key": "mostrar"},
         success: function (r) {
-            console.log("asddad");
            for(let i=0; i<r.length; i++){
                var option = '<option value="'+r[i]["tipo_activo_id"]+'">'+r[i]["tipo_activo_nombre"]+'</option>';
 
@@ -23,7 +29,7 @@ function cargarCmbTipoActivos(){
            }
         },
         error: function (r) {
-            console.log(r.responseText);
+            //console.log(r.responseText);
             Swal.fire({
                 icon: 'error',
                 title: "Problemas de comunicación",
@@ -35,7 +41,7 @@ function cargarCmbTipoActivos(){
 });  
 }
 
-//carga el select de área
+//solicita datos y carga el select de área
 function cargarCmbAreasActivos(){
     $.ajax({
         url:"../controladores/activoFijoControlador.php",
@@ -43,15 +49,17 @@ function cargarCmbAreasActivos(){
         dataType: "json",
         data: { "key": "getInfAreas"},
         success: function (r) {
-            console.log("asddad");
            for(let i=0; i<r.length; i++){
-               var option = '<option value="'+r[i]["estructura31_id"]+'">'+r[i]["estructura31_nombre"]+'</option>';
+               if(i==0){
+                $("#hdnNameArea").val(r[i]["estructura31_nombre"].trim());
+               }
 
+               var option = '<option value="'+r[i]["estructura31_id"]+'">'+r[i]["estructura31_nombre"]+'</option>';
                $("#sAreas").append(option);
            }
         },
         error: function (r) {
-            console.log(r.responseText);
+            //console.log(r.responseText);
             Swal.fire({
                 icon: 'error',
                 title: "Problemas de comunicación",

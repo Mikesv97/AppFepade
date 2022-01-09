@@ -2,8 +2,10 @@
 include_once dirname(__DIR__, 2)."/recursos/lib/TCPDF/tcpdf.php";
 include_once dirname(__DIR__, 1).'/conexion.php';
 
+//se debe heredar de TCPDF para sobreescribir los metodos header y footer y poder personalizarlos
 class ReportesPlantilla extends TCPDF{
 
+    //metodo sobreescrito para setear el encabezado del reporte
     public function Header() {
         // Logo
         $this->Image('../Recursos/Multimedia/Imagenes/logoFepadePDF.png', 10, 10, 80);
@@ -18,7 +20,7 @@ class ReportesPlantilla extends TCPDF{
         $this->Cell(0, 15, 'Reporte De Activos Fijos', 0, false, 'C', 0, '', 0, false, 'M', 'M');
     }
 
-    // Page footer
+    // Page footer lo mismo que el header solo que el footer
     public function Footer() {
         // Position at 15 mm from bottom
         $this->SetY(-15);
@@ -28,6 +30,9 @@ class ReportesPlantilla extends TCPDF{
         $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
     }
 
+    //crea una variable que contiene la etiquete style para el color de fondo
+    //ancho de la tabla y columnas de las tablas de los rpt
+    //retorna esa variable para ser concatenada con los datos
     public function getEtiquetaStyleRpt(){
         $style="
         <style>
@@ -39,8 +44,8 @@ class ReportesPlantilla extends TCPDF{
         }
        
         th{
-           background-color: red;
-           color: gold;
+           background-color: #474746;
+           color: white;
            font-weight: bold;
            text-shadow: 0 0 5px black;
         }
@@ -80,6 +85,9 @@ class ReportesPlantilla extends TCPDF{
         return $style;
     }
 
+    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
+    //para la tabla pc y poder concatenar los respectivos datos en reporteDao
+    //retorna esa variable para ser concatenada con los datos
     public function  getHeaderTablaRptPc(){
         $tablaPC ='<h3>PC</h3>
         <table border="1">
@@ -101,6 +109,35 @@ class ReportesPlantilla extends TCPDF{
         return $tablaPC;
     }
 
+    
+    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
+    //para la tabla laptop y poder concatenar los respectivos datos en reporteDao
+    //retorna esa variable para ser concatenada con los datos
+    public function  getHeaderTablaRptLap(){
+        $tablaPC ='<h3>Laptop</h3>
+        <table border="1">
+        <tr>
+            <th class="w3">Código</th>
+            <th class="w15">Descripción</th>
+            <th class="w10">Responsable</th>
+            <th class="wip" >IP</th>
+            <th class="w8" >Modelo</th>
+            <th class="w">Procesador</th>
+            <th class="w8">GEN.</th>
+            <th class="wr">RAM</th>
+            <th class="w8">DD</th>
+            <th class="wt">SO</th>
+            <th class="w8">Office</th>
+            <th class="w8">No. Series</th>
+        </tr>';
+
+        return $tablaPC;
+    }
+
+    
+    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
+    //para la tabla proyector y poder concatenar los respectivos datos en reporteDao
+    //retorna esa variable para ser concatenada con los datos
     public function getHeaderTablaRptProyector(){
 
         $tablaProyector ='<h3>Proyector</h3>
@@ -118,9 +155,13 @@ class ReportesPlantilla extends TCPDF{
         return $tablaProyector;
     }
 
+    
+    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
+    //para la tabla impresor y poder concatenar los respectivos datos en reporteDao
+    //retorna esa variable para ser concatenada con los datos
     public function getHeaderTablaRptImpresor(){
 
-        $tablaProyector ='<h3>Proyector</h3>
+        $tablaProyector ='<h3>Impresor</h3>
         <table border="1">
            <tr>
                <th class="w3">Código</th>
