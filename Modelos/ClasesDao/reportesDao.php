@@ -133,10 +133,6 @@ class ReportesDao
             .'<td colspan="12">No hay datos según los filtros seleccionados</td>'
             .'</tr>';
 
-            $tr2='<tr>'
-            .'<td colspan="9">No hay datos según los filtros seleccionados</td>'
-            .'</tr>';
-
             //evaluamos en cual tipo de activo no hay datos
             //y concatenamos la fila "no hay datos"
             if($countPC==0 ){
@@ -215,7 +211,38 @@ class ReportesDao
             $respuesta->execute([$tipAct,$area]);
             //convertimos a un arreglo los datos obtenidos de BD
             $fila =  $respuesta->fetchAll(PDO::FETCH_ASSOC);
-            //recorremos y creamos las respectivas tablas
+
+
+            //evaluamos si hay datos de la consulta
+            if(sizeof($fila)==0){
+                //si no hay
+                //creamos una fila para cuando no hay datos
+                $tr='<tr>'
+                .'<td colspan="12">No hay datos según los filtros seleccionados</td>'
+                .'</tr>';
+                
+                //evaluamos en cual tipo de activo no hay datos
+                //y concatenamos la fila "no hay datos"
+                if($countPC==0 ){
+                    $tablaPC.=$tr;
+                }
+                            
+                if($countLap==0){
+                    $tablaLaptop.=$tr;
+                }
+                
+                if($countProyec==0){
+                    $tablaProyector.=$tr;
+                }
+                            
+                            
+                if($countImp==0){
+                    $tablaImp .=$tr;
+                }
+
+            }else{
+                //si los hay
+                //recorremos y creamos las respectivas tablas
                 for ($i=0; $i <sizeof($fila) ; $i++) { 
                     switch(trim($fila[$i]["tipo_activo_nombre"])){
                         case "PC":
@@ -287,8 +314,9 @@ class ReportesDao
                         break;
                     }
 
-                }
-            
+                }   
+            }
+                        
             //cerramos las respectivas tablas de cada tipo
             $tablaImp .="</table>";
             $tablaLaptop.="</table>";
@@ -296,8 +324,9 @@ class ReportesDao
             $tablaProyector.="</table>";
 
             $html ="";
-            //evaluamos en cual tipo de activo no hay datos
-            //y concatenamos la fila "no hay datos"
+
+            //evaluamos en cual tipo de activo  hay datos
+            //y concatenamos la tabla con dato y el estilo para retornarlo junto"
             if($countPC>0 ){
                 $html =$tablaPC.$rpt->getEtiquetaStyleRpt(); 
             }
@@ -317,7 +346,7 @@ class ReportesDao
 
             //retornamos todas las tablas juntas con estilos para imprimir por tcpdf
             return $html;
-            
+
         }catch(PDOException $error){
             echo $error->getMessage();
         }
