@@ -29,9 +29,6 @@ if (isset($_POST["btnRptActTipoActivo"])) {
     $r = new ReportesDao();
     $resp = $r->getDataRptActivosTipo($tipoActRpt);
 
-    echo $resp;
-    die;
-
     $r->generarRptPdfTipAct($resp,$tipoActRpt);
 }
 

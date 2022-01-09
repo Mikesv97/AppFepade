@@ -364,15 +364,20 @@ class ReportesDao
      
     }
 
-
-
-
-
-
     //solicita los datos de la BD para generar tablas filtrado por tipo activo
     public function getDataRptActivosTipo($tipoActivo){
+        //variables auxliares
+        $countPC = 0;
+        $countLap = 0;
+        $countProyec=0;
+        $countImp=0;
         //creamos el objeto de la plantilla html de rpt
         $rpt = new ReportesPlantilla();
+        //obtenemos la maqueta de headers de las tablas para cada tipo de activo
+        $tablaPC = $rpt->getHeaderTablaRptPc();
+        $tablaLaptop = $rpt->getHeaderTablaRptLap();
+        $tablaProyector = $rpt->getHeaderTablaRptProyector();
+        $tablaImp = $rpt->getHeaderTablaRptImpresor();
 
         //establecemos la coneccion
         $con = Conexion::conectar();
@@ -389,7 +394,7 @@ class ReportesDao
         dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
         dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
         dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
-        where dbo.Tipo_Activo.tipo_activo_nombre=?
+        where dbo.Tipo_Activo.tipo_activo_id=?
         ORDER BY dbo.Activo.Estructura2_id";
 
         //preparamos la consulta
@@ -398,14 +403,15 @@ class ReportesDao
         try{
             //ejecutamos la consulta y seteamos parametros 
             $respuesta->execute([$tipoActivo]);
+            //convertimos a un arreglo los datos obtenidos de BD
             $fila =  $respuesta->fetchAll(PDO::FETCH_ASSOC);
             //recorremos y creamos las respectivas tablas
                 for ($i=0; $i <sizeof($fila) ; $i++) { 
                     switch(trim($fila[$i]["tipo_activo_nombre"])){
                         case "PC":
-                            $tabla = $rpt->getHeaderTablaRptPc();
-                            $tabla  .='<tr>'
-                            .'<td class="w3">'.$fila[$i]["Activo_id"].' '.$fila[$i]["Activo_id"].'</td>'
+                            //si tipo activo nombre es pc concatenamos valores a tabla pc
+                            $tablaPC  .='<tr>'
+                            .'<td class="w3">'.$fila[$i]["Activo_id"].'</td>'
                             .'<td class="w15">'.$fila[$i]["Activo_descripcion"].'</td>'
                             .'<td class="w10">'.$fila[$i]["Nombre_responsable"].'</td>'
                             .'<td class="wip">'.$fila[$i]["IP"].'</td>'
@@ -418,12 +424,12 @@ class ReportesDao
                             .'<td class="w8">'.$fila[$i]["Office"].'</td>'
                             .'<td class="w8">'.$fila[$i]["numero_serie"].'</td>'
                           .'</tr>';
-                            $tabla.="</table>";
-                         
+                
+                         $countPC++;
                         break;
                         case "Laptop":
-                            $tabla = $rpt->getHeaderTablaRptPc();
-                            $tabla .='<tr>'
+                            //si tipo activo nombre es laptop concatenamos valores a tabla latop
+                            $tablaLaptop .='<tr>'
                             .'<td class="w3">'.$fila[$i]["Activo_id"].'</td>'
                             .'<td class="w15">'.$fila[$i]["Activo_descripcion"].'</td>'
                             .'<td class="w10">'.$fila[$i]["Nombre_responsable"].'</td>'
@@ -437,27 +443,28 @@ class ReportesDao
                             .'<td class="w8">'.$fila[$i]["Office"].'</td>'
                             .'<td class="w8">'.$fila[$i]["numero_serie"].'</td>'
                           .'</tr>';
-                          $tabla.="</table>";
-                           
+                
+                           $countLap++;
                         break;
                         case "Impresor":
-                            $tabla = $rpt->getHeaderTablaRptImpresor();
-                            $tabla .='<tr>'
+                            //si tipo activo nombre es impresora concatenamos valores a tabla impresora
+                            $tablaImp .='<tr>'
                             .'<td class="w3">'.$fila[$i]["Activo_id"].'</td>'
                             .'<td class="w15">'.$fila[$i]["Activo_descripcion"].'</td>'
                             .'<td class="w10">'.$fila[$i]["Nombre_responsable"].'</td>'
                             .'<td class="wip">'.$fila[$i]["IP"].'</td>'
-                            .'<td class="w8">'.$fila[$i]["Modelo"].'</td>'
+                            .'<td class="wip">'.$fila[$i]["Modelo"].'</td>'
                             .'<td class="w8">'.$fila[$i]["TonerN"].'</td>'
                             .'<td class="w8">'.$fila[$i]["TonerM"].'</td>'
                             .'<td class="w8">'.$fila[$i]["TonerC"].'</td>'
                             .'<td class="w8">'.$fila[$i]["TonerA"].'</td>'
                           .'</tr>';
-                          $tabla .="</table>";
+
+                          $countImp++;
                         break;
                         case "Proyector":
-                            $tabla = $rpt->getHeaderTablaRptProyector();
-                            $tabla .='<tr>'
+                            //si tipo activo nombre es proyector concatenamos valores a tabla proyector
+                            $tablaProyector .='<tr>'
                             .'<td class="w3">'.$fila[$i]["Activo_id"].'</td>'
                             .'<td class="w15">'.$fila[$i]["Activo_descripcion"].'</td>'
                             .'<td class="w10">'.$fila[$i]["Nombre_responsable"].'</td>'
@@ -466,17 +473,41 @@ class ReportesDao
                             .'<td class="w">'.$fila[$i]["HorasUso"].'</td>'
                             .'<td class="w8">'.$fila[$i]["HoraEco"].'</td>'
                           .'</tr>';
-                          $tabla.="</table>";
+                          $countProyec++;
                         break;
                     }
 
-                }            
+                }
+            
+            //cerramos las respectivas tablas de cada tipo
+            $tablaImp .="</table>";
+            $tablaLaptop.="</table>";
+            $tablaPC.="</table>";
+            $tablaProyector.="</table>";
 
-            //concatemos cada tabla más la etiqueta style que tiene sus estilos
-            $html =$tabla.$rpt->getEtiquetaStyleRpt(); 
+            $html ="";
+            //evaluamos en cual tipo de activo no hay datos
+            //y concatenamos la fila "no hay datos"
+            if($countPC>0 ){
+                $html =$tablaPC.$rpt->getEtiquetaStyleRpt(); 
+            }
+            
+            if($countLap>0){
+                $html =$tablaLaptop.$rpt->getEtiquetaStyleRpt(); 
+            }
+
+            if($countProyec>0){
+                $html =$tablaProyector.$rpt->getEtiquetaStyleRpt(); 
+            }
+            
+            
+            if($countImp>0){
+                $html =$tablaImp.$rpt->getEtiquetaStyleRpt(); 
+            }
 
             //retornamos todas las tablas juntas con estilos para imprimir por tcpdf
             return $html;
+            
         }catch(PDOException $error){
             echo $error->getMessage();
         }
