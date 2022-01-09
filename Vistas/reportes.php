@@ -29,13 +29,13 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
         </div>
         <!-- fin barra top -->
         <!--combo box tipo activo -->
-        <div class="row page-titles mx-0">
+        <div class="row page-titles mx-0 shadow mb-3">
             <div class="col-md-12 text-center mb-5 my-3">
                 <h3 class="titulo">Reporte de activos por área y tipo de activo</h3>
                 <hr class="lineaTituloL">
             </div>
             <div class="col-md-6 p-md-0">
-                <form name="formulario" method="post" action="../Modelos/reporteGenerado.php" target="_blank">
+                <form name="formulario" method="post" action="reporteGenerado.php" target="_blank">
                     <input type="hidden" name="hdnNameArea" id="hdnNameArea">
                     <label for="sTipoActivoR">Seleccionar tipo de activo</label>
                     <select class="form-control" id="sTipoActivoR" name="sTipoActivoR">
@@ -53,13 +53,13 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
             </form>
         </div>
 
-        <div class="row page-titles mx-0">
+        <div class="row page-titles mx-0 shadow">
             <div class="col-md-12 text-center mb-5 my-3">
                 <h3 class="titulo">Reporte de activos por tipo de activo</h3>
                 <hr class="lineaTitulo">
             </div>
             <div class="col-md-6 p-md-0">
-                <form name="formulario" method="post" action="../Modelos/reporteGenerado.php" target="_blank">
+                <form name="formulario" method="post" action="reporteGenerado.php" target="_blank">
                     <input type="hidden" name="hdnNameTipAct" id="hdnNameTipAct">
                     <label for="sTipoActivoR">Seleccionar tipo de activo</label>
                     <select class="form-control" id="sTipoActivoR2" name="sTipoActivoR2">

@@ -1,5 +1,5 @@
 <?php
-require  "conexion.php";
+require dirname(__DIR__, 1) ."/Modelos/conexion.php";
 include_once dirname(__DIR__, 1) . '/Modelos/clases/reportesPlantilla.php';
 include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
 
