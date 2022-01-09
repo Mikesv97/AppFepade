@@ -6,18 +6,21 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
 if (isset($_POST["btnRptActArea"])) {
 
     $tipoAct = $_POST["sTipoActivoR"];
+    $area=$_POST["sAreaR"];
+    $areaNombre= $_POST["hdnNameArea"];
+    $rpt = new ReportesDao();
 
-    if (isset($tipoAct) && $tipoAct == 0) {
-        $area = $_POST["sAreaR"];
-        $areaNombre = $_POST["hdnNameArea"];
-        $r = new ReportesDao();
-        $resp = $r->getDataRptActivosArea($area);
+    if(isset($tipoAct) && $tipoAct == 0){
 
+        $resp = $rpt->getDataRptActivosArea($area);
+        $rpt->generarRptPdfActArea($resp,$areaNombre);
 
-        $r->generarRptPdfArea($resp, $areaNombre);
-    } else {
+    }else{
+        $resp = $rpt->getDataRptTipActArea($area,$tipoAct);
+        $rpt->generarRptPdfActArea($resp,$areaNombre);
     }
-}
+
+ }
 
 if (isset($_POST["btnRptActTipoActivo"])) {
 
