@@ -10,7 +10,7 @@ $r = new ActivoFijoDao();
  table{
     white-space:nowrap;
     text-align: center;
-    font-size: 11px;
+    font-size: 9.5px;
     padding:1px;
  }
 
@@ -33,11 +33,18 @@ $r = new ActivoFijoDao();
 .w8{
     width: 7%;
 }
+
+.wr{
+    width: 5%;
+}
 .w{
     width: 9%;
 
 }
 
+.wip{
+    width: 11%;
+}
 .wt{
     width: 7.8%;
 }
@@ -46,73 +53,75 @@ $r = new ActivoFijoDao();
 }
  </style>";
 
- $tablaPC ='<h1>PC</h1>
+ $tablaPC ='<h3>PC</h3>
     <table border="1" style="  " >
     <tr>
         <th class="w3">Código</th>
         <th class="w15">Descripción</th>
         <th class="w10">Responsable</th>
-        <th class="w" >IP</th>
+        <th class="wip" >IP</th>
         <th class="w8" >Modelo</th>
         <th class="w">Procesador</th>
         <th class="w8">GEN.</th>
-        <th class="w8">RAM</th>
+        <th class="wr">RAM</th>
         <th class="w8">DD</th>
         <th class="wt">SO</th>
         <th class="w8">Office</th>
         <th class="w8">No. Series</th>
     </tr>';
 
- $tablaLaptop ='<h1>Laptop</h1>
+ $tablaLaptop ='<h3>Laptop</h3>
  <table border="1">
     <tr>
         <th class="w3">Código</th>
         <th class="w15">Descripción</th>
         <th class="w10">Responsable</th>
-        <th class="w" >IP</th>
+        <th class="wip" >IP</th>
         <th class="w8" >Modelo</th>
         <th class="w">Procesador</th>
         <th class="w8">GEN.</th>
-        <th class="w8">RAM</th>
+        <th class="wr">RAM</th>
         <th class="w8">DD</th>
         <th class="wt">SO</th>
         <th class="w8">Office</th>
         <th class="w8">No. Series</th>
     </tr>';
 
- $tablaProyector ='<h1>Proyector</h1>
- <table border="1">
- <tr>
-    <th class="w3">Código</th>
-    <th class="w15">Descripción</th>
-    <th class="w10">Responsable</th>
-    <th class="w" >IP</th>
-    <th class="w8" >Modelo</th>
-    <th class="w">Procesador</th>
-    <th class="w8">GEN.</th>
-    <th class="w8">RAM</th>
-    <th class="w8">DD</th>
-    <th class="wt">SO</th>
-    <th class="w8">Office</th>
-    <th class="w8">No. Series</th>
-</tr>';
-
- $tablaImp ='<h1>Impresora</h1>
+ $tablaProyector ='<h3>Proyector</h3>
  <table border="1">
     <tr>
         <th class="w3">Código</th>
         <th class="w15">Descripción</th>
         <th class="w10">Responsable</th>
-        <th class="w" >IP</th>
+        <th class="wip" >IP</th>
         <th class="w8" >Modelo</th>
-        <th class="w">Procesador</th>
-        <th class="w8">GEN.</th>
-        <th class="w8">RAM</th>
-        <th class="w8">DD</th>
-        <th class="wt">SO</th>
-        <th class="w8">Office</th>
-        <th class="w8">No. Series</th>
+        <th class="w">Horas Uso</th>
+        <th class="w8">Horas Eco.</th>
     </tr>';
+
+ $tablaImp ='<h3>Impresora</h3>
+ <table border="1">
+    <tr>
+        <th class="w3">Código</th>
+        <th class="w15">Descripción</th>
+        <th class="w10">Responsable</th>
+        <th class="wip" >IP</th>
+        <th class="w8" >Modelo</th>
+        <th class="w8">Toner N</th>
+        <th class="w8">Toner M</th>
+        <th class="w8">Toner C</th>
+        <th class="w8">Toner A</th>
+    </tr>';
+    /*
+                .'<td class="w3">'.$resp[$i]["Activo_id"].'</td>'
+            .'<td class="w15">'.$resp[$i]["Activo_descripcion"].'</td>'
+            .'<td class="w10">'.$resp[$i]["Nombre_responsable"].'</td>'
+            .'<td class="wip">'.$resp[$i]["IP"].'</td>'
+            .'<td class="w8">'.$resp[$i]["Modelo"].'</td>'
+            .'<td class="w8">'.$resp[$i]["TonerN"].'</td>'
+            .'<td class="w8">'.$resp[$i]["TonerM"].'</td>'
+            .'<td class="w8">'.$resp[$i]["TonerC"].'</td>'
+            .'<td class="w8">'.$resp[$i]["TonerA"].'</td>'*/
 
 for ($i=0; $i <sizeof($resp) ; $i++) { 
     switch(trim($resp[$i]["tipo_activo_nombre"])){
@@ -121,11 +130,11 @@ for ($i=0; $i <sizeof($resp) ; $i++) {
             .'<td class="w3">'.$resp[$i]["Activo_id"].'</td>'
             .'<td class="w15">'.$resp[$i]["Activo_descripcion"].'</td>'
             .'<td class="w10">'.$resp[$i]["Nombre_responsable"].'</td>'
-            .'<td class="w">'.$resp[$i]["IP"].'</td>'
+            .'<td class="wip">'.$resp[$i]["IP"].'</td>'
             .'<td class="w8">'.$resp[$i]["Modelo"].'</td>'
             .'<td class="w">'.$resp[$i]["Procesador"].'</td>'
             .'<td class="w8">'.$resp[$i]["Generacion"].'</td>'
-            .'<td class="w8">'.$resp[$i]["Ram"].'</td>'
+            .'<td class="wr">'.$resp[$i]["Ram"].'</td>'
             .'<td class="w8">'.$resp[$i]["DiscoDuro"].'</td>'
             .'<td class="wt">'.$resp[$i]["SO"].'</td>'
             .'<td class="w8">'.$resp[$i]["Office"].'</td>'
@@ -139,11 +148,11 @@ for ($i=0; $i <sizeof($resp) ; $i++) {
             .'<td class="w3">'.$resp[$i]["Activo_id"].'</td>'
             .'<td class="w15">'.$resp[$i]["Activo_descripcion"].'</td>'
             .'<td class="w10">'.$resp[$i]["Nombre_responsable"].'</td>'
-            .'<td class="w">'.$resp[$i]["IP"].'</td>'
+            .'<td class="wip">'.$resp[$i]["IP"].'</td>'
             .'<td class="w8">'.$resp[$i]["Modelo"].'</td>'
             .'<td class="w">'.$resp[$i]["Procesador"].'</td>'
             .'<td class="w8">'.$resp[$i]["Generacion"].'</td>'
-            .'<td class="w8">'.$resp[$i]["Ram"].'</td>'
+            .'<td class="wr">'.$resp[$i]["Ram"].'</td>'
             .'<td class="w8">'.$resp[$i]["DiscoDuro"].'</td>'
             .'<td class="wt">'.$resp[$i]["SO"].'</td>'
             .'<td class="w8">'.$resp[$i]["Office"].'</td>'
@@ -157,15 +166,12 @@ for ($i=0; $i <sizeof($resp) ; $i++) {
             .'<td class="w3">'.$resp[$i]["Activo_id"].'</td>'
             .'<td class="w15">'.$resp[$i]["Activo_descripcion"].'</td>'
             .'<td class="w10">'.$resp[$i]["Nombre_responsable"].'</td>'
-            .'<td class="w">'.$resp[$i]["IP"].'</td>'
+            .'<td class="wip">'.$resp[$i]["IP"].'</td>'
             .'<td class="w8">'.$resp[$i]["Modelo"].'</td>'
-            .'<td class="w">'.$resp[$i]["Procesador"].'</td>'
-            .'<td class="w8">'.$resp[$i]["Generacion"].'</td>'
-            .'<td class="w8">'.$resp[$i]["Ram"].'</td>'
-            .'<td class="w8">'.$resp[$i]["DiscoDuro"].'</td>'
-            .'<td class="wt">'.$resp[$i]["SO"].'</td>'
-            .'<td class="w8">'.$resp[$i]["Office"].'</td>'
-            .'<td class="w8">'.$resp[$i]["numero_serie"].'</td>'
+            .'<td class="w8">'.$resp[$i]["TonerN"].'</td>'
+            .'<td class="w8">'.$resp[$i]["TonerM"].'</td>'
+            .'<td class="w8">'.$resp[$i]["TonerC"].'</td>'
+            .'<td class="w8">'.$resp[$i]["TonerA"].'</td>'
           .'</tr>';
         break;
         case "Proyector":
@@ -173,15 +179,10 @@ for ($i=0; $i <sizeof($resp) ; $i++) {
             .'<td class="w3">'.$resp[$i]["Activo_id"].'</td>'
             .'<td class="w15">'.$resp[$i]["Activo_descripcion"].'</td>'
             .'<td class="w10">'.$resp[$i]["Nombre_responsable"].'</td>'
-            .'<td class="w">'.$resp[$i]["IP"].'</td>'
+            .'<td class="wip">'.$resp[$i]["IP"].'</td>'
             .'<td class="w8">'.$resp[$i]["Modelo"].'</td>'
-            .'<td class="w">'.$resp[$i]["Procesador"].'</td>'
-            .'<td class="w8">'.$resp[$i]["Generacion"].'</td>'
-            .'<td class="w8">'.$resp[$i]["Ram"].'</td>'
-            .'<td class="w8">'.$resp[$i]["DiscoDuro"].'</td>'
-            .'<td class="wt">'.$resp[$i]["SO"].'</td>'
-            .'<td class="w8">'.$resp[$i]["Office"].'</td>'
-            .'<td class="w8">'.$resp[$i]["numero_serie"].'</td>'
+            .'<td class="w">'.$resp[$i]["HorasUso"].'</td>'
+            .'<td class="w8">'.$resp[$i]["HoraEco"].'</td>'
           .'</tr>';
         break;
         default:
@@ -201,12 +202,38 @@ echo $tablaImp."<br><br>";
 echo $tablaLaptop."<br><br>";
 echo $tablaProyector."<br><br>";*/
 
+class MYPDF extends TCPDF {
 
-$pdf = new TCPDF("P", "mm", "A3", true, 'UTF-8', false);
+    //Page header
+    public function Header() {
+        // Logo
+        $this->Image('../Recursos/Multimedia/Imagenes/logoFepadePDF.png', 10, 10, 80);
+        $this->Ln(14);
+        $this->Cell(278, 5, 'Fundación Empresarial', 0, 1,"R");
+        $this->Cell(278, 5, 'Para el desarrollo educativo', 0, 1,"R");
+        $this->Cell(278, 5, 'ISO 9001:2015', 0, 1,"R");
+        // Set font
+        $this->SetFont('helvetica', 'B', 20);
+        $this->Ln(28);
+        // Title
+        $this->Cell(0, 15, 'Reporte De Activos Fijos', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+    }
+
+    // Page footer
+    public function Footer() {
+        // Position at 15 mm from bottom
+        $this->SetY(-15);
+        // Set font
+        $this->SetFont('helvetica', 'I', 8);
+        // Page number
+        $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+    }
+}
+$pdf = new MYPDF("P", "mm", "A3", true, 'UTF-8', false);
 $pdf->AddPage();
-$pdf->Ln(5);
+$pdf->Ln(60);
 $pdf->SetFont("","B",20);
-$pdf->Cell(80,10,"Área:".$area,0,1,"L");
+$pdf->Cell(80,10,"Área: ".$area,0,1,"L");
 $pdf->Ln(5);
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Output();
