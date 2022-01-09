@@ -147,35 +147,6 @@ class activoFijoDAO
         }
     }
 
-    public function getDataRpt($area){
-       //establecemos la coneccion
-       $con = Conexion::conectar();
-       //establecemos la consulta
-       $sql="select TOP (100) PERCENT dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo, 
-       dbo.Tipo_Activo.tipo_activo_nombre, dbo.Activo.Activo_referencia, dbo.Activo.Activo_descripcion, dbo.Activo.Activo_factura, dbo.Activo.Activo_fecha_adq, dbo.Activo_responsable.Nombre_responsable, dbo.Activo.Estado, 
-       dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro, 
-       dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM, 
-       dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
-       ISNULL(dbo.Activo.Empresa_id, '') AS codigo_proyecto, ISNULL(dbo.Activo.numero_serie, '') AS numero_serie
-        FROM  dbo.Activo INNER JOIN
-       dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
-       dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
-       dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
-       dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
-       where dbo.Estructura31.estructura31_nombre=?
-       ORDER BY dbo.Activo.Estructura2_id";
-       //preparamos la consulta
-       $respuesta = $con->prepare($sql);
-       try{
-           //ejecutamos la consulta y seteamos parametros 
-           $respuesta->execute([$area]);
-
-           return $respuesta->fetchAll(PDO::FETCH_ASSOC);
-       }catch(PDOException $error){
-           echo $error->getMessage();
-       }
-    }
-
     public function tablaActivoFijo(){
         $con = Conexion::conectar();
         $sql = "SELECT a.*,convert(varchar,a.Activo_fecha_adq,23) as FechaAdquisicion,convert(varchar,a.Activo_fecha_adq,23) as FechaCaducacion,b.*,c.Nombre_Responsable as Responsable, d.usuario_nombre as Usuario, e.* 
@@ -282,52 +253,6 @@ class activoFijoDAO
         }
     }
 
-    public function reporteTipoActivo($tipoActivo){
-        $con = Conexion::conectar();
-        $sql ="select * from activo";
-        $respuesta = $con->prepare($sql);
-        try{
-            $respuesta->execute([$tipoActivo]);
-            $dato= $respuesta->fetchAll(PDO::FETCH_ASSOC);
-            $table ="
-            <table>
-                <tr>
-                    <td>Activo referencia</td>
-                    <td>Empresa ID</td>
-                    <td>Estructura1 id</td>
-                    <td>Estructura2 id</td>
-                    <td>Estructura3 id</td>
-                    <td>Activo tipo</td>
-                    <td>Fecha compra</td>
-                    <td>Fecha Caducación</td>
-                    <td>Estado</td>
-                </tr>
-            ";
-            foreach($dato as $d){
-                $table .= "
-                <tr>
-                    <td>".$d["Activo_referencia"]."</td>
-                    <td>".$d["Empresa_id"]."</td>
-                    <td>".$d["Estructura1_id"]."</td>
-                    <td>".$d["Estructura2_id"]."</td>
-                    <td>".$d["Estructura3_id"]."</td>
-                    <td>".$d["Activo_tipo"]."</td>
-                    <td>".$d["fecha_compra"]."</td>
-                    <td>".$d["Activo_fecha_caduc"]."</td>
-                    <td>".$d["Estado"]."</td>
-                </tr>
-                ";
-            }
-
-            $table.="</table>
-            </div>";
-            return $table;
-        } catch (PDOException $error) {
-            echo $error->getMessage();
-        }
-    }
-
-    
     public function comboResponsable()
     {
         $con = Conexion::conectar();
