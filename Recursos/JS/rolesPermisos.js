@@ -531,6 +531,7 @@ jQuery(document).ready(function ($){
                                     $('#tblMenus').DataTable().ajax.reload();
                                     $('#btnIngresarMenu').prop("disabled", false);
                                     $('#btnGuardarMenu').prop("disabled", true);
+                                    solicitarMenuRol(idRol); 
                                     menuEdit =null;
                                 }
                             },
