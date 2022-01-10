@@ -17,7 +17,7 @@ if ($_POST) {
                 //ASIGNADO A LA FUNCION SETOBJETIVOACTIVOFIJO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
                 $objActivoFijo = setObjActivoFijo(
                     $_POST['ActivoReferencia'],
-                    $_POST['PartidaCta'],
+                    $_POST['PartidaCta'] ,
                     $_POST['EmpresaId'],
                     $_POST['numeroSerie'],
                     str_replace('T', ' ', $_POST['ActivoFechaAdq']),
@@ -289,7 +289,7 @@ if ($_POST) {
                 $historialInsertado = false;
                 $ObjHistorico = setObjHistorico(
                     $_POST['guardarIdActivo2'],
-                    str_replace('T', ' ', $_POST['fechaHistorico']),
+                    str_replace('T', ' ', $_POST['fechaHistorico'].trim()),
                     $_POST['Estructura3IdH'],
                     $_POST['ResponsableIdH'],
                     $_POST['HistoricoComentarioH'],
@@ -372,13 +372,6 @@ if ($_POST) {
                 }
 
             break;
-            case "getInfAreas":
-                $resp = $activoFijo->getDataArea();
-                echo json_encode($resp);
-            break;
-            case "getDataRpt":
-
-            break;
         }
     }
 }
@@ -421,23 +414,23 @@ function setObjActivoFijo(
     $ResponsableCodigo
 ) {
     $objActivoFijo = new Activo_Fijo();
-    $objActivoFijo->setActivoReferencia($ActivoReferencia);
-    $objActivoFijo->setPartidaCta($PartidaCta);
-    $objActivoFijo->setEmpresaId($EmpresaId);
-    $objActivoFijo->setNumeroSerie($NumeroSerie);
-    $objActivoFijo->setActivoFechaAdq($ActivoFechaAdq);
-    $objActivoFijo->setActivoFactura($ActivoFactura);
-    $objActivoFijo->setActivoTipo($ActivoTipo);
-    $objActivoFijo->setActivoDescripcion($ActivoDescripcion);
-    $objActivoFijo->setEstructura1Id($Estructura1Id);
-    $objActivoFijo->setEstructura2Id($Estructura2Id);
-    $objActivoFijo->setEstructura3Id($Estructura3Id);
-    $objActivoFijo->setUsuarioId($UsuarioId);
-    $objActivoFijo->setActivoFechaCaduc($ActivoFechaCaduc);
-    $objActivoFijo->setActivoEliminado($ActivoEliminado);
-    $objActivoFijo->setEstado($Estado);
+    $objActivoFijo->setActivoReferencia(trim($ActivoReferencia));
+    $objActivoFijo->setPartidaCta(trim($PartidaCta));
+    $objActivoFijo->setEmpresaId(trim($EmpresaId));
+    $objActivoFijo->setNumeroSerie(trim($NumeroSerie));
+    $objActivoFijo->setActivoFechaAdq(trim($ActivoFechaAdq));
+    $objActivoFijo->setActivoFactura(trim($ActivoFactura));
+    $objActivoFijo->setActivoTipo(trim($ActivoTipo));
+    $objActivoFijo->setActivoDescripcion(trim($ActivoDescripcion));
+    $objActivoFijo->setEstructura1Id(trim($Estructura1Id));
+    $objActivoFijo->setEstructura2Id(trim($Estructura2Id));
+    $objActivoFijo->setEstructura3Id(trim($Estructura3Id));
+    $objActivoFijo->setUsuarioId(trim($UsuarioId));
+    $objActivoFijo->setActivoFechaCaduc(trim($ActivoFechaCaduc));
+    $objActivoFijo->setActivoEliminado(trim($ActivoEliminado));
+    $objActivoFijo->setEstado(trim($Estado));
     $objActivoFijo->setImagen(cargarImagen());
-    $objActivoFijo->setResponsableCodigo($ResponsableCodigo);
+    $objActivoFijo->setResponsableCodigo(trim($ResponsableCodigo));
 
     return $objActivoFijo;
 }
@@ -463,24 +456,24 @@ function setObjActivoFijoMod(
     $ActivoId
 ) {
     $objActivoFijoMod = new Activo_Fijo();
-    $objActivoFijoMod->setActivoReferencia($ActivoReferencia);
-    $objActivoFijoMod->setPartidaCta($PartidaCta);
-    $objActivoFijoMod->setEmpresaId($EmpresaId);
-    $objActivoFijoMod->setNumeroSerie($NumeroSerie);
-    $objActivoFijoMod->setActivoFechaAdq($ActivoFechaAdq);
-    $objActivoFijoMod->setActivoFactura($ActivoFactura);
-    $objActivoFijoMod->setActivoTipo($ActivoTipo);
-    $objActivoFijoMod->setActivoDescripcion($ActivoDescripcion);
-    $objActivoFijoMod->setEstructura1Id($Estructura1Id);
-    $objActivoFijoMod->setEstructura2Id($Estructura2Id);
-    $objActivoFijoMod->setEstructura3Id($Estructura3Id);
-    $objActivoFijoMod->setUsuarioId($UsuarioId);
-    $objActivoFijoMod->setActivoFechaCaduc($ActivoFechaCaduc);
-    $objActivoFijoMod->setActivoEliminado($ActivoEliminado);
-    $objActivoFijoMod->setEstado($Estado);
+    $objActivoFijoMod->setActivoReferencia(trim($ActivoReferencia));
+    $objActivoFijoMod->setPartidaCta(trim($PartidaCta));
+    $objActivoFijoMod->setEmpresaId(trim($EmpresaId));
+    $objActivoFijoMod->setNumeroSerie(trim($NumeroSerie));
+    $objActivoFijoMod->setActivoFechaAdq(trim($ActivoFechaAdq));
+    $objActivoFijoMod->setActivoFactura(trim($ActivoFactura));
+    $objActivoFijoMod->setActivoTipo(trim($ActivoTipo));
+    $objActivoFijoMod->setActivoDescripcion(trim($ActivoDescripcion));
+    $objActivoFijoMod->setEstructura1Id(trim($Estructura1Id));
+    $objActivoFijoMod->setEstructura2Id(trim($Estructura2Id));
+    $objActivoFijoMod->setEstructura3Id(trim($Estructura3Id));
+    $objActivoFijoMod->setUsuarioId(trim($UsuarioId));
+    $objActivoFijoMod->setActivoFechaCaduc(trim($ActivoFechaCaduc));
+    $objActivoFijoMod->setActivoEliminado(trim($ActivoEliminado));
+    $objActivoFijoMod->setEstado(trim($Estado));
     $objActivoFijoMod->setImagen(cargarImagen());
-    $objActivoFijoMod->setResponsableCodigo($ResponsableCodigo);
-    $objActivoFijoMod->setActivoId($ActivoId);
+    $objActivoFijoMod->setResponsableCodigo(trim($ResponsableCodigo));
+    $objActivoFijoMod->setActivoId(trim($ActivoId));
     return $objActivoFijoMod;
 }
 
@@ -501,19 +494,19 @@ function setObjActivoEspeComp(
     $IP
 ) {
     $objActivoEspeComp = new Activo_Especificacion();
-    $objActivoEspeComp->setActivoId($ActivoId);
-    $objActivoEspeComp->setProcesador($Procesador);
-    $objActivoEspeComp->setGeneracion($Generacion);
-    $objActivoEspeComp->setRam($Ram);
-    $objActivoEspeComp->setTipoRam($TipoRam);
-    $objActivoEspeComp->setDiscoDuro($DiscoDuro);
-    $objActivoEspeComp->setCapacidad_D1($CapacidadD1);
-    $objActivoEspeComp->setDiscoDuro2($DiscoDuro2);
-    $objActivoEspeComp->setCapacidad_D2($CapacidadD2);
-    $objActivoEspeComp->setSO($SO);
-    $objActivoEspeComp->setOffice($Office);
-    $objActivoEspeComp->setModelo($Modelo);
-    $objActivoEspeComp->setIP($IP);
+    $objActivoEspeComp->setActivoId(trim($ActivoId));
+    $objActivoEspeComp->setProcesador(trim($Procesador));
+    $objActivoEspeComp->setGeneracion(trim($Generacion));
+    $objActivoEspeComp->setRam(trim($Ram));
+    $objActivoEspeComp->setTipoRam(trim($TipoRam));
+    $objActivoEspeComp->setDiscoDuro(trim($DiscoDuro));
+    $objActivoEspeComp->setCapacidad_D1(trim($CapacidadD1));
+    $objActivoEspeComp->setDiscoDuro2(trim($DiscoDuro2));
+    $objActivoEspeComp->setCapacidad_D2(trim($CapacidadD2));
+    $objActivoEspeComp->setSO(trim($SO));
+    $objActivoEspeComp->setOffice(trim($Office));
+    $objActivoEspeComp->setModelo(trim($Modelo));
+    $objActivoEspeComp->setIP(trim($IP));
 
     return $objActivoEspeComp;
 }
@@ -536,19 +529,19 @@ function setObjActivoEspeCompMod(
 ) {
     $ObjActivoEspeCompMod = new Activo_Especificacion();
 
-    $ObjActivoEspeCompMod->setProcesador($Procesador);
-    $ObjActivoEspeCompMod->setGeneracion($Generacion);
-    $ObjActivoEspeCompMod->setRam($Ram);
-    $ObjActivoEspeCompMod->setDiscoDuro($DiscoDuro);
-    $ObjActivoEspeCompMod->setModelo($Modelo);
-    $ObjActivoEspeCompMod->setSO($SO);
-    $ObjActivoEspeCompMod->setOffice($Office);
-    $ObjActivoEspeCompMod->setIP($IP);
-    $ObjActivoEspeCompMod->setTipoRam($TipoRam);
-    $ObjActivoEspeCompMod->setCapacidad_D1($CapacidadD1);
-    $ObjActivoEspeCompMod->setDiscoDuro2($DiscoDuro2);
-    $ObjActivoEspeCompMod->setCapacidad_D2($CapacidadD2);
-    $ObjActivoEspeCompMod->setActivoId($ActivoId);
+    $ObjActivoEspeCompMod->setProcesador(trim($Procesador));
+    $ObjActivoEspeCompMod->setGeneracion(trim($Generacion));
+    $ObjActivoEspeCompMod->setRam(trim($Ram));
+    $ObjActivoEspeCompMod->setDiscoDuro(trim($DiscoDuro));
+    $ObjActivoEspeCompMod->setModelo(trim($Modelo));
+    $ObjActivoEspeCompMod->setSO(trim($SO));
+    $ObjActivoEspeCompMod->setOffice(trim($Office));
+    $ObjActivoEspeCompMod->setIP(trim($IP));
+    $ObjActivoEspeCompMod->setTipoRam(trim($TipoRam));
+    $ObjActivoEspeCompMod->setCapacidad_D1(trim($CapacidadD1));
+    $ObjActivoEspeCompMod->setDiscoDuro2(trim($DiscoDuro2));
+    $ObjActivoEspeCompMod->setCapacidad_D2(trim($CapacidadD2));
+    $ObjActivoEspeCompMod->setActivoId(trim($ActivoId));
     return $ObjActivoEspeCompMod;
 }
 
@@ -565,15 +558,15 @@ function setObjActivoEspeImpre(
     $fusor
 ) {
     $objActivoEspeImpre = new Activo_Especificacion();
-    $objActivoEspeImpre->setActivoId($ActivoId);
-    $objActivoEspeImpre->setModelo($Modelo);
-    $objActivoEspeImpre->setIP($IP);
-    $objActivoEspeImpre->setTonerN($TonerN);
-    $objActivoEspeImpre->setTonerM($TonerM);
-    $objActivoEspeImpre->setTonerC($TonerC);
-    $objActivoEspeImpre->setTonerA($TonerA);
-    $objActivoEspeImpre->setTambor($tambor);
-    $objActivoEspeImpre->setFusor($fusor);
+    $objActivoEspeImpre->setActivoId(trim($ActivoId));
+    $objActivoEspeImpre->setModelo(trim($Modelo));
+    $objActivoEspeImpre->setIP(trim($IP));
+    $objActivoEspeImpre->setTonerN(trim($TonerN));
+    $objActivoEspeImpre->setTonerM(trim($TonerM));
+    $objActivoEspeImpre->setTonerC(trim($TonerC));
+    $objActivoEspeImpre->setTonerA(trim($TonerA));
+    $objActivoEspeImpre->setTambor(trim($tambor));
+    $objActivoEspeImpre->setFusor(trim($fusor));
     return $objActivoEspeImpre;
 }
 
@@ -590,15 +583,15 @@ function setObjActivoEspeImpreMod(
     $ActivoId
 ) {
     $objActivoEspeImpreMod = new Activo_Especificacion();
-    $objActivoEspeImpreMod->setModelo($Modelo);
-    $objActivoEspeImpreMod->setIP($IP);
-    $objActivoEspeImpreMod->setTonerN($TonerN);
-    $objActivoEspeImpreMod->setTonerM($TonerM);
-    $objActivoEspeImpreMod->setTonerC($TonerC);
-    $objActivoEspeImpreMod->setTonerA($TonerA);
-    $objActivoEspeImpreMod->setTambor($tambor);
-    $objActivoEspeImpreMod->setFusor($fusor);
-    $objActivoEspeImpreMod->setActivoId($ActivoId);
+    $objActivoEspeImpreMod->setModelo(trim($Modelo));
+    $objActivoEspeImpreMod->setIP(trim($IP));
+    $objActivoEspeImpreMod->setTonerN(trim($TonerN));
+    $objActivoEspeImpreMod->setTonerM(trim($TonerM));
+    $objActivoEspeImpreMod->setTonerC(trim($TonerC));
+    $objActivoEspeImpreMod->setTonerA(trim($TonerA));
+    $objActivoEspeImpreMod->setTambor(trim($tambor));
+    $objActivoEspeImpreMod->setFusor(trim($fusor));
+    $objActivoEspeImpreMod->setActivoId(tri($ActivoId));
     return $objActivoEspeImpreMod;
 }
 
@@ -610,10 +603,10 @@ function setObjActivoEspeProy(
     $HoraEco
 ) {
     $objActivoEspeProy = new Activo_Especificacion();
-    $objActivoEspeProy->setActivoId($ActivoId);
-    $objActivoEspeProy->setModelo($Modelo);
-    $objActivoEspeProy->setHorasUso($HorasUso);
-    $objActivoEspeProy->setHoraEco($HoraEco);
+    $objActivoEspeProy->setActivoId(trim($ActivoId));
+    $objActivoEspeProy->setModelo(trim($Modelo));
+    $objActivoEspeProy->setHorasUso(trim($HorasUso));
+    $objActivoEspeProy->setHoraEco(trim($HoraEco));
     return $objActivoEspeProy;
 }
 
@@ -625,10 +618,10 @@ function setObjActivoEspeProyMod(
     $ActivoId
 ) {
     $objActivoEspeProyMod = new Activo_Especificacion();
-    $objActivoEspeProyMod->setModelo($Modelo);
-    $objActivoEspeProyMod->setHorasUso($HorasUso);
-    $objActivoEspeProyMod->setHoraEco($HoraEco);
-    $objActivoEspeProyMod->setActivoId($ActivoId);
+    $objActivoEspeProyMod->setModelo(trim($Modelo));
+    $objActivoEspeProyMod->setHorasUso(trim($HorasUso));
+    $objActivoEspeProyMod->setHoraEco(trim($HoraEco));
+    $objActivoEspeProyMod->setActivoId(trim($ActivoId));
     return $objActivoEspeProyMod;
 }
 
@@ -642,12 +635,12 @@ function setObjActivoHistorial(
     $Estado
 ) {
     $objActivoHistorial = new historial_Activo();
-    $objActivoHistorial->setActivoId($ActivoId);
-    $objActivoHistorial->setEstructura31Id($Estructura31_id);
-    $objActivoHistorial->setResponsableId($Responsable_id);
-    $objActivoHistorial->setHistoricoComentario($Historico_comentario);
-    $objActivoHistorial->setUsuarioId($Usuario_id);
-    $objActivoHistorial->setEstado($Estado);
+    $objActivoHistorial->setActivoId(trim($ActivoId));
+    $objActivoHistorial->setEstructura31Id(trim($Estructura31_id));
+    $objActivoHistorial->setResponsableId(trim($Responsable_id));
+    $objActivoHistorial->setHistoricoComentario(trim($Historico_comentario));
+    $objActivoHistorial->setUsuarioId(trim($Usuario_id));
+    $objActivoHistorial->setEstado(trim($Estado));
     return $objActivoHistorial;
 }
 
@@ -662,13 +655,13 @@ function setObjHistorico(
     $Estado
 ) {
     $ObjHistorico = new historial_Activo();
-    $ObjHistorico->setActivoId($ActivoId);
-    $ObjHistorico->setHistoricoFecha($Historico_fecha);
-    $ObjHistorico->setEstructura31Id($Estructura31_id);
-    $ObjHistorico->setResponsableId($Responsable_id);
-    $ObjHistorico->setHistoricoComentario($Historico_comentario);
-    $ObjHistorico->setUsuarioId($Usuario_id);
-    $ObjHistorico->setEstado($Estado);
+    $ObjHistorico->setActivoId(trim($ActivoId));
+    $ObjHistorico->setHistoricoFecha(trim($Historico_fecha));
+    $ObjHistorico->setEstructura31Id(trim($Estructura31_id));
+    $ObjHistorico->setResponsableId(trim($Responsable_id));
+    $ObjHistorico->setHistoricoComentario(trim($Historico_comentario));
+    $ObjHistorico->setUsuarioId(trim($Usuario_id));
+    $ObjHistorico->setEstado(trim($Estado));
     return $ObjHistorico;
 }
 
@@ -680,10 +673,10 @@ function setObjActualizarEstActivo(
     $ActivoId
 ) {
     $ObjActualizarEstActivo = new Activo_Fijo();
-    $ObjActualizarEstActivo->setEstado($Estado);
-    $ObjActualizarEstActivo->setResponsableCodigo($ResponsableId);
-    $ObjActualizarEstActivo->setActivoId($ActivoId);
-    $ObjActualizarEstActivo->setEstructura3Id($Estructura3Id);
+    $ObjActualizarEstActivo->setEstado(trim($Estado));
+    $ObjActualizarEstActivo->setResponsableCodigo(trim($ResponsableId));
+    $ObjActualizarEstActivo->setActivoId(trim($ActivoId));
+    $ObjActualizarEstActivo->setEstructura3Id(trim($Estructura3Id));
     return $ObjActualizarEstActivo;
 }
 
@@ -698,12 +691,12 @@ function setObjModificarHistorico(
     $HistoritoId
 ) {
     $ObjModificarHistorico = new historial_Activo();
-    $ObjModificarHistorico->setHistoricoFecha($historicoFecha);
-    $ObjModificarHistorico->setEstructura31Id($Estructura31Id);
-    $ObjModificarHistorico->setResponsableId($ResponsableIdd);
-    $ObjModificarHistorico->setHistoricoComentario($HistoricoComentario);
-    $ObjModificarHistorico->setUsuarioId($UsuarioId);
-    $ObjModificarHistorico->setEstado($Estado);
-    $ObjModificarHistorico->setHistoricoId($HistoritoId);
+    $ObjModificarHistorico->setHistoricoFecha(trim($historicoFecha));
+    $ObjModificarHistorico->setEstructura31Id(trim($Estructura31Id));
+    $ObjModificarHistorico->setResponsableId(trim($ResponsableIdd));
+    $ObjModificarHistorico->setHistoricoComentario(trim($HistoricoComentario));
+    $ObjModificarHistorico->setUsuarioId(trim($UsuarioId));
+    $ObjModificarHistorico->setEstado(trim($Estado));
+    $ObjModificarHistorico->setHistoricoId(trim($HistoritoId));
     return $ObjModificarHistorico;
 }

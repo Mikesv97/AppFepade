@@ -62,7 +62,10 @@ $idUSuario = $_SESSION["usuario"]["id"];
         color:#c91a1a;
         
     }
-
+    #labelError2{
+        color: red;
+        font-weight: bold;
+    }
     .outLineRed:hover{
         border: 1px solid white;
         background-color: #cc8e00;
@@ -255,8 +258,10 @@ div.col-md-3{
                                     <!-- FIN SEGUNDA COLUMNA DEL FORM -->
                                 </div>
                             </div>
+                             
                             <div class="row borde-top">
                                 <div class="col-md-6 borde" id="ResCompAsig">
+                                    <!-- INICIA TERCERA COLUMNA DEL FORM -->
                                     <h5 class="my-2 label label-dark col-md-12">Responsable y comentarios de asignación</h5>
                                     <div class="form-row ">
                                         <div class="form-group col-md-6">
@@ -282,6 +287,9 @@ div.col-md-3{
                                         </div>
                                     </div>
                                 </div>
+                                <!-- FIN TERCERA COLUMNA DEL FORM -->
+
+                               <!-- INICIO CUARTA COLUMNA DEL FORM -->                 
                                 <div class="col-md-6 borde">
                                     <div class="text-center">
                                         <h5 class="my-2 label label-dark col-md-12">Imagen de activo fijo</h5>
@@ -292,8 +300,13 @@ div.col-md-3{
                                     </div>
                                 </div>
                             </div>
+                            <!-- FIN CUARTA COLUMNA DEL FORM -->
+                             
+
+                            
                             <div class="row">
                                 <div class="col-md-3">
+                                    <!-- INICIO QUINTA COLUMNA DEL FORM -->
                                     <h5 class="my-2 label label-dark col-md-12">Especificaciones computadora</h5>
                                     <div class="form-row my-2 ">
                                         <div class="form-group col-md-6">
@@ -338,7 +351,10 @@ div.col-md-3{
                                         </div>
                                     </div>
                                 </div>
+                                <!-- FIN QUINTA COLUMNA DEL FORM -->
+                                
                                 <div class="col-md-3">
+                                    <!-- INICIO SEXTA COLUMNA IMPRESORA  DEL FORM -->
                                     <h5 class="my-2 label label-dark col-md-12">Especificaciones impresora</h5>
                                     <div class="form-row my-2">
                                         <div class="form-group col-md-6">
@@ -365,6 +381,9 @@ div.col-md-3{
                                             <label class="text-label">Fusor</label>
                                             <input type="text" name="fusor" class="form-control" maxlength="50">
                                         </div>
+                                        <!-- FIN SEXTA COLUMNA IMPRESORA DEL FORM -->
+
+                                           <!-- INICIO SEXTA COLUMNA PROYECTOR DEL FORM -->
                                         <h5 class="my-4 label label-dark col-md-12">Especificaciones proyector</h5>
 
                                         <div class="form-group col-md-12">
@@ -377,7 +396,9 @@ div.col-md-3{
                                         </div>
                                     </div>
                                 </div>
+                                      <!-- FIN SEXTA COLUMNA PROYECTOR DEL FORM -->
                                 <div class="col-md-6">
+                                       <!-- INICIA SEPTIMA COLUMNA DEL FORM -->
                                     <h5 class="my-2 label label-dark col-md-12">Historial activo</h5>
                                     <div class="" id="prueba">
                                         <table id="activoHistorial" name="activoHistorial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
@@ -415,6 +436,7 @@ div.col-md-3{
                             <div class="col-md-3 marginR">
                                 <button type="button" class="btn outLineRed my-4" name="btnCancelar" id="btnCancelar">Cancelar</button>
                             </div>
+                               <!-- FIN SEPTIMA COLUMNA DEL FORM -->
                         </form>
                     </div>
                 </div>
@@ -425,6 +447,7 @@ div.col-md-3{
                         <h4 class="card-title">Activos fijos en sistema</h4>
                     </div>
                     <div class="card-body">
+                           <!-- TABLA DATOS ACTIVOS -->
                         <div class="table-responsive">
                             <table id="activoInformacion" name="activoInformacion" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
                                 <thead>

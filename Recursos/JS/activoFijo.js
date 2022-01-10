@@ -1,6 +1,7 @@
 $.noConflict();
 jQuery(document).ready(function ($) {
     var filasTabla = 0;
+
     //DESABILITANDO LOS INPUT DEPENDIENDO DEL TIPO DE ACTIVO QUE SE SELECCIONE, POR DEFECTO LOS DE COMPUTADORA Y LAPTOP ESTAN DISPONIBLES
     //SIEMPREU QUE SE CARAG LA PAGINA
     desabilitarInputPc(false, true);
@@ -133,7 +134,7 @@ jQuery(document).ready(function ($) {
                     contentType: false,
                     processData: false,
                     success: function (r) {
-                        console.log(r);
+                        //console.log(r);
                         switch (r) {
                             case "Insertado":
                                 Swal.fire(
@@ -158,7 +159,14 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     error: function (r) {
-                        console.log(r);
+                        console.log(r.responseText);
+                        Swal.fire({
+                            title: '¡Problemas técnicos!',
+                            text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos con el servidor e insertar los datos'
+                                + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                        })
                     }
                 });
 
@@ -210,7 +218,7 @@ jQuery(document).ready(function ($) {
                             case "FailModificarActivo":
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta la especificacion del activo'
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para modificar el activo'
                                         + ' si el problema persiste contacta a tu administrador o soporte IT.',
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
@@ -219,7 +227,14 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     error: function (r) {
-                        console.log(r);
+                        //console.log(r);
+                        Swal.fire({
+                            title: '¡Problemas técnicos!',
+                            text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos con el servidor y modificar la especificacion del activo'
+                                + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                        })
                     }
                 });
 
@@ -273,7 +288,7 @@ jQuery(document).ready(function ($) {
                             case "FailActivoEliminado":
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta la especificacion del activo'
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para eliminar el activo'
                                         + ' si el problema persiste contacta a tu administrador o soporte IT.',
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
@@ -282,7 +297,14 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     error: function (r) {
-                        console.log(r);
+                        //console.log(r);
+                        Swal.fire({
+                            title: '¡Problemas técnicos!',
+                            text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos con el servidor y eliminar el activo'
+                                + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                        })
                     }
                 });
 
@@ -342,10 +364,10 @@ jQuery(document).ready(function ($) {
                                 cargarHistorico2(referencia, descripcion);
                                 break;
                             case "FailHistorico":
-                                console.log(r);
+                                //console.log(r);
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta la especificacion del activo'
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta la información del activo'
                                         + ' si el problema persiste contacta a tu administrador o soporte IT.',
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
@@ -354,7 +376,14 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     error: function (r) {
-                        console.log(r);
+                        //console.log(r);
+                        Swal.fire({
+                            title: '¡Problemas técnicos!',
+                            text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos con el servidor e inserta la información del activo'
+                                + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                        })
                     }
                 });
 
@@ -1027,10 +1056,6 @@ jQuery(document).ready(function ($) {
         var d = new Date();
         $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
 
-        //ESTE CARGA FECHA Y HORA PERO DABA ERROR
-        // d = new Date();
-        // $('input[type=datetime-local]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate())+"T"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds());
-
         //OBTENIEDO EL ACTIVO ID PARA CARGAR EL HISTORICO PO
         var historialId1 = $('#guardarIdActivo').val();
         //OBTENIENDO VARIABLES REFERENCIA Y DESCRIPCION DE ACTIVO PARA CARGARLOS EN EL FORMULARIO DE HISTORIAL
@@ -1042,6 +1067,8 @@ jQuery(document).ready(function ($) {
         //FUNCION PARA CARGAR LOS INPUT DE REFERENCIA Y DESCRIPCION SEGUN EL HISTORIAL DEL ACTIVO QUE CARGUEN
         cargarHistorico2(referencia, descripcion);
 
+
+        //DESTUYE LA TABLA PARA CREARLA DE NUEVO CON EL TIPO ACTIVO SELECCIONADO
         $('#historial').dataTable().fnDestroy();
 
         //DATATABLE QUE SE ENCUENTRA EN MODAL CONTIENE EL HISTORIAL DE CADA ACTIVO FIJO SEGUN EL ACTIVO ID QUE RECIBE
