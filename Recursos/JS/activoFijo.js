@@ -60,6 +60,14 @@ jQuery(document).ready(function ($) {
         $('#activoHistorial').dataTable().fnDestroy();
         //HABILITANDO TODOS LOS INPUT DEL FORMULARIO
         blockControl(false);
+
+        //DESABILITANDO LOS INPUT DEPENDIENDO DEL TIPO DE ACTIVO QUE SE SELECCIONE, POR DEFECTO LOS DE COMPUTADORA Y LAPTOP ESTAN DISPONIBLES
+        //SIEMPREU QUE SE CARAG LA PAGINA
+        desabilitarInputPc(false, true);
+        desabilitarInputProyector(true);
+        desabilitarInputImpresora(true);
+        desabilitarIp(false, true);
+
         //MOSTRAR LOS COMENTARIOS, ASIGNACION Y ESTADO CUANDO QUIERAN INSERTAR
         $('#ResCompAsig').attr('hidden', false);
         //HABILITANDO BOTON INSERTAR
@@ -145,6 +153,7 @@ jQuery(document).ready(function ($) {
                                 $("#formActivo")[0].reset();
                                 $('#activoInformacion').DataTable().ajax.reload();
                                 $('#mostrarFormulario').addClass('collapse');
+                                $('#mostrarFormulario').removeClass('show');
                                 $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
                                 break;
                             case "FailActiveEspe":
@@ -213,6 +222,7 @@ jQuery(document).ready(function ($) {
                                 $("#formActivo")[0].reset();
                                 $('#activoInformacion').DataTable().ajax.reload();
                                 $('#mostrarFormulario').addClass('collapse');
+                                $('#mostrarFormulario').removeClass('show');
                                 $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
                                 break;
                             case "FailModificarActivo":
@@ -283,6 +293,7 @@ jQuery(document).ready(function ($) {
                                 $("#formActivo")[0].reset();
                                 $('#activoInformacion').DataTable().ajax.reload();
                                 $('#mostrarFormulario').addClass('collapse');
+                                $('#mostrarFormulario').removeClass('show');
                                 $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
                                 break;
                             case "FailActivoEliminado":
