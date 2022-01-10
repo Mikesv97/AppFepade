@@ -45,7 +45,7 @@ class ReportesPlantilla extends TCPDF{
        .wt{
            width: 100%;
        }
-        th{
+        th{ssss
            background-color: #474746;
            color: white;
            font-weight: bold;

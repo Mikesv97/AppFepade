@@ -42,6 +42,12 @@ if ($_POST) {
                     if ($obtejerIdActivo != 0) {
                         //DEPENDIENDO DEL ID TIPO ACTIVO QUE VENGA ASI SE REALIZA EL INSERT EN LA TABLA CON SUS CAMPOS
                         $insertActive = false;
+                        /*
+                        ID TIPO ACTIVO 1 ---> PC
+                        ID TIPO ACTIVO 2 ---> LAPTOP
+                        ID TIPO ACTIVO 3 ---> IMPRESOR
+                        ID TIPO ACTIVO 4 ---> PROYECTOR
+                        */
                         switch ($tipoActivo) {
                             case 1:
 
@@ -178,6 +184,12 @@ if ($_POST) {
                 $updateActive = false;
                 if ($actiMod != 0) {
                     switch ($tipoActivo) {
+                        /*
+                        ID TIPO ACTIVO 1 ---> PC
+                        ID TIPO ACTIVO 2 ---> LAPTOP
+                        ID TIPO ACTIVO 3 ---> IMPRESOR
+                        ID TIPO ACTIVO 4 ---> PROYECTOR
+                        */
                         case 1:
                             //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
                             $ObjActivoEspeCompMod = setObjActivoEspeCompMod(
@@ -595,7 +607,7 @@ function setObjActivoEspeImpreMod(
     $objActivoEspeImpreMod->setTonerA(trim($TonerA));
     $objActivoEspeImpreMod->setTambor(trim($tambor));
     $objActivoEspeImpreMod->setFusor(trim($fusor));
-    $objActivoEspeImpreMod->setActivoId(tri($ActivoId));
+    $objActivoEspeImpreMod->setActivoId(trim($ActivoId));
     return $objActivoEspeImpreMod;
 }
 
