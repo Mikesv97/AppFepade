@@ -301,7 +301,7 @@ if ($_POST) {
                 $historialInsertado = false;
                 $ObjHistorico = setObjHistorico(
                     $_POST['guardarIdActivo2'],
-                    str_replace('T', ' ', $_POST['fechaHistorico'].trim()),
+                    str_replace('T', ' ', $_POST['fechaHistorico']),
                     $_POST['Estructura3IdH'],
                     $_POST['ResponsableIdH'],
                     $_POST['HistoricoComentarioH'],
