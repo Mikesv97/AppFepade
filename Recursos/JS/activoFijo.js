@@ -356,12 +356,20 @@ jQuery(document).ready(function ($) {
                                     'El historico ha sido ingresado al sistema',
                                     'success'
                                 )
-                                $("#formHistorico")[0].reset();
+                                cargarFormHistorico();
                                 $('#historial').DataTable().ajax.reload();
                                 $('#activoHistorial').DataTable().ajax.reload();
                                 var referencia = $('#ActivoReferencia').val();
                                 var descripcion = $('#ActivoDescripcion').val();
                                 cargarHistorico2(referencia, descripcion);
+                                function zeroPadded(val) {
+                                    if (val >= 10)
+                                        return val;
+                                    else
+                                        return '0' + val;
+                                }
+                                var d = new Date();
+                                $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
                                 break;
                             case "FailHistorico":
                                 //console.log(r);
@@ -1287,12 +1295,22 @@ jQuery(document).ready(function ($) {
                                     'El historico ha sido modificado en el sistema',
                                     'success'
                                 )
-                                $("#formHistorico")[0].reset();
+                                cargarFormHistorico();
                                 $('#historial').DataTable().ajax.reload();
                                 $('#activoHistorial').DataTable().ajax.reload();
                                 var referencia = $('#ActivoReferencia').val();
                                 var descripcion = $('#ActivoDescripcion').val();
                                 cargarHistorico2(referencia, descripcion);
+                                function zeroPadded(val) {
+                                    if (val >= 10)
+                                        return val;
+                                    else
+                                        return '0' + val;
+                                }
+                                var d = new Date();
+                                $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+                                $("#btnModificarHostorico").attr('disabled', true);
+                                $("#btnInsertarHistorico").attr('disabled', false);
                                 break;
                             case "FailHistoricoModificado":
                                 Swal.fire({
@@ -1363,9 +1381,22 @@ jQuery(document).ready(function ($) {
                                     'El historico ha sido eliminado del sistema',
                                     'success'
                                 )
-                                $("#formHistorico")[0].reset();
+                                cargarFormHistorico();
                                 $('#historial').DataTable().ajax.reload();
                                 $('#activoHistorial').DataTable().ajax.reload();
+                                var referencia = $('#ActivoReferencia').val();
+                                var descripcion = $('#ActivoDescripcion').val();
+                                cargarHistorico2(referencia, descripcion);
+                                function zeroPadded(val) {
+                                    if (val >= 10)
+                                        return val;
+                                    else
+                                        return '0' + val;
+                                }
+                                var d = new Date();
+                                $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+                                $("#btnModificarHostorico").attr('disabled', true);
+                                $("#btnInsertarHistorico").attr('disabled', false);
                                 break;
                             case "FailHistoricoEliminado":
                                 console.log(r);
@@ -1385,7 +1416,7 @@ jQuery(document).ready(function ($) {
                 });
             } else if (result.isDismissed) {
                 //SI EL USUARIO PRESIONA EL BOTON CANCELAR SE LIMPIA EL FORMULARIO
-                $("#formHistorico")[0].reset();
+                cargarFormHistorico();
                 //CARGAOS LOS INPUT CON LOS VALORES DE REFERENCIA Y DESCRIPCION LUGO DE LIMPIAR EL FORMULARIO
                 var referencia = $('#ActivoReferencia').val();
                 var descripcion = $('#ActivoDescripcion').val();
@@ -1399,11 +1430,7 @@ jQuery(document).ready(function ($) {
     //BOTON PARA LIMPIAR EL FORMULARIO Y PODER INGRESAR UN NUEVO HISTORIAL
     $('#btnNuevoHistorico').on('click', function (){
         //DEJANDO EL FORMULARIO DE HISTORICO EN LIMPIO
-        $('input[name=idArea]').val('');
-        $('#Estructura3IdH option[value=' + 1 + ']').prop('selected', true);
-        $('input[name=idResponsable]').val('');
-        $('#ResponsableIdH option[value=' + 1 + ']').prop('selected', true);        
-        $('textarea[name=HistoricoComentarioH]').val('');
+        cargarFormHistorico();
 
         //HABILITANDO LOS INPUT CUANDO EL USUARIO QUIERE EDITAR EL HISTORIAL
         blockControlHistorial(false);
@@ -1431,6 +1458,13 @@ jQuery(document).ready(function ($) {
         $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
     });
 
+    function cargarFormHistorico(){
+        $('input[name=idArea]').val('');
+        $('#Estructura3IdH option[value=' + 1 + ']').prop('selected', true);
+        $('input[name=idResponsable]').val('');
+        $('#ResponsableIdH option[value=' + 1 + ']').prop('selected', true);        
+        $('textarea[name=HistoricoComentarioH]').val('');
+    }
 
     function cargarGeneral1(activoRerefencia, partidaContabilidad, empresaId, numeroSerie, activoId, fechaAdq, activoFactura, activoTipo, ip) {
         $('input[name=ActivoReferencia]').val(activoRerefencia);

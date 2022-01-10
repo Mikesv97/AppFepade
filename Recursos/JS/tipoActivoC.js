@@ -222,8 +222,8 @@ jQuery(document).ready(function ($) {
                             case "FailTipoActivo":
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para eliminar el tipo de activo del sistema'
-                                        + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                                    text: 'No puedes eliminar un tipo de activo que se este utilizando en la base de datos'
+                                        + ' porfavor asegurate que no se este utilizando para poder ser eliminado.',
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
                                 })
