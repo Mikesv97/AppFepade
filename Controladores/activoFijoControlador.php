@@ -372,6 +372,10 @@ if ($_POST) {
                 }
 
             break;
+            case "getInfAreas":
+                $resp = $activoFijo->getDataArea();
+                echo json_encode($resp);
+            break;
         }
     }
 }
