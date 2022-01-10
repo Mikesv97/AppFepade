@@ -8,6 +8,15 @@ include('layout/navbar.php');
         height: 100vh;
     }
 
+    .content > h1, h3{
+        color: black;
+        font-weight: bold;
+    }
+
+    .red{
+        color: darkred;
+
+    }
     @media only screen and (max-width: 699px) {
         .contentIMG{
             max-width: 100%;
@@ -30,8 +39,8 @@ include('layout/navbar.php');
                     <img src="../Recursos/Multimedia/Imagenes/logoFepadePDF.png" alt="">
                 </div>
                 <div class="content">
-                    <h1 class="my-5">Bienvenido <?= $_SESSION["usuario"]["nombre"]; ?>!</h1>
-                    <h3>Rol: <?= $_SESSION["usuario"]["rol"]; ?></h3>
+                    <h1 class="my-5">Bienvenido <span class="red"><?= $_SESSION["usuario"]["nombre"]; ?>!</span></h1>
+                    <h3>Rol: <span class="red"><?= $_SESSION["usuario"]["rol"]; ?></span></h3>
                     <h3>Un gusto tenerte en nuestro equipo</h3>
                 </div>
             </div>
