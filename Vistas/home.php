@@ -3,29 +3,45 @@ include('layout/header.php');
 include('layout/navbar.php');
 ?>
 
+<style>
+    .altura {
+        height: 100vh;
+    }
+
+    @media only screen and (max-width: 699px) {
+        .contentIMG{
+            max-width: 100%;
+        }
+
+        .contentIMG > img{
+            width: 100%;
+        }
+
+    }
+</style>
+
 <div class="content-body">
     <div class="container-fluid">
-    <a href="" id="inicioFormRespon"></a>
+        <a href="" id="inicioFormRespon"></a>
         <!--barra top -->
-        <div class="row page-titles mx-0">
-            <div class="col-sm-6 p-md-0">
-                <div class="welcome-text">
-                    <h4>Bienvenido <?= $_SESSION["usuario"]["nombre"]; ?>!</h4>
-                    <p class="mb-0">Rol: <?= $_SESSION["usuario"]["rol"]; ?></p>
+        <div class="row shadow page-titles justify-content-center align-items-center altura">
+            <div class="col-md-12 py-5 text-center">
+                <div class="contentIMG col-md-12">
+                    <img src="../Recursos/Multimedia/Imagenes/logoFepadePDF.png" alt="">
                 </div>
-            </div>
-            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                </ol>
+                <div class="content">
+                    <h1 class="my-5">Bienvenido <?= $_SESSION["usuario"]["nombre"]; ?>!</h1>
+                    <h3>Rol: <?= $_SESSION["usuario"]["rol"]; ?></h3>
+                    <h3>Un gusto tenerte en nuestro equipo</h3>
+                </div>
             </div>
         </div>
         <!-- fin barra top -->
 
-        <p>HOLIS</p>
-
     </div>
 </div>
+
+
 
 <?php
 include('layout/footer.php');
