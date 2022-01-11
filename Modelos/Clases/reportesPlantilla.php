@@ -34,18 +34,33 @@ class ReportesPlantilla extends TCPDF{
     //ancho de la tabla y columnas de las tablas de los rpt
     //retorna esa variable para ser concatenada con los datos
     public function getEtiquetaStyleRpt(){
-        $style="
-        <style>
+    $style="
+    <style>
         table{
            white-space:nowrap;
            text-align: center;
            font-size: 9.5px;
            padding:1px;
         }
+
+        .bgDark{
+            background-color: #474746;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 0 5px black;
+        }
+
+        .tblResumen{
+            padding: 10px;
+            font-size: 20px !important;
+            margin: 0 auto;
+        }
+
        .wt{
            width: 100%;
        }
-        th{ssss
+
+        th{
            background-color: #474746;
            color: white;
            font-weight: bold;
@@ -82,7 +97,11 @@ class ReportesPlantilla extends TCPDF{
        .w10{
            width: 12%;
        }
-        </style>";
+
+       .w20{
+           width: 20%;
+       }
+    </style>";
 
         return $style;
     }

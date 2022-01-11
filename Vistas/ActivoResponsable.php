@@ -1,6 +1,10 @@
 <?php
 include('layout/header.php');
 include('layout/navbar.php');
+include_once dirname(__DIR__, 1)."/Modelos/clasesDao/menuDao.php";
+$mDao = new MenuDao();
+$menu = $mDao->obtenerMenu();
+basename(__FILE__);
 ?>
 <link href="../recursos/css/nuevoUsuario.css" rel="stylesheet">
 <script src="../Recursos/JS/activoResponsable.js"></script>

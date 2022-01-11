@@ -1,6 +1,7 @@
 <?php
 include_once dirname(__DIR__, 1).'/clases/reportesPlantilla.php';
 include_once dirname(__DIR__, 1).'/conexion.php';
+include_once "tipoActivoDao.php";
 
 class ReportesDao
 {
@@ -14,6 +15,7 @@ class ReportesDao
 
 
     //solicita los datos de la BD para generar tablas filtrado por área
+    //retorna el hmtl para la función que genera el reporte
     public function getDataRptActivosArea($area){
         //variables auxliares
         $countPC = 0;
@@ -171,6 +173,7 @@ class ReportesDao
     }
 
     //solicita los datos de la BD para generar tablas filtrado por área y tipo activo
+    //retorna el hmtl para la función que genera el reporte
     public function getDataRptTipActArea($area, $tipAct){
         //variables auxliares
         $countPC = 0;
@@ -365,6 +368,7 @@ class ReportesDao
     }
 
     //FUNCION QUE CUENTA LA CANTIDAD TOTAL DE TIPO DE ACTIVO SELECICONADO
+    //retorna el hmtl para la función que genera el reporte
     public function contTotalTipAct($tipoActivo){
         //establecemos la coneccion
         $con = Conexion::conectar();
@@ -386,6 +390,7 @@ class ReportesDao
     }
 
     //solicita los datos de la BD para generar tablas filtrado por tipo activo
+    //retorna el hmtl para la función que genera el reporte
     public function getDataRptActivosTipo($tipoActivo){
         //variables auxliares
         $countPC = 0;
@@ -573,6 +578,86 @@ class ReportesDao
 
     }
 
+    //genera la estructura de html para retornarla y pasarla a la función que
+    //genera el reporte
+    public function getDataRptResTipAct(){
+        //creamos objeto tipo activo dao para acceder a la función que cuenta
+        //cuantos activos hay según el ID pasado como parametos
+        $objTA = new TipoActivoDao();
+        //llamamos la funcion para contar cuantos hay del tipo ID 1-->PC
+        $totalPc = $objTA->countTipActivo(1);
+        //llamamos la funcion para contar cuantos hay del tipo ID 2-->Laptop
+        $totalLap = $objTA->countTipActivo(2);
+        //llamamos la funcion para contar cuantos hay del tipo ID 3-->Impresor
+        $totalImp = $objTA->countTipActivo(3);
+        //llamamos la funcion para contar cuantos hay del tipo ID 4-->Proyector
+        $totalPro = $objTA->countTipActivo(4);
+
+        //validamos que no venga vacio
+        //o si hay error que se imprima el error
+        if($totalPc == 0 || $totalPc == null || $totalPc == false ){
+            echo $totalPc;
+        }
+
+        if($totalLap == 0 || $totalLap == null || $totalLap == false ){
+            echo $totalPc;
+        }
+
+        if($totalImp == 0 || $totalImp == null || $totalImp == false ){
+            echo $totalPc;
+        }
+
+        if($totalPro == 0 || $totalPro == null || $totalPro == false ){
+            echo $totalPc;
+        }
+//project makeover upgraded
+        //preparamos el html para retornarlo
+        $html = '
+        <table style="width:100%">
+            <tr>
+                <td style="width:25%"></td>
+                <td style="width:50%">
+                    <!--INICIO TABLA-->
+                    <table class="tblResumen"  align="center" border="1">
+                        <tr>
+                            <th>Tipo activo</th>
+                            <th>Cantidad</th>
+                        </tr>
+                        <tr>
+                            <td>PC</td>
+                            <td>'.$totalPc.'</td>
+                        </tr>
+                        <tr>
+                            <td>Laptop</td>
+                            <td>'.$totalLap.'</td>
+                        </tr>
+                        <tr>
+                            <td>Impresor</td>
+                            <td>'.$totalImp.'</td>
+                        </tr>
+                        <tr>
+                            <td>Proyector</td>
+                            <td>'.$totalPro.'</td>
+                        </tr>
+                        <tr>
+                            <td class="bgDark">Total</td>
+                            <td class="bgDark">'.($totalPc+$totalLap+$totalImp+$totalPro).'</td>
+                        </tr>
+                    </table>
+                    <!--FIN TABLA-->
+                </td>
+                <td style="width:25%"></td>
+            </tr>
+        </table>';
+
+
+
+        
+        //retornamos html con estilos
+        $rpt = new ReportesPlantilla();
+        return $html.$rpt->getEtiquetaStyleRpt();
+    }
+
 
 
 
@@ -624,6 +709,19 @@ class ReportesDao
         $pdf->SetFont("","B",20);
         $pdf->Cell(80,10,"Área: ".$area,0,1,"L");
         $pdf->Ln(5);
+        $pdf->writeHTML($html, true, false, true, false, '');
+        $pdf->Output();
+    
+    }
+    
+    //genera reporte de <<resumen de activos>> 
+    public function generarRptPdfResTipAct($html){
+        $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
+        $pdf->AddPage();
+        $pdf->Ln(60);
+        $pdf->SetFont("","B",20);
+        $pdf->Cell(0, 15, 'Resumen de activos', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $pdf->Ln(20);
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Output();
     

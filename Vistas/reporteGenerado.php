@@ -35,6 +35,12 @@ if (isset($_POST["btnRptActTipoActivo"])) {
     $r->generarRptPdfTipAct($resp,$tipoActNombre,$totalActivos);
 }
 
+if(isset($_POST["btnRptResAct"])){
+    $rpt = new ReportesDao();
+
+    $html = $rpt->getDataRptResTipAct();
+    $rpt->generarRptPdfResTipAct($html);
+}
  
 
 
