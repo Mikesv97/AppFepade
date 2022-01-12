@@ -34,8 +34,7 @@ class ReportesPlantilla extends TCPDF{
     //ancho de la tabla y columnas de las tablas de los rpt
     //retorna esa variable para ser concatenada con los datos
     public function getEtiquetaStyleRpt(){
-    $style="
-    <style>
+    $style=" <style>
         table{
            white-space:nowrap;
            text-align: center;
@@ -107,23 +106,42 @@ class ReportesPlantilla extends TCPDF{
     //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
     //para la tabla pc y poder concatenar los respectivos datos en reporteDao
     //retorna esa variable para ser concatenada con los datos
-    public function  getHeaderTablaRptPc(){
-        $tablaPC ='<h3>PC</h3>
-        <table border="0.3">
-        <tr>
-            <th class="w3">Código</th>
-            <th class="w15">Descripción</th>
-            <th class="w10">Responsable</th>
-            <th class="wip" >IP</th>
-            <th class="w8" >Modelo</th>
-            <th class="w">Procesador</th>
-            <th class="w8">GEN.</th>
-            <th class="wr">RAM</th>
-            <th class="w8">DD</th>
-            <th class="wt">SO</th>
-            <th class="w8">Office</th>
-            <th class="w8">No. Series</th>
-        </tr>';
+    public function  getHeaderTablaRptPc($boolean){
+        
+        if($boolean){
+            $tablaPC ='<h3>PC</h3>
+            <table border="0.3">
+            <tr>
+                <th class="w3">Código</th>
+                <th class="w15">Descripción</th>
+                <th class="w10">Responsable</th>
+                <th class="w8" >Modelo</th>
+                <th class="w">Procesador</th>
+                <th class="w8">GEN.</th>
+                <th class="wr">RAM</th>
+                <th class="w8">DD</th>
+                <th class="wt">SO</th>
+                <th class="w8">Office</th>
+                <th class="w8">No. Series</th>
+            </tr>';
+        }else{
+            $tablaPC ='<h3>PC</h3>
+            <table border="0.3">
+            <tr>
+                <th class="w3">Código</th>
+                <th class="w15">Descripción</th>
+                <th class="w10">Responsable</th>
+                <th class="wip" >IP</th>
+                <th class="w8" >Modelo</th>
+                <th class="w">Procesador</th>
+                <th class="w8">GEN.</th>
+                <th class="wr">RAM</th>
+                <th class="w8">DD</th>
+                <th class="wt">SO</th>
+                <th class="w8">Office</th>
+                <th class="w8">No. Series</th>
+            </tr>';
+        }
 
         return $tablaPC;
     }
@@ -132,24 +150,41 @@ class ReportesPlantilla extends TCPDF{
     //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
     //para la tabla laptop y poder concatenar los respectivos datos en reporteDao
     //retorna esa variable para ser concatenada con los datos
-    public function  getHeaderTablaRptLap(){
-        $tablaPC ='<h3>Laptop</h3>
-        <table border="0.3">
-        <tr>
-            <th class="w3">Código</th>
-            <th class="w15">Descripción</th>
-            <th class="w10">Responsable</th>
-            <th class="wip" >IP</th>
-            <th class="w8" >Modelo</th>
-            <th class="w">Procesador</th>
-            <th class="w8">GEN.</th>
-            <th class="wr">RAM</th>
-            <th class="w8">DD</th>
-            <th class="wt">SO</th>
-            <th class="w8">Office</th>
-            <th class="w8">No. Series</th>
-        </tr>';
-
+    public function  getHeaderTablaRptLap($boolean){
+        if($boolean){
+            $tablaPC ='<h3>Laptop</h3>
+            <table border="0.3">
+            <tr>
+                <th class="w3">Código</th>
+                <th class="w15">Descripción</th>
+                <th class="w10">Responsable</th>
+                <th class="w8" >Modelo</th>
+                <th class="w">Procesador</th>
+                <th class="w8">GEN.</th>
+                <th class="wr">RAM</th>
+                <th class="w8">DD</th>
+                <th class="wt">SO</th>
+                <th class="w8">Office</th>
+                <th class="w8">No. Series</th>
+            </tr>';
+        }else{
+            $tablaPC ='<h3>Laptop</h3>
+            <table border="0.3">
+            <tr>
+                <th class="w3">Código</th>
+                <th class="w15">Descripción</th>
+                <th class="w10">Responsable</th>
+                <th class="wip" >IP</th>
+                <th class="w8" >Modelo</th>
+                <th class="w">Procesador</th>
+                <th class="w8">GEN.</th>
+                <th class="wr">RAM</th>
+                <th class="w8">DD</th>
+                <th class="wt">SO</th>
+                <th class="w8">Office</th>
+                <th class="w8">No. Series</th>
+            </tr>';
+        }
         return $tablaPC;
     }
 
@@ -157,19 +192,32 @@ class ReportesPlantilla extends TCPDF{
     //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
     //para la tabla proyector y poder concatenar los respectivos datos en reporteDao
     //retorna esa variable para ser concatenada con los datos
-    public function getHeaderTablaRptProyector(){
+    public function getHeaderTablaRptProyector($boolean){
 
-        $tablaProyector ='<h3>Proyector</h3>
-        <table border="0.3">
-           <tr>
-               <th class="w3">Código</th>
-               <th class="w15">Descripción</th>
-               <th class="w10">Responsable</th>
-               <th class="wip" >IP</th>
-               <th class="w8" >Modelo</th>
-               <th class="w">Horas Uso</th>
-               <th class="w8">Horas Eco.</th>
-           </tr>';
+        if($boolean){
+            $tablaProyector ='<h3>Proyector</h3>
+            <table border="0.3">
+               <tr>
+                   <th class="w3">Código</th>
+                   <th class="w15">Descripción</th>
+                   <th class="w10">Responsable</th>
+                   <th class="w8" >Modelo</th>
+                   <th class="w">Horas Uso</th>
+                   <th class="w8">Horas Eco.</th>
+               </tr>';
+        }else{
+            $tablaProyector ='<h3>Proyector</h3>
+            <table border="0.3">
+               <tr>
+                   <th class="w3">Código</th>
+                   <th class="w15">Descripción</th>
+                   <th class="w10">Responsable</th>
+                   <th class="wip" >IP</th>
+                   <th class="w8" >Modelo</th>
+                   <th class="w">Horas Uso</th>
+                   <th class="w8">Horas Eco.</th>
+               </tr>';
+        }
 
         return $tablaProyector;
     }

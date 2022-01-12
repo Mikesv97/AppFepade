@@ -16,8 +16,11 @@ class ReportesDao
 
     //solicita los datos de la BD para generar tablas filtrado por área
     //retorna el hmtl para la función que genera el reporte
-    public function getDataRptActivosArea($area)
+    public function getDataRptActivosArea($area, $boolean)
     {
+        //si boolean es falso ocupamos las cabeceras normales con IP de las tablas
+        //si es verdadero ocupamos las cabeceras sin IP
+        
         //variables auxliares
         $countPC = 0;
         $countLap = 0;
@@ -26,9 +29,9 @@ class ReportesDao
         //creamos el objeto de la plantilla html de rpt
         $rpt = new ReportesPlantilla();
         //obtenemos la maqueta de headers de las tablas para cada tipo de activo
-        $tablaPC = $rpt->getHeaderTablaRptPc();
-        $tablaLaptop = $rpt->getHeaderTablaRptLap();
-        $tablaProyector = $rpt->getHeaderTablaRptProyector();
+        $tablaPC = $rpt->getHeaderTablaRptPc($boolean);
+        $tablaLaptop = $rpt->getHeaderTablaRptLap($boolean);
+        $tablaProyector = $rpt->getHeaderTablaRptProyector($boolean);
         $tablaImp = $rpt->getHeaderTablaRptImpresor(false);
 
         //establecemos la coneccion
@@ -62,7 +65,22 @@ class ReportesDao
                 switch (trim($fila[$i]["tipo_activo_nombre"])) {
                     case "PC":
                         //si tipo activo nombre es pc concatenamos valores a tabla pc
-                        $tablaPC  .= '<tr>'
+                        if($boolean){
+                            $tablaPC  .= '<tr>'
+                            . '<td class="w3">' . $fila[$i]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
+                            . '<td class="w10">' . $fila[$i]["Nombre_responsable"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["Modelo"] . '</td>'
+                            . '<td class="w">' . $fila[$i]["Procesador"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["Generacion"] . '</td>'
+                            . '<td class="wr">' . $fila[$i]["Ram"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["DiscoDuro"] . '</td>'
+                            . '<td class="wt">' . $fila[$i]["SO"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["Office"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["numero_serie"] . '</td>'
+                            . '</tr>';
+                        }else{
+                            $tablaPC  .= '<tr>'
                             . '<td class="w3">' . $fila[$i]["Activo_id"] . '</td>'
                             . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
                             . '<td class="w10">' . $fila[$i]["Nombre_responsable"] . '</td>'
@@ -76,12 +94,28 @@ class ReportesDao
                             . '<td class="w8">' . $fila[$i]["Office"] . '</td>'
                             . '<td class="w8">' . $fila[$i]["numero_serie"] . '</td>'
                             . '</tr>';
+                        }
 
                         $countPC++;
                         break;
                     case "Laptop":
                         //si tipo activo nombre es laptop concatenamos valores a tabla latop
-                        $tablaLaptop .= '<tr>'
+                        if($boolean){
+                            $tablaLaptop .= '<tr>'
+                            . '<td class="w3">' . $fila[$i]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
+                            . '<td class="w10">' . $fila[$i]["Nombre_responsable"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["Modelo"] . '</td>'
+                            . '<td class="w">' . $fila[$i]["Procesador"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["Generacion"] . '</td>'
+                            . '<td class="wr">' . $fila[$i]["Ram"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["DiscoDuro"] . '</td>'
+                            . '<td class="wt">' . $fila[$i]["SO"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["Office"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["numero_serie"] . '</td>'
+                            . '</tr>';
+                        }else{
+                            $tablaLaptop .= '<tr>'
                             . '<td class="w3">' . $fila[$i]["Activo_id"] . '</td>'
                             . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
                             . '<td class="w10">' . $fila[$i]["Nombre_responsable"] . '</td>'
@@ -95,12 +129,25 @@ class ReportesDao
                             . '<td class="w8">' . $fila[$i]["Office"] . '</td>'
                             . '<td class="w8">' . $fila[$i]["numero_serie"] . '</td>'
                             . '</tr>';
+                        }
 
                         $countLap++;
                         break;
                     case "Impresor":
                         //si tipo activo nombre es impresora concatenamos valores a tabla impresora
-                        $tablaImp .= '<tr>'
+                        if($boolean){
+                            $tablaImp .= '<tr>'
+                            . '<td class="w3">' . $fila[$i]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
+                            . '<td class="w10">' . $fila[$i]["Nombre_responsable"] . '</td>'
+                            . '<td class="wip">' . $fila[$i]["Modelo"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["TonerN"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["TonerM"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["TonerC"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["TonerA"] . '</td>'
+                            . '</tr>';
+                        }else{
+                            $tablaImp .= '<tr>'
                             . '<td class="w3">' . $fila[$i]["Activo_id"] . '</td>'
                             . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
                             . '<td class="w10">' . $fila[$i]["Nombre_responsable"] . '</td>'
@@ -111,12 +158,23 @@ class ReportesDao
                             . '<td class="w8">' . $fila[$i]["TonerC"] . '</td>'
                             . '<td class="w8">' . $fila[$i]["TonerA"] . '</td>'
                             . '</tr>';
+                        }
 
                         $countImp++;
                         break;
                     case "Proyector":
                         //si tipo activo nombre es proyector concatenamos valores a tabla proyector
-                        $tablaProyector .= '<tr>'
+                        if($boolean){
+                            $tablaProyector .= '<tr>'
+                            . '<td class="w3">' . $fila[$i]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
+                            . '<td class="w10">' . $fila[$i]["Nombre_responsable"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["Modelo"] . '</td>'
+                            . '<td class="w">' . $fila[$i]["HorasUso"] . '</td>'
+                            . '<td class="w8">' . $fila[$i]["HoraEco"] . '</td>'
+                            . '</tr>';
+                        }else{
+                            $tablaProyector .= '<tr>'
                             . '<td class="w3">' . $fila[$i]["Activo_id"] . '</td>'
                             . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
                             . '<td class="w10">' . $fila[$i]["Nombre_responsable"] . '</td>'
@@ -125,6 +183,7 @@ class ReportesDao
                             . '<td class="w">' . $fila[$i]["HorasUso"] . '</td>'
                             . '<td class="w8">' . $fila[$i]["HoraEco"] . '</td>'
                             . '</tr>';
+                        }
                         $countProyec++;
                         break;
                 }

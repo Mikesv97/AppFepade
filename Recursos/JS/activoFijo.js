@@ -188,6 +188,7 @@ jQuery(document).ready(function ($) {
                                     'El activo ha sido ingresado al sistema',
                                     'success'
                                 )
+                                
                                 $("#formActivo")[0].reset();
                                 $('#activoInformacion').DataTable().ajax.reload();
                                 $('#mostrarFormulario').addClass('collapse');
@@ -397,7 +398,7 @@ jQuery(document).ready(function ($) {
                     contentType: false,
                     processData: false,
                     success: function (r) {
-                        console.log(r);
+                        //console.log(r);
                         switch (r) {
                             case "Insertado":
                                 Swal.fire(

@@ -42,6 +42,7 @@ if ($_POST) {
                     if ($obtejerIdActivo != 0) {
                         //DEPENDIENDO DEL ID TIPO ACTIVO QUE VENGA ASI SE REALIZA EL INSERT EN LA TABLA CON SUS CAMPOS
                         $insertActive = false;
+
                         /*
                         ID TIPO ACTIVO 1 ---> PC
                         ID TIPO ACTIVO 2 ---> LAPTOP
@@ -67,6 +68,7 @@ if ($_POST) {
                                     $_POST['Modelo'],
                                     $_POST['ip']
                                 );
+
                                 if ($activoEspe->insertarActEspCom($objActivoEspeComp) == 0) {
                                     echo json_encode('FailActiveEspe');
                                 } else {
@@ -132,6 +134,8 @@ if ($_POST) {
                                 }
                                 break;
                         }
+
+                        //evaluamos i el insert del tipo de activo que se inserto fue exitoso
                         if ($insertActive) {
                             //ASIGNANDO A LA FUNCION OBJACTIVOHISTORIAL LO QUE VIENEN EN LOS INPUT SEGUN SU NAME
                             $objActivoHistorial = setObjActivoHistorial(

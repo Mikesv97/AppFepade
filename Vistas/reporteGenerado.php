@@ -12,7 +12,7 @@ if (isset($_POST["btnRptActArea"])) {
 
     if(isset($tipoAct) && $tipoAct == 0){
 
-        $resp = $rpt->getDataRptActivosArea($area);
+        $resp = $rpt->getDataRptActivosArea($area, true);
         $rpt->generarRptPdfActArea($resp,$areaNombre);
 
     }else{
