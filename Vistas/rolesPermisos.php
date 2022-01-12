@@ -101,6 +101,8 @@
                                 <input type="text" class="form-control" id="txtDireccionWeb" maxlength="255" name="txtDirecciónWeb"  placeholder="https://www.direccion.com  ||  nombre.extensión" required>
                                 <label class="my-1"><strong>Menú padre</strong></label>
                                 <input type="text" class="form-control" id="txtMenuPadre" maxlength="50" name="txtMenuPadre"  placeholder="Activos, reportes, usuarios y roles, etc" required>
+                                <small class="my-1"><strong>Para que el menú esté fuera de algún contenedor, en<spam class="msjRed"> contenedor padre </spam> debes ingresar <spam class="msjRed">Global</spam>
+                                de esta forma el menú aparecerá afuera sin contenedor.</strong></small>
                             </div>
                             <div class="col-md-12"><p class="alertError my-2 mb-2" role="alert" id="labelErrorMenu"></p></div>
                             <div class="col-md-4">
@@ -138,7 +140,6 @@
                         
                     </div>
                 </div>
-                
             </div>
         </div>
         <!--**********************************

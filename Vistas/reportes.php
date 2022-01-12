@@ -23,7 +23,7 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Layout</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Nuevo usuario</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Reportes</a></li>
                 </ol>
             </div>
         </div>
@@ -81,15 +81,15 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
 
         <div class="row page-titles mx-0 shadow">
             <div class="col-md-6 p-md-0">
-                <h3 class="titulo mb-4">Reporte para mantenimiento</h3>
+                <h3 class="titulo mb-4">Reporte para revisión por áreas</h3>
                 <form name="formRptActImp" method="post" action="reporteGenerado.php" target="_blank">
-                    <input type="hidden" name="hdnNameTipAct" id="hdnNameTipAct">
-                    <label for="sTipoActivoR23">Seleccionar tipo de activo</label>
-                    <select class="form-control" id="sTipoActivoR2" name="sTipoActivoR2">
+                    <input type="hidden" name="hdnNomArea" id="hdnNomArea">
+                    <label for="sAreaRpt">Seleccionar el área </label>
+                    <select class="form-control" id="sAreaRpt" name="sAreaRpt">
                     </select>
                     <div class="col-md-6">
-                <button type="submit" name="btnRptActTipoActivo" class="btn outLineRed my-3">Generar reporte</button>
-            </div>
+                        <button type="submit" name="btnRptAreas" class="btn outLineRed my-3">Generar reporte</button>
+                    </div>
             </div>
             <div class="col-md-5 offset-md-1 p-md-0">
                 <h3 class="titulo mb-4 mx-2">Reporte de toner</h3>
@@ -102,7 +102,25 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
                 </form>
             </div>
             </div>
-        </div>  
+        </div> 
+
+        <div class="row page-titles mx-0 shadow mb-3 justify-content-center align-items-center">
+            <div class="col-md-12 text-center mb-5 my-3">
+                <h3 class="titulo">Reporte para mantenimiento</h3>
+            </div>
+            <div class="col-md-4 p-md-0">
+                <form name="formRptActTA" method="post" action="reporteGenerado.php" target="_blank">
+                    <input type="hidden" name="hdnNameAreaMant" id="hdnNameAreaMant">
+                    <label for="sTipoActivoR">Seleccionar área para el mantenimiento</label>
+                    <select class="form-control" id="sRptAreMant" name="sRptAreMant">
+                
+                    </select>
+            </div>
+            <div class="col-md-12 text-center">
+                <button type="submit" name="btnRptMant" class="btn outLineRed my-3">Generar reporte</button>
+            </div>
+            </form>
+        </div>
 
 
     </div>
