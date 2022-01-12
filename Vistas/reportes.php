@@ -83,12 +83,12 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
             <div class="col-md-6 p-md-0">
                 <h3 class="titulo mb-4">Reporte para revisión por áreas</h3>
                 <form name="formRptActImp" method="post" action="reporteGenerado.php" target="_blank">
-                    <input type="hidden" name="hdnNameTipAct" id="hdnNameTipAct">
-                    <label for="sTipoActivoR23">Seleccionar tipo de activo</label>
-                    <select class="form-control" id="sTipoActivoR2" name="sTipoActivoR2">
+                    <input type="hidden" name="hdnNomArea" id="hdnNomArea">
+                    <label for="sAreaRpt">Seleccionar el área </label>
+                    <select class="form-control" id="sAreaRpt" name="sAreaRpt">
                     </select>
                     <div class="col-md-6">
-                <button type="submit" name="btnRptActTipoActivo" class="btn outLineRed my-3">Generar reporte</button>
+                <button type="submit" name="btnRptAreas" class="btn outLineRed my-3">Generar reporte</button>
             </div>
             </div>
             <div class="col-md-5 offset-md-1 p-md-0">

@@ -15,6 +15,10 @@ $(document).ready(function(){
     $("#sTipoActivoR2").change(function(){
         $("#hdnNameTipAct").val($("#sTipoActivoR2 option:selected").text().trim());
     });
+
+    $("#sAreaRpt").change(function(){
+        $("#hdnNomArea").val($("#sAreaRpt option:selected").text().trim());
+    });
 });
 
 
@@ -59,10 +63,12 @@ function cargarCmbAreasActivos(){
            for(let i=0; i<r.length; i++){
                if(i==0){
                 $("#hdnNameArea").val(r[i]["estructura31_nombre"].trim());
+                $("#hdnNomArea").val(r[i]["estructura31_nombre"].trim());
                }
 
                var option = '<option value="'+r[i]["estructura31_id"]+'">'+r[i]["estructura31_nombre"]+'</option>';
                $("#sAreas").append(option);
+               $("#sAreaRpt").append(option);
            }
         },
         error: function (r) {

@@ -12,7 +12,7 @@ if (isset($_POST["btnRptActArea"])) {
 
     if(isset($tipoAct) && $tipoAct == 0){
 
-        $resp = $rpt->getDataRptActivosArea($area, true);
+        $resp = $rpt->getDataRptActivosArea($area, false);
         $rpt->generarRptPdfActArea($resp,$areaNombre);
 
     }else{
@@ -47,4 +47,13 @@ if(isset($_POST["btnRptCantTon"])){
 
     $html = $rpt->getDataRptTipoActivoImp();
     $rpt->generarRptPdfResImpToner($html);
+}
+
+if(isset($_POST["btnRptAreas"])){
+    $area=$_POST["sAreaRpt"];
+    $areaNombre= $_POST["hdnNomArea"];
+    $rpt = new ReportesDao();
+    $resp = $rpt->getDataRptActivosArea($area, true);
+    $rpt->generarRptPdfActArea($resp,$areaNombre);
+    
 }
