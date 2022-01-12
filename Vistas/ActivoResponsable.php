@@ -81,8 +81,8 @@ basename(__FILE__);
                                 <th>Codigo responsable</th>
                                 <th>Nombre de responsable</th>
                                 <th>Estado</th>
-                                <th></th>
-                                <th></th>
+                                <th>Editar</th>
+                                <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
