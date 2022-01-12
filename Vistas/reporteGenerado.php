@@ -12,7 +12,7 @@ if (isset($_POST["btnRptActArea"])) {
 
     if(isset($tipoAct) && $tipoAct == 0){
 
-        $resp = $rpt->getDataRptActivosArea($area, false);
+        $resp = $rpt->getDataRptActivosArea($area, false,1);
         $rpt->generarRptPdfActArea($resp,$areaNombre);
 
     }else{
@@ -53,7 +53,7 @@ if(isset($_POST["btnRptAreas"])){
     $area=$_POST["sAreaRpt"];
     $areaNombre= $_POST["hdnNomArea"];
     $rpt = new ReportesDao();
-    $resp = $rpt->getDataRptActivosArea($area, true);
+    $resp = $rpt->getDataRptActivosArea($area, true,2);
     $rpt->generarRptPdfActArea($resp,$areaNombre);
     
 }

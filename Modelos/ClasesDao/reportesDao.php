@@ -16,7 +16,7 @@ class ReportesDao
 
     //solicita los datos de la BD para generar tablas filtrado por área
     //retorna el hmtl para la función que genera el reporte
-    public function getDataRptActivosArea($area, $boolean)
+    public function getDataRptActivosArea($area, $boolean, $num)
     {
         //si boolean es falso ocupamos las cabeceras normales con IP de las tablas
         //si es verdadero ocupamos las cabeceras sin IP
@@ -32,7 +32,7 @@ class ReportesDao
         $tablaPC = $rpt->getHeaderTablaRptPc($boolean);
         $tablaLaptop = $rpt->getHeaderTablaRptLap($boolean);
         $tablaProyector = $rpt->getHeaderTablaRptProyector($boolean);
-        $tablaImp = $rpt->getHeaderTablaRptImpresor(false);
+        $tablaImp = $rpt->getHeaderTablaRptImpresor($num);
 
         //establecemos la coneccion
         $con = Conexion::conectar();
@@ -238,10 +238,10 @@ class ReportesDao
         //creamos el objeto de la plantilla html de rpt
         $rpt = new ReportesPlantilla();
         //obtenemos la maqueta de headers de las tablas para cada tipo de activo
-        $tablaPC = $rpt->getHeaderTablaRptPc();
-        $tablaLaptop = $rpt->getHeaderTablaRptLap();
-        $tablaProyector = $rpt->getHeaderTablaRptProyector();
-        $tablaImp = $rpt->getHeaderTablaRptImpresor(false);
+        $tablaPC = $rpt->getHeaderTablaRptPc(false);
+        $tablaLaptop = $rpt->getHeaderTablaRptLap(false);
+        $tablaProyector = $rpt->getHeaderTablaRptProyector(false);
+        $tablaImp = $rpt->getHeaderTablaRptImpresor(1);
 
         //establecemos la coneccion
         $con = Conexion::conectar();
@@ -412,9 +412,9 @@ class ReportesDao
         //creamos el objeto de la plantilla html de rpt
         $rpt = new ReportesPlantilla();
         //obtenemos la maqueta de headers de las tablas para cada tipo de activo
-        $tablaPC = $rpt->getHeaderTablaRptPc();
-        $tablaLaptop = $rpt->getHeaderTablaRptLap();
-        $tablaProyector = $rpt->getHeaderTablaRptProyector();
+        $tablaPC = $rpt->getHeaderTablaRptPc(false);
+        $tablaLaptop = $rpt->getHeaderTablaRptLap(false);
+        $tablaProyector = $rpt->getHeaderTablaRptProyector(false);
         $tablaImp = $rpt->getHeaderTablaRptImpresor(false);
 
         //establecemos la coneccion
@@ -620,7 +620,7 @@ class ReportesDao
         //creamos el objeto de la plantilla html de rpt
         $rpt = new ReportesPlantilla();
         //obtenemos la maqueta de headers de las tablas para cada tipo de activo
-        $tablaImp = $rpt->getHeaderTablaRptImpresor(true);
+        $tablaImp = $rpt->getHeaderTablaRptImpresor(0);
 
         //establecemos la coneccion
         $con = Conexion::conectar();
@@ -685,7 +685,7 @@ class ReportesDao
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
-        $pdf->Ln(60);
+        $pdf->Ln(70);
         $pdf->SetFont("", "B", 20);
         $pdf->Cell(80, 10, "Tipo De Activo: " . $tipoActivo, 0, 0, "L");
         $pdf->Cell(196, 10, "Cantidad: " . $cantActivo, 0, 1, "R");
@@ -700,7 +700,7 @@ class ReportesDao
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
-        $pdf->Ln(60);
+        $pdf->Ln(70);
         $pdf->SetFont("", "B", 20);
         $pdf->Cell(80, 10, "Área: " . $area, 0, 1, "L");
         $pdf->Ln(5);
@@ -713,10 +713,8 @@ class ReportesDao
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
-        $pdf->Ln(60);
+        $pdf->Ln(70);
         $pdf->SetFont("", "B", 20);
-        $pdf->Cell(0, 15, 'Resumen de activos', 0, false, 'C', 0, '', 0, false, 'M', 'M');
-        $pdf->Ln(20);
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Output();
     }
@@ -726,10 +724,10 @@ class ReportesDao
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
-        $pdf->Ln(60);
+        $pdf->Ln(54);
         $pdf->SetFont("", "B", 20);
-        $pdf->Cell(0, 15, 'Detalle de impresoras activo', 0, false, 'C', 0, '', 0, false, 'M', 'M');
-        $pdf->Ln(20);
+        $pdf->Cell(0, 15, 'DETALLE DE IMPRESORES', 0, 1,"C");
+        $pdf->Ln(10);
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Output();
     }

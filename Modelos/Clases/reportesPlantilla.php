@@ -15,9 +15,11 @@ class ReportesPlantilla extends TCPDF{
         $this->Cell(278, 5, 'ISO 9001:2015', 0, 1,"R");
         // Set font
         $this->SetFont('helvetica', 'B', 20);
-        $this->Ln(28);
+        $this->Ln(5);
         // Title
-        $this->Cell(0, 15, 'Reporte De Activos Fijos', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this->Cell(0, 15,'FEPADE', 0, 1,"C");
+        $this->Cell(0, 15, 'DETALLE DE ACTIVOS FEPADE', 0, 1,"C");
+ 
     }
 
     // Page footer lo mismo que el header solo que el footer
@@ -226,40 +228,58 @@ class ReportesPlantilla extends TCPDF{
     //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
     //para la tabla impresor y poder concatenar los respectivos datos en reporteDao
     //retorna esa variable para ser concatenada con los datos
-    public function getHeaderTablaRptImpresor($boolean){
-
-        if($boolean){
-            $tablaProyector ='<h3>Impresor</h3>
-            <table border="0.3">
-            <tr>
-                <th class="w3">Corr</th>
-                <th class="w15">Descripción</th>
-                <th class="w10">No. IMP</th>
-                <th class="w8">Toner N</th>
-                <th class="w8">Toner M</th>
-                <th class="w8">Toner C</th>
-                <th class="w8">Toner A</th>
-            </tr>';
-
-        return $tablaProyector;
-        }else{
+    public function getHeaderTablaRptImpresor($num){
+        /*
+        0 ---> reporte con cabeceras para reportes de impresoras y toners
+        1 ---> reporte con cabeceras con IP 
+        2 ---> reporte con cabeceras sin IP         
+        */
+        switch($num){
+            case 0:
+                $tablaProyector ='<h3>Impresor</h3>
+                <table border="0.3">
+                <tr>
+                    <th class="w3">Corr</th>
+                    <th class="w15">Descripción</th>
+                    <th class="w10">No. IMP</th>
+                    <th class="w8">Toner N</th>
+                    <th class="w8">Toner M</th>
+                    <th class="w8">Toner C</th>
+                    <th class="w8">Toner A</th>
+                </tr>';
+            break;
+            case 1:
+                $tablaProyector ='<h3>Impresor</h3>
+                <table border="0.3">
+                <tr>
+                    <th class="w3">Código</th>
+                    <th class="w15">Descripción</th>
+                    <th class="w10">Reponsable</th>
+                    <th class="wip">IP</th>
+                    <th class="wip">Modelo</th>
+                    <th class="w8">Toner N</th>
+                    <th class="w8">Toner M</th>
+                    <th class="w8">Toner C</th>
+                    <th class="w8">Toner A</th>
+                </tr>';
+            break;
+        
+            case 2:
             $tablaProyector ='<h3>Impresor</h3>
             <table border="0.3">
             <tr>
                 <th class="w3">Código</th>
                 <th class="w15">Descripción</th>
                 <th class="w10">Reponsable</th>
-                <th class="wip">IP</th>
                 <th class="wip">Modelo</th>
                 <th class="w8">Toner N</th>
                 <th class="w8">Toner M</th>
                 <th class="w8">Toner C</th>
                 <th class="w8">Toner A</th>
             </tr>';
-
-        return $tablaProyector;
+            break;
         }
-        
+        return $tablaProyector;
     }
 
 }
