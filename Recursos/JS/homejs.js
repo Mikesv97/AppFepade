@@ -89,6 +89,7 @@ $(document).ready(function(){
         });
        
     }
+
 });
 
 
@@ -97,6 +98,11 @@ $(document).ready(function(){
         $("#subMenuActivos li").remove();
         $("#subMenuUsuarioRol li").remove();
         $("#subMenuResp li").remove();
+        $("#menu #mGlobal").remove();
+        
+
+    
+
         $.ajax({
             url: "../Controladores/homeControlador.php",
             method: "post",
@@ -104,7 +110,7 @@ $(document).ready(function(){
             data: { "key": "solicitarMenu","idRol": idRol},
             success: function (r) {
                 for(let i=0; i<r.length; i++){
-                    switch(r[i]["menu_padre"]){
+                    switch(r[i]["menu_padre"].toLowerCase()){
                         case "activos":
                             var lista ='<li><a href="'+r[i]["direccion_web"]+'">';
                             lista += r[i]["nombre_menu"]+'</a></li>';
@@ -123,8 +129,16 @@ $(document).ready(function(){
                             $("#subMenuResp").append(lista);
                             $("#listaResponsable").show();
                         break;
-                        case "reportes":
-                            $("#listaReportes").show();
+                        case "global":
+                            var lista =
+                            '<li id="mGlobal">'
+                                +'<a href="'+r[i]["direccion_web"]+'">'
+                                    +'<i class="icon icon-app-store"></i>'
+                                    +'<span class="nav-text">'+r[i]["nombre_menu"]+'</span>'
+                                +'</a>'
+                            +'</li>';
+                            $("#listaResponsable").after(lista);
+
                         break;
                     }
                    

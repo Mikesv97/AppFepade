@@ -93,9 +93,6 @@
                     
                 </ul>
             </li>
-            <li id="listaReportes"><a  href="reportes.php" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Reportes</span></a>
-            </li>
-            
         </ul>
     </div>
 </div>

@@ -282,4 +282,25 @@ class ReportesPlantilla extends TCPDF{
         return $tablaProyector;
     }
 
+        //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
+    //para la tabla matenimiento de activo poder concatenar los respectivos datos en reporteDao
+    //retorna esa variable para ser concatenada con los datos
+    public function getHeaderTablaMantenimiento(){      
+        
+            $tablaMant ='
+            <table border="0.3">
+            <tr>
+                <th class="w3">Código</th>
+                <th class="w15">Equipo</th>
+                <th class="w10">Observación</th>
+                <th class="wip">Tipo Ram</th>
+                <th class="w8">Monitor Marca</th>
+                <th class="w8">Código</th>
+                <th class="w8">Pulgadas</th>
+            </tr>';
+    
+        
+        return $tablaMant;
+    }
+
 }
