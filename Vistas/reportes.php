@@ -56,27 +56,26 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
         <div class="row page-titles mx-0 shadow">
             <div class="col-md-6 p-md-0">
                 <h3 class="titulo mb-4">Reporte de activos por tipo de activo</h3>
-                <form name="formulario" method="post" action="reporteGenerado.php" target="_blank">
+                <form name="frmRptAct" method="post" action="reporteGenerado.php" target="_blank">
                     <input type="hidden" name="hdnNameTipAct" id="hdnNameTipAct">
                     <label for="sTipoActivoR">Seleccionar tipo de activo</label>
                     <select class="form-control" id="sTipoActivoR2" name="sTipoActivoR2">
                     </select>
-            </div>
-            <div class="col-md-5 offset-md-1 p-md-0">
-            <h3 class="titulo mb-4 mx-2">Resumen de activos</h3>
-                    <p class="mx-2">
-                        Se generará un resumen de los tipos de activos y 
-                        la cantidad de cada uno registrados en el sistema
-                    </p>
-            </div>
-            <div class="col-md-6">
+                    <div class="col-md-6">
                 <button type="submit" name="btnRptActTipoActivo" class="btn outLineRed my-3">Generar reporte</button>
             </div>
-            <div class="col-md-5 offset-md-1">
-                <button type="submit" name="btnRptResAct" class="btn outLineRed my-3">Generar reporte</button>
-            </form>
             </div>
-
+            <div class="col-md-5 offset-md-1 p-md-0">
+                <h3 class="titulo mb-4 mx-2">Resumen de activos</h3>
+                <p class="mx-2">
+                    Se generará un resumen de los tipos de activos y 
+                    la cantidad de cada uno registrados en el sistema
+                </p>
+                <div class="col-md-5 ">
+                    <button type="submit" name="btnRptResAct" class="btn outLineRed my-3">Generar reporte</button>
+                </form>
+            </div>
+            </div>
         </div>  
 
 
