@@ -44,9 +44,8 @@ class ReportesPlantilla extends TCPDF{
         }
 
         .bgDark{
-            background-color: #474746;
-            color: white;
-            font-weight: bold;
+            background-color: #999999;
+            color: black;
             text-shadow: 0 0 5px black;
         }
 
@@ -61,9 +60,8 @@ class ReportesPlantilla extends TCPDF{
        }
 
         th{
-           background-color: #474746;
-           color: white;
-           font-weight: bold;
+           background-color: #999999;
+           color: black;
            text-shadow: 0 0 5px black;
         }
        
@@ -77,11 +75,11 @@ class ReportesPlantilla extends TCPDF{
        }
        
        .w8{
-           width: 7%;
+           width: 7.5%;
        }
        
        .wr{
-           width: 5%;
+           width: 5.5%;
        }
        .w{
            width: 9%;
@@ -89,7 +87,7 @@ class ReportesPlantilla extends TCPDF{
        }
        
        .wip{
-           width: 11%;
+           width: 9%;
        }
        .wt{
            width: 7.8%;
@@ -111,7 +109,7 @@ class ReportesPlantilla extends TCPDF{
     //retorna esa variable para ser concatenada con los datos
     public function  getHeaderTablaRptPc(){
         $tablaPC ='<h3>PC</h3>
-        <table border="1">
+        <table border="0.3">
         <tr>
             <th class="w3">Código</th>
             <th class="w15">Descripción</th>
@@ -136,7 +134,7 @@ class ReportesPlantilla extends TCPDF{
     //retorna esa variable para ser concatenada con los datos
     public function  getHeaderTablaRptLap(){
         $tablaPC ='<h3>Laptop</h3>
-        <table border="1">
+        <table border="0.3">
         <tr>
             <th class="w3">Código</th>
             <th class="w15">Descripción</th>
@@ -162,7 +160,7 @@ class ReportesPlantilla extends TCPDF{
     public function getHeaderTablaRptProyector(){
 
         $tablaProyector ='<h3>Proyector</h3>
-        <table border="1">
+        <table border="0.3">
            <tr>
                <th class="w3">Código</th>
                <th class="w15">Descripción</th>
@@ -180,24 +178,40 @@ class ReportesPlantilla extends TCPDF{
     //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
     //para la tabla impresor y poder concatenar los respectivos datos en reporteDao
     //retorna esa variable para ser concatenada con los datos
-    public function getHeaderTablaRptImpresor(){
+    public function getHeaderTablaRptImpresor($boolean){
 
-        $tablaProyector ='<h3>Impresor</h3>
-        <table border="1">
-           <tr>
-               <th class="w3">Código</th>
-               <th class="w15">Descripción</th>
-               <th class="w10">Responsable</th>
-               <th class="wip" >IP</th>
-               <th class="wip" >Modelo</th>
-               <th class="w8" >Toner N</th>
-               <th class="w8">Toner N</th>
-               <th class="w8">Toner C</th>
-               <th class="w8">Toner A</th>
-           </tr>';
+        if($boolean){
+            $tablaProyector ='<h3>Impresor</h3>
+            <table border="0.3">
+            <tr>
+                <th class="w3">Corr</th>
+                <th class="w15">Descripción</th>
+                <th class="w10">No. IMP</th>
+                <th class="w8">Toner N</th>
+                <th class="w8">Toner M</th>
+                <th class="w8">Toner C</th>
+                <th class="w8">Toner A</th>
+            </tr>';
 
         return $tablaProyector;
-    }
-}
+        }else{
+            $tablaProyector ='<h3>Impresor</h3>
+            <table border="0.3">
+            <tr>
+                <th class="w3">Código</th>
+                <th class="w15">Descripción</th>
+                <th class="w10">Reponsable</th>
+                <th class="wip">IP</th>
+                <th class="wip">Modelo</th>
+                <th class="w8">Toner N</th>
+                <th class="w8">Toner M</th>
+                <th class="w8">Toner C</th>
+                <th class="w8">Toner A</th>
+            </tr>';
 
-?>
+        return $tablaProyector;
+        }
+        
+    }
+
+}

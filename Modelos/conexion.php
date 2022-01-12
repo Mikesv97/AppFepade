@@ -3,7 +3,7 @@
 class Conexion{
 
     public static function conectar(){
-        $serverName = "DESKTOP-DLGTVHJ\SQLEXPRESS";
+        $serverName = "DESKTOP-CO34HBA\SQLEXPRESS";
         $basedatos="ACTIVO";
         try{
            

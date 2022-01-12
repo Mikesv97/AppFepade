@@ -41,6 +41,13 @@ if(isset($_POST["btnRptResAct"])){
     $html = $rpt->getDataRptResTipAct();
     $rpt->generarRptPdfResTipAct($html);
 }
+
+if(isset($_POST["btnRptCantTon"])){
+    $rpt = new ReportesDao();
+
+    $html = $rpt->getDataRptTipoActivoImp();
+    $rpt->generarRptPdfResImpToner($html);
+}
  
 
 

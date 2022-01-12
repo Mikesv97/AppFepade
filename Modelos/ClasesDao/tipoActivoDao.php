@@ -96,6 +96,26 @@ class tipoActivoDao{
             echo $error->getMessage();
         }
     }
+
+    public function countTipImpre($descripcion){
+        //establecemos la coneccion
+        $con = Conexion::conectar();
+        //establecemos la consulta
+        $sql="select count(*) from Activo where Activo_tipo = 3 AND Activo_descripcion LIKE ?";
+        //preparamos la consulta
+        $respuesta = $con->prepare($sql);
+        try{
+        
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute(['%'.$descripcion.'']);
+            //retornamos la cantidad de registro con el correo ingresado
+            //solo puede ser 1 si hay o 0 si no hay
+            return $respuesta->fetchColumn();
+        
+        }catch(PDOException $error){
+            echo $error->getMessage();
+        }
+    }
 }
 
 ?>

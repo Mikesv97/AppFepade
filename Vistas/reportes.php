@@ -35,7 +35,7 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
                 <h3 class="titulo">Reporte de activos por área y tipo de activo</h3>
             </div>
             <div class="col-md-6 p-md-0">
-                <form name="formulario" method="post" action="reporteGenerado.php" target="_blank">
+                <form name="formRptActTA" method="post" action="reporteGenerado.php" target="_blank">
                     <input type="hidden" name="hdnNameArea" id="hdnNameArea">
                     <label for="sTipoActivoR">Seleccionar tipo de activo</label>
                     <select class="form-control" id="sTipoActivoR" name="sTipoActivoR">
@@ -56,7 +56,7 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
         <div class="row page-titles mx-0 shadow">
             <div class="col-md-6 p-md-0">
                 <h3 class="titulo mb-4">Reporte de activos por tipo de activo</h3>
-                <form name="frmRptAct" method="post" action="reporteGenerado.php" target="_blank">
+                <form name="frmRptActT" method="post" action="reporteGenerado.php" target="_blank">
                     <input type="hidden" name="hdnNameTipAct" id="hdnNameTipAct">
                     <label for="sTipoActivoR">Seleccionar tipo de activo</label>
                     <select class="form-control" id="sTipoActivoR2" name="sTipoActivoR2">
@@ -66,13 +66,39 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
             </div>
             </div>
             <div class="col-md-5 offset-md-1 p-md-0">
-                <h3 class="titulo mb-4 mx-2">Resumen de activos</h3>
+                <h3 class="titulo mb-4 mx-2">Reporte de activos totales</h3>
                 <p class="mx-2">
                     Se generará un resumen de los tipos de activos y 
                     la cantidad de cada uno registrados en el sistema
                 </p>
                 <div class="col-md-5 ">
                     <button type="submit" name="btnRptResAct" class="btn outLineRed my-3">Generar reporte</button>
+                </form>
+            </div>
+            </div>
+        </div>  
+
+
+        <div class="row page-titles mx-0 shadow">
+            <div class="col-md-6 p-md-0">
+                <h3 class="titulo mb-4">Reporte para mantenimiento</h3>
+                <form name="formRptActImp" method="post" action="reporteGenerado.php" target="_blank">
+                    <input type="hidden" name="hdnNameTipAct" id="hdnNameTipAct">
+                    <label for="sTipoActivoR23">Seleccionar tipo de activo</label>
+                    <select class="form-control" id="sTipoActivoR2" name="sTipoActivoR2">
+                    </select>
+                    <div class="col-md-6">
+                <button type="submit" name="btnRptActTipoActivo" class="btn outLineRed my-3">Generar reporte</button>
+            </div>
+            </div>
+            <div class="col-md-5 offset-md-1 p-md-0">
+                <h3 class="titulo mb-4 mx-2">Reporte de toner</h3>
+                <p class="mx-2">
+                    Se generará un resumen de los toner en base
+                    a las impresoras ingresadas en el sistema.
+                </p>
+                <div class="col-md-5 ">
+                    <button type="submit" name="btnRptCantTon" class="btn outLineRed my-3">Generar reporte</button>
                 </form>
             </div>
             </div>
