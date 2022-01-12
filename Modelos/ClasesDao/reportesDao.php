@@ -506,24 +506,6 @@ class ReportesDao
         //llamamos la funcion para contar cuantos hay del tipo ID 4-->Proyector
         $totalPro = $objTA->countTipActivo(4);
 
-        //validamos que no venga vacio
-        //o si hay error que se imprima el error
-        if ($totalPc == 0 || $totalPc == null || $totalPc == false) {
-            echo $totalPc;
-        }
-
-        if ($totalLap == 0 || $totalLap == null || $totalLap == false) {
-            echo $totalPc;
-        }
-
-        if ($totalImp == 0 || $totalImp == null || $totalImp == false) {
-            echo $totalPc;
-        }
-
-        if ($totalPro == 0 || $totalPro == null || $totalPro == false) {
-            echo $totalPc;
-        }
-        //project makeover upgraded
         //preparamos el html para retornarlo
         $html = '
         <table style="width:100%">
@@ -585,8 +567,10 @@ class ReportesDao
         $con = Conexion::conectar();
 
         //establecemos la consulta
-        $sql = "SELECT DISTINCT a.Activo_descripcion, b.TonerN, b.TonerM, b.TonerC, b.TonerA FROM Activo a 
-        INNER JOIN Activo_Especificacion b ON a.Activo_id = b.Activo_id WHERE Activo_tipo = ?";
+        $sql = "select count(b.Modelo) as cantidadModelo,modelo , b.TonerN, b.TonerM, b.TonerC, b.TonerA FROM Activo a
+        INNER JOIN Activo_Especificacion b ON a.Activo_id = b.Activo_id WHERE Activo_tipo = ?
+        group by b.TonerN, b.TonerM, b.TonerC, b.TonerA,Modelo
+        order by tonern,modelo";
 
         //preparamos la consulta
         $respuesta = $con->prepare($sql);
@@ -601,8 +585,8 @@ class ReportesDao
 
                 $tablaImp .= '<tr>'
                     . '<td class="w3">' . ($i+1) . '</td>'
-                    . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
-                    . '<td class="w10">' . $tipoActivoD->countTipImpre($fila[$i]["Activo_descripcion"]) . '</td>'
+                    . '<td class="w15">' . $fila[$i]["modelo"] . '</td>'
+                    . '<td class="w10">' . $fila[$i]["cantidadModelo"] . '</td>'
                     . '<td class="w8">' . $fila[$i]["TonerN"] . '</td>'
                     . '<td class="w8">' . $fila[$i]["TonerM"] . '</td>'
                     . '<td class="w8">' . $fila[$i]["TonerC"] . '</td>'
@@ -665,19 +649,6 @@ class ReportesDao
         $pdf->Output();
     }
 
-    //genera reporte de <<activo>> 
-    public function generarRptPdf($html, $area)
-    {
-        $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
-        $pdf->AddPage();
-        $pdf->Ln(60);
-        $pdf->SetFont("", "B", 20);
-        $pdf->Cell(80, 10, "Área: " . $area, 0, 1, "L");
-        $pdf->Ln(5);
-        $pdf->writeHTML($html, true, false, true, false, '');
-        $pdf->Output();
-    }
-
     //genera reporte de <<resumen de activos>> 
     public function generarRptPdfResTipAct($html)
     {
@@ -691,7 +662,7 @@ class ReportesDao
         $pdf->Output();
     }
 
-    //genera reporte de <<resumen de activos>> 
+    //genera reporte de <<impresora y toners>> 
     public function generarRptPdfResImpToner($html)
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);

@@ -48,14 +48,3 @@ if(isset($_POST["btnRptCantTon"])){
     $html = $rpt->getDataRptTipoActivoImp();
     $rpt->generarRptPdfResImpToner($html);
 }
- 
-
-
-
-
-/*$tipoActivo = "Laptop";
-$r = new ReportesDao();
-$resp = $r->getDataRptActivosTipo($tipoActivo);
-
-
-$r->generarRptPdfTipAct($resp,$tipoActivo);*/
