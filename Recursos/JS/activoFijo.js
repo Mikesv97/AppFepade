@@ -102,6 +102,44 @@ jQuery(document).ready(function ($) {
         }
         var d = new Date();
         $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+
+        //DATATABLE QUE SE MUESTRA EN FORMULARIO Y QUE CONTIENE EL HISTORIAL DE CADA ACTIVO FIJO SEGUN EL ACTIVO ID QUE RECIBE
+        $('#activoHistorial').DataTable({
+            "ajax": {
+                "url": "../Controladores/activoFijoControlador.php",
+                "method": "post",
+                "dataType": "json",
+                "data": { "key": "getInfoHistorial", "ActivoId": "0" },
+                "dataSrc": ""
+            },
+            "columns": [
+                {
+                    data: "Estructura31_id",
+                    className: "Estructura31_id"
+                },
+                {
+                    data: "estructura31_nombre",
+                    className: "estructura31_nombre"
+                },
+                {
+                    data: "Responsable",
+                    className: "Responsable"
+                }
+            ],
+            responsive: true,
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                "zeroRecords": "No se han encontrado datos - intente nuevamente",
+                "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay datos disponibles",
+                "infoFiltered": "(Filtrado de _MAX_ activos totales)",
+                "search": "Buscar",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+        });
     });
 
     //EVENTO CHANGE QUE MUESTRA LA IMAGEN QUE SE AGREGAR EN EL INPUT FILE
@@ -1146,10 +1184,11 @@ jQuery(document).ready(function ($) {
                     "previous": "Anterior"
                 }
             }
-        });
+        })
+        .columns.adjust() //CON ESTO ESTAMOS AJUSTANDO LAS COLUMNAS EN EL MODAL
+        .responsive.recalc(); //Y CON ESTO REAJUSTAMOS EL RESPONSIVE CUANDO SE ABRE EL MODAL
 
         //VALIDAMOS EL ROL PARA OCULTAR LAS COLUMNAS
-        
         ocultarColumTableHistorial();
     }); 
 

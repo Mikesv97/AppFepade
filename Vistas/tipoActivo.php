@@ -78,8 +78,8 @@ $idUSuario = $_SESSION["usuario"]["id"];
                                 <th>Nombre tipo activo</th>
                                 <th>Usuario ID</th>
                                 <th>Fecha</th>
-                                <th></th>
-                                <th></th>
+                                <th>Editar</th>
+                                <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>

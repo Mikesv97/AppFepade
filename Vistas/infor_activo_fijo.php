@@ -596,9 +596,9 @@ div.col-md-3{
                                                     <th>Nombre de área</th>
                                                     <th>Área</th>
                                                     <th>Responsable</th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
+                                                    <th>Más detalles</th>
+                                                    <th>Editar</th>
+                                                    <th>Eliminar</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -610,9 +610,9 @@ div.col-md-3{
                                                     <th>Nombre de área</th>
                                                     <th>Área</th>
                                                     <th>Responsable</th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
+                                                    <th>Más detalles</th>
+                                                    <th>Editar</th>
+                                                    <th>Eliminar</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
