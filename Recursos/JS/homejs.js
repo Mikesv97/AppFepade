@@ -100,9 +100,6 @@ $(document).ready(function(){
         $("#subMenuResp li").remove();
         $("#menu #mGlobal").remove();
         
-
-    
-
         $.ajax({
             url: "../Controladores/homeControlador.php",
             method: "post",

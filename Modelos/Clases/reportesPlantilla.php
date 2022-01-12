@@ -60,6 +60,9 @@ class ReportesPlantilla extends TCPDF{
            width: 100%;
        }
 
+       td{
+        vertical-align:middle;
+       }
         th{
            background-color: #999999;
            color: black;
@@ -71,6 +74,12 @@ class ReportesPlantilla extends TCPDF{
            width: 6%;
            
         }
+
+        .w4{
+       
+            width: 7%;
+            
+         }
        .w15{
            width: 15%;
        }
@@ -100,6 +109,14 @@ class ReportesPlantilla extends TCPDF{
        .w20{
            width: 20%;
        }
+
+       
+       .w30{
+        width: 30%;
+        padding: 20px !important;
+    }
+
+
     </style>";
 
         return $style;
@@ -290,13 +307,15 @@ class ReportesPlantilla extends TCPDF{
             $tablaMant ='
             <table border="0.3">
             <tr>
-                <th class="w3">Código</th>
+                <th class="w4">Código</th>
                 <th class="w15">Equipo</th>
-                <th class="w10">Observación</th>
-                <th class="wip">Tipo Ram</th>
-                <th class="w8">Monitor Marca</th>
+                <th class="w8">Procesador</th>
+                <th class="wip">Ram</th>
+                <th class="wip">Discos Duros</th>
+                <th class="wip">Monitor Marca</th>
                 <th class="w8">Código</th>
                 <th class="w8">Pulgadas</th>
+                <th class="w30">Observación</th>
             </tr>';
     
         

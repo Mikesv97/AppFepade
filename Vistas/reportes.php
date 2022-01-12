@@ -81,7 +81,7 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
 
         <div class="row page-titles mx-0 shadow">
             <div class="col-md-6 p-md-0">
-                <h3 class="titulo mb-4">Reporte para revisión por áreas y para mantemiento</h3>
+                <h3 class="titulo mb-4">Reporte para revisión por áreas</h3>
                 <form name="formRptActImp" method="post" action="reporteGenerado.php" target="_blank">
                     <input type="hidden" name="hdnNomArea" id="hdnNomArea">
                     <label for="sAreaRpt">Seleccionar el área </label>
