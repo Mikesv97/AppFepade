@@ -101,7 +101,7 @@ jQuery(document).ready(function ($) {
                 return '0' + val;
         }
         var d = new Date();
-        $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+        $('input[type=date]').val(d.getFullYear() + "-" + zeroPadded(d.getMonth() + 1) + "-" + zeroPadded(d.getDate()));
 
         //DATATABLE QUE SE MUESTRA EN FORMULARIO Y QUE CONTIENE EL HISTORIAL DE CADA ACTIVO FIJO SEGUN EL ACTIVO ID QUE RECIBE
         $('#activoHistorial').DataTable({
@@ -188,7 +188,7 @@ jQuery(document).ready(function ($) {
                                     'El activo ha sido ingresado al sistema',
                                     'success'
                                 )
-                                
+
                                 $("#formActivo")[0].reset();
                                 $('#activoInformacion').DataTable().ajax.reload();
                                 $('#mostrarFormulario').addClass('collapse');
@@ -198,11 +198,26 @@ jQuery(document).ready(function ($) {
                             case "FailActiveEspe":
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta la especificacion del activo'
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta el nuevo activo'
                                         + ' si el problema persiste contacta a tu administrador o soporte IT.',
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
                                 })
+                                break;
+                            case "TipoNoSolicitado":
+                                Swal.fire({
+                                    title: '¡Tipo de activo no diseñado!',
+                                    text: 'El sisema fue solicitado y diseñado con 4 tipo de activos, PC, Laptop, Impresor, Proyector'
+                                        + ' para poder añadir un activo diferente a los 4 iniciales, ponte en contacto con el personal TI'
+                                        + ' para implementar la funcionalidad necesaria en el sistema',
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar',
+                                })
+                                $("#formActivo")[0].reset();
+                                $('#activoInformacion').DataTable().ajax.reload();
+                                $('#mostrarFormulario').addClass('collapse');
+                                $('#mostrarFormulario').removeClass('show');
+                                $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
                                 break;
                         }
                     },
@@ -223,7 +238,7 @@ jQuery(document).ready(function ($) {
     });
 
     //CUANDO SE MODIFICA UN ACTIVO
-    $('#btnModificar').on('click',function (e) {
+    $('#btnModificar').on('click', function (e) {
         e.preventDefault();
         Swal.fire({
             title: 'Modificar el activo en el sistema',
@@ -273,6 +288,21 @@ jQuery(document).ready(function ($) {
                                     confirmButtonText: 'Aceptar',
                                 })
                                 break;
+                            case "TipoNoSolicitado":
+                                Swal.fire({
+                                    title: '¡Tipo de activo no diseñado!',
+                                    text: 'El sisema fue solicitado y diseñado con 4 tipo de activos, PC, Laptop, Impresor, Proyector'
+                                        + ' para poder modificar un activo diferente a los 4 iniciales, ponte en contacto con el personal TI'
+                                        + ' para implementar la funcionalidad necesaria en el sistema',
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar',
+                                })
+                                $("#formActivo")[0].reset();
+                                $('#activoInformacion').DataTable().ajax.reload();
+                                $('#mostrarFormulario').addClass('collapse');
+                                $('#mostrarFormulario').removeClass('show');
+                                $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
+                                break;
                         }
                     },
                     error: function (r) {
@@ -294,7 +324,7 @@ jQuery(document).ready(function ($) {
     });
 
     //CUANDO SE ELIMINA UN ACTIVO
-    $('#btnEliminar').on('click',function (e) {
+    $('#btnEliminar').on('click', function (e) {
         e.preventDefault();
         Swal.fire({
             title: 'Eliminar el activo del sistema',
@@ -338,7 +368,7 @@ jQuery(document).ready(function ($) {
                             case "FailActivoEliminado":
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para eliminar el activo'
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para cambiar el estado a eliminado del activo'
                                         + ' si el problema persiste contacta a tu administrador o soporte IT.',
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
@@ -365,7 +395,7 @@ jQuery(document).ready(function ($) {
     });
 
     //CUANDO SE CANCELA UN ACTIVO
-    $('#btnCancelar').on('click', function(){
+    $('#btnCancelar').on('click', function () {
         $("#formActivo")[0].reset();
         $('#mostrarFormulario').addClass('collapse');
         $('#mostrarFormulario').removeClass('show');
@@ -419,13 +449,13 @@ jQuery(document).ready(function ($) {
                                         return '0' + val;
                                 }
                                 var d = new Date();
-                                $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+                                $('input[type=date]').val(d.getFullYear() + "-" + zeroPadded(d.getMonth() + 1) + "-" + zeroPadded(d.getDate()));
                                 break;
                             case "FailHistorico":
                                 //console.log(r);
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta la información del activo'
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta el historico'
                                         + ' si el problema persiste contacta a tu administrador o soporte IT.',
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
@@ -451,7 +481,7 @@ jQuery(document).ready(function ($) {
 
     //EN LA CARGA DE LA PAGINA SE CARGA LA TABLA DE ACTIVO FIJO MEDIANTE 
     //AJAX CON DATATABLE
-  
+
     $('#activoInformacion').DataTable({
         "ajax": {
             "url": "../Controladores/activoFijoControlador.php",
@@ -530,36 +560,36 @@ jQuery(document).ready(function ($) {
                 className: "Activo_eliminado"
             },
             {
-               
+
                 data: null,
                 className: "center",
                 defaultContent: '<button type="button" class="btn btn-spotify" id="btnMostrar"><i class="fa fa-eye"></i></button>'
-                    
+
             },
             {
-               
+
                 data: null,
                 className: "center",
                 defaultContent: '<button type="button" class="btn btn-facebook" id="btnEditar"><i class="fa fa-pencil-square-o"></i></button>'
-                
-                
+
+
             },
             {
-               
+
                 data: null,
                 className: "center",
                 defaultContent: '<button type="button" class="btn btn-pinterest" id="btnBorrar"><i class="fa fa-trash-o"></i></button>'
-                
-                
+
+
             },
             {
                 data: "Imagen",
                 "render": function (data) {
-                   
+
                     return '<img src="../Recursos/Multimedia/Imagenes/Upload/' + data + '" height="100px" width="100px" >';
                 }
             }
-            
+
 
         ],
         responsive: true,
@@ -575,7 +605,7 @@ jQuery(document).ready(function ($) {
                 "previous": "Anterior"
             }
         }
-        
+
     });
 
     //validamos el rol para ocultar las columnas
@@ -925,7 +955,7 @@ jQuery(document).ready(function ($) {
 
         //REMOVIEHNDO ESTILO AL INPUT CODIGO AUTOMATICO
         $('input[name=ActivoId]').removeClass('desabilitado');
-        $('input[name=ActivoId]').attr('disabled',false);
+        $('input[name=ActivoId]').attr('disabled', false);
 
         //OCULTAMOS LOS COMENTARIOS, ASIGNACION Y ESTADO CUANDO QUIERAN MODIFICAR
         $('#ResCompAsig').attr('hidden', true);
@@ -1084,7 +1114,7 @@ jQuery(document).ready(function ($) {
 
     //BOTON PARA MOSTRAR EL HISTORIAL DEL ACTIVO SELECIONADO
     $('#btnMostrarHistorial').on('click', function () {
-       
+
         //DEJANDO EL FORMULARIO DE HISTORICO EN LIMPIO SIEMPRE QUE LO MUESTREN
         $("#formHistorico")[0].reset();
 
@@ -1112,7 +1142,7 @@ jQuery(document).ready(function ($) {
                 return '0' + val;
         }
         var d = new Date();
-        $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+        $('input[type=date]').val(d.getFullYear() + "-" + zeroPadded(d.getMonth() + 1) + "-" + zeroPadded(d.getDate()));
 
         //OBTENIEDO EL ACTIVO ID PARA CARGAR EL HISTORICO PO
         var historialId1 = $('#guardarIdActivo').val();
@@ -1191,7 +1221,7 @@ jQuery(document).ready(function ($) {
 
         //VALIDAMOS EL ROL PARA OCULTAR LAS COLUMNAS
         ocultarColumTableHistorial();
-    }); 
+    });
 
     //BOTON PARA CARGAR LOS INPUT CON LA INFORMACION DEL HISTORIAL SELECIONADO
     $('#historial tbody').on('click', '.btnMostrarHistorial', function () {
@@ -1359,14 +1389,14 @@ jQuery(document).ready(function ($) {
                                         return '0' + val;
                                 }
                                 var d = new Date();
-                                $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+                                $('input[type=date]').val(d.getFullYear() + "-" + zeroPadded(d.getMonth() + 1) + "-" + zeroPadded(d.getDate()));
                                 $("#btnModificarHostorico").attr('disabled', true);
                                 $("#btnInsertarHistorico").attr('disabled', false);
                                 break;
                             case "FailHistoricoModificado":
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta la especificacion del activo'
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para modidicar el historico'
                                         + ' si el problema persiste contacta a tu administrador o soporte IT.',
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
@@ -1383,7 +1413,7 @@ jQuery(document).ready(function ($) {
     });
 
     //BOTON PARA ELIMINAR UN HISTORIAL SELECIONADO
-    $('#historial tbody').on('click', '.btnEliminarHistorial', function (){
+    $('#historial tbody').on('click', '.btnEliminarHistorial', function () {
 
         //GUARDANDO LA INFORMACION ALMACENADA EN LA TABLA EN LA VARIABLE DATA
         var table = $('#historial').DataTable();
@@ -1445,7 +1475,7 @@ jQuery(document).ready(function ($) {
                                         return '0' + val;
                                 }
                                 var d = new Date();
-                                $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+                                $('input[type=date]').val(d.getFullYear() + "-" + zeroPadded(d.getMonth() + 1) + "-" + zeroPadded(d.getDate()));
                                 $("#btnModificarHostorico").attr('disabled', true);
                                 $("#btnInsertarHistorico").attr('disabled', false);
                                 break;
@@ -1453,7 +1483,7 @@ jQuery(document).ready(function ($) {
                                 console.log(r);
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta la especificacion del activo'
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para eliminar el historico'
                                         + ' si el problema persiste contacta a tu administrador o soporte IT.',
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
@@ -1479,7 +1509,7 @@ jQuery(document).ready(function ($) {
     });
 
     //BOTON PARA LIMPIAR EL FORMULARIO Y PODER INGRESAR UN NUEVO HISTORIAL
-    $('#btnNuevoHistorico').on('click', function (){
+    $('#btnNuevoHistorico').on('click', function () {
         //DEJANDO EL FORMULARIO DE HISTORICO EN LIMPIO
         cargarFormHistorico();
 
@@ -1506,14 +1536,14 @@ jQuery(document).ready(function ($) {
                 return '0' + val;
         }
         var d = new Date();
-        $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+        $('input[type=date]').val(d.getFullYear() + "-" + zeroPadded(d.getMonth() + 1) + "-" + zeroPadded(d.getDate()));
     });
 
-    function cargarFormHistorico(){
+    function cargarFormHistorico() {
         $('input[name=idArea]').val('');
         $('#Estructura3IdH option[value=' + 1 + ']').prop('selected', true);
         $('input[name=idResponsable]').val('');
-        $('#ResponsableIdH option[value=' + 1 + ']').prop('selected', true);        
+        $('#ResponsableIdH option[value=' + 1 + ']').prop('selected', true);
         $('textarea[name=HistoricoComentarioH]').val('');
     }
 
@@ -1529,7 +1559,7 @@ jQuery(document).ready(function ($) {
         $('input[name=ip]').val(ip);
     }
 
-    function cargarGeneral2(nombreUsuario, modelo, estructura1, estructura2, estructura3, activoDescripcion, fechaCaducacion, activoEliminado,imagenBD,Responsable,estado) {
+    function cargarGeneral2(nombreUsuario, modelo, estructura1, estructura2, estructura3, activoDescripcion, fechaCaducacion, activoEliminado, imagenBD, Responsable, estado) {
         $('input[name=nombreUsuario]').val(nombreUsuario);
         $('input[name=Modelo]').val(modelo);
         $('#Estructura1Id option[value=' + estructura1 + ']').prop('selected', true);
@@ -1636,7 +1666,7 @@ jQuery(document).ready(function ($) {
     }
 
     //FUNCION PARA DESABILITAR LOS INPUT DEL HISTORIAL
-    function blockControlHistorial(desabilitar){
+    function blockControlHistorial(desabilitar) {
         $('#Estructura3IdH').attr('disabled', desabilitar);
         $('#ResponsableIdH').attr('disabled', desabilitar);
         $('input[name=fechaHistorico]').attr('disabled', desabilitar);
@@ -1645,7 +1675,7 @@ jQuery(document).ready(function ($) {
     }
 
     //función que oculta columnas de DataTable según el rol que inicia sesión
-    function ocultarColumTableActivo(){
+    function ocultarColumTableActivo() {
         //creamos instancia a las tablas para acceder a sus columnas
         var dtActivo = $('#activoInformacion').DataTable();
 
@@ -1658,22 +1688,22 @@ jQuery(document).ready(function ($) {
             url: "../Controladores/homeControlador.php",
             method: "post",
             dataType: "json",
-            data: { "key": "soliAccRol","idRol": idRol},
+            data: { "key": "soliAccRol", "idRol": idRol },
             success: function (r) {
                 //validamos cada acción y vamos mostrando sus columnas.
-                for(let i=0; i<r.length; i++){
-                    switch(r[i]["nombre_accion"].toLowerCase()){
+                for (let i = 0; i < r.length; i++) {
+                    switch (r[i]["nombre_accion"].toLowerCase()) {
                         case "editar":
                             dtActivo.columns(18).visible(true);
-                            
-                        break;
+
+                            break;
                         case "eliminar":
                             dtActivo.columns(19).visible(true);
-                        break;
+                            break;
                     }
-                   
+
                 }
-                
+
             },
             error: function (r) {
                 console.log(r.responseText);
@@ -1681,16 +1711,16 @@ jQuery(document).ready(function ($) {
                     icon: 'error',
                     title: "Problemas de comunicación",
                     text: 'Parece que tenemos problemas para comunicarnos con los servidores y validar las acciones permitidas para el rol del usuario'
-                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                        + ' por favor verifica tu conexión de internet e intenta de nuevo.',
                     showConfirmButton: true
                 })
             }
-            
+
         });
     }
 
 
-    function ocultarColumTableHistorial(){
+    function ocultarColumTableHistorial() {
         //creamos instancia a las tablas para acceder a sus columnas
         var dtHistorial = $('#historial').DataTable();
 
@@ -1703,22 +1733,22 @@ jQuery(document).ready(function ($) {
             url: "../Controladores/homeControlador.php",
             method: "post",
             dataType: "json",
-            data: { "key": "soliAccRol","idRol": idRol},
+            data: { "key": "soliAccRol", "idRol": idRol },
             success: function (r) {
                 //validamos cada acción y vamos mostrando sus columnas.
-                for(let i=0; i<r.length; i++){
-                    switch(r[i]["nombre_accion"].toLowerCase()){
+                for (let i = 0; i < r.length; i++) {
+                    switch (r[i]["nombre_accion"].toLowerCase()) {
                         case "editar":
-                            
+
                             dtHistorial.columns(5).visible(true);
-                        break;
+                            break;
                         case "eliminar":
                             dtHistorial.columns(6).visible(true);
-                        break;
+                            break;
                     }
-                   
+
                 }
-                
+
             },
             error: function (r) {
                 console.log(r.responseText);
@@ -1726,11 +1756,11 @@ jQuery(document).ready(function ($) {
                     icon: 'error',
                     title: "Problemas de comunicación",
                     text: 'Parece que tenemos problemas para comunicarnos con los servidores y validar las acciones permitidas para el rol del usuario'
-                    +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                        + ' por favor verifica tu conexión de internet e intenta de nuevo.',
                     showConfirmButton: true
                 })
             }
-            
+
         });
     }
 });
