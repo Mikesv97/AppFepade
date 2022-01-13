@@ -31,15 +31,12 @@ jQuery(document).ready(function ($) {
                 switch (r) {
                     case "InsertadoInventario":
                         Swal.fire(
-                            'Invenario ingresado!',
-                            'El inventario ha sido ingresado al sistema',
+                            'Activo inventariado!',
+                            'El activo ha sido agregado al inventario con exito',
                             'success'
                         )
                         $("#frmInvenAct")[0].reset();
-                        $('#mostrarEscaneo').addClass('collapse');
-                        $('#mostrarEscaneo').removeClass('show');
                         //PARA DESACTIVAR LA CAMARA UNA VEZ SE INSERTAR UN ACTIVO
-                        Quagga.stop();
                         function zeroPadded(val) {
                             if (val >= 10)
                                 return val;

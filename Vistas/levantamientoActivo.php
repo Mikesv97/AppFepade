@@ -69,7 +69,7 @@ $idUSuario = $_SESSION["usuario"]["id"];
                 </button>
 
                 <div class="col-xl-12 col-xxl-12 collapse" id="mostrarEscaneo">
-                    <p id="resultado">Aquí aparecerá el código</p>
+                    <p id="resultado" hidden>Aquí aparecerá el código</p>
                     <div id="contenedor"></div>
                 </div>
 
