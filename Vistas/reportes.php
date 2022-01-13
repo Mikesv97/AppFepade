@@ -55,35 +55,12 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
                     <button type="submit" id="btnRptActTipoActivo" name="btnRptActTipoActivo" class="btn outLineRed my-3">Reporte tipo activo</button>
                     <button type="submit" id="btnRptAreas" name="btnRptAreas" class="btn outLineRed my-3">Reporte áreas</button>
                     <button type="submit" id="btnRptMant" name="btnRptMant" class="btn outLineRed my-3">Reporte mantenimiento</button>
+                    <button type="submit" name="btnRptResAct" class="btn outLineRed my-3">Reporte activos totales</button>
+                    <button type="submit" name="btnRptCantTon" class="btn outLineRed my-3">Reporte toners</button>
                 </div>
             </div>
             </form>
         </div>
-
-        <div class="row page-titles mx-0 shadow">
-        <div class="col-md-6 p-md-0">
-                <form name="formRptActImp" method="post" action="reporteGenerado.php" target="_blank">
-                    <h3 class="titulo mb-4 mx-2">Reporte de toner</h3>
-                    <p class="mx-2">
-                        Se generará un resumen de los toner en base
-                        a las impresoras ingresadas en el sistema.
-                    </p>
-                    <div class="col-md-5 ">
-                        <button type="submit" name="btnRptCantTon" class="btn outLineRed my-3">Generar reporte</button>
-                    </div>
-            </div>
-            <div class="col-md-5 offset-md-1 p-md-0">
-                <h3 class="titulo mb-4 mx-2">Reporte de activos totales</h3>
-                <p class="mx-2">
-                    Se generará un resumen de los tipos de activos y 
-                    la cantidad de cada uno registrados en el sistema
-                </p>
-                <div class="col-md-5 ">
-                    <button type="submit" name="btnRptResAct" class="btn outLineRed my-3">Generar reporte</button>
-                </form>
-            </div>
-            </div>
-        </div>    
     </div>
 </div>
 <!-- Datatable -->
