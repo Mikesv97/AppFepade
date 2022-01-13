@@ -50,7 +50,9 @@ class ReportesPlantilla extends TCPDF{
            padding: 1px;
           
         }
-
+        .noBorder{
+            border:none !important;
+        }
         .center{
             text-align: center;
         }
@@ -61,9 +63,8 @@ class ReportesPlantilla extends TCPDF{
         }
 
         .tblResumen{
-            padding: 10px;
-            font-size: 20px !important;
-            margin: 0 auto;
+            padding: 3px;
+            font-size: 10px !important;
         }
 
        td{

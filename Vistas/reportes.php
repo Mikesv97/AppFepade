@@ -47,23 +47,28 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
                 <select class="form-control" id="sAreas" name="sAreaR">
                 </select>
             </div>
-            <div class="col-md-12">
-                <button type="submit" name="btnRptActArea" class="btn outLineRed my-3">Generar reporte</button>
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <button type="submit" name="btnRptActArea" class="btn outLineRed my-3">Reporte tipo-área</button>
+                    <button type="submit" name="btnRptActTipoActivo" class="btn outLineRed my-3">Reporte tipo activo</button>
+                    <button type="submit" name="btnRptAreas" class="btn outLineRed my-3">Reporte áreas</button>
+                    <button type="submit" name="btnRptMant" class="btn outLineRed my-3">Reporte mantenimiento</button>
+                </div>
             </div>
             </form>
         </div>
 
         <div class="row page-titles mx-0 shadow">
-            <div class="col-md-6 p-md-0">
-                <h3 class="titulo mb-4">Reporte de activos por tipo de activo</h3>
-                <form name="frmRptActT" method="post" action="reporteGenerado.php" target="_blank">
-                    <input type="hidden" name="hdnNameTipAct" id="hdnNameTipAct">
-                    <label for="sTipoActivoR">Seleccionar tipo de activo</label>
-                    <select class="form-control" id="sTipoActivoR2" name="sTipoActivoR2">
-                    </select>
-                    <div class="col-md-6">
-                <button type="submit" name="btnRptActTipoActivo" class="btn outLineRed my-3">Generar reporte</button>
-            </div>
+        <div class="col-md-6 p-md-0">
+                <form name="formRptActImp" method="post" action="reporteGenerado.php" target="_blank">
+                    <h3 class="titulo mb-4 mx-2">Reporte de toner</h3>
+                    <p class="mx-2">
+                        Se generará un resumen de los toner en base
+                        a las impresoras ingresadas en el sistema.
+                    </p>
+                    <div class="col-md-5 ">
+                        <button type="submit" name="btnRptCantTon" class="btn outLineRed my-3">Generar reporte</button>
+                    </div>
             </div>
             <div class="col-md-5 offset-md-1 p-md-0">
                 <h3 class="titulo mb-4 mx-2">Reporte de activos totales</h3>
@@ -76,53 +81,7 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
                 </form>
             </div>
             </div>
-        </div>  
-
-
-        <div class="row page-titles mx-0 shadow">
-            <div class="col-md-6 p-md-0">
-                <h3 class="titulo mb-4">Reporte para revisión por áreas</h3>
-                <form name="formRptActImp" method="post" action="reporteGenerado.php" target="_blank">
-                    <input type="hidden" name="hdnNomArea" id="hdnNomArea">
-                    <label for="sAreaRpt">Seleccionar el área </label>
-                    <select class="form-control" id="sAreaRpt" name="sAreaRpt">
-                    </select>
-                    <div class="col-md-6">
-                        <button type="submit" name="btnRptAreas" class="btn outLineRed my-3">Generar reporte</button>
-                    </div>
-            </div>
-            <div class="col-md-5 offset-md-1 p-md-0">
-                <h3 class="titulo mb-4 mx-2">Reporte de toner</h3>
-                <p class="mx-2">
-                    Se generará un resumen de los toner en base
-                    a las impresoras ingresadas en el sistema.
-                </p>
-                <div class="col-md-5 ">
-                    <button type="submit" name="btnRptCantTon" class="btn outLineRed my-3">Generar reporte</button>
-                </form>
-            </div>
-            </div>
-        </div> 
-
-        <div class="row page-titles mx-0 shadow mb-3 justify-content-center align-items-center">
-            <div class="col-md-12 text-center mb-5 my-3">
-                <h3 class="titulo">Reporte para mantenimiento</h3>
-            </div>
-            <div class="col-md-4 p-md-0">
-                <form name="formRptActTA" method="post" action="reporteGenerado.php" target="_blank">
-                    <input type="hidden" name="hdnNameAreaMant" id="hdnNameAreaMant">
-                    <label for="sTipoActivoR">Seleccionar área para el mantenimiento</label>
-                    <select class="form-control" id="sRptAreMant" name="sRptAreMant">
-                
-                    </select>
-            </div>
-            <div class="col-md-12 text-center">
-                <button type="submit" name="btnRptMant" class="btn outLineRed my-3">Generar reporte</button>
-            </div>
-            </form>
-        </div>
-
-
+        </div>    
     </div>
 </div>
 <!-- Datatable -->

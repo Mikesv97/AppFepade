@@ -575,10 +575,10 @@ class ReportesDao
 
         //preparamos el html para retornarlo
         $html = '
-        <table style="width:100%">
+        <table  style="width:100%">
             <tr>
-                <td style="width:25%"></td>
-                <td style="width:50%">
+                <td class="noBorder" style="width:25%"></td>
+                <td class="noBorder" style="width:50%">
                     <!--INICIO TABLA-->
                     <table class="tblResumen"  align="center" border="1">
                         <tr>
@@ -608,7 +608,7 @@ class ReportesDao
                     </table>
                     <!--FIN TABLA-->
                 </td>
-                <td style="width:25%"></td>
+                <td class="noBorder" style="width:25%"></td>
             </tr>
         </table>';
 
@@ -814,6 +814,7 @@ class ReportesDao
         $pdf->AddPage();
         $pdf->Ln(10);
         $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Ln(30);
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Output();
     }
