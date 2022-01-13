@@ -1,10 +1,9 @@
 <?php
 
-class Inventario {
+class Inventario{
 
     private $codigo_barra;
     private $fecha_inventario;
-
 
     public function __construct()
     {

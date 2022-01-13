@@ -10,6 +10,7 @@ $idUSuario = $_SESSION["usuario"]["id"];
 <link href="../recursos/css/nuevoUsuario.css" rel="stylesheet">
 <script src="https://unpkg.com/quagga@0.12.1/dist/quagga.min.js"></script>
 <script src="../Recursos/JS/lavantamientoActivo.js"></script>
+<script src="../Recursos/JS/inventario.js"></script>
 
 <style>
     #contenedor video {
@@ -62,11 +63,17 @@ $idUSuario = $_SESSION["usuario"]["id"];
                         <h1 class="text-gray-900 my-2 mb-4">Levantamiento De Activo</h1>
                     </div>
                 </div>
-                <p id="resultado">Aquí aparecerá el código</p>
-                <p>A continuación, el contenedor: </p>
-                <div id="contenedor"></div>
 
-                <form id="frmInvenAct" class="my-4">
+                <button type="button" class="btn btn-dark mb-5 ml-4" data-toggle="collapse" href="#mostrarEscaneo" aria-controls="mostrarEscaneo" id="verEscaneo">
+                    Escanear codigo de barra
+                </button>
+
+                <div class="col-xl-12 col-xxl-12 collapse" id="mostrarEscaneo">
+                    <p id="resultado">Aquí aparecerá el código</p>
+                    <div id="contenedor"></div>
+                </div>
+
+                <form id="frmInvenAct" class="my-4" method="POST">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="txtCodigoBarra">Codígo de barra*</label>

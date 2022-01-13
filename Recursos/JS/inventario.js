@@ -1,6 +1,16 @@
 $.noConflict();
 jQuery(document).ready(function ($) {
 
+    //PARA CARGAR LA FECHA ACTUAL CUANDO SE CARGA LA PAGINA
+    function zeroPadded(val) {
+        if (val >= 10)
+            return val;
+        else
+            return '0' + val;
+    }
+    var d = new Date();
+    $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+
     $('#frmInvenAct').submit(function (e) {
         //detenemos el envio del form
         e.preventDefault();
@@ -25,8 +35,17 @@ jQuery(document).ready(function ($) {
                             'El inventario ha sido ingresado al sistema',
                             'success'
                         )
-                        $("#frmTipoActivo")[0].reset();
-                        $('#tblTipoActivo').DataTable().ajax.reload();
+                        $("#frmInvenAct")[0].reset();
+                        $('#mostrarEscaneo').addClass('collapse');
+                        $('#mostrarEscaneo').removeClass('show');
+                        function zeroPadded(val) {
+                            if (val >= 10)
+                                return val;
+                            else
+                                return '0' + val;
+                        }
+                        var d = new Date();
+                        $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
                         break;
                     case "FailInventario":
                         Swal.fire({
@@ -51,6 +70,13 @@ jQuery(document).ready(function ($) {
             }
         });
 
+    });
+
+    //CUANDO SE CANCELA UN ACTIVO
+    $('#btnCancelar').on('click', function(){
+        $("#frmInvenAct")[0].reset();
+        $('#mostrarEscaneo').addClass('collapse');
+        $('#mostrarEscaneo').removeClass('show');
     });
 
 });

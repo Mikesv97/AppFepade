@@ -1,6 +1,6 @@
 <?php
 
-include_once dirname(__DIR__, 1).'/Modelos/clasesDao/inventarioControlador.php';
+include_once dirname(__DIR__, 1).'/Modelos/clasesDao/inventarioDao.php';
 
 $inventario = new inventarioDao();
 
@@ -25,7 +25,7 @@ if ($_POST) {
 
 function setObjInventario(
     $codigoBarra,
-    $fechaInventario,
+    $fechaInventario
 ){
     $objInventario = new Inventario();
     $objInventario->setCodigoBarra($codigoBarra);

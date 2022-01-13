@@ -1,9 +1,8 @@
 <?php
-
-include dirname(__DIR__, 1).'/clases/inventario.php';
+include dirname(__DIR__, 1)."/clases/inventario.php";
 include_once dirname(__DIR__, 1).'/conexion.php';
 
-class  inventarioDao{
+class inventarioDao{
 
     public function __construct()
     {
