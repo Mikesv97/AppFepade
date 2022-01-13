@@ -1,7 +1,7 @@
 <?php
-include_once dirname(__DIR__, 1).'/Modelos/clasesDao/activoFijoDao.php';
-include_once dirname(__DIR__, 1).'/Modelos/clasesDao/activoEspecificacionDao.php';
-include_once dirname(__DIR__, 1).'/Modelos/clasesDao/historialActivoDao.php';
+include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/activoFijoDao.php';
+include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/activoEspecificacionDao.php';
+include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/historialActivoDao.php';
 
 $activoFijo = new activoFijoDAO();
 $activoEspe = new activoEspecificacionDao();
@@ -14,142 +14,147 @@ if ($_POST) {
             case "insertar":
                 //VARIABLE DONDE SE ALMACENA EL ID TIPO ACTIVO
                 $tipoActivo = $_POST["tipoActivo"];
-                //ASIGNADO A LA FUNCION SETOBJETIVOACTIVOFIJO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
-                $objActivoFijo = setObjActivoFijo(
-                    $_POST['ActivoReferencia'],
-                    $_POST['PartidaCta'] ,
-                    $_POST['EmpresaId'],
-                    $_POST['numeroSerie'],
-                    str_replace('T', ' ', $_POST['ActivoFechaAdq']),
-                    $_POST['ActivoFactura'],
-                    $_POST['ActivoTipo'],
-                    $_POST['ActivoDescripcion'],
-                    $_POST['Estructura1Id'],
-                    $_POST['Estructura2Id'],
-                    $_POST['Estructura3Id'],
-                    $_POST['UsuarioId'],
-                    str_replace('T', ' ', $_POST['ActivoFechaCaduc']),
-                    $_POST['activoDel'],
-                    $_POST['activoInac'],
-                    $_POST['ResponsableId']
-                );
-                //GUARDANDO EN LA VARIABLE ACTIVOINSERTADO LO QUE VENGA DE LA FUNCION INSERTAACTIVOFIJO
-                $activoInsertado = $activoFijo->insertarActivoFijo($objActivoFijo);
-                //SI INSERTARACTIVO FIJO ES DIFERENTE A 0 ENTONCES SE OBTETIENE ENTONCES SE OBTIENE EL ID ACTIVO
-                //DEL ACTIVO QUE SE ESTA INSERTADO, SI NO MANDA A ERROR
-                if ($activoInsertado != 0) {
-                    $obtejerIdActivo = $activoEspe->obtenerId();
-                    if ($obtejerIdActivo != 0) {
-                        //DEPENDIENDO DEL ID TIPO ACTIVO QUE VENGA ASI SE REALIZA EL INSERT EN LA TABLA CON SUS CAMPOS
-                        $insertActive = false;
+                //AQUI SE EVALUA QUE EL TIPO DE ACTIVO SEA DE LOS 4 SOLICITADOS SI NO ES ASI NO SE INSERTARA EL ACTIVO
+                if ($tipoActivo == 1 || $tipoActivo == 2 || $tipoActivo == 3 || $tipoActivo == 4) {
+                    //ASIGNADO A LA FUNCION SETOBJETIVOACTIVOFIJO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                    $objActivoFijo = setObjActivoFijo(
+                        $_POST['ActivoReferencia'],
+                        $_POST['PartidaCta'],
+                        $_POST['EmpresaId'],
+                        $_POST['numeroSerie'],
+                        str_replace('T', ' ', $_POST['ActivoFechaAdq']),
+                        $_POST['ActivoFactura'],
+                        $_POST['ActivoTipo'],
+                        $_POST['ActivoDescripcion'],
+                        $_POST['Estructura1Id'],
+                        $_POST['Estructura2Id'],
+                        $_POST['Estructura3Id'],
+                        $_POST['UsuarioId'],
+                        str_replace('T', ' ', $_POST['ActivoFechaCaduc']),
+                        $_POST['activoDel'],
+                        $_POST['activoInac'],
+                        $_POST['ResponsableId']
+                    );
+                    //GUARDANDO EN LA VARIABLE ACTIVOINSERTADO LO QUE VENGA DE LA FUNCION INSERTAACTIVOFIJO
+                    $activoInsertado = $activoFijo->insertarActivoFijo($objActivoFijo);
+                    //SI INSERTARACTIVO FIJO ES DIFERENTE A 0 ENTONCES SE OBTETIENE ENTONCES SE OBTIENE EL ID ACTIVO
+                    //DEL ACTIVO QUE SE ESTA INSERTADO, SI NO MANDA A ERROR
+                    if ($activoInsertado != 0) {
+                        $obtejerIdActivo = $activoEspe->obtenerId();
+                        if ($obtejerIdActivo != 0) {
+                            //DEPENDIENDO DEL ID TIPO ACTIVO QUE VENGA ASI SE REALIZA EL INSERT EN LA TABLA CON SUS CAMPOS
+                            $insertActive = false;
 
-                        /*
-                        ID TIPO ACTIVO 1 ---> PC
-                        ID TIPO ACTIVO 2 ---> LAPTOP
-                        ID TIPO ACTIVO 3 ---> IMPRESOR
-                        ID TIPO ACTIVO 4 ---> PROYECTOR
-                        */
-                        switch ($tipoActivo) {
-                            case 1:
+                            /*
+                            ID TIPO ACTIVO 1 ---> PC
+                            ID TIPO ACTIVO 2 ---> LAPTOP
+                            ID TIPO ACTIVO 3 ---> IMPRESOR
+                            ID TIPO ACTIVO 4 ---> PROYECTOR
+                            */
+                            switch ($tipoActivo) {
+                                case 1:
 
-                                //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
-                                $objActivoEspeComp = setObjActivoEspeComp(
-                                    $obtejerIdActivo, //LLAMANDO A LA VARIABLE DONDE TIENE LA FUNCION PARA OBTENER EL ID ACTIVO INGRESADOR
-                                    $_POST['Procesador'],
-                                    $_POST['Generacion'],
-                                    $_POST['Ram'],
-                                    $_POST['TipoRam'],
-                                    $_POST['DiscoDuro'],
-                                    $_POST['CapacidadD1'],
-                                    $_POST['DiscoDuro2'],
-                                    $_POST['CapacidadD2'],
-                                    $_POST['SO'],
-                                    $_POST['Office'],
-                                    $_POST['Modelo'],
-                                    $_POST['ip']
-                                );
+                                    //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                                    $objActivoEspeComp = setObjActivoEspeComp(
+                                        $obtejerIdActivo, //LLAMANDO A LA VARIABLE DONDE TIENE LA FUNCION PARA OBTENER EL ID ACTIVO INGRESADOR
+                                        $_POST['Procesador'],
+                                        $_POST['Generacion'],
+                                        $_POST['Ram'],
+                                        $_POST['TipoRam'],
+                                        $_POST['DiscoDuro'],
+                                        $_POST['CapacidadD1'],
+                                        $_POST['DiscoDuro2'],
+                                        $_POST['CapacidadD2'],
+                                        $_POST['SO'],
+                                        $_POST['Office'],
+                                        $_POST['Modelo'],
+                                        $_POST['ip']
+                                    );
 
-                                if ($activoEspe->insertarActEspCom($objActivoEspeComp) == 0) {
-                                    echo json_encode('FailActiveEspe');
-                                } else {
-                                    $insertActive = true;
-                                }
+                                    if ($activoEspe->insertarActEspCom($objActivoEspeComp) == 0) {
+                                        echo json_encode('FailActiveEspe');
+                                    } else {
+                                        $insertActive = true;
+                                    }
 
-                                break;
-                            case 2:
+                                    break;
+                                case 2:
 
-                                //ASIGNADO A LA FUNCION SETOBJETIVOLO QUE VIENE POR LOS INPUT SEGUN EL NAME
-                                $objActivoEspeComp = setObjActivoEspeComp(
+                                    //ASIGNADO A LA FUNCION SETOBJETIVOLO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                                    $objActivoEspeComp = setObjActivoEspeComp(
+                                        $obtejerIdActivo,
+                                        $_POST['Procesador'],
+                                        $_POST['Generacion'],
+                                        $_POST['Ram'],
+                                        $_POST['TipoRam'],
+                                        $_POST['DiscoDuro'],
+                                        $_POST['CapacidadD1'],
+                                        $_POST['DiscoDuro2'],
+                                        $_POST['CapacidadD2'],
+                                        $_POST['SO'],
+                                        $_POST['Office'],
+                                        $_POST['Modelo'],
+                                        $_POST['ip']
+                                    );
+                                    if ($activoEspe->insertarActEspCom($objActivoEspeComp) == 0) {
+                                        echo json_encode('FailActiveEspe');
+                                    } else {
+                                        $insertActive = true;
+                                    }
+                                    break;
+                                case 3:
+
+                                    $objActivoEspeImpre = setObjActivoEspeImpre(
+                                        $obtejerIdActivo,
+                                        $_POST['Modelo'],
+                                        $_POST['ip'],
+                                        $_POST['TonerN'],
+                                        $_POST['TonerM'],
+                                        $_POST['TonerC'],
+                                        $_POST['TonerA'],
+                                        $_POST['tambor'],
+                                        $_POST['fusor']
+                                    );
+                                    if ($activoEspe->insertarActEspImp($objActivoEspeImpre) == 0) {
+                                        echo json_encode('FailActiveEspe');
+                                    } else {
+                                        $insertActive = true;
+                                    }
+                                    break;
+                                case 4:
+
+                                    $objActivoEspeProy = setObjActivoEspeProy(
+                                        $obtejerIdActivo,
+                                        $_POST['Modelo'],
+                                        $_POST['HorasUso'],
+                                        $_POST['HoraEco']
+                                    );
+                                    if ($activoEspe->insertarActEspProy($objActivoEspeProy) == 0) {
+                                        echo json_encode('FailActiveEspe');
+                                    } else {
+                                        $insertActive = true;
+                                    }
+                                    break;
+                            }
+
+                            //evaluamos i el insert del tipo de activo que se inserto fue exitoso
+                            if ($insertActive) {
+                                //ASIGNANDO A LA FUNCION OBJACTIVOHISTORIAL LO QUE VIENEN EN LOS INPUT SEGUN SU NAME
+                                $objActivoHistorial = setObjActivoHistorial(
                                     $obtejerIdActivo,
-                                    $_POST['Procesador'],
-                                    $_POST['Generacion'],
-                                    $_POST['Ram'],
-                                    $_POST['TipoRam'],
-                                    $_POST['DiscoDuro'],
-                                    $_POST['CapacidadD1'],
-                                    $_POST['DiscoDuro2'],
-                                    $_POST['CapacidadD2'],
-                                    $_POST['SO'],
-                                    $_POST['Office'],
-                                    $_POST['Modelo'],
-                                    $_POST['ip']
+                                    $_POST['Estructura3Id'],
+                                    $_POST['ResponsableId'],
+                                    $_POST['HistoricoComentario'],
+                                    $_POST['UsuarioId'],
+                                    $_POST['activoInac']
                                 );
-                                if ($activoEspe->insertarActEspCom($objActivoEspeComp) == 0) {
+                                if ($activoHist->insertarHistorial($objActivoHistorial) == 0) {
                                     echo json_encode('FailActiveEspe');
                                 } else {
-                                    $insertActive = true;
+                                    echo json_encode('Insertado');
                                 }
-                                break;
-                            case 3:
-
-                                $objActivoEspeImpre = setObjActivoEspeImpre(
-                                    $obtejerIdActivo,
-                                    $_POST['Modelo'],
-                                    $_POST['ip'],
-                                    $_POST['TonerN'],
-                                    $_POST['TonerM'],
-                                    $_POST['TonerC'],
-                                    $_POST['TonerA'],
-                                    $_POST['tambor'],
-                                    $_POST['fusor']
-                                );
-                                if ($activoEspe->insertarActEspImp($objActivoEspeImpre) == 0) {
-                                    echo json_encode('FailActiveEspe');
-                                } else {
-                                    $insertActive = true;
-                                }
-                                break;
-                            case 4:
-
-                                $objActivoEspeProy = setObjActivoEspeProy(
-                                    $obtejerIdActivo,
-                                    $_POST['Modelo'],
-                                    $_POST['HorasUso'],
-                                    $_POST['HoraEco']
-                                );
-                                if ($activoEspe->insertarActEspProy($objActivoEspeProy) == 0) {
-                                    echo json_encode('FailActiveEspe');
-                                } else {
-                                    $insertActive = true;
-                                }
-                                break;
-                        }
-
-                        //evaluamos i el insert del tipo de activo que se inserto fue exitoso
-                        if ($insertActive) {
-                            //ASIGNANDO A LA FUNCION OBJACTIVOHISTORIAL LO QUE VIENEN EN LOS INPUT SEGUN SU NAME
-                            $objActivoHistorial = setObjActivoHistorial(
-                                $obtejerIdActivo,
-                                $_POST['Estructura3Id'],
-                                $_POST['ResponsableId'],
-                                $_POST['HistoricoComentario'],
-                                $_POST['UsuarioId'],
-                                $_POST['activoInac']
-                            );
-                            if ($activoHist->insertarHistorial($objActivoHistorial) == 0) {
-                                echo json_encode('FailActiveEspe');
                             } else {
-                                echo json_encode('Insertado');
+                                echo json_encode("FailActiveEspe");
                             }
                         } else {
                             echo json_encode("FailActiveEspe");
@@ -158,136 +163,141 @@ if ($_POST) {
                         echo json_encode("FailActiveEspe");
                     }
                 } else {
-                    echo json_encode("FailActiveEspe");
+                    echo json_encode('TipoNoSolicitado');
                 }
                 break;
             case "modificar":
                 //VARIABLE DONDE SE ALMACENA EL ID TIPO ACTIVO
                 $tipoActivo = $_POST["tipoActivo"];
-                //ASIGNADO A LA FUNCION SETOBJETIVOACTIVOFIJO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
-                $objActivoFijoMod = setObjActivoFijoMod(
-                    $_POST['ActivoReferencia'],
-                    $_POST['PartidaCta'],
-                    $_POST['EmpresaId'],
-                    $_POST['numeroSerie'],
-                    str_replace('T', ' ', $_POST['ActivoFechaAdq']),
-                    $_POST['ActivoFactura'],
-                    $_POST['ActivoTipo'],
-                    $_POST['ActivoDescripcion'],
-                    $_POST['Estructura1Id'],
-                    $_POST['Estructura2Id'],
-                    $_POST['Estructura3Id'],
-                    $_POST['UsuarioId'],
-                    str_replace('T', ' ', $_POST['ActivoFechaCaduc']),
-                    $_POST['activoDel'],
-                    $_POST['activoInac'],
-                    $_POST['ResponsableId'],
-                    $_POST['ActivoId']
-                );
-                $actiMod = $activoFijo->modificarActivoFijo($objActivoFijoMod);
-                $updateActive = false;
-                if ($actiMod != 0) {
-                    switch ($tipoActivo) {
-                        /*
-                        ID TIPO ACTIVO 1 ---> PC
-                        ID TIPO ACTIVO 2 ---> LAPTOP
-                        ID TIPO ACTIVO 3 ---> IMPRESOR
-                        ID TIPO ACTIVO 4 ---> PROYECTOR
-                        */
-                        case 1:
-                            //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
-                            $ObjActivoEspeCompMod = setObjActivoEspeCompMod(
-                                $_POST['Procesador'],
-                                $_POST['Generacion'],
-                                $_POST['Ram'],
-                                $_POST['DiscoDuro'],
-                                $_POST['Modelo'],
-                                $_POST['SO'],
-                                $_POST['Office'],
-                                $_POST['ip'],
-                                $_POST['TipoRam'],
-                                $_POST['CapacidadD1'],
-                                $_POST['DiscoDuro2'],
-                                $_POST['CapacidadD2'],
-                                $_POST['ActivoId']
-                            );
+                //AQUI SE EVALUA QUE EL TIPO DE ACTIVO SEA DE LOS 4 SOLICITADOS SI NO ES ASI NO SE MODIFICARA EL ACTIVO
+                if ($tipoActivo == 1 || $tipoActivo == 2 || $tipoActivo == 3 || $tipoActivo == 4) {
+                    //ASIGNADO A LA FUNCION SETOBJETIVOACTIVOFIJO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                    $objActivoFijoMod = setObjActivoFijoMod(
+                        $_POST['ActivoReferencia'],
+                        $_POST['PartidaCta'],
+                        $_POST['EmpresaId'],
+                        $_POST['numeroSerie'],
+                        str_replace('T', ' ', $_POST['ActivoFechaAdq']),
+                        $_POST['ActivoFactura'],
+                        $_POST['ActivoTipo'],
+                        $_POST['ActivoDescripcion'],
+                        $_POST['Estructura1Id'],
+                        $_POST['Estructura2Id'],
+                        $_POST['Estructura3Id'],
+                        $_POST['UsuarioId'],
+                        str_replace('T', ' ', $_POST['ActivoFechaCaduc']),
+                        $_POST['activoDel'],
+                        $_POST['activoInac'],
+                        $_POST['ResponsableId'],
+                        $_POST['ActivoId']
+                    );
+                    $actiMod = $activoFijo->modificarActivoFijo($objActivoFijoMod);
+                    $updateActive = false;
+                    if ($actiMod != 0) {
+                        switch ($tipoActivo) {
+                                /*
+                            ID TIPO ACTIVO 1 ---> PC
+                            ID TIPO ACTIVO 2 ---> LAPTOP
+                            ID TIPO ACTIVO 3 ---> IMPRESOR
+                            ID TIPO ACTIVO 4 ---> PROYECTOR
+                            */
+                            case 1:
+                                //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                                $ObjActivoEspeCompMod = setObjActivoEspeCompMod(
+                                    $_POST['Procesador'],
+                                    $_POST['Generacion'],
+                                    $_POST['Ram'],
+                                    $_POST['DiscoDuro'],
+                                    $_POST['Modelo'],
+                                    $_POST['SO'],
+                                    $_POST['Office'],
+                                    $_POST['ip'],
+                                    $_POST['TipoRam'],
+                                    $_POST['CapacidadD1'],
+                                    $_POST['DiscoDuro2'],
+                                    $_POST['CapacidadD2'],
+                                    $_POST['ActivoId']
+                                );
 
-                            if ($activoEspe->modificarActEspCom($ObjActivoEspeCompMod) == 0) {
-                                echo json_encode('FailModificarActivo');
-                            } else {
-                                $updateActive = true;
-                            }
-                            break;
-                        case 2:
-                            //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
-                            $ObjActivoEspeCompMod = setObjActivoEspeCompMod(
-                                $_POST['Procesador'],
-                                $_POST['Generacion'],
-                                $_POST['Ram'],
-                                $_POST['DiscoDuro'],
-                                $_POST['Modelo'],
-                                $_POST['SO'],
-                                $_POST['Office'],
-                                $_POST['ip'],
-                                $_POST['TipoRam'],
-                                $_POST['CapacidadD1'],
-                                $_POST['DiscoDuro2'],
-                                $_POST['CapacidadD2'],
-                                $_POST['ActivoId']
-                            );
+                                if ($activoEspe->modificarActEspCom($ObjActivoEspeCompMod) == 0) {
+                                    echo json_encode('FailModificarActivo');
+                                } else {
+                                    $updateActive = true;
+                                }
+                                break;
+                            case 2:
+                                //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                                $ObjActivoEspeCompMod = setObjActivoEspeCompMod(
+                                    $_POST['Procesador'],
+                                    $_POST['Generacion'],
+                                    $_POST['Ram'],
+                                    $_POST['DiscoDuro'],
+                                    $_POST['Modelo'],
+                                    $_POST['SO'],
+                                    $_POST['Office'],
+                                    $_POST['ip'],
+                                    $_POST['TipoRam'],
+                                    $_POST['CapacidadD1'],
+                                    $_POST['DiscoDuro2'],
+                                    $_POST['CapacidadD2'],
+                                    $_POST['ActivoId']
+                                );
 
-                            if ($activoEspe->modificarActEspCom($ObjActivoEspeCompMod) == 0) {
-                                echo json_encode('FailModificarActivo');
-                            } else {
-                                $updateActive = true;
-                            }
-                            break;
-                        case 3:
-                            $objActivoEspeImpreMod = setObjActivoEspeImpreMod(
-                                $_POST['Modelo'],
-                                $_POST['ip'],
-                                $_POST['TonerN'],
-                                $_POST['TonerM'],
-                                $_POST['TonerC'],
-                                $_POST['TonerA'],
-                                $_POST['tambor'],
-                                $_POST['fusor'],
-                                $_POST['ActivoId']
-                            );
+                                if ($activoEspe->modificarActEspCom($ObjActivoEspeCompMod) == 0) {
+                                    echo json_encode('FailModificarActivo');
+                                } else {
+                                    $updateActive = true;
+                                }
+                                break;
+                            case 3:
+                                $objActivoEspeImpreMod = setObjActivoEspeImpreMod(
+                                    $_POST['Modelo'],
+                                    $_POST['ip'],
+                                    $_POST['TonerN'],
+                                    $_POST['TonerM'],
+                                    $_POST['TonerC'],
+                                    $_POST['TonerA'],
+                                    $_POST['tambor'],
+                                    $_POST['fusor'],
+                                    $_POST['ActivoId']
+                                );
 
-                            if ($activoEspe->modificarActEspImp($objActivoEspeImpreMod) == 0) {
-                                echo json_encode('FailModificarActivo');
-                            } else {
-                                $updateActive = true;
-                            }
-                            break;
-                        case 4:
-                            $objActivoEspeProyMod = setObjActivoEspeProyMod(
-                                $_POST['Modelo'],
-                                $_POST['HorasUso'],
-                                $_POST['HoraEco'],
-                                $_POST['ActivoId']
-                            );
+                                if ($activoEspe->modificarActEspImp($objActivoEspeImpreMod) == 0) {
+                                    echo json_encode('FailModificarActivo');
+                                } else {
+                                    $updateActive = true;
+                                }
+                                break;
+                            case 4:
+                                $objActivoEspeProyMod = setObjActivoEspeProyMod(
+                                    $_POST['Modelo'],
+                                    $_POST['HorasUso'],
+                                    $_POST['HoraEco'],
+                                    $_POST['ActivoId']
+                                );
 
-                            if ($activoEspe->modificarActEspProy($objActivoEspeProyMod) == 0) {
-                                echo json_encode('FailModificarActivo');
-                            } else {
-                                $updateActive = true;
-                            }
-                            break;
-                    }
-                    if ($updateActive) {
-                        echo json_encode('Modificado');
+                                if ($activoEspe->modificarActEspProy($objActivoEspeProyMod) == 0) {
+                                    echo json_encode('FailModificarActivo');
+                                } else {
+                                    $updateActive = true;
+                                }
+                                break;
+                        }
+                        if ($updateActive) {
+                            echo json_encode('Modificado');
+                        }
+                    } else {
+                        echo json_encode('FailModificarActivo');
                     }
                 } else {
-                    echo json_encode('FailModificarActivo');
+                    echo json_encode('TipoNoSolicitado');
                 }
                 break;
             case "eliminar":
                 $id = $_POST['ActivoId'];
-                if ($activoFijo->eliminarrActivoFijo($id) == 0){
+                if ($activoFijo->eliminarrActivoFijo($id) == 0) {
                     echo json_encode('FailActivoEliminado');
-                }else{
+                } else {
                     echo json_encode('EliminadoAct');
                 }
                 break;
@@ -387,11 +397,11 @@ if ($_POST) {
                     }
                 }
 
-            break;
+                break;
             case "getInfAreas":
                 $resp = $activoFijo->getDataArea();
                 echo json_encode($resp);
-            break;
+                break;
         }
     }
 }
