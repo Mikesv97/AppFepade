@@ -37,6 +37,7 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
             <div class="col-md-6 p-md-0">
                 <form name="formRptActTA" method="post" action="reporteGenerado.php" target="_blank">
                     <input type="hidden" name="hdnNameArea" id="hdnNameArea">
+                    <input type="hidden" name="hdnNameAct" id="hdnNameAct">
                     <label for="sTipoActivoR">Seleccionar tipo de activo</label>
                     <select class="form-control" id="sTipoActivoR" name="sTipoActivoR">
                         <option value="0">Todos</option>
@@ -47,12 +48,13 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
                 <select class="form-control" id="sAreas" name="sAreaR">
                 </select>
             </div>
+            <div class="col-md-12"><p class="alertError my-2 mb-2" role="alert" id="labelError"></p></div>
             <div class="row my-3">
                 <div class="col-md-12">
-                    <button type="submit" name="btnRptActArea" class="btn outLineRed my-3">Reporte tipo-área</button>
-                    <button type="submit" name="btnRptActTipoActivo" class="btn outLineRed my-3">Reporte tipo activo</button>
-                    <button type="submit" name="btnRptAreas" class="btn outLineRed my-3">Reporte áreas</button>
-                    <button type="submit" name="btnRptMant" class="btn outLineRed my-3">Reporte mantenimiento</button>
+                    <button type="submit" id="btnRptActArea" name="btnRptActArea" class="btn outLineRed my-3">Reporte tipo-área</button>
+                    <button type="submit" id="btnRptActTipoActivo" name="btnRptActTipoActivo" class="btn outLineRed my-3">Reporte tipo activo</button>
+                    <button type="submit" id="btnRptAreas" name="btnRptAreas" class="btn outLineRed my-3">Reporte áreas</button>
+                    <button type="submit" id="btnRptMant" name="btnRptMant" class="btn outLineRed my-3">Reporte mantenimiento</button>
                 </div>
             </div>
             </form>

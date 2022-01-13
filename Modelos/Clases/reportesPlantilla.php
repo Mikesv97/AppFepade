@@ -236,7 +236,7 @@ class ReportesPlantilla extends TCPDF{
                    <th class="w15">Descripción</th>
                    <th class="w12">Responsable</th>
                    <th class="w7 center" >Modelo</th>
-                   <th class="7-5">Horas Uso</th>
+                   <th class="w7-5">Horas Uso</th>
                    <th class="w7-5">Horas Eco.</th>
                </tr>';
         }else{
@@ -271,28 +271,28 @@ class ReportesPlantilla extends TCPDF{
                 $tablaProyector ='<h3>Impresor</h3>
                 <table>
                 <tr>
-                    <th class="w6">Corr</th>
+                    <th class="w6 center">Corr</th>
                     <th class="w15">Descripción</th>
-                    <th class="w12">No. IMP</th>
-                    <th class="w7-5">Toner N</th>
-                    <th class="w7-5">Toner M</th>
-                    <th class="w7-5">Toner C</th>
-                    <th class="w7-5">Toner A</th>
+                    <th class="w6 center">No. IMP</th>
+                    <th class="w7-5 center">Toner N</th>
+                    <th class="w7-5 center">Toner M</th>
+                    <th class="w7-5 center">Toner C</th>
+                    <th class="w7-5 center">Toner A</th>
                 </tr>';
             break;
             case 1:
                 $tablaProyector ='<h3>Impresor</h3>
                 <table>
                 <tr>
-                    <th class="w6">Código</th>
+                    <th class="w6 center">Código</th>
                     <th class="w15">Descripción</th>
                     <th class="w12">Reponsable</th>
                     <th class="w9 center">IP</th>
                     <th class="w7 center">Modelo</th>
-                    <th class="w7-5">Toner N</th>
-                    <th class="w7-5">Toner M</th>
-                    <th class="w7-5">Toner C</th>
-                    <th class="w7-5">Toner A</th>
+                    <th class="w7-5 center">Toner N</th>
+                    <th class="w7-5 center">Toner M</th>
+                    <th class="w7-5 center">Toner C</th>
+                    <th class="w7-5 center">Toner A</th>
                 </tr>';
             break;
         

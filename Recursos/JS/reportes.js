@@ -1,7 +1,7 @@
 $(document).ready(function(){
    //cargamos el select de tipo de activos
     cargarCmbTipoActivos();
-    
+    $("#labelError").hide();
     //cargamos el select de áreas
     cargarCmbAreasActivos();
 
@@ -12,16 +12,41 @@ $(document).ready(function(){
         $("#hdnNameArea").val($("#sAreas option:selected").text().trim());
     });
 
-    $("#sTipoActivoR2").change(function(){
-        $("#hdnNameTipAct").val($("#sTipoActivoR2 option:selected").text().trim());
+    $("#sTipoActivoR").change(function(){
+        if($("#labelError").is(":visible")){
+            $("#labelError").hide();
+        }
+        $("#hdnNameAct").val($("#sTipoActivoR option:selected").text().trim());
     });
 
-    $("#sAreaRpt").change(function(){
-        $("#hdnNomArea").val($("#sAreaRpt option:selected").text().trim());
+    $("#btnRptActTipoActivo").on("click", function(e){
+       var valorTipAct = $("#sTipoActivoR").val();
+       if(valorTipAct ==0){
+        $("#labelError").text("Debes seleccionar un tipo de activo para generar este reporte.");
+        $("#labelError").show();
+        e.preventDefault();
+       }
     });
 
-    $("#sRptAreMant").change(function(){
-        $("#hdnNameAreaMant").val($("#sRptAreMant option:selected").text().trim());
+    $("#btnRptActArea").on("click",function(){
+        if($("#labelError").is(":visible")){
+            $("#labelError").text("");
+            $("#labelError").hide();
+        }
+    });
+
+    $("#btnRptAreas").on("click",function(){
+        if($("#labelError").is(":visible")){
+            $("#labelError").text("");
+            $("#labelError").hide();
+        }
+    });
+
+    $("#btnRptMant").on("click",function(){
+        if($("#labelError").is(":visible")){
+            $("#labelError").text("");
+            $("#labelError").hide();
+        }
     });
 });
 

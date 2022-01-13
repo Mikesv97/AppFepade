@@ -20,12 +20,16 @@ if (isset($_POST["btnRptActArea"])) {
         $rpt->generarRptPdfActArea($resp,$areaNombre);
     }
 
- }
+
+
+}
+
+
 
 if (isset($_POST["btnRptActTipoActivo"])) {
 
-    $tipoActRpt = $_POST["sTipoActivoR2"];
-    $tipoActNombre=$_POST["hdnNameTipAct"];
+    $tipoActRpt = $_POST["sTipoActivoR"];
+    $tipoActNombre=$_POST["hdnNameAct"];
 
     $r = new ReportesDao();
 
@@ -50,8 +54,8 @@ if(isset($_POST["btnRptCantTon"])){
 }
 
 if(isset($_POST["btnRptAreas"])){
-    $area=$_POST["sAreaRpt"];
-    $areaNombre= $_POST["hdnNomArea"];
+    $area=$_POST["sAreaR"];
+    $areaNombre= $_POST["hdnNameArea"];
     $rpt = new ReportesDao();
     $resp = $rpt->getDataRptActivosArea($area, true,2);
     $rpt->generarRptPdfActArea($resp,$areaNombre);
@@ -60,9 +64,15 @@ if(isset($_POST["btnRptAreas"])){
 }
 
 if(isset($_POST["btnRptMant"])){
-    $area=$_POST["sRptAreMant"];
-    $areaNombre= $_POST["hdnNameAreaMant"];
+    $area=$_POST["sAreaR"];
+    $areaNombre= $_POST["hdnNameArea"];
     $rpt = new ReportesDao();
     $resp = $rpt->getDataRptMantenimiento($area);
     $rpt->generarRptPdfMantenimiento($resp,$areaNombre);
+}
+
+if(!$_POST){
+
+    header("Location: reportes.php");
+
 }

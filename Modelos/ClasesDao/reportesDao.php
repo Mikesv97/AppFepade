@@ -67,13 +67,13 @@ class ReportesDao
                         //si tipo activo nombre es pc concatenamos valores a tabla pc
                         if($boolean){
                             $tablaPC  .= '<tr>'
-                            . '<td class="w3">' . $fila[$i]["Activo_id"] . '</td>'
+                            . '<td class="w6">' . $fila[$i]["Activo_id"] . '</td>'
                             . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
                             . '<td class="w12">' . $fila[$i]["Nombre_responsable"] . '</td>'
                             . '<td class="w7 center">' . $fila[$i]["Modelo"] . '</td>'
                             . '<td class="w6 center">' . $fila[$i]["Procesador"] . '</td>'
                             . '<td class="w7-5 center">' . $fila[$i]["Generacion"] . '</td>'
-                            . '<td class="w5 center">' . $fila[$i]["Ram"] . '</td>'
+                            . '<td class="w5-5 center">' . $fila[$i]["Ram"] . '</td>'
                             . '<td class="w7-5 center">' . $fila[$i]["DiscoDuro"] .
                             "<br>".$fila[$i]["DiscoDuro2"]. '</td>'
                             . '<td class="w6 center">' . $fila[$i]["SO"] . '</td>'
@@ -462,10 +462,10 @@ class ReportesDao
                             . '<td class="w7 center">' . $fila[$i]["Modelo"] . '</td>'
                             . '<td class="w6 center">' . $fila[$i]["Procesador"] . '</td>'
                             . '<td class="w7-5 center">' . $fila[$i]["Generacion"] . '</td>'
-                            . '<td class="w7-5 center">' . $fila[$i]["Ram"] . '</td>'
+                            . '<td class="w5-5 center">' . $fila[$i]["Ram"] . '</td>'
                             . '<td class="w7-5 center">' . $fila[$i]["DiscoDuro"] .
                             "<br>".$fila[$i]["DiscoDuro2"]. '</td>'
-                            . '<td class="w7-8 center">' . $fila[$i]["SO"] . '</td>'
+                            . '<td class="w6 center">' . $fila[$i]["SO"] . '</td>'
                             . '<td class="w7-5 center">' . $fila[$i]["Office"] . '</td>'
                             . '<td class="w7-5">' . $fila[$i]["numero_serie"] . '</td>'
                             . '</tr>';
@@ -485,7 +485,7 @@ class ReportesDao
                             . '<td class="w5-5 center">' . $fila[$i]["Ram"] . '</td>'
                             . '<td class="w7-5 center">' . $fila[$i]["DiscoDuro"] .
                             "<br>".$fila[$i]["DiscoDuro2"]. '</td>'
-                            . '<td class="w7-8 center">' . $fila[$i]["SO"] . '</td>'
+                            . '<td class="w6 center">' . $fila[$i]["SO"] . '</td>'
                             . '<td class="w7-5 center">' . $fila[$i]["Office"] . '</td>'
                             . '<td class="w7-5">' . $fila[$i]["numero_serie"] . '</td>'
                             . '</tr>';
@@ -652,12 +652,12 @@ class ReportesDao
 
                 $tablaImp .= '<tr>'
                     . '<td class="w6">' . ($i+1) . '</td>'
-                    . '<td class="w15 center">' . $fila[$i]["modelo"] . '</td>'
-                    . '<td class="w12 center">' . $fila[$i]["cantidadModelo"] . '</td>'
-                    . '<td class="w7-5">' . $fila[$i]["TonerN"] . '</td>'
-                    . '<td class="w7-5">' . $fila[$i]["TonerM"] . '</td>'
-                    . '<td class="w7-5">' . $fila[$i]["TonerC"] . '</td>'
-                    . '<td class="w7-5">' . $fila[$i]["TonerA"] . '</td>'
+                    . '<td class="w15">' . $fila[$i]["modelo"] . '</td>'
+                    . '<td class="w6 center">' . $fila[$i]["cantidadModelo"] . '</td>'
+                    . '<td class="w7-5 center">' . $fila[$i]["TonerN"] . '</td>'
+                    . '<td class="w7-5 center">' . $fila[$i]["TonerM"] . '</td>'
+                    . '<td class="w7-5 center">' . $fila[$i]["TonerC"] . '</td>'
+                    . '<td class="w7-5 center">' . $fila[$i]["TonerA"] . '</td>'
                     . '</tr>';
             }
             //cerramos las respectivas tablas de cada tipo
@@ -720,12 +720,12 @@ class ReportesDao
                     '<tr>'
                         . '<td class="w7"><br><br>' . ($i+1)." ".$fila[$i]["numero_serie"]. '</td>'
                         . '<td class="w15"><br><br>'.$fila[$i]["tipo_activo_nombre"] ." ". $fila[$i]["Modelo"] . '</td>'
-                        . '<td class="w7-5"><br><br>N/A</td>'
-                        . '<td class="w9"><br><br>N/A</td>'
-                        . '<td class="w9"><br><br>N/A</td>'
-                        . '<td class="w9"></td>'
-                        . '<td class="w7-5"></td>'
-                        . '<td class="w7-5"></td>'
+                        . '<td class="w6 center"><br><br>N/A</td>'
+                        . '<td class="w9 center"><br><br>N/A</td>'
+                        . '<td class="w9 center"><br><br>N/A</td>'
+                        . '<td class="w9 center"></td>'
+                        . '<td class="w7-5 center"></td>'
+                        . '<td class="w7-5 center"></td>'
                         . '<td class="w30"><br><br><br><br></td>'
                         . '</tr>';
                 }else{
@@ -733,9 +733,9 @@ class ReportesDao
                     '<tr>'
                         . '<td class="w7"><br><br>' . ($i+1)." ".$fila[$i]["numero_serie"]. '</td>'
                         . '<td class="w15"><br><br>'.$fila[$i]["tipo_activo_nombre"] ." " . $fila[$i]["Modelo"] . '</td>'
-                        . '<td class="w6"><br><br>' . $fila[$i]["Procesador"]." G.".$fila[$i]["Generacion"] . '</td>'
-                        . '<td class="w9"><br><br>' ."RAM ". $fila[$i]["Ram"] . '</td>'
-                        . '<td class="w9"><br><br>' .$fila[$i]["DiscoDuro"]." ".$fila[$i]["Capacidad_D1"]
+                        . '<td class="w6 center"><br><br>' . $fila[$i]["Procesador"]." G.".$fila[$i]["Generacion"] . '</td>'
+                        . '<td class="w9 center"><br><br>' ."RAM ". $fila[$i]["Ram"] . '</td>'
+                        . '<td class="w9 center"><br><br>' .$fila[$i]["DiscoDuro"]." ".$fila[$i]["Capacidad_D1"]
                         ." <br>".$fila[$i]["DiscoDuro2"]." ".$fila[$i]["Capacidad_D2"]. '</td>'
                         . '<td class="w9"></td>'
                         . '<td class="w7-5"></td>'
