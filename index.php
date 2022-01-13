@@ -2,7 +2,7 @@
 session_start();
 if(isset($_SESSION["usuario"]["nombre"]) && isset($_SESSION["usuario"]["usuarioNuevo"])){
   if($_SESSION["usuario"]["usuarioNuevo"] ==0){
-    header("Location: vistas/infor_activo_fijo.php");
+    header("Location: vistas/home.php");
   }else{
     header("Location: vistas/primerlogin.php");
   }
