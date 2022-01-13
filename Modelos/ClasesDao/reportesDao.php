@@ -840,7 +840,10 @@ class ReportesDao
             $pdf->Ln(40);
             $pdf->SetFont('helvetica', 'B', 10);
             $pdf->Cell(0, 5, 'Mantenimiento Preventivo de Recursos de TI', 0, 1,"L");
-            $pdf->Cell(0, 3, 'Departamento: '.$areaNombre, 0, 1,"L");
+            $pdf->Cell(70, 5, 'Departamento: '.$areaNombre, 0, 0,"L");
+            $pdf->Cell(145, 5, 'Gerente|Jefe: ______________________________ ', 0, 0,"C");
+            $pdf->Cell(60, 5, 'Fecha: ____________________ ', 0, 1,"L");
+
             $pdf->Ln(5);
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Output();
