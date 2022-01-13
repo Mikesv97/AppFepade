@@ -55,11 +55,12 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
                     <button type="submit" id="btnRptActTipoActivo" name="btnRptActTipoActivo" class="btn outLineRed my-3">Reporte tipo activo</button>
                     <button type="submit" id="btnRptAreas" name="btnRptAreas" class="btn outLineRed my-3">Reporte áreas</button>
                     <button type="submit" id="btnRptMant" name="btnRptMant" class="btn outLineRed my-3">Reporte mantenimiento</button>
-                    <button type="submit" name="btnRptResAct" class="btn outLineRed my-3">Reporte activos totales</button>
-                    <button type="submit" name="btnRptCantTon" class="btn outLineRed my-3">Reporte toners</button>
+                    <button type="submit" id="btnRptResAct" name="btnRptResAct" class="btn outLineRed my-3">Reporte activos totales</button>
+                    <button type="submit" id="btnRptCantTon" name="btnRptCantTon" class="btn outLineRed my-3">Reporte toners</button>
+                    </form>
                 </div>
             </div>
-            </form>
+                
         </div>
     </div>
 </div>

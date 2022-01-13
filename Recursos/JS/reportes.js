@@ -48,6 +48,20 @@ $(document).ready(function(){
             $("#labelError").hide();
         }
     });
+
+    $("#btnRptResAct").on("click",function(){
+        if($("#labelError").is(":visible")){
+            $("#labelError").text("");
+            $("#labelError").hide();
+        }
+    });
+
+    $("#btnRptCantTon").on("click",function(){
+        if($("#labelError").is(":visible")){
+            $("#labelError").text("");
+            $("#labelError").hide();
+        }
+    });
 });
 
 
