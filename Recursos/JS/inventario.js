@@ -38,6 +38,8 @@ jQuery(document).ready(function ($) {
                         $("#frmInvenAct")[0].reset();
                         $('#mostrarEscaneo').addClass('collapse');
                         $('#mostrarEscaneo').removeClass('show');
+                        //PARA DESACTIVAR LA CAMARA UNA VEZ SE INSERTAR UN ACTIVO
+                        Quagga.stop();
                         function zeroPadded(val) {
                             if (val >= 10)
                                 return val;
@@ -72,11 +74,21 @@ jQuery(document).ready(function ($) {
 
     });
 
-    //CUANDO SE CANCELA UN ACTIVO
+    //CUANDO SE CANCELA UN INVENTARIO
     $('#btnCancelar').on('click', function(){
         $("#frmInvenAct")[0].reset();
         $('#mostrarEscaneo').addClass('collapse');
         $('#mostrarEscaneo').removeClass('show');
+        function zeroPadded(val) {
+            if (val >= 10)
+                return val;
+            else
+                return '0' + val;
+        }
+        var d = new Date();
+        $('input[type=date]').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate()));
+        //PARA DETENER LA DETECION DE CAMARA
+        Quagga.stop();
     });
 
 });

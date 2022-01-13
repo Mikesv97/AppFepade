@@ -77,7 +77,7 @@ $idUSuario = $_SESSION["usuario"]["id"];
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="txtCodigoBarra">Codígo de barra*</label>
-                            <input type="text" class="form-control" id="txtCodigoBarra" name="txtCodigoBarra" required>
+                            <input type="text" class="form-control" id="txtCodigoBarra" name="txtCodigoBarra" readonly required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="fechaCodBarra">Fecha*</label>
