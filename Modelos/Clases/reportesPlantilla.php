@@ -61,10 +61,16 @@ class ReportesPlantilla extends TCPDF{
        }
 
        td{
-           
+
         text-align: center;
 
 	    
+       }
+
+       p{
+        display: block;
+        margin: 0 auto;
+
        }
         th{
            background-color: #999999;

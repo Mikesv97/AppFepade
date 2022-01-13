@@ -59,10 +59,9 @@ $idUSuario = $_SESSION["usuario"]["id"];
             <div class="col-sm-6 p-md-0">
                 <div class="text-center">
                     <div class="vistaTitulo">
-                        <h1 class="text-gray-900 my-2 mb-4">Nuevo tipo de activo</h1>
+                        <h1 class="text-gray-900 my-2 mb-4">Levantamiento De Activo</h1>
                     </div>
                 </div>
-
                 <p id="resultado">Aquí aparecerá el código</p>
                 <p>A continuación, el contenedor: </p>
                 <div id="contenedor"></div>

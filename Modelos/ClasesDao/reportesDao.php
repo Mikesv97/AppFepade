@@ -689,8 +689,8 @@ class ReportesDao
         dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
         dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
         dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
-        where dbo.Estructura31.estructura31_id= 1
-        ORDER BY dbo.Activo.Estructura2_id";
+        where dbo.Estructura31.estructura31_id= ? 
+        ORDER BY dbo.Tipo_Activo.tipo_activo_id";
 
         //preparamos la consulta
         $respuesta = $con->prepare($sql);
@@ -704,19 +704,37 @@ class ReportesDao
             //si los hay
             //recorremos y creamos las respectivas tablas
             for ($i = 0; $i < sizeof($fila); $i++) {
-                $tabla .= 
-                '<tr>'
-                    . '<td class="w4">' . ($i+1)." ".$fila[$i]["numero_serie"]. '</td>'
-                    . '<td class="w15">' . $fila[$i]["Modelo"] . '</td>'
-                    . '<td class="w8">' . $fila[$i]["Procesador"]." G.".$fila[$i]["Generacion"] . '</td>'
-                    . '<td class="wip">' ."RAM ". $fila[$i]["Ram"] . '</td>'
-                    . '<td class="wip">' .$fila[$i]["DiscoDuro"]." ".$fila[$i]["Capacidad_D1"]
-                    ." <br>".$fila[$i]["DiscoDuro2"]." ".$fila[$i]["Capacidad_D2"]. '</td>'
-                    . '<td class="wip"></td>'
-                    . '<td class="w8"></td>'
-                    . '<td class="w8"></td>'
-                    . '<td class="w30"><br><br><br><br></td>'
-                    . '</tr>';
+
+                $activo = trim($fila[$i]["tipo_activo_nombre"]);
+
+                if($activo == "Impresor" || $activo == "Proyector"){
+                    $tabla .= 
+                    '<tr>'
+                        . '<td class="w4"><br><br>' . ($i+1)." ".$fila[$i]["numero_serie"]. '</td>'
+                        . '<td class="w15"><br><br>'.$fila[$i]["tipo_activo_nombre"] ." ". $fila[$i]["Modelo"] . '</td>'
+                        . '<td class="w8"><br><br></td>'
+                        . '<td class="wip"><br><br></td>'
+                        . '<td class="wip"><br><br></td>'
+                        . '<td class="wip"></td>'
+                        . '<td class="w8"></td>'
+                        . '<td class="w8"></td>'
+                        . '<td class="w30"><br><br><br><br></td>'
+                        . '</tr>';
+                }else{
+                    $tabla .= 
+                    '<tr>'
+                        . '<td class="w4"><br><br>' . ($i+1)." ".$fila[$i]["numero_serie"]. '</td>'
+                        . '<td class="w15"><br><br>'.$fila[$i]["tipo_activo_nombre"] ." " . $fila[$i]["Modelo"] . '</td>'
+                        . '<td class="w8"><br><br>' . $fila[$i]["Procesador"]." G.".$fila[$i]["Generacion"] . '</td>'
+                        . '<td class="wip"><br><br>' ."RAM ". $fila[$i]["Ram"] . '</td>'
+                        . '<td class="wip"><br><br>' .$fila[$i]["DiscoDuro"]." ".$fila[$i]["Capacidad_D1"]
+                        ." <br>".$fila[$i]["DiscoDuro2"]." ".$fila[$i]["Capacidad_D2"]. '</td>'
+                        . '<td class="wip"></td>'
+                        . '<td class="w8"></td>'
+                        . '<td class="w8"></td>'
+                        . '<td class="w30"><br><br><br><br></td>'
+                        . '</tr>';
+                }
                 $tblaCount++;
                 
             }
