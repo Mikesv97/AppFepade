@@ -66,21 +66,16 @@ $idUSuario = $_SESSION["usuario"]["id"];
                 <p>A continuación, el contenedor: </p>
                 <div id="contenedor"></div>
 
-                <form id="frmLevanAct" class="my-4">
+                <form id="frmInvenAct" class="my-4">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="txtCodigoBarra">Codígo de barra*</label>
-                            <input type="text" class="form-control" id="txtCodigoBarra" name="txtCodigoBarra" required readonly>
+                            <input type="text" class="form-control" id="txtCodigoBarra" name="txtCodigoBarra" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="fechaCodBarra">Fecha*</label>
                             <input id="fechaCodBarra" type="date" name="fechaCodBarra" class="form-control" required>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="txtPassword1">Usuario ID*</label>
-                            <input type="text" class="form-control" id="usuarioId" name="usuarioId" maxlength="15" value="<?= $idUSuario; ?>" readonly>
-                        </div>
-
                     </div>
                     <div class="col-md-12">
                         <p class="alertError my-2" role="alert" id="lbError"></p>
