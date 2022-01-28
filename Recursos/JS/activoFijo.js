@@ -838,6 +838,7 @@ jQuery(document).ready(function ($) {
             desabilitarInputPc(false);
             desabilitarInputProyector(true);
             desabilitarInputImpresora(true);
+            desabilitarIp(false);
         } else if (data['Activo_tipo'] == 3) {
             desabilitarInputPc(true);
             desabilitarInputProyector(true);
@@ -846,6 +847,16 @@ jQuery(document).ready(function ($) {
         } else if (data['Activo_tipo'] == 4) {
             desabilitarInputPc(true);
             desabilitarInputProyector(false);
+            desabilitarInputImpresora(true);
+            desabilitarIp(true);
+        }else if (data['Activo_tipo'] == 5) {
+            desabilitarInputPc(true);
+            desabilitarInputProyector(true);
+            desabilitarInputImpresora(true);
+            desabilitarIp(false);
+        }else if (data['Activo_tipo'] == 6) {
+            desabilitarInputPc(true);
+            desabilitarInputProyector(true);
             desabilitarInputImpresora(true);
             desabilitarIp(true);
         }

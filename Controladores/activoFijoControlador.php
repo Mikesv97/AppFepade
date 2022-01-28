@@ -14,9 +14,9 @@ if ($_POST) {
             case "insertar":
                 //VARIABLE DONDE SE ALMACENA EL ID TIPO ACTIVO
                 $tipoActivo = $_POST["tipoActivo"];
-                
+
                 //AQUI SE EVALUA QUE EL TIPO DE ACTIVO SEA DE LOS 4 SOLICITADOS SI NO ES ASI NO SE INSERTARA EL ACTIVO
-                if ($tipoActivo == 1 || $tipoActivo == 2 || $tipoActivo == 3 || $tipoActivo == 4) {
+                if ($tipoActivo == 1 || $tipoActivo == 2 || $tipoActivo == 3 || $tipoActivo == 4 || $tipoActivo == 5 || $tipoActivo == 6) {
                     //ASIGNADO A LA FUNCION SETOBJETIVOACTIVOFIJO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
                     $objActivoFijo = setObjActivoFijo(
                         $_POST['ActivoReferencia'],
@@ -136,6 +136,58 @@ if ($_POST) {
                                         $insertActive = true;
                                     }
                                     break;
+                                case 5:
+                                    $noDatos = 'N/A';
+                                    //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                                    $objActivoEspeComp = setObjActivoEspeComp(
+                                        $obtejerIdActivo, //LLAMANDO A LA VARIABLE DONDE TIENE LA FUNCION PARA OBTENER EL ID ACTIVO INGRESADOR
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $_POST['Modelo'],
+                                        $_POST['ip']
+                                    );
+
+                                    if ($activoEspe->insertarActEspCom($objActivoEspeComp) == 0) {
+                                        echo json_encode('FailActiveEspe');
+                                    } else {
+                                        $insertActive = true;
+                                    }
+
+                                    break;
+                                case 6:
+                                    $noDatos = 'N/A';
+                                    //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                                    $objActivoEspeComp = setObjActivoEspeComp(
+                                        $obtejerIdActivo, //LLAMANDO A LA VARIABLE DONDE TIENE LA FUNCION PARA OBTENER EL ID ACTIVO INGRESADOR
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $noDatos,
+                                        $_POST['Modelo'],
+                                        $noDatos
+                                    );
+
+                                    if ($activoEspe->insertarActEspCom($objActivoEspeComp) == 0) {
+                                        echo json_encode('FailActiveEspe');
+                                    } else {
+                                        $insertActive = true;
+                                    }
+
+                                    break;
                             }
 
                             //evaluamos i el insert del tipo de activo que se inserto fue exitoso
@@ -171,7 +223,7 @@ if ($_POST) {
                 //VARIABLE DONDE SE ALMACENA EL ID TIPO ACTIVO
                 $tipoActivo = $_POST["tipoActivo"];
                 //AQUI SE EVALUA QUE EL TIPO DE ACTIVO SEA DE LOS 4 SOLICITADOS SI NO ES ASI NO SE MODIFICARA EL ACTIVO
-                if ($tipoActivo == 1 || $tipoActivo == 2 || $tipoActivo == 3 || $tipoActivo == 4) {
+                if ($tipoActivo == 1 || $tipoActivo == 2 || $tipoActivo == 3 || $tipoActivo == 4 || $tipoActivo == 5 || $tipoActivo == 6) {
                     //ASIGNADO A LA FUNCION SETOBJETIVOACTIVOFIJO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
                     $objActivoFijoMod = setObjActivoFijoMod(
                         $_POST['ActivoReferencia'],
@@ -278,6 +330,56 @@ if ($_POST) {
                                 );
 
                                 if ($activoEspe->modificarActEspProy($objActivoEspeProyMod) == 0) {
+                                    echo json_encode('FailModificarActivo');
+                                } else {
+                                    $updateActive = true;
+                                }
+                                break;
+                            case 5:
+                                $noDatos = 'N/A';
+                                //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                                $ObjActivoEspeCompMod = setObjActivoEspeCompMod(
+                                    $noDatos,
+                                    $noDatos,
+                                    $noDatos,
+                                    $noDatos,
+                                    $_POST['Modelo'],
+                                    $noDatos,
+                                    $noDatos,
+                                    $_POST['ip'],
+                                    $noDatos,
+                                    $noDatos,
+                                    $noDatos,
+                                    $noDatos,
+                                    $_POST['ActivoId']
+                                );
+
+                                if ($activoEspe->modificarActEspCom($ObjActivoEspeCompMod) == 0) {
+                                    echo json_encode('FailModificarActivo');
+                                } else {
+                                    $updateActive = true;
+                                }
+                                break;
+                            case 6:
+                                $noDatos = 'N/A';
+                                //ASIGNADO A LA FUNCION SETOBJETIVO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
+                                $ObjActivoEspeCompMod = setObjActivoEspeCompMod(
+                                    $noDatos,
+                                    $noDatos,
+                                    $noDatos,
+                                    $noDatos,
+                                    $_POST['Modelo'],
+                                    $noDatos,
+                                    $noDatos,
+                                    $noDatos,
+                                    $noDatos,
+                                    $noDatos,
+                                    $noDatos,
+                                    $noDatos,
+                                    $_POST['ActivoId']
+                                );
+
+                                if ($activoEspe->modificarActEspCom($ObjActivoEspeCompMod) == 0) {
                                     echo json_encode('FailModificarActivo');
                                 } else {
                                     $updateActive = true;
