@@ -32,6 +32,18 @@ $(document).ready(function () {
                 desabilitarInputProyector(false, true);
                 desabilitarIp(true, false)
                 break;
+            case '5':
+                desabilitarInputPc(true);
+                desabilitarInputImpresora(true);
+                desabilitarInputProyector(true);
+                desabilitarIp(false, true);
+                break;
+            case '6':
+                desabilitarInputPc(true);
+                desabilitarInputImpresora(true);
+                desabilitarInputProyector(true);
+                desabilitarIp(true, false)
+                break;
             default:
                 desabilitarInputPc(false, true);
                 desabilitarInputImpresora(true);
@@ -66,16 +78,16 @@ function desabilitarInputPc(desabilitar, requerido) {
         $('input[name=Office]').removeClass('desabilitado');
         $('input[name=SO]').removeClass('desabilitado');
     }
-    $('input[name=Procesador]').attr({'disabled': desabilitar, 'required': requerido})
-    $('input[name=Generacion]').attr({'disabled': desabilitar, 'required': requerido})
-    $('input[name=Ram]').attr({'disabled': desabilitar, 'required': requerido})
-    $('input[name=TipoRam]').attr({'disabled': desabilitar, 'required': requerido})
-    $('input[name=DiscoDuro]').attr({'disabled': desabilitar, 'required': requerido})
-    $('input[name=CapacidadD1]').attr({'disabled': desabilitar, 'required': requerido})
+    $('input[name=Procesador]').attr({ 'disabled': desabilitar, 'required': requerido })
+    $('input[name=Generacion]').attr({ 'disabled': desabilitar, 'required': requerido })
+    $('input[name=Ram]').attr({ 'disabled': desabilitar, 'required': requerido })
+    $('input[name=TipoRam]').attr({ 'disabled': desabilitar, 'required': requerido })
+    $('input[name=DiscoDuro]').attr({ 'disabled': desabilitar, 'required': requerido })
+    $('input[name=CapacidadD1]').attr({ 'disabled': desabilitar, 'required': requerido })
     $('input[name=DiscoDuro2]').attr('disabled', desabilitar)
     $('input[name=CapacidadD2]').attr('disabled', desabilitar)
-    $('input[name=Office]').attr({'disabled': desabilitar, 'required': requerido})
-    $('input[name=SO]').attr({'disabled': desabilitar, 'required': requerido})
+    $('input[name=Office]').attr({ 'disabled': desabilitar, 'required': requerido })
+    $('input[name=SO]').attr({ 'disabled': desabilitar, 'required': requerido })
 }
 
 function desabilitarInputProyector(desabilitar, requerido) {
@@ -86,8 +98,8 @@ function desabilitarInputProyector(desabilitar, requerido) {
         $('input[name=HorasUso]').removeClass('desabilitado');
         $('input[name=HoraEco]').removeClass('desabilitado');
     }
-    $('input[name=HorasUso]').attr({'disabled': desabilitar, 'required': requerido})
-    $('input[name=HoraEco]').attr({'disabled': desabilitar, 'required': requerido})
+    $('input[name=HorasUso]').attr({ 'disabled': desabilitar, 'required': requerido })
+    $('input[name=HoraEco]').attr({ 'disabled': desabilitar, 'required': requerido })
 }
 
 function desabilitarInputImpresora(desabilitar, requerido) {
@@ -106,19 +118,19 @@ function desabilitarInputImpresora(desabilitar, requerido) {
         $('input[name=tambor]').removeClass('desabilitado');
         $('input[name=fusor]').removeClass('desabilitado');
     }
-    $('input[name=TonerN]').attr({'disabled': desabilitar, 'required': requerido})
-    $('input[name=TonerM]').attr({'disabled': desabilitar, 'required': requerido})
-    $('input[name=TonerC]').attr({'disabled': desabilitar, 'required': requerido})
-    $('input[name=TonerA]').attr({'disabled': desabilitar, 'required': requerido})
-    $('input[name=tambor]').attr({'disabled': desabilitar})
-    $('input[name=fusor]').attr({'disabled': desabilitar})
+    $('input[name=TonerN]').attr({ 'disabled': desabilitar, 'required': requerido })
+    $('input[name=TonerM]').attr({ 'disabled': desabilitar, 'required': requerido })
+    $('input[name=TonerC]').attr({ 'disabled': desabilitar, 'required': requerido })
+    $('input[name=TonerA]').attr({ 'disabled': desabilitar, 'required': requerido })
+    $('input[name=tambor]').attr({ 'disabled': desabilitar })
+    $('input[name=fusor]').attr({ 'disabled': desabilitar })
 }
 
-function desabilitarIp(desabilitar, requerido){
-    if(desabilitar){
+function desabilitarIp(desabilitar, requerido) {
+    if (desabilitar) {
         $('input[name=ip').addClass('desabilitado');
-    }else{
+    } else {
         $('input[name=ip]').removeClass('desabilitado');
     }
-    $('input[name=ip]').attr({'disabled': desabilitar, 'required': requerido})
+    $('input[name=ip]').attr({ 'disabled': desabilitar, 'required': requerido })
 }
