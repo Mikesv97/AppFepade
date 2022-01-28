@@ -397,7 +397,7 @@ class ReportesDao
         $tablaProyector = $rpt->getHeaderTablaRptProyector(false);
         $tablaImp = $rpt->getHeaderTablaRptImpresor(1);
         $tablaTel = $rpt->getHeaderTablaRptTelefono(false);
-        $tablaMonitor = $rpt->getHeaderTablaRptMonitor(false);
+        $tablaMonitor = $rpt->getHeaderTablaRptMonitor();
         $estiloTbl = $rpt->getEtiquetaStyleRpt();
         
         //creamos variable auxiliares para área admon
@@ -412,8 +412,8 @@ class ReportesDao
         $contAdmonLap=0;
         $contAdmonImp=0;
         $contAdmonPro=0;
-        $countAdmonTel =0;
-        $countAdmonMoni = 0;
+        $contAdmonTel =0;
+        $contAdmonMoni = 0;
 
         //creamos variables auxiliares para área nula
         $nulaPc =$tablaPC;
@@ -442,8 +442,8 @@ class ReportesDao
         $contCampaLap=0;
         $contCampaImp=0;
         $contCampaPro=0;
-        $countCampaTel =0;
-        $countCampaMoni=0;
+        $contCampaTel =0;
+        $contCampaMoni=0;
 
         //creamos variables auxiliares para área capacitación
         $capaPc =$tablaPC;
@@ -457,8 +457,8 @@ class ReportesDao
         $contCapaLap=0;
         $contCapaImp=0;
         $contCapaPro=0;
-        $countCapaTel =0;
-        $countCapaMoni=0;
+        $contCapaTel =0;
+        $contCapaMoni=0;
 
        //creamos variables auxiliares para área competencias
         $compePc =$tablaPC;
@@ -472,8 +472,8 @@ class ReportesDao
         $contCompeLap=0;
         $contCompeImp=0;
         $contCompePro=0;
-        $countCompeTel =0;
-        $countCompeMoni=0;
+        $contCompeTel =0;
+        $contCompeMoni=0;
 
         //creamos variables auxiliares para área comunicaciones
         $comuniPc =$tablaPC;      
@@ -487,8 +487,8 @@ class ReportesDao
         $contComuniLap=0;
         $contComuniImp=0;
         $contComuniPro=0;
-        $countComuniTel =0;
-        $countComuniMoni =0;
+        $contComuniTel =0;
+        $contComuniMoni =0;
 
         //creamos variables auxiliares para crear el array
         $htmlAdmon = false;
@@ -551,14 +551,14 @@ class ReportesDao
                             $contAdmonPro++;
                         }
 
-                        if(strtolower($tipo) == "telefono ip"){
+                        if(strtolower($tipo) == "telefono"){
                             $admonTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
-                            $countAdmonTel++;
+                            $contAdmonTel++;
                         }
 
                         if(strtolower($tipo) == "monitor"){
                             $admonMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila);
-                            $countAdmonMoni++;
+                            $contAdmonMoni++;
                         }
 
                     break;
@@ -584,6 +584,18 @@ class ReportesDao
                             $nulaPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
                             $contNulaPro++;
                         }
+
+                        
+                        if(strtolower($tipo) == "telefono"){
+                            $nulaTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contNulaTel++;
+                        }
+
+                        if(strtolower($tipo) == "monitor"){
+                            $nulaMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contNulaMoni++;
+                        }
+
                     break;
                     case "campaña de libro":
                         $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
@@ -607,6 +619,18 @@ class ReportesDao
                             $campaPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
                             $contCampaPro++;
                         }
+
+                        
+                        if(strtolower($tipo) == "telefono"){
+                            $campaTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCampaTel++;
+                        }
+
+                        if(strtolower($tipo) == "monitor"){
+                            $campaMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCampaMoni++;
+                        }
+
                     break;
                     case "capacitacion": 
                         $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
@@ -631,7 +655,18 @@ class ReportesDao
                         if(strtolower($tipo) == "proyector"){
                             $capaPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
                             $contCapaPro++;
-                        }            
+                        }
+                        
+                        
+                        if(strtolower($tipo) == "telefono"){
+                            $capaTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $countCapaTel++;
+                        }
+
+                        if(strtolower($tipo) == "monitor"){
+                            $capaMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCapaMoni++;
+                        }
                     break;
                     case "competencias":
                         $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
@@ -654,7 +689,18 @@ class ReportesDao
                         if(strtolower($tipo) == "proyector"){
                             $compePro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
                             $contCompePro++;
-                        }                      
+                        }     
+                        
+                        
+                        if(strtolower($tipo) == "telefono"){
+                            $compeTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCompeTel++;
+                        }
+
+                        if(strtolower($tipo) == "monitor"){
+                            $compeMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCompeMoni++;
+                        }
                     break;
                     case "comunicaciones": 
                         $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
@@ -678,6 +724,16 @@ class ReportesDao
                         if(strtolower($tipo) == "proyector"){
                             $comuniPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
                             $contComuniPro++;
+                        }
+                        
+                        if(strtolower($tipo) == "telefono"){
+                            $comuniTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contComuniTel++;
+                        }
+
+                        if(strtolower($tipo) == "monitor"){
+                            $comuniMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contComuniMoni++;
                         }              
                     break;
                 }
@@ -689,31 +745,43 @@ class ReportesDao
             $admonLap .= "</table>";
             $admonImp .= "</table>";
             $admonPro .= "</table>";
+            $admonTel .= "</table>";
+            $admonMoni .= "</table>";
 
             $nulaPc .= "</table>";
             $nulaLap .= "</table>";
             $nulaImp .= "</table>";
-            $nulaPro .= "</table>"; 
+            $nulaPro .= "</table>";
+            $nulaTel .= "</table>";
+            $nulaMoni .= "</table>"; 
     
             $campaPc .= "</table>" ;
             $campaLap .= "</table>";
             $campaImp .= "</table>";
             $campaPro .= "</table>";
+            $campaTel .= "</table>";
+            $campaMoni .= "</table>";
 
             $capaPc .= "</table>";
             $capaLap .= "</table>";
             $capaImp .= "</table>";
             $capaPro .= "</table>";
+            $capaTel .= "</table>";
+            $capaMoni .= "</table>";
       
             $compePc .= "</table>";
             $compeLap .= "</table>";
             $compeImp .= "</table>";
-            $compePro .= "</table>";  
+            $compePro .= "</table>";
+            $compeTel .= "</table>";
+            $compeMoni .= "</table>";  
 
             $comuniPc .= "</table>";      
             $comuniLap .= "</table>";
             $comuniImp .= "</table>";
-            $comuniPro .= "</table>";  
+            $comuniPro .= "</table>";
+            $comuniTel .= "</table>";
+            $comuniMoni .= "</table>";  
 
 
 
@@ -738,6 +806,13 @@ class ReportesDao
                 $htmlAdmon .=$admonPro;
             }
             
+            if($contAdmonTel>0){
+                $htmlAdmon .=$admonTel;
+            }
+
+            if($contAdmonMoni>0){
+                $htmlAdmon .=$admonMoni;
+            }
             //--------ÁREA NULA----------
             if($contNulaPc > 0){
                 $htmlNula .= $nulaPc;
@@ -753,6 +828,14 @@ class ReportesDao
 
             if($contNulaPro>0){
                 $htmlNula .=$nulaPro;
+            }
+
+            if($contNulaTel>0){
+                $htmlNula .=$nulaTel;
+            }
+
+            if($contNulaMoni>0){
+                $htmlNula .=$nulaMoni;
             }
 
              //--------ÁREA CAMPAÑA LIBRO----------
@@ -772,6 +855,13 @@ class ReportesDao
                  $htmlCampLi .=$campaPro;
             }
 
+            if($contCampaTel>0){
+                $htmlCampLi .=$campaTel;
+            }
+
+            if($contCampaMoni>0){
+                $htmlCampLi .=$campaMoni;
+            }
             //--------ÁREA CAMPAÑA CAPACITACION----------
 
             if($contCapaPc > 0){
@@ -788,6 +878,14 @@ class ReportesDao
 
             if($contCapaPro>0){
                 $htmlCapa .=$capaPro;
+            }
+
+            if($contCapaTel>0){
+                $htmlCapa .= $capaTel;
+            }
+
+            if($contAdmonMoni>0){
+                $htmlCapa .= $capaMoni;
             }
 
             //--------ÁREA COMPETENCIAS----------
@@ -808,6 +906,14 @@ class ReportesDao
                 $htmlCompe .=$compePro;
             }
 
+            if($contCompeTel>0){
+                $htmlCompe .=$compeTel;
+            }
+
+            if($contCompeMoni>0){
+                $htmlCompe .=$compeMoni;
+            }
+
             //--------ÁREA COMUNICACIONES----------
 
 
@@ -825,6 +931,14 @@ class ReportesDao
 
             if($contComuniPro>0){
                 $htmlComuni .=$comuniPro;
+            }
+
+            if($contComuniTel>0){
+                $htmlComuni .=$comuniTel;
+            }
+
+            if($contComuniMoni>0){
+                $htmlComuni .=$comuniMoni;
             }
 
             //creamos el array
@@ -1426,6 +1540,29 @@ class ReportesDao
                     . '</tr>';
                     
                     return $proyector;
+                break;
+                case 'telefono':
+                    $tel="";
+                    $tel .= '<tr>'
+                    . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                    . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                    . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                    . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                    . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
+                    . '</tr>';
+                    
+                    return $tel;
+                break;
+                case 'monitor':
+                    $moni="";
+                    $moni .= '<tr>'
+                    . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                    . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                    . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                    . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                    . '</tr>';
+                    
+                    return $moni;
                 break;
             }       
     }

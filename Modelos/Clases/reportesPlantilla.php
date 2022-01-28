@@ -284,27 +284,16 @@ class ReportesPlantilla extends TCPDF{
     //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
     //para la tabla monitor y poder concatenar los respectivos datos en reporteDao
     //retorna esa variable para ser concatenada con los datos
-    public function getHeaderTablaRptMonitor($boolean){
+    public function getHeaderTablaRptMonitor(){
 
-        if($boolean){
-            $tablaMonitor ='<h3>Monitor</h3>
-            <table>
-               <tr>
-                   <th class="w6">Código</th>
-                   <th class="w15">Descripción</th>
-                   <th class="w12">Responsable</th>
-                   <th class="w7 center" >Modelo</th>
-               </tr>';
-        }else{
-            $tablaMonitor ='<h3>Teléfono</h3>
-            <table>
-               <tr>
-                   <th class="w6">Código</th>
-                   <th class="w15">Descripción</th>
-                   <th class="w12">Responsable</th>
-                   <th class="w7 center" >Modelo</th>
-               </tr>';
-        }
+        $tablaMonitor ='<h3>Monitor</h3>
+        <table>
+            <tr>
+                <th class="w6">Código</th>
+                <th class="w15">Descripción</th>
+                <th class="w12">Responsable</th>
+                <th class="w7 center" >Modelo</th>
+            </tr>';
 
         return $tablaMonitor;
     }
