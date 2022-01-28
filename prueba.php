@@ -29,8 +29,8 @@ $rpt = new ReportesDao();
 }*/
 
 $array = $rpt-> getDataRptTipActAreaTodas();
-//var_dump($array);
-$rpt->generearRptTipActAreaAll($array); 
+var_dump($array);
+//$rpt->generearRptTipActAreaAll($array); 
 ?>
 <!--<form action="prueba.php" method="POST" enctype="multipart/form-data" >
   <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg"><br>

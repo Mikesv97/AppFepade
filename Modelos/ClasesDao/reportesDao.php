@@ -491,12 +491,12 @@ class ReportesDao
         $contComuniMoni =0;
 
         //creamos variables auxiliares para crear el array
-        $htmlAdmon = false;
-        $htmlNula =false;
-        $htmlCampLi =false;
-        $htmlCapa =false;
-        $htmlCompe = false;
-        $htmlComuni = false;
+        $htmlAdmon = "";
+        $htmlNula ="";
+        $htmlCampLi ="";
+        $htmlCapa ="";
+        $htmlCompe = "";
+        $htmlComuni = "";
 
         //establecemos la coneccion
         $con = Conexion::conectar();
@@ -660,7 +660,7 @@ class ReportesDao
                         
                         if(strtolower($tipo) == "telefono"){
                             $capaTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
-                            $countCapaTel++;
+                            $contCapaTel++;
                         }
 
                         if(strtolower($tipo) == "monitor"){
@@ -784,8 +784,6 @@ class ReportesDao
             $comuniMoni .= "</table>";  
 
 
-
-
             //concatenamos para crear array para reporte tablas a sus áreas
             //según las tablas con datos
 
@@ -884,7 +882,7 @@ class ReportesDao
                 $htmlCapa .= $capaTel;
             }
 
-            if($contAdmonMoni>0){
+            if($contCapaMoni>0){
                 $htmlCapa .= $capaMoni;
             }
 
