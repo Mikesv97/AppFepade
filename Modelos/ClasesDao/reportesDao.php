@@ -396,6 +396,8 @@ class ReportesDao
         $tablaLaptop = $rpt->getHeaderTablaRptLap(false);
         $tablaProyector = $rpt->getHeaderTablaRptProyector(false);
         $tablaImp = $rpt->getHeaderTablaRptImpresor(1);
+        $tablaTel = $rpt->getHeaderTablaRptTelefono(false);
+        $tablaMonitor = $rpt->getHeaderTablaRptMonitor(false);
         $estiloTbl = $rpt->getEtiquetaStyleRpt();
         
         //creamos variable auxiliares para área admon
@@ -403,61 +405,90 @@ class ReportesDao
         $admonLap = $tablaLaptop;
         $admonImp = $tablaImp;
         $admonPro = $tablaProyector;
+        $admonTel = $tablaTel;
+        $admonMoni = $tablaMonitor;
 
         $contAdmonPc=0;
         $contAdmonLap=0;
         $contAdmonImp=0;
         $contAdmonPro=0;
+        $countAdmonTel =0;
+        $countAdmonMoni = 0;
 
         //creamos variables auxiliares para área nula
         $nulaPc =$tablaPC;
         $nulaLap =$tablaLaptop;
         $nulaImp =$tablaImp;
         $nulaPro =$tablaProyector; 
+        $nulaTel = $tablaTel;
+        $nulaMoni = $tablaMonitor;
+
         $contNulaPc=0;
         $contNulaLap=0;
         $contNulaImp=0;
         $contNulaPro=0;
+        $contNulaTel=0;
+        $contNulaMoni=0;
 
         //creamos variables auxiliares para área campaña libro
         $campaPc =$tablaPC;
         $campaLap =$tablaLaptop;
         $campaImp =$tablaImp;
         $campaPro =$tablaProyector;
+        $campaTel = $tablaTel;
+        $campaMoni = $tablaMonitor;
+        
         $contCampaPc=0;
         $contCampaLap=0;
         $contCampaImp=0;
         $contCampaPro=0;
+        $countCampaTel =0;
+        $countCampaMoni=0;
 
         //creamos variables auxiliares para área capacitación
         $capaPc =$tablaPC;
         $capaLap =$tablaLaptop;
         $capaImp =$tablaImp;
         $capaPro =$tablaProyector;
+        $capaTel = $tablaTel;
+        $capaMoni = $tablaMonitor;
+
         $contCapaPc=0;
         $contCapaLap=0;
         $contCapaImp=0;
-        $contCapaPro=0; 
+        $contCapaPro=0;
+        $countCapaTel =0;
+        $countCapaMoni=0;
 
        //creamos variables auxiliares para área competencias
         $compePc =$tablaPC;
         $compeLap =$tablaLaptop;
         $compeImp =$tablaImp;
         $compePro =$tablaProyector;  
+        $compeTel = $tablaTel;
+        $compeMoni = $tablaMonitor;
+
         $contCompePc=0;
         $contCompeLap=0;
         $contCompeImp=0;
         $contCompePro=0;
+        $countCompeTel =0;
+        $countCompeMoni=0;
 
         //creamos variables auxiliares para área comunicaciones
         $comuniPc =$tablaPC;      
         $comuniLap =$tablaLaptop;
         $comuniImp =$tablaImp;
-        $comuniPro =$tablaProyector;      
+        $comuniPro =$tablaProyector;
+        $comuniTel = $tablaTel;
+        $comuniMoni = $tablaMonitor;
+
         $contComuniPc=0;
         $contComuniLap=0;
         $contComuniImp=0;
         $contComuniPro=0;
+        $countComuniTel =0;
+        $countComuniMoni =0;
 
         //creamos variables auxiliares para crear el array
         $htmlAdmon = false;
@@ -518,6 +549,16 @@ class ReportesDao
                         if(strtolower($tipo) == "proyector"){
                             $admonPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
                             $contAdmonPro++;
+                        }
+
+                        if(strtolower($tipo) == "telefono ip"){
+                            $admonTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $countAdmonTel++;
+                        }
+
+                        if(strtolower($tipo) == "monitor"){
+                            $admonMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $countAdmonMoni++;
                         }
 
                     break;

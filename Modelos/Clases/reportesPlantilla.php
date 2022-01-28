@@ -250,6 +250,65 @@ class ReportesPlantilla extends TCPDF{
         return $tablaProyector;
     }
 
+
+    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
+    //para la tabla telefono ip y poder concatenar los respectivos datos en reporteDao
+    //retorna esa variable para ser concatenada con los datos
+    public function getHeaderTablaRptTelefono($boolean){
+
+        if($boolean){
+            $tablaTelefono ='<h3>Teléfono</h3>
+            <table>
+               <tr>
+                   <th class="w6">Código</th>
+                   <th class="w15">Descripción</th>
+                   <th class="w12">Responsable</th>
+                   <th class="w7 center" >Modelo</th>
+               </tr>';
+        }else{
+            $tablaTelefono ='<h3>Teléfono</h3>
+            <table>
+               <tr>
+                   <th class="w6">Código</th>
+                   <th class="w15">Descripción</th>
+                   <th class="w12">Responsable</th>
+                   <th class="w7 center" >Modelo</th>
+                   <th class="w9 center" >IP</th>
+               </tr>';
+        }
+
+        return $tablaTelefono;
+    }
+
+
+    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
+    //para la tabla monitor y poder concatenar los respectivos datos en reporteDao
+    //retorna esa variable para ser concatenada con los datos
+    public function getHeaderTablaRptMonitor($boolean){
+
+        if($boolean){
+            $tablaMonitor ='<h3>Monitor</h3>
+            <table>
+               <tr>
+                   <th class="w6">Código</th>
+                   <th class="w15">Descripción</th>
+                   <th class="w12">Responsable</th>
+                   <th class="w7 center" >Modelo</th>
+               </tr>';
+        }else{
+            $tablaMonitor ='<h3>Teléfono</h3>
+            <table>
+               <tr>
+                   <th class="w6">Código</th>
+                   <th class="w15">Descripción</th>
+                   <th class="w12">Responsable</th>
+                   <th class="w7 center" >Modelo</th>
+               </tr>';
+        }
+
+        return $tablaMonitor;
+    }
+
     
     //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
     //para la tabla impresor y poder concatenar los respectivos datos en reporteDao
