@@ -39,6 +39,7 @@ $(document).ready(function(){
         $("#btnGuardarMenu").hide();
         $("#btnEliminar").hide();
         $("#btnCancelar").hide();
+        $("#btnCancelarMenu").hide();
 
         //validamos mediante ajax la acciones permitadas para el rol del usuario
         //que inicio sesión
@@ -58,7 +59,8 @@ $(document).ready(function(){
                             $("#btnInsertarHistorico").show();
                             $("#btnIngresarMenu").show();
                             $("#btnNewUser").show();  
-                            $("#btnCancelar").show();          
+                            $("#btnCancelar").show(); 
+                            $("#btnCancelarMenu").show();         
                         break;
                         case "editar":
                             $("#btnModificar").show();
@@ -66,10 +68,19 @@ $(document).ready(function(){
                             $("#btnGuardar").show();
                             $("#btnGuardarMenu").show();
                             $("#btnCancelar").show();
+                            $("#btnCancelarMenu").show();
                         break;
                         case "eliminar":
                             $("#btnEliminar").show();
                         break;
+                        case "ninguna":
+                            $("#btnRptActArea").hide();
+                            $("#btnRptActTipoActivo").hide();
+                            $("#btnRptAreas").hide();
+                            $("#btnRptMant").hide();
+                            $("#btnRptResAct").hide();
+                            $("#btnRptCantTon").hide();
+                        break;   
                     }
                    
                 }

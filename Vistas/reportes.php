@@ -46,6 +46,7 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
             <div class="col-md-6 p-md-0">
                 <label for="sTipoActivoR">Seleccionar área</label>
                 <select class="form-control" id="sAreas" name="sAreaR">
+                <option value="100">Todas</option>
                 </select>
             </div>
             <div class="col-md-12"><p class="alertError my-2 mb-2" role="alert" id="labelError"></p></div>

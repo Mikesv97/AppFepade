@@ -210,7 +210,7 @@ jQuery(document).ready(function ($) {
                                     text: 'El sisema fue solicitado y diseñado con 4 tipo de activos, PC, Laptop, Impresor, Proyector'
                                         + ' para poder añadir un activo diferente a los 4 iniciales, ponte en contacto con el personal TI'
                                         + ' para implementar la funcionalidad necesaria en el sistema',
-                                    icon: 'error',
+                                    icon: 'info',
                                     confirmButtonText: 'Aceptar',
                                 })
                                 $("#formActivo")[0].reset();

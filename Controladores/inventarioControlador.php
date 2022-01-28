@@ -11,7 +11,7 @@ if ($_POST) {
             case "insertar":
                 $objInventario = setObjInventario(
                     $_POST['txtCodigoBarra'],
-                    str_replace('T', ' ', $_POST['fechaCodBarra'])
+                    $_POST['fechaCodBarra']
                 );
                 if($inventario->insertarInventario($objInventario) == 0){
                     echo json_encode('FailInventario');

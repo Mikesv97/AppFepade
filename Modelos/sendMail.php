@@ -16,13 +16,13 @@ class SendMail {
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp-mail.outlook.com';                      //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'douglas.figueroa20@itca.edu.sv';                     //SMTP username
-        $mail->Password   = 'xxxxxxxx';                               //SMTP password
+        $mail->Username   = 'EL CORREO QUE SE USARÁ ACÁ';                     //SMTP username
+        $mail->Password   = 'CONTRASEÑA DE ESE CORREO';                               //SMTP password
         $mail->SMTPSecure = 'tls';            //Enable implicit TLS encryption
         $mail->Port       = 25;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
         $mail->CharSet = 'UTF-8';
         //Recipients
-        $mail->setFrom('douglas.figueroa20@itca.edu.sv', 'Sistema FEPADE');
+        $mail->setFrom('EL CORREO QUE SE USARÁ ACÁ', 'Sistema FEPADE');
         $mail->addAddress($correo);     //Add a recipient
         //$mail->addAddress('ellen@example.com');               //Name is optional
         //$mail->addReplyTo('info@example.com', 'Information');

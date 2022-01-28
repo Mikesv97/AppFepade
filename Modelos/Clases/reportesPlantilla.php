@@ -8,27 +8,21 @@ class ReportesPlantilla extends TCPDF{
     //metodo sobreescrito para setear el encabezado del reporte
     public function Header() {
         // Logo
-        $this->Image('../Recursos/Multimedia/Imagenes/logoFepadePDF.png', 10, 10, 50);
-        $this->Ln(14);
-        $this->SetFont('helvetica', '', 10);
-        $this->Cell(278, 5, 'Fundación Empresarial', 0, 1,"R");
-        $this->Cell(278, 5, 'Para el desarrollo educativo', 0, 1,"R");
-        $this->Cell(278, 5, 'ISO 9001:2015', 0, 1,"R");
-        // convert TTF font to TCPDF format and store it on the fonts folder
-        $fontname = TCPDF_FONTS::addTTFfont('/path-to-font/Arial.ttf', 'TrueTypeUnicode', '', 96);
-        // Set font
-        $this->SetFont('helvetica', 'B', 11);
-        $this->Ln(3);
-        // Title
-        $this->Cell(0, 6,'FEPADE', 0, 1,"C");
-        $this->Cell(0, 2, 'DETALLE DE ACTIVOS FEPADE', 0, 1,"C");
- 
+        $this->Image('../Recursos/Multimedia/Imagenes/logoFepadePDF.png', 10, 10, 40,0);
+        $this->Ln(10);
+        $this->SetFont('helvetica', 'I', 10);
+        $this->writeHTMLCell(90, 0, 100, '', "FEPADE<br>DETALLE DE ACTIVOS FEPADE", 0, 0, 0, true, 'C', true);
+        $this->writeHTMLCell(90, 0, 188, '', "Fundación Empresarial<br>Para el desarrollo educativo<br>ISO 9001:2015", 0, 0, 0, true, 'R', true);
+        $this->SetMargins(8, PDF_MARGIN_TOP, 8);
+        $this->SetAutoPageBreak(TRUE, 20);
+
     }
 
     // Page footer lo mismo que el header solo que el footer
     public function Footer() {
         // Position at 15 mm from bottom
         $this->SetY(-15);
+        $this->SetFooterMargin(10);
         // Set font
         $this->SetFont('helvetica', 'I', 10);
         date_default_timezone_set("America/El_Salvador");

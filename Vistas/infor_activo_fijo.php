@@ -589,7 +589,7 @@ div.col-md-3{
                                 <div class="col-md-12 responsive-table">
                                     <h5 class=" my-2 label label-dark col-md-12">Historico de ubicaciones</h5>
                                     <div class="">
-                                        <table id="historial" name="historial" class='table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
+                                        <table id="historial" name="historial" class='table-responsive table table-striped dt-responsive nowrap' style='width:100%; text-align: center'>
                                             <thead>
                                                 <tr>
                                                     <th>Fecha de historico</th>

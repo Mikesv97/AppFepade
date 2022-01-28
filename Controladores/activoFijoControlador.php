@@ -14,6 +14,7 @@ if ($_POST) {
             case "insertar":
                 //VARIABLE DONDE SE ALMACENA EL ID TIPO ACTIVO
                 $tipoActivo = $_POST["tipoActivo"];
+                
                 //AQUI SE EVALUA QUE EL TIPO DE ACTIVO SEA DE LOS 4 SOLICITADOS SI NO ES ASI NO SE INSERTARA EL ACTIVO
                 if ($tipoActivo == 1 || $tipoActivo == 2 || $tipoActivo == 3 || $tipoActivo == 4) {
                     //ASIGNADO A LA FUNCION SETOBJETIVOACTIVOFIJO LO QUE VIENE POR LOS INPUT SEGUN EL NAME
@@ -22,7 +23,7 @@ if ($_POST) {
                         $_POST['PartidaCta'],
                         $_POST['EmpresaId'],
                         $_POST['numeroSerie'],
-                        str_replace('T', ' ', $_POST['ActivoFechaAdq']),
+                        $_POST['ActivoFechaAdq'],
                         $_POST['ActivoFactura'],
                         $_POST['ActivoTipo'],
                         $_POST['ActivoDescripcion'],
@@ -30,7 +31,7 @@ if ($_POST) {
                         $_POST['Estructura2Id'],
                         $_POST['Estructura3Id'],
                         $_POST['UsuarioId'],
-                        str_replace('T', ' ', $_POST['ActivoFechaCaduc']),
+                        $_POST['ActivoFechaCaduc'],
                         $_POST['activoDel'],
                         $_POST['activoInac'],
                         $_POST['ResponsableId']
@@ -177,7 +178,7 @@ if ($_POST) {
                         $_POST['PartidaCta'],
                         $_POST['EmpresaId'],
                         $_POST['numeroSerie'],
-                        str_replace('T', ' ', $_POST['ActivoFechaAdq']),
+                        $_POST['ActivoFechaAdq'],
                         $_POST['ActivoFactura'],
                         $_POST['ActivoTipo'],
                         $_POST['ActivoDescripcion'],
@@ -185,7 +186,7 @@ if ($_POST) {
                         $_POST['Estructura2Id'],
                         $_POST['Estructura3Id'],
                         $_POST['UsuarioId'],
-                        str_replace('T', ' ', $_POST['ActivoFechaCaduc']),
+                        $_POST['ActivoFechaCaduc'],
                         $_POST['activoDel'],
                         $_POST['activoInac'],
                         $_POST['ResponsableId'],
@@ -315,7 +316,7 @@ if ($_POST) {
                 $historialInsertado = false;
                 $ObjHistorico = setObjHistorico(
                     $_POST['guardarIdActivo2'],
-                    str_replace('T', ' ', $_POST['fechaHistorico']),
+                    $_POST['fechaHistorico'],
                     $_POST['Estructura3IdH'],
                     $_POST['ResponsableIdH'],
                     $_POST['HistoricoComentarioH'],
@@ -355,7 +356,7 @@ if ($_POST) {
                 break;
             case "modificarHisotial":
                 $ObjModificarHistorico = setObjModificarHistorico(
-                    str_replace('T', ' ', $_POST['fechaHistorico']),
+                    $_POST['fechaHistorico'],
                     $_POST['Estructura3IdH'],
                     $_POST['ResponsableIdH'],
                     $_POST['HistoricoComentarioH'],

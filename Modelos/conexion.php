@@ -5,10 +5,12 @@ class Conexion{
     public static function conectar(){
         $serverName = "DESKTOP-VAIT65I\SQLEXPRESS";
         $basedatos="ACTIVO";
+        $usuario="";
+        $passord="";
         try{
            
             //DECLARANDO CANEDA DE CONEXION
-            $con = new PDO("sqlsrv:Server=$serverName;Database=$basedatos","","");
+            $con = new PDO("sqlsrv:Server=$serverName;Database=$basedatos",$usuario,$passord);
             
             //preparamos a la libreria PDO para mandar
             //excepsiones en caso de errores

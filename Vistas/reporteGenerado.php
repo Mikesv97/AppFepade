@@ -10,14 +10,21 @@ if (isset($_POST["btnRptActArea"])) {
     $areaNombre= $_POST["hdnNameArea"];
     $rpt = new ReportesDao();
 
-    if(isset($tipoAct) && $tipoAct == 0){
+    if($tipoAct == 0 && $area != 100){
 
         $resp = $rpt->getDataRptActivosArea($area, false,1);
         $rpt->generarRptPdfActArea($resp,$areaNombre);
 
-    }else{
+    }
+    
+    if($tipoAct !=0 && $area != 100){
         $resp = $rpt->getDataRptTipActArea($area,$tipoAct);
         $rpt->generarRptPdfActArea($resp,$areaNombre);
+    }
+
+    if($area==100 && $tipoAct==0){
+        $htmlArray = $rpt->getDataRptTipActAreaTodas();
+        $rpt->generearRptTipActAreaAll($htmlArray);
     }
 
 

@@ -41,7 +41,7 @@ class activoFijoDAO
                 $a->getPartidaCta(),
                 $a->getEmpresaId(),
                 $a->getNumeroSerie(),
-                date_create($a->getActivoFechaAdq())->format('d/m/y'),
+                $a->getActivoFechaAdq(),
                 $a->getActivoFactura(),
                 $a->getActivoTipo(),
                 $a->getActivoDescripcion(),
@@ -49,8 +49,8 @@ class activoFijoDAO
                 $a->getEstructura2Id(),
                 $a->getEstructura3Id(),
                 $a->getUsuarioId(),
-                date_create($a->getActivoFechaCaduc())->format('d/m/y'),
-                date_create($a->getActivoFechaAdq())->format('d/m/y'),
+                $a->getActivoFechaCaduc(),
+                $a->getActivoFechaAdq(),
                 $a->getActivoEliminado(),
                 $a->getEstado(),
                 $a->getResponsableCodigo(),
@@ -58,7 +58,7 @@ class activoFijoDAO
             ]);
             return $respuesta->rowCount();
         } catch (PDOException $error) {
-            return $error->getMessage();
+           return $error->getMessage();
         }
     }
 
@@ -219,7 +219,7 @@ class activoFijoDAO
                 $a->getPartidaCta(),
                 $a->getEmpresaId(),
                 $a->getNumeroSerie(),
-                date_create($a->getActivoFechaAdq())->format('d/m/y'),
+                $a->getActivoFechaAdq(),
                 $a->getActivoFactura(),
                 $a->getActivoTipo(),
                 $a->getActivoDescripcion(),
@@ -227,8 +227,8 @@ class activoFijoDAO
                 $a->getEstructura2Id(),
                 $a->getEstructura3Id(),
                 $a->getUsuarioId(),
-                date_create($a->getActivoFechaCaduc())->format('d/m/y'),
-                date_create($a->getActivoFechaAdq())->format('d/m/y'),
+                $a->getActivoFechaCaduc(),
+                $a->getActivoFechaAdq(),
                 $a->getActivoEliminado(),
                 $a->getEstado(),
                 $a->getResponsableCodigo(),

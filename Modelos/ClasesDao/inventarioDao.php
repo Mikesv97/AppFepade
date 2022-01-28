@@ -19,7 +19,7 @@ class inventarioDao{
         try{
             $respuesta->execute([
                 $r->getCodigoBarra(),
-                date_create($r->getFechaInventario())->format('d/m/y')
+                $r->getFechaInventario()
             ]);
             return $respuesta->rowCount();
         }catch(PDOException $error){

@@ -38,19 +38,19 @@ class ReportesDao
         $con = Conexion::conectar();
 
         //establecemos la consulta
-        $sql = "select TOP (100) PERCENT dbo.Activo_Especificacion.DiscoDuro2,dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo, 
+        $sql = "select dbo.Activo_Especificacion.DiscoDuro2,dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo, 
         dbo.Tipo_Activo.tipo_activo_nombre, dbo.Activo.Activo_referencia, dbo.Activo.Activo_descripcion, dbo.Activo.Activo_factura, dbo.Activo.Activo_fecha_adq, dbo.Activo_responsable.Nombre_responsable, dbo.Activo.Estado, 
         dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro, 
         dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM, 
         dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
-        ISNULL(dbo.Activo.Empresa_id, '') AS codigo_proyecto, ISNULL(dbo.Activo.numero_serie, '') AS numero_serie
+        dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie
          FROM  dbo.Activo INNER JOIN
         dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
         dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
         dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
         dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
         where dbo.Estructura31.estructura31_id=?
-        ORDER BY dbo.Activo.Estructura2_id";
+        ORDER BY dbo.Tipo_Activo.tipo_activo_id";
 
         //preparamos la consulta
         $respuesta = $con->prepare($sql);
@@ -194,10 +194,10 @@ class ReportesDao
             }
 
             //cerramos las respectivas tablas de cada tipo
-            $tablaImp .= "</table>";
-            $tablaLaptop .= "</table>";
-            $tablaPC .= "</table>";
-            $tablaProyector .= "</table>";
+            $tablaImp .= "</table><br>";
+            $tablaLaptop .= "</table><br>";
+            $tablaPC .= "</table><br>";
+            $tablaProyector .= "</table><br>";
             $html = "";
 
             //evaluamos en cual tipo de activo no hay datos
@@ -251,19 +251,19 @@ class ReportesDao
         $con = Conexion::conectar();
 
         //establecemos la consulta
-        $sql = "select TOP (100) PERCENT dbo.Activo_Especificacion.DiscoDuro2, dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo,
+        $sql = "select dbo.Activo_Especificacion.DiscoDuro2, dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo,
         dbo.Tipo_Activo.tipo_activo_nombre, dbo.Activo.Activo_referencia, dbo.Activo.Activo_descripcion, dbo.Activo.Activo_factura, dbo.Activo.Activo_fecha_adq, dbo.Activo_responsable.Nombre_responsable, dbo.Activo.Estado,
         dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro,
         dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM,
         dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
-        ISNULL(dbo.Activo.Empresa_id, '') AS codigo_proyecto, ISNULL(dbo.Activo.numero_serie, '') AS numero_serie
+        dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie
         FROM dbo.Activo INNER JOIN
         dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
         dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
         dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
         dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
         where dbo.Tipo_Activo.tipo_activo_id = ? and dbo.Estructura31.estructura31_id= ?
-        ORDER BY dbo.Activo.Estructura2_id";
+        ORDER BY dbo.Tipo_Activo.tipo_activo_id";
 
         //preparamos la consulta
         $respuesta = $con->prepare($sql);
@@ -384,6 +384,443 @@ class ReportesDao
         }
     }
 
+    //solicita los datos de la BD para generar tablas sin filtro
+    //retorna el hmtl para la función que genera el reporte
+    public function getDataRptTipActAreaTodas()
+    {
+        //creamos el objeto de la plantilla html de rpt
+        $rpt = new ReportesPlantilla();
+
+        //obtenemos la maqueta de headers de las tablas para cada tipo de activo
+        $tablaPC = $rpt->getHeaderTablaRptPc(false);
+        $tablaLaptop = $rpt->getHeaderTablaRptLap(false);
+        $tablaProyector = $rpt->getHeaderTablaRptProyector(false);
+        $tablaImp = $rpt->getHeaderTablaRptImpresor(1);
+        $estiloTbl = $rpt->getEtiquetaStyleRpt();
+        
+        //creamos variable auxiliares para área admon
+        $admonPc =  $tablaPC;
+        $admonLap = $tablaLaptop;
+        $admonImp = $tablaImp;
+        $admonPro = $tablaProyector;
+
+        $contAdmonPc=0;
+        $contAdmonLap=0;
+        $contAdmonImp=0;
+        $contAdmonPro=0;
+
+        //creamos variables auxiliares para área nula
+        $nulaPc =$tablaPC;
+        $nulaLap =$tablaLaptop;
+        $nulaImp =$tablaImp;
+        $nulaPro =$tablaProyector; 
+        $contNulaPc=0;
+        $contNulaLap=0;
+        $contNulaImp=0;
+        $contNulaPro=0;
+
+        //creamos variables auxiliares para área campaña libro
+        $campaPc =$tablaPC;
+        $campaLap =$tablaLaptop;
+        $campaImp =$tablaImp;
+        $campaPro =$tablaProyector;
+        $contCampaPc=0;
+        $contCampaLap=0;
+        $contCampaImp=0;
+        $contCampaPro=0;
+
+        //creamos variables auxiliares para área capacitación
+        $capaPc =$tablaPC;
+        $capaLap =$tablaLaptop;
+        $capaImp =$tablaImp;
+        $capaPro =$tablaProyector;
+        $contCapaPc=0;
+        $contCapaLap=0;
+        $contCapaImp=0;
+        $contCapaPro=0; 
+
+       //creamos variables auxiliares para área competencias
+        $compePc =$tablaPC;
+        $compeLap =$tablaLaptop;
+        $compeImp =$tablaImp;
+        $compePro =$tablaProyector;  
+        $contCompePc=0;
+        $contCompeLap=0;
+        $contCompeImp=0;
+        $contCompePro=0;
+
+        //creamos variables auxiliares para área comunicaciones
+        $comuniPc =$tablaPC;      
+        $comuniLap =$tablaLaptop;
+        $comuniImp =$tablaImp;
+        $comuniPro =$tablaProyector;      
+        $contComuniPc=0;
+        $contComuniLap=0;
+        $contComuniImp=0;
+        $contComuniPro=0;
+
+        //creamos variables auxiliares para crear el array
+        $htmlAdmon = false;
+        $htmlNula =false;
+        $htmlCampLi =false;
+        $htmlCapa =false;
+        $htmlCompe = false;
+        $htmlComuni = false;
+
+        //establecemos la coneccion
+        $con = Conexion::conectar();
+
+        //establecemos la consulta
+        $sql = "select dbo.Activo_Especificacion.DiscoDuro2, dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo,
+        dbo.Tipo_Activo.tipo_activo_nombre, dbo.Activo.Activo_referencia, dbo.Activo.Activo_descripcion, dbo.Activo.Activo_factura, dbo.Activo.Activo_fecha_adq, dbo.Activo_responsable.Nombre_responsable, dbo.Activo.Estado,
+        dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro,
+        dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM,
+        dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
+        dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie
+        FROM dbo.Activo INNER JOIN
+        dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
+        dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
+        dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
+        dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
+        ORDER BY dbo.Estructura31.estructura31_nombre";
+
+        //preparamos la consulta
+        $respuesta = $con->query($sql);
+
+        try {
+            //convertimos a un arreglo los datos obtenidos de BD
+            $fila =  $respuesta->fetchAll(PDO::FETCH_ASSOC);
+
+            //si los hay
+            //recorremos y creamos las respectivas tablas
+            for ($i = 0; $i < sizeof($fila); $i++) {
+                $area = trim($fila[$i]["estructura31_nombre"]);
+                switch (strtolower($area)) {
+                    case "administracion":
+                        $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
+
+                        if(strtolower($tipo) == "pc"){
+                            $admonPc .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contAdmonPc++;
+                                    
+                        }
+
+                        if(strtolower($tipo) == "laptop"){
+                            $admonLap .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contAdmonLap++;
+                        }
+
+                        if(strtolower($tipo) == "impresor"){
+                            $admonImp .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contAdmonImp++;
+                        }
+
+                        if(strtolower($tipo) == "proyector"){
+                            $admonPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contAdmonPro++;
+                        }
+
+                    break;
+                    case "nula": 
+                        $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
+
+                        if(strtolower($tipo) == "pc"){
+                            $nulaPc .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contNulaPc++;
+                        }
+
+                        if(strtolower($tipo) == "laptop"){
+                            $nulaLap .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contNulaLap++;
+                        }
+
+                        if(strtolower($tipo) == "impresor"){
+                            $nulaImp .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contNulaImp++;
+                        }
+
+                        if(strtolower($tipo) == "proyector"){
+                            $nulaPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contNulaPro++;
+                        }
+                    break;
+                    case "campaña de libro":
+                        $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
+
+                        if(strtolower($tipo) == "pc"){
+                            $campaPc .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCampaPc++;
+                        }
+
+                        if(strtolower($tipo) == "laptop"){
+                            $campaLap .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCampaLap++;
+                        }
+
+                        if(strtolower($tipo) == "impresor"){
+                            $campaImp .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCampaImp++;
+                        }
+
+                        if(strtolower($tipo) == "proyector"){
+                            $campaPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCampaPro++;
+                        }
+                    break;
+                    case "capacitacion": 
+                        $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
+
+                        if(strtolower($tipo) == "pc"){
+                            $capaPc .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCapaPc++;
+                           
+                        }
+
+                        if(strtolower($tipo) == "laptop"){
+                            $capaLap .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCapaLap++;
+                            
+                        }
+
+                        if(strtolower($tipo) == "impresor"){
+                            $capaImp .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCapaImp++;
+                        }
+
+                        if(strtolower($tipo) == "proyector"){
+                            $capaPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCapaPro++;
+                        }            
+                    break;
+                    case "competencias":
+                        $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
+
+                        if(strtolower($tipo) == "pc"){
+                            $compePc .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCompePc++;
+                        }
+
+                        if(strtolower($tipo) == "laptop"){
+                            $compeLap .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCompeLap++;
+                        }
+
+                        if(strtolower($tipo) == "impresor"){
+                            $compeImp .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCompeImp++;
+                        }
+
+                        if(strtolower($tipo) == "proyector"){
+                            $compePro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contCompePro++;
+                        }                      
+                    break;
+                    case "comunicaciones": 
+                        $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
+
+                        if(strtolower($tipo) == "pc"){
+                            $comuniPc .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contComuniPc++;
+                           
+                        }
+
+                        if(strtolower($tipo) == "laptop"){
+                            $comuniLap .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contComuniLap++;
+                        }
+
+                        if(strtolower($tipo) == "impresor"){
+                            $comuniImp .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contComuniImp++;
+                        }
+
+                        if(strtolower($tipo) == "proyector"){
+                            $comuniPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $contComuniPro++;
+                        }              
+                    break;
+                }
+            }
+
+            
+            //concatenamos el cierre de tablas por área
+            $admonPc .=  "</table>";
+            $admonLap .= "</table>";
+            $admonImp .= "</table>";
+            $admonPro .= "</table>";
+
+            $nulaPc .= "</table>";
+            $nulaLap .= "</table>";
+            $nulaImp .= "</table>";
+            $nulaPro .= "</table>"; 
+    
+            $campaPc .= "</table>" ;
+            $campaLap .= "</table>";
+            $campaImp .= "</table>";
+            $campaPro .= "</table>";
+
+            $capaPc .= "</table>";
+            $capaLap .= "</table>";
+            $capaImp .= "</table>";
+            $capaPro .= "</table>";
+      
+            $compePc .= "</table>";
+            $compeLap .= "</table>";
+            $compeImp .= "</table>";
+            $compePro .= "</table>";  
+
+            $comuniPc .= "</table>";      
+            $comuniLap .= "</table>";
+            $comuniImp .= "</table>";
+            $comuniPro .= "</table>";  
+
+
+
+
+            //concatenamos para crear array para reporte tablas a sus áreas
+            //según las tablas con datos
+
+             //--------ÁREA ADMON----------
+            if($contAdmonPc > 0){
+                $htmlAdmon .= $admonPc;
+            }
+
+            if($contAdmonLap>0){
+                $htmlAdmon .= $admonLap;
+            }
+
+            if($contAdmonImp>0){
+                $htmlAdmon .=$admonImp;
+            }
+
+            if($contAdmonPro>0){
+                $htmlAdmon .=$admonPro;
+            }
+            
+            //--------ÁREA NULA----------
+            if($contNulaPc > 0){
+                $htmlNula .= $nulaPc;
+            }
+
+            if($contNulaLap>0){
+                $htmlNula .= $nulaLap;
+            }
+
+            if($contNulaImp>0){
+                $htmlNula .=$nulaImp;
+            }
+
+            if($contNulaPro>0){
+                $htmlNula .=$nulaPro;
+            }
+
+             //--------ÁREA CAMPAÑA LIBRO----------
+            if($contCampaPc > 0){
+                $htmlCampLi .= $campaPc;
+            }
+
+            if($contCampaLap>0){
+                 $htmlCampLi .= $campaLap;
+            }
+
+            if($contCampaImp>0){
+                 $htmlCampLi .=$campaImp;
+            }
+
+            if($contCampaPro>0){
+                 $htmlCampLi .=$campaPro;
+            }
+
+            //--------ÁREA CAMPAÑA CAPACITACION----------
+
+            if($contCapaPc > 0){
+                $htmlCapa .= $capaPc;
+            }
+
+            if($contCapaLap>0){
+                $htmlCapa .= $capaLap;
+            }
+
+            if($contCapaImp>0){
+                $htmlCapa .=$capaImp;
+            }
+
+            if($contCapaPro>0){
+                $htmlCapa .=$capaPro;
+            }
+
+            //--------ÁREA COMPETENCIAS----------
+
+            if($contCompePc > 0){
+                $htmlCompe .= $compePc;
+            }
+
+            if($contCompeLap>0){
+                $htmlCompe .= $compeLap;
+            }
+
+            if($contCompeImp>0){
+                $htmlCompe .=$compeImp;
+            }
+
+            if($contCompePro>0){
+                $htmlCompe .=$compePro;
+            }
+
+            //--------ÁREA COMUNICACIONES----------
+
+
+            if($contComuniPc > 0){
+                $htmlComuni .= $comuniPc;
+            }
+
+            if($contComuniLap>0){
+                $htmlComuni .= $comuniLap;
+            }
+
+            if($contComuniImp>0){
+                $htmlComuni .=$comuniImp;
+            }
+
+            if($contComuniPro>0){
+                $htmlComuni .=$comuniPro;
+            }
+
+            //creamos el array
+            $arrayData = array();
+
+            if(strlen($htmlAdmon)>0){
+               $arrayData["Administración"] = $htmlAdmon.$estiloTbl;
+            }
+
+            if(strlen($htmlNula)>0){
+                $arrayData["Nula"] = $htmlNula.$estiloTbl;
+            }
+
+            if(strlen($htmlCampLi)>0){
+                $arrayData["Campaña de libro"] = $htmlCampLi.$estiloTbl;
+            }
+
+            if(strlen($htmlCapa)>0){
+                $arrayData["Capacitación"] = $htmlCapa.$estiloTbl;
+            }
+
+            if(strlen($htmlCompe)>0){
+                $arrayData["Competencias"] = $htmlCompe.$estiloTbl;
+            }
+
+            if(strlen($htmlComuni)>0){
+                $arrayData["Comunicaciones"] = $htmlComuni.$estiloTbl;
+            }
+            
+            //retornamos array
+            return $arrayData;
+
+        } catch (PDOException $error) {
+            echo $error->getMessage();
+        }
+    }
+
     //FUNCION QUE CUENTA LA CANTIDAD TOTAL DE TIPO DE ACTIVO SELECICONADO
     //retorna el hmtl para la función que genera el reporte
     public function contTotalTipAct($tipoActivo)
@@ -432,14 +869,14 @@ class ReportesDao
         dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro, 
         dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM, 
         dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
-        ISNULL(dbo.Activo.Empresa_id, '') AS codigo_proyecto, ISNULL(dbo.Activo.numero_serie, '') AS numero_serie
+        dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie
          FROM  dbo.Activo INNER JOIN
         dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
         dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
         dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
         dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
         where dbo.Tipo_Activo.tipo_activo_id=?
-        ORDER BY dbo.Activo.Estructura2_id";
+        ORDER BY dbo.Estructura31.estructura31_nombre";
 
         //preparamos la consulta
         $respuesta = $con->prepare($sql);
@@ -686,18 +1123,18 @@ class ReportesDao
         $con = Conexion::conectar();
 
         //establecemos la consulta
-        $sql = "select TOP (100) PERCENT dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo,
+        $sql = "select dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo,
         dbo.Tipo_Activo.tipo_activo_nombre, dbo.Activo.Activo_referencia, dbo.Activo.Activo_descripcion, dbo.Activo.Activo_factura, dbo.Activo.Activo_fecha_adq, dbo.Activo_responsable.Nombre_responsable, dbo.Activo.Estado,
         dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro, dbo.Activo_Especificacion.Capacidad_D1,
 		dbo.Activo_Especificacion.DiscoDuro2,dbo.Activo_Especificacion.Capacidad_D2, dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM,
         dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
-        ISNULL(dbo.Activo.Empresa_id, '') AS codigo_proyecto, ISNULL(dbo.Activo.numero_serie, '') AS numero_serie
+        dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie
         FROM dbo.Activo INNER JOIN
         dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
         dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
         dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
         dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
-        where dbo.Estructura31.estructura31_id= ? 
+        where dbo.Estructura31.estructura31_id= ?
         ORDER BY dbo.Tipo_Activo.tipo_activo_id";
 
         //preparamos la consulta
@@ -778,13 +1215,12 @@ class ReportesDao
     /*   ------- INICIAN FUNCIONES PARA GENERAR LOS REPORTES QUE SE IMPRIMEN EN EL NAVEGADOR -------
      -------         SEGÚN LOS DATOS GENERADOS DE LA BD      -------         */
 
-
     //genera reporte <<activo>> filtrado solamente por <<tipo activo>>
     public function generarRptPdfTipAct($html, $tipoActivo, $cantActivo)
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
-        $pdf->Ln(38);
+        $pdf->Ln(2);
         $pdf->SetFont('helvetica', 'B', 10);
         $pdf->Cell(80, 10, "Tipo De Activo: " . $tipoActivo, 0, 0, "L");
         $pdf->Cell(196, 10, "Cantidad: " . $cantActivo, 0, 1, "R");
@@ -799,10 +1235,10 @@ class ReportesDao
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
-        $pdf->Ln(35);
+        $pdf->Ln(2);
         $pdf->SetFont('helvetica', 'B', 10);
         $pdf->Cell(80, 10, "Área: " . $area, 0, 1, "L");
-        $pdf->Ln(5);
+        $pdf->Ln(3);
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Output();
     }
@@ -812,9 +1248,10 @@ class ReportesDao
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
-        $pdf->Ln(10);
-        $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Ln(30);
+        $pdf->Ln(2);
+        $pdf->SetFont('helvetica', 'B', 13);
+        $pdf->Cell(0, 10, "Resumen de activos totales", 0, 1, "C");
+        $pdf->Ln(3);
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Output();
     }
@@ -824,28 +1261,138 @@ class ReportesDao
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
-        $pdf->Ln(29);
+        $pdf->Ln(2);
         $pdf->SetFont('helvetica', 'B', 10);
         $pdf->Cell(0, 15, 'DETALLE DE IMPRESORES', 0, 1,"C");
-        $pdf->Ln(5);
+        $pdf->Ln(3);
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Output();
     }
 
-        //genera reporte de <<mantenimiento>> 
-        public function generarRptPdfMantenimiento($html, $areaNombre)
-        {
-            $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
-            $pdf->AddPage();
-            $pdf->Ln(40);
-            $pdf->SetFont('helvetica', 'B', 10);
-            $pdf->Cell(0, 5, 'Mantenimiento Preventivo de Recursos de TI', 0, 1,"L");
-            $pdf->Cell(70, 5, 'Departamento: '.$areaNombre, 0, 0,"L");
-            $pdf->Cell(145, 5, 'Gerente|Jefe: ______________________________ ', 0, 0,"C");
-            $pdf->Cell(60, 5, 'Fecha: ____________________ ', 0, 1,"L");
+    //genera reporte de <<mantenimiento>> 
+    public function generarRptPdfMantenimiento($html, $areaNombre)
+    {
+        $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
+        $pdf->AddPage();
+        $pdf->Ln(5);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->Cell(0, 5, 'Mantenimiento Preventivo de Recursos de TI', 0, 1,"L");
+        $pdf->Cell(70, 5, 'Departamento: '.$areaNombre, 0, 0,"L");
+        $pdf->Cell(145, 5, 'Gerente|Jefe: ______________________________ ', 0, 0,"C");
+        $pdf->Cell(60, 5, 'Fecha: ____________________ ', 0, 1,"L");
 
-            $pdf->Ln(5);
-            $pdf->writeHTML($html, true, false, true, false, '');
-            $pdf->Output();
+        $pdf->Ln(3);
+        $pdf->writeHTML($html, true, false, true, false, '');
+        $pdf->Output();
+    }
+
+     //genera reporte de <<activo>> por <<área>> y <<tipo activo>> sin filtro
+    public function generearRptTipActAreaAll($htmlArray)
+    {
+        $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
+        $pdf->AddPage();
+        $pdf->Ln(15);
+        
+        foreach ($htmlArray as $key => $value) {
+
+            $pdf->SetFont('helvetica', 'B', 15);
+            $pdf->Ln(0);
+            $pdf->Cell(80, 0, "Área: ".$key, 0, 1, "L");
+            $pdf->Ln(2);
+            $pdf->SetFont('helvetica', 'B', 10);
+            $pdf->writeHTML($value, true, false, true, false, '');
+            $pdf->SetAutoPageBreak(TRUE, 34);
+        
         }
+
+        $pdf->Output();
+    }
+
+
+    //Función que prepara la estructura hmtl del reporte para área sin filtos
+    //recive el área y el valor de la tabla para ir creando la estructura según el área
+    //TIPO ACTIVO = TODOS => AREA = TODAS retorna un array con el area y su html
+    // clave - valor
+    public function setHtmlByAreaTip($tipoActivo,$posicion, $arregloBd){        
+            //evaluamos que área está de valor pasando a minuscula para evitar Admon != admon
+            switch (strtolower($tipoActivo)) {
+                case 'pc':
+                    $fpc="";
+                    $fpc.= '<tr>'
+                            . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                            . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
+                            . '<td class="w7 center">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                            . '<td class="w6 center">' . $arregloBd[$posicion]["Procesador"] . '</td>'
+                            . '<td class="w7-5 center">' . $arregloBd[$posicion]["Generacion"] . '</td>'
+                            . '<td class="w5-5 center">' . $arregloBd[$posicion]["Ram"] . '</td>'
+                            . '<td class="w7-5 center">' . $arregloBd[$posicion]["DiscoDuro"] .
+                            "<br>".$arregloBd[$posicion]["DiscoDuro2"]. '</td>'
+                            . '<td class="w6 center">' . $arregloBd[$posicion]["SO"] . '</td>'
+                            . '<td class="w7-5 center">' . $arregloBd[$posicion]["Office"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["numero_serie"] . '</td>'
+                            . '</tr>';
+
+                 return $fpc;
+
+                break;
+                case 'laptop':
+                    $laptop="";
+                    $laptop .= '<tr>'
+                    . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                    . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                    . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                    . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
+                    . '<td class="w7 center">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                    . '<td class="w6 center">' . $arregloBd[$posicion]["Procesador"] . '</td>'
+                    . '<td class="w7-5 center">' . $arregloBd[$posicion]["Generacion"] . '</td>'
+                    . '<td class="w5-5 center">' . $arregloBd[$posicion]["Ram"] . '</td>'
+                    . '<td class="w7-5 center">' . $arregloBd[$posicion]["DiscoDuro"] .
+                    "<br>".$arregloBd[$posicion]["DiscoDuro2"]. '</td>'
+                    . '<td class="w6 center">' . $arregloBd[$posicion]["SO"] . '</td>'
+                    . '<td class="w7-5 center">' . $arregloBd[$posicion]["Office"] . '</td>'
+                    . '<td class="w7-5">' . $arregloBd[$posicion]["numero_serie"] . '</td>'
+                    . '</tr>';  
+                 return $laptop;               
+                break; 
+                case 'impresor':
+                   $impresor ="";
+                   $impresor .= '<tr>'
+                    . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                    . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                    . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                    . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
+                    . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                    . '<td class="w7-5">' . $arregloBd[$posicion]["TonerN"] . '</td>'
+                    . '<td class="w7-5">' . $arregloBd[$posicion]["TonerM"] . '</td>'
+                    . '<td class="w7-5">' . $arregloBd[$posicion]["TonerC"] . '</td>'
+                    . '<td class="w7-5">' . $arregloBd[$posicion]["TonerA"] . '</td>'
+                    . '</tr>';
+                    
+                   return $impresor;
+                break;
+                case 'proyector':
+                    $proyector="";
+                    $proyector .= '<tr>'
+                    . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                    . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                    . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                    . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
+                    . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                    . '<td class="w7-5">' . $arregloBd[$posicion]["HorasUso"] . '</td>'
+                    . '<td class="w7-5">' . $arregloBd[$posicion]["HoraEco"] . '</td>'
+                    . '</tr>';
+                    
+                    return $proyector;
+                break;
+            }       
+    }
+
+
 }
+
+
+
+
+?>
