@@ -23,7 +23,12 @@ if (isset($_POST["btnRptActArea"])) {
     }
 
     if($area==100 && $tipoAct==0){
-        $htmlArray = $rpt->getDataRptTipActAreaTodas();
+        $htmlArray = $rpt->getDataRptTipActAreaTodas(0);
+        $rpt->generearRptTipActAreaAll($htmlArray);
+    }
+
+    if($area==100 && $tipoAct!=0){
+        $htmlArray = $rpt->getDataRptTipActAreaTodas($tipoAct);
         $rpt->generearRptTipActAreaAll($htmlArray);
     }
 
