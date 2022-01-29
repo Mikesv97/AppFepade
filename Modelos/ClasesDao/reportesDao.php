@@ -1518,10 +1518,10 @@ class ReportesDao
     }
 
 
-    //Función que prepara la estructura hmtl del reporte para área sin filtos
-    //recive el área y el valor de la tabla para ir creando la estructura según el área
-    //TIPO ACTIVO = TODOS => AREA = TODAS retorna un array con el area y su html
-    // clave - valor
+    //Función que prepara la estructura hmtl del reporte por área y tipo
+    //recibe el tipo de activo, posición del recorrido de la iteración al momento de llamar la función,
+    //el arreglo con los datos de la consulta -> base de datos, el reporte es para gerencia o no (booleano)
+    //y si el reporte es para mantenimiento o no (booleano)
     public function setHtmlByAreaTip($tipoActivo,$posicion, $arregloBd, $bandGte, $mantenimiento){        
             //evaluamos que área está de valor pasando a minuscula para evitar Admon != admon
             switch (strtolower($tipoActivo)) {
