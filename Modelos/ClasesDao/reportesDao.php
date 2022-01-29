@@ -1282,7 +1282,7 @@ class ReportesDao
 
   
 
-    
+
     /*   ------- INICIAN FUNCIONES PARA GENERAR LOS REPORTES QUE SE IMPRIMEN EN EL NAVEGADOR -------
      -------         SEGÚN LOS DATOS GENERADOS DE LA BD      -------         */
 
@@ -1397,7 +1397,7 @@ class ReportesDao
         $pdf->Output();
     }
 
-     //genera reporte de <<activo>> por <<área>> y <<tipo activo>> sin filtro
+    //genera reporte de <<activo>> por <<área>> y <<tipo activo>> sin filtro
     public function generearRptTipActAreaAll($htmlArray)
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);

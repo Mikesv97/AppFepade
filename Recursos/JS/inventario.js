@@ -27,7 +27,7 @@ jQuery(document).ready(function ($) {
             contentType: false,
             processData: false,
             success: function (r) {
-                console.log(r);
+                //console.log(r);
                 switch (r) {
                     case "InsertadoInventario":
                         Swal.fire(
@@ -58,10 +58,10 @@ jQuery(document).ready(function ($) {
                 }
             },
             error: function (r) {
-                console.log(r);
+                //console.log(r.responseText);
                 Swal.fire({
                     title: '¡Problemas técnicos!',
-                    text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta el inventario'
+                    text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos con el servidor e inserta el inventario'
                         + ' si el problema persiste contacta a tu administrador o soporte IT.',
                     icon: 'error',
                     confirmButtonText: 'Aceptar',

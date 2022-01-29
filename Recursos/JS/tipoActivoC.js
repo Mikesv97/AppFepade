@@ -131,7 +131,7 @@ jQuery(document).ready(function ($) {
                         contentType: false,
                         processData: false,
                         success: function (r) {
-                            console.log(r);
+                            //console.log(r);
                             switch (r) {
                                 case "InsertadoTipoActivo":
                                     Swal.fire(
@@ -154,10 +154,10 @@ jQuery(document).ready(function ($) {
                             }
                         },
                         error: function (r) {
-                            console.log(r);
+                            //console.log(r.responseText);
                             Swal.fire({
                                 title: '¡Problemas técnicos!',
-                                text: '¡Vaya! Parece que tenemos dificultades técnicas para inserta el tipo de activo'
+                                text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos con el servidor e inserta el tipo de activo'
                                     + ' si el problema persiste contacta a tu administrador o soporte IT.',
                                 icon: 'error',
                                 confirmButtonText: 'Aceptar',
@@ -207,7 +207,7 @@ jQuery(document).ready(function ($) {
                     contentType: false,
                     processData: false,
                     success: function (r) {
-                        console.log(r);
+                        //console.log(r);
                         switch (r) {
                             case "DeleteTipoActivo":
                                 Swal.fire(
@@ -231,10 +231,10 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     error: function (r) {
-                        console.log(r);
+                        //console.log(r.responseText);
                         Swal.fire({
                             title: '¡Problemas técnicos!',
-                            text: '¡Vaya! Parece que tenemos dificultades técnicas para eliminar el tipo de activo del sistema'
+                            text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos con el servidor y eliminar el tipo de activo del sistema'
                                 + ' si el problema persiste contacta a tu administrador o soporte IT.',
                             icon: 'error',
                             confirmButtonText: 'Aceptar',
@@ -320,7 +320,7 @@ jQuery(document).ready(function ($) {
                             contentType: false,
                             processData: false,
                             success: function (r) {
-                                console.log(r);
+                                //console.log(r);
                                 switch (r) {
                                     case "ModificadoTipoActivo":
                                         Swal.fire(
@@ -352,10 +352,10 @@ jQuery(document).ready(function ($) {
                                 }
                             },
                             error: function (r) {
-                                console.log(r.responseText);
+                                //console.log(r.responseText);
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
-                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para modificar el tipo de activo'
+                                    text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos con el servidor y modificar el tipo de activo'
                                         + ' si el problema persiste contacta a tu administrador o soporte IT.',
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
@@ -423,7 +423,7 @@ jQuery(document).ready(function ($) {
                 
             },
             error: function (r) {
-                console.log(r.responseText);
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",

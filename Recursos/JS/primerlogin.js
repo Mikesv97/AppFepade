@@ -18,7 +18,14 @@ $(document).ready(function () {
               }
           },
           error: function (r) {
-            console.log(r);
+            //console.log(r.responseText);
+            Swal.fire({
+              title: 'WOOPS!',
+              text: 'Hubo problemas al intentar comunicarse con el servidor para cerrar la sesión del usuario'
+              +' intenta de nuevo, si el problema persiste contacta a tu administrador o soporte IT.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            })
           }
         });
     });
@@ -52,12 +59,12 @@ $(document).ready(function () {
           data: { "key": "primerCambioPass","usuario":user, "contraseña": pass2},
           success: function (r) {
             var resp = r;
-            console.log(resp);
+            //console.log(resp);
             switch(resp){
               case "FailChangFirtPass":
                 Swal.fire({
                   title: '!Woops!',
-                  text: 'No pudimos conectarnos al servidor, por favor intenta de nuevo, si el problema persiste'
+                  text: 'No pudimos cambiar la contraseña, por favor intenta de nuevo, si el problema persiste'
                   +'informa a tu administrador o personal de IT.\n'
                   +'Proceso: primerCambioContraseña',
                   icon: 'error',
@@ -79,10 +86,10 @@ $(document).ready(function () {
 
           },
           error: function (r) {
-            console.log(r.responseText);
+            //console.log(r.responseText);
             Swal.fire({
               title: '!Woops!',
-              text: 'No pudimos conectarnos al servidor, por favor intenta de nuevo, si el problema persiste'
+              text: 'No pudimos conectarnos al servidor para cambiar la contraseña, por favor intenta de nuevo, si el problema persiste'
               +'informa a tu administrador o personal de IT.\n'
               +'Proceso: ValidarPassActual',
               icon: 'error',
@@ -122,7 +129,7 @@ $(document).ready(function () {
             //console.log(r.responseText);
             Swal.fire({
               title: '!Woops!',
-              text: 'No pudimos conectarnos al servidor, por favor intenta de nuevo, si el problema persiste'
+              text: 'No pudimos conectarnos al servidor y validar que tu contraseña actual sea correcta, por favor intenta de nuevo, si el problema persiste'
               +'informa a tu administrador o personal de IT.\n'
               +'Proceso: ValidarPassActual',
               icon: 'error',
@@ -154,7 +161,7 @@ function mensajeLoad(){
             'success'
           )
         }else{
-            $(location).attr('href',"../index.php");
+            $(location).attr('href',"../index.php?s=true");
         }
       });
  } 

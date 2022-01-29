@@ -14,7 +14,6 @@ if ($_POST) {
             case "insertar":
                 //VARIABLE DONDE SE ALMACENA EL ID TIPO ACTIVO
                 $tipoActivo = $_POST["tipoActivo"];
-
                 //AQUI SE EVALUA QUE EL TIPO DE ACTIVO SEA DE LOS 4 SOLICITADOS SI NO ES ASI NO SE INSERTARA EL ACTIVO
                 if ($tipoActivo == 1 || $tipoActivo == 2 || $tipoActivo == 3 || $tipoActivo == 4 || $tipoActivo == 5 || $tipoActivo == 6) {
                     //ASIGNADO A LA FUNCION SETOBJETIVOACTIVOFIJO LO QUE VIENE POR LOS INPUT SEGUN EL NAME

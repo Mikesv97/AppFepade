@@ -18,8 +18,15 @@ $(document).ready(function(){
                     $(location).attr('href',"../index.php");
                 }
             },
-            error: function () {
-               console.log("Hubo Un Error Al Intentar Comunicarse Al Servidor, Intenta De Nuevo");
+            error: function (r) {
+               //console.log(r.responseText);
+               Swal.fire({
+                icon: 'error',
+                title: "Problemas de comunicación",
+                text: 'Parece que tenemos problemas para comunicarnos con los servidores y cerrar la sesión del usuario'
+                +' por favor verifica tu conexión de internet e intenta de nuevo.',
+                showConfirmButton: true
+            })
             }
         });
     });
@@ -87,7 +94,7 @@ $(document).ready(function(){
                 
             },
             error: function (r) {
-                console.log(r.responseText);
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
@@ -154,7 +161,7 @@ $(document).ready(function(){
                 
             },
             error: function (r) {
-                console.log(r.responseText);
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",

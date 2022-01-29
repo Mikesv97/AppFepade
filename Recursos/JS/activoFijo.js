@@ -222,7 +222,7 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     error: function (r) {
-                        console.log(r.responseText);
+                        //console.log(r.responseText);
                         Swal.fire({
                             title: '¡Problemas técnicos!',
                             text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos con el servidor e insertar los datos'
@@ -351,7 +351,7 @@ jQuery(document).ready(function ($) {
                     contentType: false,
                     processData: false,
                     success: function (r) {
-                        console.log(r);
+                        //console.log(r);
                         switch (r) {
                             case "EliminadoAct":
                                 Swal.fire(
@@ -1379,7 +1379,7 @@ jQuery(document).ready(function ($) {
                     contentType: false,
                     processData: false,
                     success: function (r) {
-                        console.log(r);
+                        //console.log(r);
                         switch (r) {
                             case "modificar":
                                 Swal.fire(
@@ -1416,7 +1416,14 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     error: function (r) {
-                        console.log(r);
+                        //console.log(r.responseText);
+                        Swal.fire({
+                            title: '¡Problemas técnicos!',
+                            text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos con el servidor y modidicar el historico'
+                                + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                        })
                     }
                 });
             }
@@ -1465,7 +1472,7 @@ jQuery(document).ready(function ($) {
                     contentType: false,
                     processData: false,
                     success: function (r) {
-                        console.log(r);
+                        //console.log(r);
                         switch (r) {
                             case "Eliminado":
                                 Swal.fire(
@@ -1491,7 +1498,7 @@ jQuery(document).ready(function ($) {
                                 $("#btnInsertarHistorico").attr('disabled', false);
                                 break;
                             case "FailHistoricoEliminado":
-                                console.log(r);
+                                //console.log(r);
                                 Swal.fire({
                                     title: '¡Problemas técnicos!',
                                     text: '¡Vaya! Parece que tenemos dificultades técnicas para eliminar el historico'
@@ -1503,7 +1510,13 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     error: function (r) {
-                        console.log(r);
+                        Swal.fire({
+                            title: '¡Problemas técnicos!',
+                            text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos con el servidor y eliminar el historico'
+                                + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                        })
                     }
                 });
             } else if (result.isDismissed) {
@@ -1717,7 +1730,7 @@ jQuery(document).ready(function ($) {
 
             },
             error: function (r) {
-                console.log(r.responseText);
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
@@ -1762,7 +1775,7 @@ jQuery(document).ready(function ($) {
 
             },
             error: function (r) {
-                console.log(r.responseText);
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",

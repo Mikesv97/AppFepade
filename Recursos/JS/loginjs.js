@@ -105,7 +105,7 @@ $(document).ready(function(){
                 }
             },
             error: function (r) {
-                console.log(r.responseText);
+                //console.log(r.responseText);
                 //si falla algo se muestra error del proceso
                Swal.fire({
                     title: 'WOOPS!',

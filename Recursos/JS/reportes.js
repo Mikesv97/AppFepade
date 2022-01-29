@@ -1,7 +1,9 @@
 $(document).ready(function(){
    //cargamos el select de tipo de activos
     cargarCmbTipoActivos();
+    //ocultamos label de errores
     $("#labelError").hide();
+
     //cargamos el select de áreas
     cargarCmbAreasActivos();
 
@@ -12,6 +14,9 @@ $(document).ready(function(){
         $("#hdnNameArea").val($("#sAreas option:selected").text().trim());
     });
 
+
+    //al cambio de option en selec pasamos valor
+    //al input escondido para manejar el nombre de tipo activo
     $("#sTipoActivoR").change(function(){
         if($("#labelError").is(":visible")){
             $("#labelError").hide();
@@ -19,40 +24,6 @@ $(document).ready(function(){
         $("#hdnNameAct").val($("#sTipoActivoR option:selected").text().trim());
     });
 
-    $("#btnRptActArea").on("click",function(){
-        if($("#labelError").is(":visible")){
-            $("#labelError").text("");
-            $("#labelError").hide();
-        }
-    });
-
-    $("#btnRptAreas").on("click",function(){
-        if($("#labelError").is(":visible")){
-            $("#labelError").text("");
-            $("#labelError").hide();
-        }
-    });
-
-    $("#btnRptMant").on("click",function(){
-        if($("#labelError").is(":visible")){
-            $("#labelError").text("");
-            $("#labelError").hide();
-        }
-    });
-
-    $("#btnRptResAct").on("click",function(){
-        if($("#labelError").is(":visible")){
-            $("#labelError").text("");
-            $("#labelError").hide();
-        }
-    });
-
-    $("#btnRptCantTon").on("click",function(){
-        if($("#labelError").is(":visible")){
-            $("#labelError").text("");
-            $("#labelError").hide();
-        }
-    });
 });
 
 

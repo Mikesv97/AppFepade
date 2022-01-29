@@ -88,7 +88,7 @@ jQuery(document).ready(function ($) {
                     contentType: false,
                     processData: false,
                     success: function (r) {
-                        console.log(r);
+                        //console.log(r);
                         switch (r) {
                             case "InsertadoResponsable":
                                 Swal.fire(
@@ -111,7 +111,14 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     error: function (r) {
-                        console.log(r);
+                        //console.log(r.responseText);
+                        Swal.fire({
+                            title: '¡Problemas técnicos!',
+                            text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos al servidor e inserta al nuevo responsable'
+                                + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                        })
                     }
                 });
 
@@ -172,7 +179,7 @@ jQuery(document).ready(function ($) {
                     contentType: false,
                     processData: false,
                     success: function (r) {
-                        console.log(r);
+                        //console.log(r);
                         switch (r) {
                             case "DeleteResponsable":
                                 Swal.fire(
@@ -195,7 +202,14 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     error: function (r) {
-                        console.log(r);
+                        //console.log(r.responseText);
+                        Swal.fire({
+                            title: '¡Problemas técnicos!',
+                            text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos con el servidor y eliminar el responsable del sistema'
+                                + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                        })
                     }
                 });
 
@@ -265,7 +279,7 @@ jQuery(document).ready(function ($) {
                     contentType: false,
                     processData: false,
                     success: function (r) {
-                        console.log(r);
+                        //console.log(r);
                         switch (r) {
                             case "ModificadoResponsable":
                                 Swal.fire(
@@ -296,7 +310,14 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     error: function (r) {
-                        console.log(r);
+                        //console.log(r.responseText);
+                        Swal.fire({
+                            title: '¡Problemas técnicos!',
+                            text: '¡Vaya! Parece que tenemos dificultades técnicas para comunicarnos con el servidor y modificar al responsable'
+                                + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                        })
                     }
                 });
 
@@ -344,7 +365,7 @@ jQuery(document).ready(function ($) {
                 
             },
             error: function (r) {
-                console.log(r.responseText);
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",

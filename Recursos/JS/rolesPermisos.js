@@ -207,7 +207,7 @@ jQuery(document).ready(function ($){
                             }
                         },
                         error: function (r) {
-                            console.log(r.responseText);
+                            //console.log(r.responseText);
                             Swal.fire({
                                 icon: 'error',
                                 title: "Problemas de comunicación",
@@ -268,7 +268,7 @@ jQuery(document).ready(function ($){
                     }
                 },
                 error: function (r) {
-                    console.log(r.responseText);
+                    //console.log(r.responseText);
                     Swal.fire({
                         icon: 'error',
                         title: "Problemas de comunicación",
@@ -442,7 +442,7 @@ jQuery(document).ready(function ($){
                                 "accionesArray": accionesArray,
                                 "menuArray": menuArray},
                                 success: function (r) {
-                                    console.log(r);
+                                    //console.log(r);
                                     if(r == true){
                                         Swal.fire({
                                             position: 'bottom-end',
@@ -460,7 +460,7 @@ jQuery(document).ready(function ($){
                                     }
                                 },
                                 error: function (r) {
-                                    console.log(r.responseText);
+                                    //console.log(r.responseText);
                                     Swal.fire({
                                         icon: 'error',
                                         title: "Problemas de comunicación",
@@ -516,7 +516,7 @@ jQuery(document).ready(function ($){
                             "direccionWeb": direccionWeb,
                             "menuPadre": menuPadre},
                             success: function (r) {
-                                console.log(r);
+                                //console.log(r);
                                 if(r == true){
                                     Swal.fire({
                                         position: 'bottom-end',
@@ -536,7 +536,7 @@ jQuery(document).ready(function ($){
                                 }
                             },
                             error: function (r) {
-                                console.log(r.responseText);
+                                //console.log(r.responseText);
                                 Swal.fire({
                                     icon: 'error',
                                     title: "Problemas de comunicación",
@@ -578,7 +578,7 @@ jQuery(document).ready(function ($){
                     data: { "key": "eliminarRol",
                     "idRolTbl": idRolTbl},
                     success: function (r) {
-                        console.log(r);
+                        //console.log(r);
                         if(r == true){
                             Swal.fire({
                                 position: 'bottom-end',
@@ -601,7 +601,7 @@ jQuery(document).ready(function ($){
                         }
                     },
                     error: function (r) {
-                        console.log(r.responseText);
+                        //console.log(r.responseText);
                         Swal.fire({
                             icon: 'error',
                             title: "Problemas de comunicación",
@@ -643,7 +643,7 @@ jQuery(document).ready(function ($){
                     data: { "key": "eliminarMenu",
                     "idMenuTbl": idMenuTbl},
                     success: function (r) {
-                        console.log(r);
+                        //console.log(r);
                         if(r == true){
                             Swal.fire({
                                 position: 'bottom-end',
@@ -668,7 +668,7 @@ jQuery(document).ready(function ($){
                         }
                     },
                     error: function (r) {
-                        console.log(r.responseText);
+                        //console.log(r.responseText);
                         Swal.fire({
                             icon: 'error',
                             title: "Problemas de comunicación",
@@ -776,7 +776,7 @@ jQuery(document).ready(function ($){
                 }
             },
             error: function (r) {
-                console.log(r.responseText);
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
@@ -935,7 +935,7 @@ jQuery(document).ready(function ($){
                }
             },
             error: function (r) {
-                console.log(r)
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
@@ -967,7 +967,7 @@ jQuery(document).ready(function ($){
                }
             },
             error: function (r) {
-                console.log(r)
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
@@ -1075,7 +1075,7 @@ jQuery(document).ready(function ($){
                 callback(roles);
             },
             error: function (r) {
-                console.log(r)
+                //console.log(r.responseText)
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
@@ -1109,11 +1109,11 @@ jQuery(document).ready(function ($){
                 callback(menu);
             },
             error: function (r) {
-                console.log(r)
+                //console.log(r)
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
-                    text: 'Parece tenemos problemas para comunicarnos con los servidores y validar los roles ingresados en el sistema'
+                    text: 'Parece tenemos problemas para comunicarnos con los servidores y validar los menus ingresados en el sistema'
                     +' por favor verifica tu conexión de internet e intenta de nuevo.',
                     showConfirmButton: true
                 })
@@ -1172,7 +1172,7 @@ jQuery(document).ready(function ($){
                 
             },
             error: function (r) {
-                console.log(r.responseText);
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",

@@ -17,10 +17,17 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 		}, function (err) {
 			if (err) {
-				console.log(err);
+				//console.log(err);
+				Swal.fire({
+                    title: '¡Problemas técnicos!',
+                    text: '¡Vaya! Parece que tenemos dificultades técnicas para acceder a la cámara y capturar el código de barras'
+                        + ' si el problema persiste contacta a tu administrador o soporte IT.',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                })
 				return
 			}
-			console.log("Iniciado correctamente");
+			//console.log("Iniciado correctamente");
 			Quagga.start();
 		});
 	});
@@ -29,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		$resultados.textContent = data.codeResult.code;
 		document.getElementById('txtCodigoBarra').value=$resultados.textContent = data.codeResult.code;//ASIGNADO EL VALOR AL INPUT CODIGO DE BARRA
 		// Imprimimos todo el data para que puedas depurar
-		console.log(data);
+		//console.log(data);
 	});
 
 	Quagga.onProcessed(function (result) {

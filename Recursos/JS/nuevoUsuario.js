@@ -244,7 +244,7 @@ $(document).ready(function(){
                                     
                                 },
                                 error: function (r) {
-                                    console.log(r.responseText);
+                                    //console.log(r.responseText);
                                     Swal.fire({
                                         icon: 'error',
                                         title: "Problemas de comunicación",
@@ -326,7 +326,7 @@ $(document).ready(function(){
                 }
             },
             error: function (r) {
-                console.log(r);
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
@@ -527,7 +527,7 @@ $(document).ready(function(){
                 callback(correos);
             },
             error: function (r) {
-                //console.log(r)
+                //console.log(r.responseText)
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
@@ -568,7 +568,7 @@ $(document).ready(function(){
     
             },
             error: function (r) {
-                //console.log(r)
+                //console.log(r.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: "Problemas de comunicación",
