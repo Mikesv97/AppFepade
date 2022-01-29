@@ -1315,19 +1315,32 @@ class ReportesDao
 
 
     //genera reporte de <<activo>> filtrado por <<área>> y <<tipo activo>>
-    public function generarRptPdfActArea($htmlArray, $area)
+    public function generarRptPdfActArea($htmlArray, $area, $areaNombre)
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
 
-        foreach($htmlArray as $key => $value){
-            $pdf->AddPage();
-            $pdf->Ln(2);
-            $pdf->SetFont('helvetica', 'B', 10);
-            $pdf->Cell(80, 10, "Área: " . $area, 0, 1, "L");
-            $pdf->Ln(3);
-            $pdf->writeHTML($value, true, false, true, false, '');
+        if($area ==100){
+            foreach($htmlArray as $key => $value){
+                $pdf->AddPage();
+                $pdf->Ln(2);
+                $pdf->SetFont('helvetica', 'B', 10);
+                $pdf->Cell(80, 10, "Área: " . $key, 0, 1, "L");
+                $pdf->Ln(3);
+                $pdf->writeHTML($value, true, false, true, false, '');
+            }
+            
+        }else{
+            foreach($htmlArray as $key => $value){
+                $pdf->AddPage();
+                $pdf->Ln(2);
+                $pdf->SetFont('helvetica', 'B', 10);
+                $pdf->Cell(80, 10, "Área: " . $areaNombre, 0, 1, "L");
+                $pdf->Ln(3);
+                $pdf->writeHTML($value, true, false, true, false, '');
+            }
+            
         }
-        
+
         $pdf->Output();
     }
 
@@ -1432,7 +1445,7 @@ class ReportesDao
                         if($bandGte){
                             $fpc.= '<tr>'
                             . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br>'.'</td>'
                             . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
                             . '<td class="w7 center">' . $arregloBd[$posicion]["Modelo"] . '</td>'
                             . '<td class="w6 center">' . $arregloBd[$posicion]["Procesador"] . '</td>'
@@ -1447,7 +1460,7 @@ class ReportesDao
                         }else{
                             $fpc.= '<tr>'
                             . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br>'.'</td>'
                             . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
                             . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
                             . '<td class="w7 center">' . $arregloBd[$posicion]["Modelo"] . '</td>'
@@ -1468,7 +1481,7 @@ class ReportesDao
                     $fpc ='<tr>'
                     . '<td class="w9"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
                     . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"] ." " . $arregloBd[$posicion]["Modelo"] . '</td>'
-                    . '<td class="w7-5 center"><br><br>' . $arregloBd[$posicion]["Procesador"]."<br>G.".$arregloBd[$posicion]["Generacion"] . '</td>'
+                    . '<td class="w6 center"><br><br>' . $arregloBd[$posicion]["Procesador"]."<br>G.".$arregloBd[$posicion]["Generacion"] . '</td>'
                     . '<td class="w9 center"><br><br>' ."RAM ". $arregloBd[$posicion]["Ram"] . '</td>'
                     . '<td class="w9 center"><br><br>' .$arregloBd[$posicion]["DiscoDuro"]." ".$arregloBd[$posicion]["Capacidad_D1"]
                     ." <br>".$arregloBd[$posicion]["DiscoDuro2"]." ".$arregloBd[$posicion]["Capacidad_D2"]. '</td>'
@@ -1486,7 +1499,7 @@ class ReportesDao
                         if($bandGte){
                             $laptop .= '<tr>'
                             . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br>'.'</td>'
                             . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
                             . '<td class="w7 center">' . $arregloBd[$posicion]["Modelo"] . '</td>'
                             . '<td class="w6 center">' . $arregloBd[$posicion]["Procesador"] . '</td>'
@@ -1501,7 +1514,7 @@ class ReportesDao
                         }else{
                             $laptop .= '<tr>'
                             . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br>'.'</td>'
                             . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
                             . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
                             . '<td class="w7 center">' . $arregloBd[$posicion]["Modelo"] . '</td>'
@@ -1522,7 +1535,7 @@ class ReportesDao
                     $laptop ='<tr>'
                     . '<td class="w9"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
                     . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"] ." " . $arregloBd[$posicion]["Modelo"] . '</td>'
-                    . '<td class="w7-5 center"><br><br>' . $arregloBd[$posicion]["Procesador"]."<br>G.".$arregloBd[$posicion]["Generacion"] . '</td>'
+                    . '<td class="w6 center"><br><br>' . $arregloBd[$posicion]["Procesador"]."<br>G.".$arregloBd[$posicion]["Generacion"] . '</td>'
                     . '<td class="w9 center"><br><br>' ."RAM ". $arregloBd[$posicion]["Ram"] . '</td>'
                     . '<td class="w9 center"><br><br>' .$arregloBd[$posicion]["DiscoDuro"]." ".$arregloBd[$posicion]["Capacidad_D1"]
                     ." <br>".$arregloBd[$posicion]["DiscoDuro2"]." ".$arregloBd[$posicion]["Capacidad_D2"]. '</td>'
@@ -1539,7 +1552,7 @@ class ReportesDao
                         if($bandGte){
                             $impresor .= '<tr>'
                             . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br>'.'</td>'
                             . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
                             . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
                             . '<td class="w7-5">' . $arregloBd[$posicion]["TonerN"] . '</td>'
@@ -1550,7 +1563,7 @@ class ReportesDao
                            }else{
                             $impresor .= '<tr>'
                             . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br>'.'</td>'
                             . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
                             . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
                             . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
@@ -1583,7 +1596,7 @@ class ReportesDao
                         if($bandGte){
                             $proyector .= '<tr>'
                             . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br>'.'</td>'
                             . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
                             . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
                             . '<td class="w7-5">' . $arregloBd[$posicion]["HorasUso"] . '</td>'
@@ -1592,7 +1605,7 @@ class ReportesDao
                         }else{
                             $proyector .= '<tr>'
                             . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br>'.'</td>'
                             . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
                             . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
                             . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
@@ -1623,7 +1636,7 @@ class ReportesDao
                         if($bandGte){
                             $tel .= '<tr>'
                             . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br>'.'</td>'
                             . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
                             . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
                             . '</tr>';
@@ -1631,7 +1644,7 @@ class ReportesDao
                         }else{
                             $tel .= '<tr>'
                             . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br>'.'</td>'
                             . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
                             . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
                             . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
@@ -1659,7 +1672,7 @@ class ReportesDao
                     if(!$mantenimiento){
                         $moni .= '<tr>'
                         . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                        . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                        . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br>'.'</td>'
                         . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
                         . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
                         . '</tr>';

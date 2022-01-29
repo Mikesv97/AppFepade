@@ -12,26 +12,8 @@ if (isset($_POST["btnRptActArea"])) {
 
     $rpt = new ReportesDao();
 
-    if($tipoAct !=0 && $area != 100){
-        $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area, false, false);
-        $rpt->generarRptPdfActArea($resp,$areaNombre);
-    }
-
-    if($area==100 && $tipoAct==0){
-        $htmlArray = $rpt->getDataRptTipActAreaTodas(0,100, false, false);
-        $rpt->generearRptTipActAreaAll($htmlArray);
-    }
-
-    if($area==100 && $tipoAct!=0){
-        $htmlArray = $rpt->getDataRptTipActAreaTodas($tipoAct, $area, false, false);
-        $rpt->generearRptTipActAreaAll($htmlArray);
-    }
-
-    if($area!=100 && $tipoAct==0){
-        $htmlArray = $rpt->getDataRptTipActAreaTodas($tipoAct, $area, false, false);
-        $rpt->generearRptTipActAreaAll($htmlArray);
-    }
-
+    $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area, false, false);
+    $rpt->generarRptPdfActArea($resp, $area, $areaNombre);
 
 
 }
@@ -80,22 +62,9 @@ if(isset($_POST["btnRptAreas"])){
     $areaNombre= $_POST["hdnNameArea"];
     
     $rpt = new ReportesDao();
-
-    if($tipoAct !=0 && $area != 100){
-        $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area, true, false);
-        $rpt->generarRptPdfActArea($resp,$areaNombre);
-    }
-
-    if($area==100 && $tipoAct==0){
-        $htmlArray = $rpt->getDataRptTipActAreaTodas(0,100, true, false);
-        $rpt->generearRptTipActAreaAll($htmlArray);
-    }
-
-    if($area==100 && $tipoAct!=0){
-        $htmlArray = $rpt->getDataRptTipActAreaTodas($tipoAct, $area, true, false);
-        $rpt->generearRptTipActAreaAll($htmlArray);
-    }
-
+    $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area, true, false);
+    $rpt->generarRptPdfActArea($resp, $area, $areaNombre);
+    
     
     
 }
@@ -110,20 +79,9 @@ if(isset($_POST["btnRptMant"])){
     $tipoActNombre = $_POST["hdnNameAct"];
 
     $rpt = new ReportesDao();
-    if($tipoAct !=0 && $area != 100){
-        $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area, false, true);
-        $rpt->generarRptPdfMantenimiento($resp, $areaNombre);
-    }
 
-    if($area==100 && $tipoAct==0){
-        $htmlArray = $rpt->getDataRptTipActAreaTodas(0,100, false, true);
-        $rpt->generarRptPdfMantenimiento($htmlArray, $areaNombre);
-    }
-
-    if($area==100 && $tipoAct!=0){
-        $htmlArray = $rpt->getDataRptTipActAreaTodas($tipoAct, $area, false, true);
-        $rpt->generarRptPdfMantenimiento($htmlArray, $areaNombre);
-    }
+    $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area, false, true);
+    $rpt->generarRptPdfMantenimiento($resp, $areaNombre);
 
 }
 
@@ -150,3 +108,4 @@ function getArrayCantByActiTipo($rptDao){
 
     return $array;
 }
+
