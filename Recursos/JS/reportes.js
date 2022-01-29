@@ -19,15 +19,6 @@ $(document).ready(function(){
         $("#hdnNameAct").val($("#sTipoActivoR option:selected").text().trim());
     });
 
-    $("#btnRptActTipoActivo").on("click", function(e){
-       var valorTipAct = $("#sTipoActivoR").val();
-       if(valorTipAct ==0){
-        $("#labelError").text("Debes seleccionar un tipo de activo para generar este reporte.");
-        $("#labelError").show();
-        e.preventDefault();
-       }
-    });
-
     $("#btnRptActArea").on("click",function(){
         if($("#labelError").is(":visible")){
             $("#labelError").text("");

@@ -852,36 +852,71 @@ class ReportesDao
 
 
             $html = "";
-            $html .= $rpt->getEtiquetaStyleRpt();
-            //evaluamos en cual tipo de activo no hay datos
-            //y concatenamos la fila "no hay datos"
-            if ($countPC > 0) {
-                $html = $tablaPC;
+
+            if($tipoActivo ==0){
+                $htmlArray = array();
+                
+                //evaluamos en cual tipo de activo no hay datos
+                //y concatenamos la fila "no hay datos"
+                if ($countPC > 0) {
+                    $htmlArray[0] = $tablaPC.$rpt->getEtiquetaStyleRpt();
+                }
+
+                if ($countLap > 0) {
+                    $htmlArray[1]  = $tablaLaptop.$rpt->getEtiquetaStyleRpt();
+                }
+
+                if ($countProyec > 0) {
+                    $htmlArray[3]  = $tablaProyector.$rpt->getEtiquetaStyleRpt();
+                }
+
+
+                if ($countImp > 0) {
+                    $htmlArray[2]  = $tablaImp.$rpt->getEtiquetaStyleRpt();
+                }
+
+                if ($countTel > 0) {
+                    $htmlArray[4]  = $tablaTel.$rpt->getEtiquetaStyleRpt();
+                }
+
+                if ($countMoni > 0) {
+                    $htmlArray[5]  = $tablaMonitor.$rpt->getEtiquetaStyleRpt();
+                }
+
+                return $htmlArray;
+
+            }else{
+                //evaluamos en cual tipo de activo no hay datos
+                //y concatenamos la fila "no hay datos"
+                if ($countPC > 0) {
+                    $html = $tablaPC;
+                }
+
+                if ($countLap > 0) {
+                    $html = $tablaLaptop;
+                }
+
+                if ($countProyec > 0) {
+                    $html = $tablaProyector;
+                }
+
+
+                if ($countImp > 0) {
+                    $html = $tablaImp;
+                }
+
+                if ($countTel > 0) {
+                    $html = $tablaTel;
+                }
+
+                if ($countMoni > 0) {
+                    $html = $tablaMonitor;
+                }
+
+                //retornamos todas las tablas juntas con estilos para imprimir por tcpdf
+                return $html.$rpt->getEtiquetaStyleRpt();
             }
 
-            if ($countLap > 0) {
-                $html = $tablaLaptop;
-            }
-
-            if ($countProyec > 0) {
-                $html = $tablaProyector;
-            }
-
-
-            if ($countImp > 0) {
-                $html = $tablaImp;
-            }
-
-            if ($countTel > 0) {
-                $html = $tablaTel;
-            }
-
-            if ($countMoni > 0) {
-                $html = $tablaMonitor;
-            }
-
-            //retornamos todas las tablas juntas con estilos para imprimir por tcpdf
-            return $html;
         } catch (PDOException $error) {
             echo $error->getMessage();
         }
@@ -1109,16 +1144,29 @@ class ReportesDao
      -------         SEGÚN LOS DATOS GENERADOS DE LA BD      -------         */
 
     //genera reporte <<activo>> filtrado solamente por <<tipo activo>>
-    public function generarRptPdfTipAct($html, $tipoActivo, $cantActivo)
+    public function generarRptPdfTipAct($html, $tipoActivo, $tipoActivoNombre)
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
         $pdf->AddPage();
         $pdf->Ln(2);
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(80, 10, "Tipo De Activo: " . $tipoActivo, 0, 0, "L");
-        $pdf->Cell(196, 10, "Cantidad: " . $cantActivo, 0, 1, "R");
-        $pdf->Ln(3);
-        $pdf->writeHTML($html, true, false, true, false, '');
+
+        if(is_array($html)){
+            $i =0;
+            foreach($tipoActivo as $key => $value){
+                $pdf->Cell(80, 10, "Tipo De Activo: " . $key, 0, 0, "L");
+                $pdf->Cell(188, 10, "Cantidad: " . $value, 0, 1, "R");
+                $pdf->Ln(3);
+                $pdf->writeHTML($html[$i], true, false, true, false, '');
+                $i++;
+            }
+        }else{
+            $pdf->Cell(80, 10, "Tipo De Activo: " . $tipoActivoNombre, 0, 0, "L");
+            $pdf->Cell(188, 10, "Cantidad: " . $tipoActivo[$tipoActivoNombre], 0, 1, "R");
+            $pdf->Ln(3);
+            $pdf->writeHTML($html, true, false, true, false, '');
+        }
+
         $pdf->Output();
     }
 

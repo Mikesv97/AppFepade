@@ -46,17 +46,12 @@ if (isset($_POST["btnRptActTipoActivo"])) {
     $r = new ReportesDao();
 
     //creamos array para manejar la cant de tipo activos
-    $arrayContTAct = array();
+    $arrayContTAct = getArrayCantByActiTipo($r);
 
-
-    //1 = pc, 2=laptop, 3= impresor, 4=proyecto, 5=telefono, 6 = monitor
-    for($i=0; $i<6; $i++ ){
-        $arrayContTAct[$i] = $r->contTotalTipAct(($i+1));
-    }
-   
 
     $resp = $r->getDataRptActivosTipo($tipoActRpt);
-    $r->generarRptPdfTipAct($resp,$tipoActNombre,$totalActivos);
+
+    $r->generarRptPdfTipAct($resp,$arrayContTAct, $tipoActNombre);
 }
 
 if(isset($_POST["btnRptResAct"])){
@@ -95,4 +90,18 @@ if(!$_POST){
 
     header("Location: reportes.php");
 
+}
+
+function getArrayCantByActiTipo($rptDao){
+    $array = array();
+
+    //1 = pc, 2=laptop, 3= impresor, 4=proyecto, 5=telefono, 6 = monitor
+    $array["PC"] = $rptDao -> contTotalTipAct(1);
+    $array["Laptop"] = $rptDao -> contTotalTipAct(2);
+    $array["Impresor"] = $rptDao -> contTotalTipAct(3);
+    $array["Proyector"] = $rptDao -> contTotalTipAct(4);
+    $array["Telefono"] = $rptDao -> contTotalTipAct(5);
+    $array["Monitor"] = $rptDao -> contTotalTipAct(6);
+
+    return $array;
 }
