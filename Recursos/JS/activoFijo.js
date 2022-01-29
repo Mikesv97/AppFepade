@@ -84,7 +84,7 @@ jQuery(document).ready(function ($) {
         $('#ActivoEliminado').attr('checked', false);
         $('#estado').attr('checked', false);
         //CARGANDO LA IMAGEN POR DEFECTO CUANDO DEN CLICK EN INGRESAR ACTIVO FIJO
-        $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
+        $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jfif');
         //AGREGANDO ESTILO AL INPUT CODIGO AUTOMATICO
         $('input[name=ActivoId]').addClass('desabilitado');
         //MUESTRA EL SELECT PARA QUE EL USUARIO CAMBIE EL AREA DESDE EL FORMUALRIO ACTIVO
@@ -193,7 +193,7 @@ jQuery(document).ready(function ($) {
                                 $('#activoInformacion').DataTable().ajax.reload();
                                 $('#mostrarFormulario').addClass('collapse');
                                 $('#mostrarFormulario').removeClass('show');
-                                $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
+                                $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jfif');
                                 break;
                             case "FailActiveEspe":
                                 Swal.fire({
@@ -217,7 +217,7 @@ jQuery(document).ready(function ($) {
                                 $('#activoInformacion').DataTable().ajax.reload();
                                 $('#mostrarFormulario').addClass('collapse');
                                 $('#mostrarFormulario').removeClass('show');
-                                $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
+                                $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jfif');
                                 break;
                         }
                     },
@@ -277,7 +277,7 @@ jQuery(document).ready(function ($) {
                                 $('#activoInformacion').DataTable().ajax.reload();
                                 $('#mostrarFormulario').addClass('collapse');
                                 $('#mostrarFormulario').removeClass('show');
-                                $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
+                                $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jfif');
                                 break;
                             case "FailModificarActivo":
                                 Swal.fire({
@@ -301,7 +301,7 @@ jQuery(document).ready(function ($) {
                                 $('#activoInformacion').DataTable().ajax.reload();
                                 $('#mostrarFormulario').addClass('collapse');
                                 $('#mostrarFormulario').removeClass('show');
-                                $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
+                                $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jfif');
                                 break;
                         }
                     },
@@ -363,7 +363,7 @@ jQuery(document).ready(function ($) {
                                 $('#activoInformacion').DataTable().ajax.reload();
                                 $('#mostrarFormulario').addClass('collapse');
                                 $('#mostrarFormulario').removeClass('show');
-                                $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jpg');
+                                $('#mostrarImagen').attr('src', '../recursos/multimedia/imagenes/upload/nodisponible.jfif');
                                 break;
                             case "FailActivoEliminado":
                                 Swal.fire({

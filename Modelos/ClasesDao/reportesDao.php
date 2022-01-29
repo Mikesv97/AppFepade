@@ -1500,11 +1500,10 @@ class ReportesDao
     public function generearRptTipActAreaAll($htmlArray)
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
-        $pdf->AddPage();
-        $pdf->Ln(15);
-        
-        foreach ($htmlArray as $key => $value) {
 
+        foreach ($htmlArray as $key => $value) {
+            $pdf->AddPage();
+            $pdf->Ln(15);
             $pdf->SetFont('helvetica', 'B', 15);
             $pdf->Ln(0);
             $pdf->Cell(80, 0, "Área: ".$key, 0, 1, "L");

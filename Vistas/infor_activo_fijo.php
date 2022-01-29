@@ -295,7 +295,7 @@ div.col-md-3{
                                         <h5 class="my-2 label label-dark col-md-12">Imagen de activo fijo</h5>
                                         <input type="text" name="imagenBD" id="imagenBD" hidden>
                                         <div>
-                                            <img id="mostrarImagen" src="../Recursos/Multimedia/Imagenes/Upload/nodisponible.jpg">
+                                            <img id="mostrarImagen" src="../Recursos/Multimedia/Imagenes/Upload/nodisponible.jfif">
                                         </div>
                                     </div>
                                 </div>
