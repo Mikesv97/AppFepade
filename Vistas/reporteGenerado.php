@@ -124,8 +124,7 @@ if(isset($_POST["btnRptMant"])){
         $htmlArray = $rpt->getDataRptTipActAreaTodas($tipoAct, $area, false, true);
         $rpt->generarRptPdfMantenimiento($htmlArray, $areaNombre);
     }
-    //$resp = $rpt->getDataRptMantenimiento($area);
-    //$rpt->generarRptPdfMantenimiento($resp,$areaNombre);
+
 }
 
 
