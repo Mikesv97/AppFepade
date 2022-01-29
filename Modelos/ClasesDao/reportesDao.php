@@ -13,249 +13,6 @@ class ReportesDao
     /*   -------    INICIAN FUNCIONES PARA SOLICITAR DATOS A LA BASE DE DATOS -------
      -------         SEGÚN LOS FILTROS SELECCIONADOS POR EL USUARIO       -------         */
 
-
-    //solicita los datos de la BD para generar tablas filtrado por área
-    //retorna el hmtl para la función que genera el reporte
-  /*  public function getDataRptActivosArea($area, $boolean, $num)
-    {
-        //si boolean es falso ocupamos las cabeceras normales con IP de las tablas
-        //si es verdadero ocupamos las cabeceras sin IP
-        
-        //variables auxliares
-        $countPC = 0;
-        $countLap = 0;
-        $countProyec = 0;
-        $countImp = 0;
-        //creamos el objeto de la plantilla html de rpt
-        $rpt = new ReportesPlantilla();
-        //obtenemos la maqueta de headers de las tablas para cada tipo de activo
-        $tablaPC = $rpt->getHeaderTablaRptPc($boolean);
-        $tablaLaptop = $rpt->getHeaderTablaRptLap($boolean);
-        $tablaProyector = $rpt->getHeaderTablaRptProyector($boolean);
-        $tablaImp = $rpt->getHeaderTablaRptImpresor($num);
-        $tablaTel = $rpt->getHeaderTablaRptTelefono($boolean);
-        $tablaMoni = $rpt->getHeaderTablaRptMonitor();
-
-        //establecemos la coneccion
-        $con = Conexion::conectar();
-
-        //establecemos la consulta
-        $sql = "select dbo.Activo_Especificacion.DiscoDuro2,dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo, 
-        dbo.Tipo_Activo.tipo_activo_nombre, dbo.Activo.Activo_referencia, dbo.Activo.Activo_descripcion, dbo.Activo.Activo_factura, dbo.Activo.Activo_fecha_adq, dbo.Activo_responsable.Nombre_responsable, dbo.Activo.Estado, 
-        dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro, 
-        dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM, 
-        dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
-        dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie
-         FROM  dbo.Activo INNER JOIN
-        dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
-        dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
-        dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
-        dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
-        where dbo.Estructura31.estructura31_id=?
-        ORDER BY dbo.Tipo_Activo.tipo_activo_id";
-
-        //preparamos la consulta
-        $respuesta = $con->prepare($sql);
-
-        try {
-            //ejecutamos la consulta y seteamos parametros 
-            $respuesta->execute([$area]);
-            //convertimos a un arreglo los datos obtenidos de BD
-            $fila =  $respuesta->fetchAll(PDO::FETCH_ASSOC);
-            //recorremos y creamos las respectivas tablas
-            for ($i = 0; $i < sizeof($fila); $i++) {
-                switch (trim($fila[$i]["tipo_activo_nombre"])) {
-                    case "PC":
-                        //si tipo activo nombre es pc concatenamos valores a tabla pc
-                        if($boolean){
-                            $tablaPC  .= '<tr>'
-                            . '<td class="w6">' . $fila[$i]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
-                            . '<td class="w12">' . $fila[$i]["Nombre_responsable"] . '</td>'
-                            . '<td class="w7 center">' . $fila[$i]["Modelo"] . '</td>'
-                            . '<td class="w6 center">' . $fila[$i]["Procesador"] . '</td>'
-                            . '<td class="w7-5 center">' . $fila[$i]["Generacion"] . '</td>'
-                            . '<td class="w5-5 center">' . $fila[$i]["Ram"] . '</td>'
-                            . '<td class="w7-5 center">' . $fila[$i]["DiscoDuro"] .
-                            "<br>".$fila[$i]["DiscoDuro2"]. '</td>'
-                            . '<td class="w6 center">' . $fila[$i]["SO"] . '</td>'
-                            . '<td class="w7-5 center">' . $fila[$i]["Office"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["numero_serie"] . '</td>'
-                            . '</tr>';
-                        }else{
-                            $tablaPC  .= '<tr>'
-                            . '<td class="w6">' . $fila[$i]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
-                            . '<td class="w12">' . $fila[$i]["Nombre_responsable"] . '</td>'
-                            . '<td class="w9">' . $fila[$i]["IP"] . '</td>'
-                            . '<td class="w7 center">' . $fila[$i]["Modelo"] . '</td>'
-                            . '<td class="w6 center">' . $fila[$i]["Procesador"] . '</td>'
-                            . '<td class="w7-5 center">' . $fila[$i]["Generacion"] . '</td>'
-                            . '<td class="w5-5 center">' . $fila[$i]["Ram"] . '</td>'
-                            . '<td class="w7-5 center">' . $fila[$i]["DiscoDuro"] .
-                            "<br>".$fila[$i]["DiscoDuro2"]. '</td>'
-                            . '<td class="w6 center">' . $fila[$i]["SO"] . '</td>'
-                            . '<td class="w7-5 center">' . $fila[$i]["Office"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["numero_serie"] . '</td>'
-                            . '</tr>';
-                        }
-
-                        $countPC++;
-                        break;
-                    case "Laptop":
-                        //si tipo activo nombre es laptop concatenamos valores a tabla latop
-                        if($boolean){
-                            $tablaLaptop .= '<tr>'
-                            . '<td class="w6">' . $fila[$i]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
-                            . '<td class="w12">' . $fila[$i]["Nombre_responsable"] . '</td>'
-                            . '<td class="w7 center">' . $fila[$i]["Modelo"] . '</td>'
-                            . '<td class="w6 center">' . $fila[$i]["Procesador"] . '</td>'
-                            . '<td class="w7-5 center">' . $fila[$i]["Generacion"] . '</td>'
-                            . '<td class="w5-5 center">' . $fila[$i]["Ram"] . '</td>'
-                            . '<td class="w7-5 center">' . $fila[$i]["DiscoDuro"] .
-                            "<br>".$fila[$i]["DiscoDuro2"]. '</td>'
-                            . '<td class="w6 center">' . $fila[$i]["SO"] . '</td>'
-                            . '<td class="w7-5 center">' . $fila[$i]["Office"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["numero_serie"] . '</td>'
-                            . '</tr>';
-                        }else{
-                            $tablaLaptop .= '<tr>'
-                            . '<td class="w6">' . $fila[$i]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
-                            . '<td class="w12">' . $fila[$i]["Nombre_responsable"] . '</td>'
-                            . '<td class="w9">' . $fila[$i]["IP"] . '</td>'
-                            . '<td class="w7 center">' . $fila[$i]["Modelo"] . '</td>'
-                            . '<td class="w6 center">' . $fila[$i]["Procesador"] . '</td>'
-                            . '<td class="w7-5 center">' . $fila[$i]["Generacion"] . '</td>'
-                            . '<td class="w5-5 center">' . $fila[$i]["Ram"] . '</td>'
-                            . '<td class="w7-5 center">' . $fila[$i]["DiscoDuro"] .
-                            "<br>".$fila[$i]["DiscoDuro2"]. '</td>'
-                            . '<td class="w6 center">' . $fila[$i]["SO"] . '</td>'
-                            . '<td class="w7-5 center">' . $fila[$i]["Office"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["numero_serie"] . '</td>'
-                            . '</tr>';
-                        }
-
-                        $countLap++;
-                        break;
-                    case "Impresor":
-                        //si tipo activo nombre es impresora concatenamos valores a tabla impresora
-                        if($boolean){
-                            $tablaImp .= '<tr>'
-                            . '<td class="w6">' . $fila[$i]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
-                            . '<td class="w12">' . $fila[$i]["Nombre_responsable"] . '</td>'
-                            . '<td class="w7">' . $fila[$i]["Modelo"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["TonerN"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["TonerM"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["TonerC"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["TonerA"] . '</td>'
-                            . '</tr>';
-                        }else{
-                            $tablaImp .= '<tr>'
-                            . '<td class="w6">' . $fila[$i]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
-                            . '<td class="w12">' . $fila[$i]["Nombre_responsable"] . '</td>'
-                            . '<td class="w9">' . $fila[$i]["IP"] . '</td>'
-                            . '<td class="w7">' . $fila[$i]["Modelo"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["TonerN"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["TonerM"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["TonerC"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["TonerA"] . '</td>'
-                            . '</tr>';
-                        }
-
-                        $countImp++;
-                        break;
-                    case "Proyector":
-                        //si tipo activo nombre es proyector concatenamos valores a tabla proyector
-                        if($boolean){
-                            $tablaProyector .= '<tr>'
-                            . '<td class="w6">' . $fila[$i]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
-                            . '<td class="w12">' . $fila[$i]["Nombre_responsable"] . '</td>'
-                            . '<td class="w7">' . $fila[$i]["Modelo"] . '</td>'
-                            . '<td class="7-5">' . $fila[$i]["HorasUso"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["HoraEco"] . '</td>'
-                            . '</tr>';
-                        }else{
-                            $tablaProyector .= '<tr>'
-                            . '<td class="w6">' . $fila[$i]["Activo_id"] . '</td>'
-                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
-                            . '<td class="w12">' . $fila[$i]["Nombre_responsable"] . '</td>'
-                            . '<td class="w9">' . $fila[$i]["IP"] . '</td>'
-                            . '<td class="w7">' . $fila[$i]["Modelo"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["HorasUso"] . '</td>'
-                            . '<td class="w7-5">' . $fila[$i]["HoraEco"] . '</td>'
-                            . '</tr>';
-                        }
-                        $countProyec++;
-                        break;
-                        case "Proyector":
-                            //si tipo activo nombre es proyector concatenamos valores a tabla proyector
-                            if($boolean){
-                                $tablaProyector .= '<tr>'
-                                . '<td class="w6">' . $fila[$i]["Activo_id"] . '</td>'
-                                . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
-                                . '<td class="w12">' . $fila[$i]["Nombre_responsable"] . '</td>'
-                                . '<td class="w7">' . $fila[$i]["Modelo"] . '</td>'
-                                . '<td class="7-5">' . $fila[$i]["HorasUso"] . '</td>'
-                                . '<td class="w7-5">' . $fila[$i]["HoraEco"] . '</td>'
-                                . '</tr>';
-                            }else{
-                                $tablaProyector .= '<tr>'
-                                . '<td class="w6">' . $fila[$i]["Activo_id"] . '</td>'
-                                . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
-                                . '<td class="w12">' . $fila[$i]["Nombre_responsable"] . '</td>'
-                                . '<td class="w9">' . $fila[$i]["IP"] . '</td>'
-                                . '<td class="w7">' . $fila[$i]["Modelo"] . '</td>'
-                                . '<td class="w7-5">' . $fila[$i]["HorasUso"] . '</td>'
-                                . '<td class="w7-5">' . $fila[$i]["HoraEco"] . '</td>'
-                                . '</tr>';
-                            }
-                            $countProyec++;
-                        break;
-                }
-            }
-
-            //cerramos las respectivas tablas de cada tipo
-            $tablaImp .= "</table><br>";
-            $tablaLaptop .= "</table><br>";
-            $tablaPC .= "</table><br>";
-            $tablaProyector .= "</table><br>";
-            $html = "";
-
-            //evaluamos en cual tipo de activo no hay datos
-            //y concatenamos la fila "no hay datos"
-            if ($countPC > 0) {
-                //concatemos cada tabla más la etiqueta style que tiene sus estilos
-                $html .= $tablaPC;
-            }
-
-            if ($countLap > 0) {
-                //concatemos cada tabla más la etiqueta style que tiene sus estilos
-                $html .= $tablaLaptop;
-            }
-
-            if ($countProyec > 0) {
-                //concatemos cada tabla más la etiqueta style que tiene sus estilos
-                $html .= $tablaProyector;
-            }
-
-
-            if ($countImp > 0) {
-                //concatemos cada tabla más la etiqueta style que tiene sus estilos
-                $html .= $tablaImp;
-            }
-
-            //retornamos todas las tablas juntas con estilos para imprimir por tcpdf
-            return $html . $rpt->getEtiquetaStyleRpt();
-        } catch (PDOException $error) {
-            echo $error->getMessage();
-        }
-    }*/
-
     //solicita los datos de la BD para generar tablas sin filtro
     //retorna el hmtl para la función que genera el reporte
     public function getDataRptTipActAreaTodas($tipoActivo, $area)
@@ -926,38 +683,67 @@ class ReportesDao
         $countLap = 0;
         $countProyec = 0;
         $countImp = 0;
+        $countTel =0;
+        $countMoni = 0;
+
         //creamos el objeto de la plantilla html de rpt
         $rpt = new ReportesPlantilla();
+
         //obtenemos la maqueta de headers de las tablas para cada tipo de activo
         $tablaPC = $rpt->getHeaderTablaRptPc(false);
         $tablaLaptop = $rpt->getHeaderTablaRptLap(false);
         $tablaProyector = $rpt->getHeaderTablaRptProyector(false);
         $tablaImp = $rpt->getHeaderTablaRptImpresor(1);
+        $tablaTel = $rpt->getHeaderTablaRptTelefono(false);
+        $tablaMonitor = $rpt->getHeaderTablaRptMonitor();
 
         //establecemos la coneccion
         $con = Conexion::conectar();
+        $sql ="";
 
-        //establecemos la consulta
-        $sql = "select TOP (100) PERCENT dbo.Activo_Especificacion.DiscoDuro2, dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo, 
-        dbo.Tipo_Activo.tipo_activo_nombre, dbo.Activo.Activo_referencia, dbo.Activo.Activo_descripcion, dbo.Activo.Activo_factura, dbo.Activo.Activo_fecha_adq, dbo.Activo_responsable.Nombre_responsable, dbo.Activo.Estado, 
-        dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro, 
-        dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM, 
-        dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
-        dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie
-         FROM  dbo.Activo INNER JOIN
-        dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
-        dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
-        dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
-        dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
-        where dbo.Tipo_Activo.tipo_activo_id=?
-        ORDER BY dbo.Estructura31.estructura31_nombre";
+        if($tipoActivo ==0){
+            //establecemos la consulta
+            $sql = "select dbo.Activo_Especificacion.DiscoDuro2, dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo, 
+            dbo.Tipo_Activo.tipo_activo_nombre, dbo.Activo.Activo_referencia, dbo.Activo.Activo_descripcion, dbo.Activo.Activo_factura, dbo.Activo.Activo_fecha_adq, dbo.Activo_responsable.Nombre_responsable, dbo.Activo.Estado, 
+            dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro, 
+            dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM, 
+            dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
+            dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie
+             FROM  dbo.Activo INNER JOIN
+            dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
+            dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
+            dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
+            dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
+            ORDER BY dbo.Tipo_Activo.tipo_activo_id";
 
-        //preparamos la consulta
-        $respuesta = $con->prepare($sql);
+            //ejecutamos la consulta
+            $respuesta = $con->query($sql);
+        }
 
-        try {
+        if($tipoActivo != 0){
+                    
+            //establecemos la consulta
+            $sql = "select dbo.Activo_Especificacion.DiscoDuro2, dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo, 
+            dbo.Tipo_Activo.tipo_activo_nombre, dbo.Activo.Activo_referencia, dbo.Activo.Activo_descripcion, dbo.Activo.Activo_factura, dbo.Activo.Activo_fecha_adq, dbo.Activo_responsable.Nombre_responsable, dbo.Activo.Estado, 
+            dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro, 
+            dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM, 
+            dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
+            dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie
+             FROM  dbo.Activo INNER JOIN
+            dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
+            dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
+            dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
+            dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
+            where dbo.Tipo_Activo.tipo_activo_id=?
+            ORDER BY dbo.Tipo_Activo.tipo_activo_id";
+            //preparamos la consulta
+            $respuesta = $con->prepare($sql);
             //ejecutamos la consulta y seteamos parametros 
             $respuesta->execute([$tipoActivo]);
+        }
+
+        try {
+
             //convertimos a un arreglo los datos obtenidos de BD
             $fila =  $respuesta->fetchAll(PDO::FETCH_ASSOC);
             //recorremos y creamos las respectivas tablas
@@ -1031,7 +817,28 @@ class ReportesDao
                             . '<td class="w7-5">' . $fila[$i]["HoraEco"] . '</td>'
                             . '</tr>';
                         $countProyec++;
-                        break;
+                    break;
+                    case "Telefono":
+                        //si tipo activo nombre es proyector concatenamos valores a tabla proyector
+                        $tablaTel .= '<tr>'
+                            . '<td class="w6">' . $fila[$i]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
+                            . '<td class="w12">' . $fila[$i]["Nombre_responsable"] . '</td>'
+                            . '<td class="w9">' . $fila[$i]["Modelo"] . '</td>'
+                            . '<td class="w7">' . $fila[$i]["IP"] . '</td>'
+                            . '</tr>';
+                        $countTel++;
+                    break;
+                    case "Monitor":
+                        //si tipo activo nombre es proyector concatenamos valores a tabla proyector
+                        $tablaMonitor .= '<tr>'
+                            . '<td class="w6">' . $fila[$i]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $fila[$i]["Activo_descripcion"] . '</td>'
+                            . '<td class="w12">' . $fila[$i]["Nombre_responsable"] . '</td>'
+                            . '<td class="w7">' . $fila[$i]["Modelo"] . '</td>'
+                            . '</tr>';
+                        $countMoni++;
+                    break;
                 }
             }
 
@@ -1040,25 +847,37 @@ class ReportesDao
             $tablaLaptop .= "</table>";
             $tablaPC .= "</table>";
             $tablaProyector .= "</table>";
+            $tablaTel .= "</table>";
+            $tablaMonitor .= "</table>";
+
 
             $html = "";
+            $html .= $rpt->getEtiquetaStyleRpt();
             //evaluamos en cual tipo de activo no hay datos
             //y concatenamos la fila "no hay datos"
             if ($countPC > 0) {
-                $html = $tablaPC . $rpt->getEtiquetaStyleRpt();
+                $html = $tablaPC;
             }
 
             if ($countLap > 0) {
-                $html = $tablaLaptop . $rpt->getEtiquetaStyleRpt();
+                $html = $tablaLaptop;
             }
 
             if ($countProyec > 0) {
-                $html = $tablaProyector . $rpt->getEtiquetaStyleRpt();
+                $html = $tablaProyector;
             }
 
 
             if ($countImp > 0) {
-                $html = $tablaImp . $rpt->getEtiquetaStyleRpt();
+                $html = $tablaImp;
+            }
+
+            if ($countTel > 0) {
+                $html = $tablaTel;
+            }
+
+            if ($countMoni > 0) {
+                $html = $tablaMonitor;
             }
 
             //retornamos todas las tablas juntas con estilos para imprimir por tcpdf

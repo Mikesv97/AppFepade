@@ -45,7 +45,15 @@ if (isset($_POST["btnRptActTipoActivo"])) {
 
     $r = new ReportesDao();
 
-    $totalActivos = $r->contTotalTipAct($tipoActRpt);
+    //creamos array para manejar la cant de tipo activos
+    $arrayContTAct = array();
+
+
+    //1 = pc, 2=laptop, 3= impresor, 4=proyecto, 5=telefono, 6 = monitor
+    for($i=0; $i<6; $i++ ){
+        $arrayContTAct[$i] = $r->contTotalTipAct(($i+1));
+    }
+   
 
     $resp = $r->getDataRptActivosTipo($tipoActRpt);
     $r->generarRptPdfTipAct($resp,$tipoActNombre,$totalActivos);
