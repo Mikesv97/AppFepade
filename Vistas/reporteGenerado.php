@@ -18,17 +18,17 @@ if (isset($_POST["btnRptActArea"])) {
     }
     
     if($tipoAct !=0 && $area != 100){
-        $resp = $rpt->getDataRptTipActArea($area,$tipoAct);
+        $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area);
         $rpt->generarRptPdfActArea($resp,$areaNombre);
     }
 
     if($area==100 && $tipoAct==0){
-        $htmlArray = $rpt->getDataRptTipActAreaTodas(0);
+        $htmlArray = $rpt->getDataRptTipActAreaTodas(0,100);
         $rpt->generearRptTipActAreaAll($htmlArray);
     }
 
     if($area==100 && $tipoAct!=0){
-        $htmlArray = $rpt->getDataRptTipActAreaTodas($tipoAct);
+        $htmlArray = $rpt->getDataRptTipActAreaTodas($tipoAct, $area);
         $rpt->generearRptTipActAreaAll($htmlArray);
     }
 
