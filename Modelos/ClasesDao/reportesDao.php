@@ -1167,6 +1167,11 @@ class ReportesDao
         $totalImp = $objTA->countTipActivo(3);
         //llamamos la funcion para contar cuantos hay del tipo ID 4-->Proyector
         $totalPro = $objTA->countTipActivo(4);
+        //llamamos la funcion para contar cuantos hay del tipo ID 5-->Telefono
+        $totalTel = $objTA->countTipActivo(5);
+        //llamamos la funcion para contar cuantos hay del tipo ID 6-->Monitor
+        $totalMoni = $objTA->countTipActivo(6);
+
 
         //preparamos el html para retornarlo
         $html = '
@@ -1197,8 +1202,16 @@ class ReportesDao
                             <td>' . $totalPro . '</td>
                         </tr>
                         <tr>
+                            <td>Telefono</td>
+                            <td>' . $totalTel . '</td>
+                        </tr>
+                        <tr>
+                            <td>Monitor</td>
+                            <td>' . $totalMoni . '</td>
+                        </tr>
+                        <tr>
                             <td class="bgDark">Total</td>
-                            <td class="bgDark">' . ($totalPc + $totalLap + $totalImp + $totalPro) . '</td>
+                            <td class="bgDark">' . ($totalPc + $totalLap + $totalImp + $totalPro + $totalTel + $totalMoni) . '</td>
                         </tr>
                     </table>
                     <!--FIN TABLA-->
