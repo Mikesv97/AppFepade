@@ -53,9 +53,10 @@ class ReportesDao
         //para reporte mantenimiento
         $htmlManAdmon = "";
         $htmlManNula = "";
-        $htmlManAdmon = "";
-        $htmlManAdmon = "";
-        $htmlManAdmon = "";
+        $htmlManCampLi = "";
+        $htmlManCapa = "";
+        $htmlManCompe = "";
+        $htmlManComuni = "";
 
         //creamos variable para manejar la respuesta
         $respuesta ="";
@@ -488,190 +489,372 @@ class ReportesDao
             $comuniPro .= "</table>";
             $comuniTel .= "</table>";
             $comuniMoni .= "</table>";  
-
-
-            //concatenamos para crear array para reporte tablas a sus áreas
-            //según las tablas con datos
-
-             //--------ÁREA ADMON----------
-            if($contAdmonPc > 0){
-                $htmlAdmon .= $admonPc;
-            }
-
-            if($contAdmonLap>0){
-                $htmlAdmon .= $admonLap;
-            }
-
-            if($contAdmonImp>0){
-                $htmlAdmon .=$admonImp;
-            }
-
-            if($contAdmonPro>0){
-                $htmlAdmon .=$admonPro;
-            }
-            
-            if($contAdmonTel>0){
-                $htmlAdmon .=$admonTel;
-            }
-
-            if($contAdmonMoni>0){
-                $htmlAdmon .=$admonMoni;
-            }
-            //--------ÁREA NULA----------
-            if($contNulaPc > 0){
-                $htmlNula .= $nulaPc;
-            }
-
-            if($contNulaLap>0){
-                $htmlNula .= $nulaLap;
-            }
-
-            if($contNulaImp>0){
-                $htmlNula .=$nulaImp;
-            }
-
-            if($contNulaPro>0){
-                $htmlNula .=$nulaPro;
-            }
-
-            if($contNulaTel>0){
-                $htmlNula .=$nulaTel;
-            }
-
-            if($contNulaMoni>0){
-                $htmlNula .=$nulaMoni;
-            }
-
-             //--------ÁREA CAMPAÑA LIBRO----------
-            if($contCampaPc > 0){
-                $htmlCampLi .= $campaPc;
-            }
-
-            if($contCampaLap>0){
-                 $htmlCampLi .= $campaLap;
-            }
-
-            if($contCampaImp>0){
-                 $htmlCampLi .=$campaImp;
-            }
-
-            if($contCampaPro>0){
-                 $htmlCampLi .=$campaPro;
-            }
-
-            if($contCampaTel>0){
-                $htmlCampLi .=$campaTel;
-            }
-
-            if($contCampaMoni>0){
-                $htmlCampLi .=$campaMoni;
-            }
-            //--------ÁREA CAMPAÑA CAPACITACION----------
-
-            if($contCapaPc > 0){
-                $htmlCapa .= $capaPc;
-            }
-
-            if($contCapaLap>0){
-                $htmlCapa .= $capaLap;
-            }
-
-            if($contCapaImp>0){
-                $htmlCapa .=$capaImp;
-            }
-
-            if($contCapaPro>0){
-                $htmlCapa .=$capaPro;
-            }
-
-            if($contCapaTel>0){
-                $htmlCapa .= $capaTel;
-            }
-
-            if($contCapaMoni>0){
-                $htmlCapa .= $capaMoni;
-            }
-
-            //--------ÁREA COMPETENCIAS----------
-
-            if($contCompePc > 0){
-                $htmlCompe .= $compePc;
-            }
-
-            if($contCompeLap>0){
-                $htmlCompe .= $compeLap;
-            }
-
-            if($contCompeImp>0){
-                $htmlCompe .=$compeImp;
-            }
-
-            if($contCompePro>0){
-                $htmlCompe .=$compePro;
-            }
-
-            if($contCompeTel>0){
-                $htmlCompe .=$compeTel;
-            }
-
-            if($contCompeMoni>0){
-                $htmlCompe .=$compeMoni;
-            }
-
-            //--------ÁREA COMUNICACIONES----------
-
-
-            if($contComuniPc > 0){
-                $htmlComuni .= $comuniPc;
-            }
-
-            if($contComuniLap>0){
-                $htmlComuni .= $comuniLap;
-            }
-
-            if($contComuniImp>0){
-                $htmlComuni .=$comuniImp;
-            }
-
-            if($contComuniPro>0){
-                $htmlComuni .=$comuniPro;
-            }
-
-            if($contComuniTel>0){
-                $htmlComuni .=$comuniTel;
-            }
-
-            if($contComuniMoni>0){
-                $htmlComuni .=$comuniMoni;
-            }
-
+   
             //creamos el array
             $arrayData = array();
 
-            if(strlen($htmlAdmon)>0){
-               $arrayData["Administración"] = $htmlAdmon.$estiloTbl;
-            }
+            //concatenamos para crear array para reporte tablas a sus áreas
+            //según las tablas con datos
+            if($mantenimiento){
+                //--------ÁREA ADMON----------
+                if($contAdmonPc > 0){
+                    $htmlManAdmon .= $admonPc;
+                }
 
-            if(strlen($htmlNula)>0){
-                $arrayData["Nula"] = $htmlNula.$estiloTbl;
-            }
+                if($contAdmonLap>0){
+                    $htmlManAdmon .= $admonLap;
+                }
 
-            if(strlen($htmlCampLi)>0){
-                $arrayData["Campaña de libro"] = $htmlCampLi.$estiloTbl;
-            }
+                if($contAdmonImp>0){
+                    $htmlManAdmon .=$admonImp;
+                }
 
-            if(strlen($htmlCapa)>0){
-                $arrayData["Capacitación"] = $htmlCapa.$estiloTbl;
-            }
+                if($contAdmonPro>0){
+                    $htmlManAdmon .=$admonPro;
+                }
 
-            if(strlen($htmlCompe)>0){
-                $arrayData["Competencias"] = $htmlCompe.$estiloTbl;
-            }
+                if($contAdmonTel>0){
+                    $htmlManAdmon .=$admonTel;
+                }
 
-            if(strlen($htmlComuni)>0){
-                $arrayData["Comunicaciones"] = $htmlComuni.$estiloTbl;
+                if($contAdmonMoni>0){
+                    $htmlManAdmon .=$admonMoni;
+                }
+
+                //--------ÁREA NULA----------
+                if($contNulaPc > 0){
+                    $htmlManNula .= $nulaPc;
+                }
+
+                if($contNulaLap>0){
+                    $htmlManNula .= $nulaLap;
+                }
+
+                if($contNulaImp>0){
+                    $htmlManNula .=$nulaImp;
+                }
+
+                if($contNulaPro>0){
+                    $htmlManNula .=$nulaPro;
+                }
+
+                if($contNulaTel>0){
+                    $htmlManNula .=$nulaTel;
+                }
+
+                if($contNulaMoni>0){
+                    $htmlManNula .=$nulaMoni;
+                }
+
+                //--------ÁREA CAMPAÑA LIBRO----------
+                if($contCampaPc > 0){
+                    $htmlManCampLi .= $campaPc;
+                }
+
+                if($contCampaLap>0){
+                    $htmlManCampLi .= $campaLap;
+                }
+
+                if($contCampaImp>0){
+                    $htmlManCampLi .=$campaImp;
+                }
+
+                if($contCampaPro>0){
+                    $htmlManCampLi .=$campaPro;
+                }
+
+                if($contCampaTel>0){
+                    $htmlManCampLi .=$campaTel;
+                }
+
+                if($contCampaMoni>0){
+                    $htmlManCampLi .=$campaMoni;
+                }
+                //--------ÁREA  CAPACITACION----------
+
+                if($contCapaPc > 0){
+                    $htmlManCapa .= $capaPc;
+                }
+
+                if($contCapaLap>0){
+                    $htmlManCapa .= $capaLap;
+                }
+
+                if($contCapaImp>0){
+                    $htmlManCapa .=$capaImp;
+                }
+
+                if($contCapaPro>0){
+                    $htmlManCapa .=$capaPro;
+                }
+
+                if($contCapaTel>0){
+                    $htmlManCapa .= $capaTel;
+                }
+
+                if($contCapaMoni>0){
+                    $htmlManCapa .= $capaMoni;
+                }
+
+                //--------ÁREA COMPETENCIAS----------
+
+                if($contCompePc > 0){
+                    $htmlManCompe .= $compePc;
+                }
+
+                if($contCompeLap>0){
+                    $htmlManCompe .= $compeLap;
+                }
+
+                if($contCompeImp>0){
+                    $htmlManCompe .=$compeImp;
+                }
+
+                if($contCompePro>0){
+                    $htmlManCompe .=$compePro;
+                }
+
+                if($contCompeTel>0){
+                    $htmlManCompe .=$compeTel;
+                }
+
+                if($contCompeMoni>0){
+                    $htmlManCompe .=$compeMoni;
+                }
+
+                //--------ÁREA COMUNICACIONES----------
+
+
+                if($contComuniPc > 0){
+                    $htmlManComuni .= $comuniPc;
+                }
+
+                if($contComuniLap>0){
+                    $htmlManComuni .= $comuniLap;
+                }
+
+                if($contComuniImp>0){
+                    $htmlManComuni .=$comuniImp;
+                }
+
+                if($contComuniPro>0){
+                    $htmlManComuni .=$comuniPro;
+                }
+
+                if($contComuniTel>0){
+                    $htmlManComuni .=$comuniTel;
+                }
+
+                if($contComuniMoni>0){
+                    $htmlManComuni .=$comuniMoni;
+                }   
+                
+                //llenamos el array 
+                if(strlen($htmlManAdmon)>0){
+                    $arrayData["Administración"] = $htmlManAdmon.$estiloTbl;
+                }
+                    
+                if(strlen($htmlManNula)>0){
+                    $arrayData["Nula"] = $htmlManNula.$estiloTbl;
+                }
+                    
+                if(strlen($htmlManCampLi)>0){
+                    $arrayData["Campaña de libro"] = $htmlManCampLi.$estiloTbl;
+                }
+                    
+                if(strlen($htmlManCapa)>0){
+                    $arrayData["Capacitación"] = $htmlManCapa.$estiloTbl;
+                }
+                    
+                if(strlen($htmlManCompe)>0){
+                        $arrayData["Competencias"] = $htmlManCompe.$estiloTbl;
+                }    
+                    
+                if(strlen($htmlManComuni)>0){
+                    $arrayData["Comunicaciones"] = $htmlManComuni.$estiloTbl;
+                } 
+
+
+            }else{
+
+                //--------ÁREA ADMON----------
+                if($contAdmonPc > 0){
+                    $htmlAdmon .= $admonPc;
+                }
+
+                if($contAdmonLap>0){
+                    $htmlAdmon .= $admonLap;
+                }
+
+                if($contAdmonImp>0){
+                    $htmlAdmon .=$admonImp;
+                }
+
+                if($contAdmonPro>0){
+                    $htmlAdmon .=$admonPro;
+                }
+                
+                if($contAdmonTel>0){
+                    $htmlAdmon .=$admonTel;
+                }
+
+                if($contAdmonMoni>0){
+                    $htmlAdmon .=$admonMoni;
+                }
+                //--------ÁREA NULA----------
+                if($contNulaPc > 0){
+                    $htmlNula .= $nulaPc;
+                }
+
+                if($contNulaLap>0){
+                    $htmlNula .= $nulaLap;
+                }
+
+                if($contNulaImp>0){
+                    $htmlNula .=$nulaImp;
+                }
+
+                if($contNulaPro>0){
+                    $htmlNula .=$nulaPro;
+                }
+
+                if($contNulaTel>0){
+                    $htmlNula .=$nulaTel;
+                }
+
+                if($contNulaMoni>0){
+                    $htmlNula .=$nulaMoni;
+                }
+
+                //--------ÁREA CAMPAÑA LIBRO----------
+                if($contCampaPc > 0){
+                    $htmlCampLi .= $campaPc;
+                }
+
+                if($contCampaLap>0){
+                    $htmlCampLi .= $campaLap;
+                }
+
+                if($contCampaImp>0){
+                    $htmlCampLi .=$campaImp;
+                }
+
+                if($contCampaPro>0){
+                    $htmlCampLi .=$campaPro;
+                }
+
+                if($contCampaTel>0){
+                    $htmlCampLi .=$campaTel;
+                }
+
+                if($contCampaMoni>0){
+                    $htmlCampLi .=$campaMoni;
+                }
+                //--------ÁREA CAPACITACION----------
+
+                if($contCapaPc > 0){
+                    $htmlCapa .= $capaPc;
+                }
+
+                if($contCapaLap>0){
+                    $htmlCapa .= $capaLap;
+                }
+
+                if($contCapaImp>0){
+                    $htmlCapa .=$capaImp;
+                }
+
+                if($contCapaPro>0){
+                    $htmlCapa .=$capaPro;
+                }
+
+                if($contCapaTel>0){
+                    $htmlCapa .= $capaTel;
+                }
+
+                if($contCapaMoni>0){
+                    $htmlCapa .= $capaMoni;
+                }
+
+                //--------ÁREA COMPETENCIAS----------
+
+                if($contCompePc > 0){
+                    $htmlCompe .= $compePc;
+                }
+
+                if($contCompeLap>0){
+                    $htmlCompe .= $compeLap;
+                }
+
+                if($contCompeImp>0){
+                    $htmlCompe .=$compeImp;
+                }
+
+                if($contCompePro>0){
+                    $htmlCompe .=$compePro;
+                }
+
+                if($contCompeTel>0){
+                    $htmlCompe .=$compeTel;
+                }
+
+                if($contCompeMoni>0){
+                    $htmlCompe .=$compeMoni;
+                }
+
+                //--------ÁREA COMUNICACIONES----------
+
+
+                if($contComuniPc > 0){
+                    $htmlComuni .= $comuniPc;
+                }
+
+                if($contComuniLap>0){
+                    $htmlComuni .= $comuniLap;
+                }
+
+                if($contComuniImp>0){
+                    $htmlComuni .=$comuniImp;
+                }
+
+                if($contComuniPro>0){
+                    $htmlComuni .=$comuniPro;
+                }
+
+                if($contComuniTel>0){
+                    $htmlComuni .=$comuniTel;
+                }
+
+                if($contComuniMoni>0){
+                    $htmlComuni .=$comuniMoni;
+                }
+
+                //llenamos el array para reporte tipo y áreas 
+                if(strlen($htmlAdmon)>0){
+                $arrayData["Administración"] = $htmlAdmon.$estiloTbl;
+                }
+
+                if(strlen($htmlNula)>0){
+                    $arrayData["Nula"] = $htmlNula.$estiloTbl;
+                }
+
+                if(strlen($htmlCampLi)>0){
+                    $arrayData["Campaña de libro"] = $htmlCampLi.$estiloTbl;
+                }
+
+                if(strlen($htmlCapa)>0){
+                    $arrayData["Capacitación"] = $htmlCapa.$estiloTbl;
+                }
+
+                if(strlen($htmlCompe)>0){
+                    $arrayData["Competencias"] = $htmlCompe.$estiloTbl;
+                }
+
+                if(strlen($htmlComuni)>0){
+                    $arrayData["Comunicaciones"] = $htmlComuni.$estiloTbl;
+                }
             }
-            
+                        
             //retornamos array
             return $arrayData;
 
