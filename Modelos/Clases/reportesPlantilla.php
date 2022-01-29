@@ -1,6 +1,5 @@
 <?php
 include_once dirname(__DIR__, 2)."/recursos/lib/TCPDF/tcpdf.php";
-include_once dirname(__DIR__, 1).'/conexion.php';
 
 //se debe heredar de TCPDF para sobreescribir los metodos header y footer y poder personalizarlos
 class ReportesPlantilla extends TCPDF{
@@ -11,9 +10,10 @@ class ReportesPlantilla extends TCPDF{
         $this->Image('../Recursos/Multimedia/Imagenes/logoFepadePDF.png', 10, 10, 40,0);
         $this->Ln(10);
         $this->SetFont('helvetica', 'I', 10);
+                            //w, h,  x,   y,   textohmtl,  borde, relleno, salto linea, alineado ultima celda centrado, padding 
         $this->writeHTMLCell(90, 0, 100, '', "FEPADE<br>DETALLE DE ACTIVOS FEPADE", 0, 0, 0, true, 'C', true);
         $this->writeHTMLCell(90, 0, 188, '', "Fundación Empresarial<br>Para el desarrollo educativo<br>ISO 9001:2015", 0, 0, 0, true, 'R', true);
-        $this->SetMargins(8, PDF_MARGIN_TOP, 8);
+        $this->SetMargins(4, PDF_MARGIN_TOP, 4);
         $this->SetAutoPageBreak(TRUE, 20);
 
     }
@@ -28,7 +28,7 @@ class ReportesPlantilla extends TCPDF{
         date_default_timezone_set("America/El_Salvador");
         $fecha = date("d-m-Y H:i: a");
         // Page number
-        $this->Cell(0, 10, 'Reporte Generado '.$fecha, 0, false, 'L', 0, '', 0, false, 'T', 'M');
+        $this->Cell(80, 10, 'Reporte Generado '.$fecha,0, false, 'L', 0, '', 0, false, 'T', 'M');
         $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
     }
 
@@ -36,103 +36,100 @@ class ReportesPlantilla extends TCPDF{
     //ancho de la tabla y columnas de las tablas de los rpt
     //retorna esa variable para ser concatenada con los datos
     public function getEtiquetaStyleRpt(){
-    $style=" <style>
-        table{
-           white-space:nowrap;
-           font-family: Arial, Helvetica, sans-serif;
-           font-size: 8px;
-           padding: 1px;
-          
+        $style=" <style>
+            table{
+            white-space:nowrap;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 8px;
+            padding: 1px;
+            
+            }
+            .noBorder{
+                border:none !important;
+            }
+            .center{
+                text-align: center;
+            }
+            .bgDark{
+                background-color: #999999;
+                color: black;
+                text-shadow: 0 0 5px black;
+            }
+
+            .tblResumen{
+                padding: 3px;
+                font-size: 10px !important;
+            }
+
+        td{
+            border: 0.2px dashed gray;
+        
+            
         }
-        .noBorder{
-            border:none !important;
-        }
-        .center{
-            text-align: center;
-        }
-        .bgDark{
+
+            th{
             background-color: #999999;
             color: black;
-            text-shadow: 0 0 5px black;
-        }
+            border: 0.2px dashed gray;
+            
+            }
+        
+            .wt{
+                width: 100%;
+            }
+            
+        .w3{
+            width: 3%;
+            }
 
-        .tblResumen{
-            padding: 3px;
-            font-size: 10px !important;
-        }
+            .w6{
+        
+            width: 6%;
+            
+            }
 
-       td{
-        border: 0.2px dashed gray;
-       
-	    
-       }
-
-        th{
-           background-color: #999999;
-           color: black;
-           border: 0.2px dashed gray;
-          
-        }
-       
-        .wt{
-            width: 100%;
+            .w7{
+        
+                width: 7%;
+                
+            }
+        .w15{
+            width: 15%;
         }
         
-       .w3{
-        width: 3%;
+        .w7-5{
+            width: 7.5%;
+        }
+        .w5-5{
+            width: 5.5%;
+        }
+        .w9{
+            width: 9%;
+        
         }
 
-        .w6{
-       
-           width: 6%;
-           
+        .w7-8{
+            width: 7.8%;
+        }
+        .w12{
+            width: 12%;
         }
 
-        .w7{
-       
-            width: 7%;
-            
-         }
-       .w15{
-           width: 15%;
-       }
-       
-       .w7-5{
-           width: 7.5%;
-       }
-       .w5-5{
-           width: 5.5%;
-       }
-       .w9{
-           width: 9%;
-       
-       }
+        .w20{
+            width: 20%;
+        }
 
-       .w7-8{
-           width: 7.8%;
-       }
-       .w12{
-           width: 12%;
-       }
-
-       .w20{
-           width: 20%;
-       }
-
-       
-       .w30{
-        width: 30%;
-        padding: 20px !important;
-    }
-
-
-    </style>";
+        
+        .w30{
+            width: 30%;
+            padding: 20px !important;
+            }
+        </style>";
 
         return $style;
     }
 
-    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
-    //para la tabla pc y poder concatenar los respectivos datos en reporteDao
+    //crea una variable que contiene las etiquetas tabla pc y ecabezados de coloumnas
     //retorna esa variable para ser concatenada con los datos
     public function  getHeaderTablaRptPc($boolean){
         
@@ -175,8 +172,7 @@ class ReportesPlantilla extends TCPDF{
     }
 
     
-    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
-    //para la tabla laptop y poder concatenar los respectivos datos en reporteDao
+    //crea una variable que contiene las etiquetas tabla laptop y ecabezados de coloumnas
     //retorna esa variable para ser concatenada con los datos
     public function  getHeaderTablaRptLap($boolean){
         if($boolean){
@@ -217,8 +213,7 @@ class ReportesPlantilla extends TCPDF{
     }
 
     
-    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
-    //para la tabla proyector y poder concatenar los respectivos datos en reporteDao
+    //crea una variable que contiene las etiquetas tabla proyector y ecabezados de coloumnas
     //retorna esa variable para ser concatenada con los datos
     public function getHeaderTablaRptProyector($boolean){
 
@@ -251,8 +246,7 @@ class ReportesPlantilla extends TCPDF{
     }
 
 
-    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
-    //para la tabla telefono ip y poder concatenar los respectivos datos en reporteDao
+    //crea una variable que contiene las etiquetas tabla telefono y ecabezados de coloumnas
     //retorna esa variable para ser concatenada con los datos
     public function getHeaderTablaRptTelefono($boolean){
 
@@ -281,8 +275,7 @@ class ReportesPlantilla extends TCPDF{
     }
 
 
-    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
-    //para la tabla monitor y poder concatenar los respectivos datos en reporteDao
+    //crea una variable que contiene las etiquetas tabla monitor y ecabezados de coloumnas
     //retorna esa variable para ser concatenada con los datos
     public function getHeaderTablaRptMonitor(){
 
@@ -299,8 +292,7 @@ class ReportesPlantilla extends TCPDF{
     }
 
     
-    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
-    //para la tabla impresor y poder concatenar los respectivos datos en reporteDao
+    //crea una variable que contiene las etiquetas tabla impresor y ecabezados de coloumnas
     //retorna esa variable para ser concatenada con los datos
     public function getHeaderTablaRptImpresor($num){
         /*
@@ -356,8 +348,7 @@ class ReportesPlantilla extends TCPDF{
         return $tablaProyector;
     }
 
-        //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas
-    //para la tabla matenimiento de activo poder concatenar los respectivos datos en reporteDao
+    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas para mantenimiento
     //retorna esa variable para ser concatenada con los datos
     public function getHeaderTablaMantenimiento(){      
         

@@ -62,6 +62,7 @@ if(isset($_POST["btnRptAreas"])){
     $areaNombre= $_POST["hdnNameArea"];
     
     $rpt = new ReportesDao();
+    
     $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area, true, false);
     $rpt->generarRptPdfActArea($resp, $area, $areaNombre);
     
