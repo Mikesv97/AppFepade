@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 		}, function (err) {
 			if (err) {
-				//console.log(err);
+				console.log(err);
 				Swal.fire({
                     title: '¡Problemas técnicos!',
                     text: '¡Vaya! Parece que tenemos dificultades técnicas para acceder a la cámara y capturar el código de barras'
