@@ -100,7 +100,7 @@ $idUSuario = $_SESSION["usuario"]["id"];
                         <h1 class="text-gray-900 my-2 mb-4">Descargar APP para celular</h1>
                     </div>
                     <p>Si no puedes activar la camara de tu navegador descargar la app para tu celular android</p>
-                    <a class="outLineRed btn" href="../Recursos/Multimedia/apk/EscanerFinal2.apk" download="Escaner.apk">
+                    <a class="outLineRed btn" href="../Recursos/Multimedia/apk/Scanner_Fepade.apk" download="Scanner_Fepade.apk">
                         Descargar
                     </a>
                 </div>
