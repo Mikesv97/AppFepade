@@ -364,13 +364,12 @@ class ReportesPlantilla extends TCPDF{
             $tablaMant ='
             <table >
             <tr>
-                <th class="w7">Código</th>
+                <th class="w9">Código</th>
                 <th class="w15">Equipo</th>
-                <th class="w6">Procesador</th>
+                <th class="w7-5">Procesador</th>
                 <th class="w9 center">Ram</th>
                 <th class="w9">Discos Duros</th>
                 <th class="w9">Monitor Marca</th>
-                <th class="w7-5 center">Código</th>
                 <th class="w7-5">Pulgadas</th>
                 <th class="w30">Observación</th>
             </tr>';

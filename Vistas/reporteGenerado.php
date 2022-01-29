@@ -27,6 +27,11 @@ if (isset($_POST["btnRptActArea"])) {
         $rpt->generearRptTipActAreaAll($htmlArray);
     }
 
+    if($area!=100 && $tipoAct==0){
+        $htmlArray = $rpt->getDataRptTipActAreaTodas($tipoAct, $area, false, false);
+        $rpt->generearRptTipActAreaAll($htmlArray);
+    }
+
 
 
 }
@@ -99,11 +104,28 @@ if(isset($_POST["btnRptAreas"])){
 
 //CUANDO SE HACE CLICK EN REPORTE MANTENIMIENTO
 if(isset($_POST["btnRptMant"])){
+    $tipoAct = $_POST["sTipoActivoR"];
     $area=$_POST["sAreaR"];
-    $areaNombre= $_POST["hdnNameArea"];
+    $areaNombre = $_POST["hdnNameArea"];
+    $tipoActNombre = $_POST["hdnNameAct"];
+
     $rpt = new ReportesDao();
-    $resp = $rpt->getDataRptMantenimiento($area);
-    $rpt->generarRptPdfMantenimiento($resp,$areaNombre);
+    if($tipoAct !=0 && $area != 100){
+        $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area, false, true);
+        $rpt->generarRptPdfMantenimiento($resp, $areaNombre);
+    }
+
+    if($area==100 && $tipoAct==0){
+        $htmlArray = $rpt->getDataRptTipActAreaTodas(0,100, false, true);
+        $rpt->generarRptPdfMantenimiento($htmlArray, $areaNombre);
+    }
+
+    if($area==100 && $tipoAct!=0){
+        $htmlArray = $rpt->getDataRptTipActAreaTodas($tipoAct, $area, false, true);
+        $rpt->generarRptPdfMantenimiento($htmlArray, $areaNombre);
+    }
+    //$resp = $rpt->getDataRptMantenimiento($area);
+    //$rpt->generarRptPdfMantenimiento($resp,$areaNombre);
 }
 
 
@@ -126,6 +148,12 @@ function getArrayCantByActiTipo($rptDao){
     $array["Proyector"] = $rptDao -> contTotalTipAct(4);
     $array["Telefono"] = $rptDao -> contTotalTipAct(5);
     $array["Monitor"] = $rptDao -> contTotalTipAct(6);
+
+    return $array;
+}
+
+function getArrayNombreActiTipo(){
+    $array = array("PC","Laptop","Impresor","Proyector","Telefono","Monitor");
 
     return $array;
 }

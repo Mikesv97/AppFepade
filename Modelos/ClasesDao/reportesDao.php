@@ -28,7 +28,7 @@ class ReportesDao
             $tablaImp = $rpt->getHeaderTablaMantenimiento();
             $tablaTel = $rpt->getHeaderTablaMantenimiento();
             $tablaMonitor = $rpt->getHeaderTablaMantenimiento(); 
-            $estiloTbl = $rpt->getHeaderTablaMantenimiento();
+            $estiloTbl = $rpt->getEtiquetaStyleRpt();
 
         }else{
 
@@ -170,7 +170,7 @@ class ReportesDao
             dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro,
             dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM,
             dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
-            dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie
+            dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie, dbo.Activo_Especificacion.Capacidad_D1,dbo.Activo_Especificacion.Capacidad_D2
             FROM dbo.Activo INNER JOIN
             dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
             dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
@@ -188,7 +188,7 @@ class ReportesDao
             dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro,
             dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM,
             dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
-            dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie
+            dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie, dbo.Activo_Especificacion.Capacidad_D1,dbo.Activo_Especificacion.Capacidad_D2
             FROM dbo.Activo INNER JOIN
             dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
             dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
@@ -209,7 +209,7 @@ class ReportesDao
             dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro,
             dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM,
             dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
-            dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie
+            dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie, dbo.Activo_Especificacion.Capacidad_D1,dbo.Activo_Especificacion.Capacidad_D2
             FROM dbo.Activo INNER JOIN
             dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
             dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
@@ -224,6 +224,26 @@ class ReportesDao
             $respuesta->execute([$tipoActivo, $area]);
         }        
 
+        if($tipoActivo == 0 && $area!=100){
+            $sql="select dbo.Activo_Especificacion.DiscoDuro2, dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo,
+            dbo.Tipo_Activo.tipo_activo_nombre, dbo.Activo.Activo_referencia, dbo.Activo.Activo_descripcion, dbo.Activo.Activo_factura, dbo.Activo.Activo_fecha_adq, dbo.Activo_responsable.Nombre_responsable, dbo.Activo.Estado,
+            dbo.Activo.Activo_eliminado, dbo.Activo_Especificacion.Procesador, dbo.Activo_Especificacion.Generacion, dbo.Activo_Especificacion.Ram, dbo.Activo_Especificacion.DiscoDuro,
+            dbo.Activo_Especificacion.Modelo, dbo.Activo_Especificacion.SO, dbo.Activo_Especificacion.Office, dbo.Activo_Especificacion.IP, dbo.Activo_Especificacion.TonerN, dbo.Activo_Especificacion.TonerM,
+            dbo.Activo_Especificacion.TonerC, dbo.Activo_Especificacion.TonerA, dbo.Activo_Especificacion.HorasUso, dbo.Activo_Especificacion.HoraEco, dbo.Activo.Estructura2_id,
+            dbo.Activo.Empresa_id AS codigo_proyecto, dbo.Activo.numero_serie AS numero_serie, dbo.Activo_Especificacion.Capacidad_D1,dbo.Activo_Especificacion.Capacidad_D2
+            FROM dbo.Activo INNER JOIN
+            dbo.Activo_responsable ON dbo.Activo.Responsable_codigo = dbo.Activo_responsable.Responsable_codigo INNER JOIN
+            dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
+            dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
+            dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
+            where dbo.Estructura31.estructura31_id = ?
+            ORDER BY dbo.Tipo_Activo.tipo_activo_nombre";
+
+            //preparamos consulta
+            $respuesta = $con->prepare($sql);
+            //ejecutamos la consulta y seteamos parametros 
+            $respuesta->execute([$area]);
+        }
 
         try {
             //convertimos a un arreglo los datos obtenidos de BD
@@ -498,155 +518,155 @@ class ReportesDao
             if($mantenimiento){
                 //--------ÁREA ADMON----------
                 if($contAdmonPc > 0){
-                    $htmlManAdmon .= $admonPc;
+                    $htmlManAdmon .= "<h3>PC</h3>".$admonPc;
                 }
 
                 if($contAdmonLap>0){
-                    $htmlManAdmon .= $admonLap;
+                    $htmlManAdmon .= "<h3>Laptop</h3>".$admonLap;
                 }
 
                 if($contAdmonImp>0){
-                    $htmlManAdmon .=$admonImp;
+                    $htmlManAdmon .="<h3>Impresor</h3>".$admonImp;
                 }
 
                 if($contAdmonPro>0){
-                    $htmlManAdmon .=$admonPro;
+                    $htmlManAdmon .="<h3>Proyector</h3>".$admonPro;
                 }
 
                 if($contAdmonTel>0){
-                    $htmlManAdmon .=$admonTel;
+                    $htmlManAdmon .="<h3>Telefono</h3>".$admonTel;
                 }
 
                 if($contAdmonMoni>0){
-                    $htmlManAdmon .=$admonMoni;
+                    $htmlManAdmon .="<h3>Monitor</h3>".$admonMoni;
                 }
 
                 //--------ÁREA NULA----------
                 if($contNulaPc > 0){
-                    $htmlManNula .= $nulaPc;
+                    $htmlManNula .="<h3>PC</h3>".$nulaPc;
                 }
 
                 if($contNulaLap>0){
-                    $htmlManNula .= $nulaLap;
+                    $htmlManNula .="<h3>Laptop</h3>". $nulaLap;
                 }
 
                 if($contNulaImp>0){
-                    $htmlManNula .=$nulaImp;
+                    $htmlManNula .="<h3>Impresor</h3>".$nulaImp;
                 }
 
                 if($contNulaPro>0){
-                    $htmlManNula .=$nulaPro;
+                    $htmlManNula .="<h3>Proyector</h3>".$nulaPro;
                 }
 
                 if($contNulaTel>0){
-                    $htmlManNula .=$nulaTel;
+                    $htmlManNula .="<h3>Telefono</h3>".$nulaTel;
                 }
 
                 if($contNulaMoni>0){
-                    $htmlManNula .=$nulaMoni;
+                    $htmlManNula .="<h3>Monitor</h3>".$nulaMoni;
                 }
 
                 //--------ÁREA CAMPAÑA LIBRO----------
                 if($contCampaPc > 0){
-                    $htmlManCampLi .= $campaPc;
+                    $htmlManCampLi .="<h3>PC</h3>". $campaPc;
                 }
 
                 if($contCampaLap>0){
-                    $htmlManCampLi .= $campaLap;
+                    $htmlManCampLi .="<h3>Laptop</h3>". $campaLap;
                 }
 
                 if($contCampaImp>0){
-                    $htmlManCampLi .=$campaImp;
+                    $htmlManCampLi .="<h3>Impresor</h3>".$campaImp;
                 }
 
                 if($contCampaPro>0){
-                    $htmlManCampLi .=$campaPro;
+                    $htmlManCampLi .="<h3>Proyector</h3>".$campaPro;
                 }
 
                 if($contCampaTel>0){
-                    $htmlManCampLi .=$campaTel;
+                    $htmlManCampLi .="<h3>Telefono</h3>".$campaTel;
                 }
 
                 if($contCampaMoni>0){
-                    $htmlManCampLi .=$campaMoni;
+                    $htmlManCampLi .="<h3>Monitor</h3>".$campaMoni;
                 }
                 //--------ÁREA  CAPACITACION----------
 
                 if($contCapaPc > 0){
-                    $htmlManCapa .= $capaPc;
+                    $htmlManCapa .= "<h3>PC</h3>".$capaPc;
                 }
 
                 if($contCapaLap>0){
-                    $htmlManCapa .= $capaLap;
+                    $htmlManCapa .="<h3>Laptop</h3>".$capaLap;
                 }
 
                 if($contCapaImp>0){
-                    $htmlManCapa .=$capaImp;
+                    $htmlManCapa .="<h3>Impresor</h3>".$capaImp;
                 }
 
                 if($contCapaPro>0){
-                    $htmlManCapa .=$capaPro;
+                    $htmlManCapa .="<h3>Proyector</h3>".$capaPro;
                 }
 
                 if($contCapaTel>0){
-                    $htmlManCapa .= $capaTel;
+                    $htmlManCapa .="<h3>Telefono</h3>". $capaTel;
                 }
 
                 if($contCapaMoni>0){
-                    $htmlManCapa .= $capaMoni;
+                    $htmlManCapa .= "<h3>Monitor</h3>".$capaMoni;
                 }
 
                 //--------ÁREA COMPETENCIAS----------
 
                 if($contCompePc > 0){
-                    $htmlManCompe .= $compePc;
+                    $htmlManCompe .= "<h3>PC</h3>".$compePc;
                 }
 
                 if($contCompeLap>0){
-                    $htmlManCompe .= $compeLap;
+                    $htmlManCompe .= "<h3>Laptop</h3>".$compeLap;
                 }
 
                 if($contCompeImp>0){
-                    $htmlManCompe .=$compeImp;
+                    $htmlManCompe .="<h3>Impresor</h3>".$compeImp;
                 }
 
                 if($contCompePro>0){
-                    $htmlManCompe .=$compePro;
+                    $htmlManCompe .="<h3>Proyector</h3>".$compePro;
                 }
 
                 if($contCompeTel>0){
-                    $htmlManCompe .=$compeTel;
+                    $htmlManCompe .="<h3>Telefono</h3>".$compeTel;
                 }
 
                 if($contCompeMoni>0){
-                    $htmlManCompe .=$compeMoni;
+                    $htmlManCompe .="<h3>Monitor</h3>".$compeMoni;
                 }
 
                 //--------ÁREA COMUNICACIONES----------
 
 
                 if($contComuniPc > 0){
-                    $htmlManComuni .= $comuniPc;
+                    $htmlManComuni .="<h3>PC</h3>". $comuniPc;
                 }
 
                 if($contComuniLap>0){
-                    $htmlManComuni .= $comuniLap;
+                    $htmlManComuni .= "<h3>Laptop</h3>".$comuniLap;
                 }
 
                 if($contComuniImp>0){
-                    $htmlManComuni .=$comuniImp;
+                    $htmlManComuni .="<h3>Impresor</h3>".$comuniImp;
                 }
 
                 if($contComuniPro>0){
-                    $htmlManComuni .=$comuniPro;
+                    $htmlManComuni .="<h3>Proyector</h3>".$comuniPro;
                 }
 
                 if($contComuniTel>0){
-                    $htmlManComuni .=$comuniTel;
+                    $htmlManComuni .="<h3>Telefono</h3>".$comuniTel;
                 }
 
                 if($contComuniMoni>0){
-                    $htmlManComuni .=$comuniMoni;
+                    $htmlManComuni .="<h3>Monitor</h3>".$comuniMoni;
                 }   
                 
                 //llenamos el array 
@@ -679,7 +699,7 @@ class ReportesDao
 
                 //--------ÁREA ADMON----------
                 if($contAdmonPc > 0){
-                    $htmlAdmon .= $admonPc;
+                    $htmlAdmon .=$admonPc;
                 }
 
                 if($contAdmonLap>0){
@@ -1384,12 +1404,13 @@ class ReportesDao
     public function generarRptPdfActArea($htmlArray, $area)
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
-        $pdf->AddPage();
-        $pdf->Ln(2);
-        $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(80, 10, "Área: " . $area, 0, 1, "L");
-        $pdf->Ln(3);
+
         foreach($htmlArray as $key => $value){
+            $pdf->AddPage();
+            $pdf->Ln(2);
+            $pdf->SetFont('helvetica', 'B', 10);
+            $pdf->Cell(80, 10, "Área: " . $area, 0, 1, "L");
+            $pdf->Ln(3);
             $pdf->writeHTML($value, true, false, true, false, '');
         }
         
@@ -1423,19 +1444,42 @@ class ReportesDao
     }
 
     //genera reporte de <<mantenimiento>> 
-    public function generarRptPdfMantenimiento($html, $areaNombre)
+    public function generarRptPdfMantenimiento($htmlArray, $area)
     {
         $pdf = new ReportesPlantilla("P", "mm", "A3", true, 'UTF-8', false);
-        $pdf->AddPage();
+        
         $pdf->Ln(5);
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->Cell(0, 5, 'Mantenimiento Preventivo de Recursos de TI', 0, 1,"L");
-        $pdf->Cell(70, 5, 'Departamento: '.$areaNombre, 0, 0,"L");
-        $pdf->Cell(145, 5, 'Gerente|Jefe: ______________________________ ', 0, 0,"C");
-        $pdf->Cell(60, 5, 'Fecha: ____________________ ', 0, 1,"L");
 
-        $pdf->Ln(3);
-        $pdf->writeHTML($html, true, false, true, false, '');
+        if(!is_array($htmlArray)){
+            $pdf->AddPage();
+            $pdf->Ln(5);
+            $pdf->Cell(0, 5, 'Mantenimiento Preventivo de Recursos de TI', 0, 1,"L");
+            $pdf->Cell(70, 5, 'Departamento: '.$area, 0, 0,"L");
+            $pdf->Cell(145, 5, 'Gerente|Jefe: ______________________________ ', 0, 0,"C");
+            $pdf->Cell(60, 5, 'Fecha: ____________________ ', 0, 1,"L");
+            
+            foreach($htmlArray as $key => $value){
+                $pdf->Ln(3);
+                $pdf->writeHTML($value, true, false, true, false, '');
+            }
+
+        }else{
+            $i =0;
+            foreach($htmlArray as $key =>$value){
+                $pdf->AddPage();
+                $pdf->Ln(5);
+                $pdf->Cell(0, 5, 'Mantenimiento Preventivo de Recursos de TI', 0, 1,"L");
+                $pdf->Cell(70, 5, 'Departamento: '.$key, 0, 0,"L");
+                $pdf->Cell(145, 5, 'Gerente|Jefe: ______________________________ ', 0, 0,"C");
+                $pdf->Cell(60, 5, 'Fecha: ____________________ ', 0, 1,"L");
+                $pdf->Ln(3);
+                $pdf->writeHTML($value, true, false, true, false, '');
+                $i++;
+            }
+
+        }
+
         $pdf->Output();
     }
 
@@ -1509,15 +1553,14 @@ class ReportesDao
                     }
 
                     $fpc ='<tr>'
-                    . '<td class="w7"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
+                    . '<td class="w9"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
                     . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"] ." " . $arregloBd[$posicion]["Modelo"] . '</td>'
-                    . '<td class="w6 center"><br><br>' . $arregloBd[$posicion]["Procesador"]." G.".$arregloBd[$posicion]["Generacion"] . '</td>'
+                    . '<td class="w7-5 center"><br><br>' . $arregloBd[$posicion]["Procesador"]."<br>G.".$arregloBd[$posicion]["Generacion"] . '</td>'
                     . '<td class="w9 center"><br><br>' ."RAM ". $arregloBd[$posicion]["Ram"] . '</td>'
-                    . '<td class="w9 center"><br><br>' .$fila[$i]["DiscoDuro"]." ".$arregloBd[$posicion]["Capacidad_D1"]
+                    . '<td class="w9 center"><br><br>' .$arregloBd[$posicion]["DiscoDuro"]." ".$arregloBd[$posicion]["Capacidad_D1"]
                     ." <br>".$arregloBd[$posicion]["DiscoDuro2"]." ".$arregloBd[$posicion]["Capacidad_D2"]. '</td>'
-                    . '<td class="w9"></td>'
-                    . '<td class="w7-5"></td>'
-                    . '<td class="w7-5"></td>'
+                    . '<td class="w9 center">N/A</td>'
+                    . '<td class="w7-5 center">N/A</td>'
                     . '<td class="w30"><br><br><br><br></td>'
                     . '</tr>';
 
@@ -1564,15 +1607,14 @@ class ReportesDao
                     }
 
                     $laptop ='<tr>'
-                    . '<td class="w7"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
+                    . '<td class="w9"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
                     . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"] ." " . $arregloBd[$posicion]["Modelo"] . '</td>'
-                    . '<td class="w6 center"><br><br>' . $arregloBd[$posicion]["Procesador"]." G.".$arregloBd[$posicion]["Generacion"] . '</td>'
+                    . '<td class="w7-5 center"><br><br>' . $arregloBd[$posicion]["Procesador"]."<br>G.".$arregloBd[$posicion]["Generacion"] . '</td>'
                     . '<td class="w9 center"><br><br>' ."RAM ". $arregloBd[$posicion]["Ram"] . '</td>'
-                    . '<td class="w9 center"><br><br>' .$fila[$i]["DiscoDuro"]." ".$arregloBd[$posicion]["Capacidad_D1"]
+                    . '<td class="w9 center"><br><br>' .$arregloBd[$posicion]["DiscoDuro"]." ".$arregloBd[$posicion]["Capacidad_D1"]
                     ." <br>".$arregloBd[$posicion]["DiscoDuro2"]." ".$arregloBd[$posicion]["Capacidad_D2"]. '</td>'
-                    . '<td class="w9"></td>'
-                    . '<td class="w7-5"></td>'
-                    . '<td class="w7-5"></td>'
+                    . '<td class="w9 center">N/A</td>'
+                    . '<td class="w7-5 center">N/A</td>'
                     . '<td class="w30"><br><br><br><br></td>'
                     . '</tr>';
 
@@ -1610,14 +1652,13 @@ class ReportesDao
                     }
 
                     $impresor='<tr>'
-                    . '<td class="w7"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
+                    . '<td class="w9"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
                     . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"] ." ". $arregloBd[$posicion]["Modelo"] . '</td>'
                     . '<td class="w6 center"><br><br>N/A</td>'
                     . '<td class="w9 center"><br><br>N/A</td>'
                     . '<td class="w9 center"><br><br>N/A</td>'
-                    . '<td class="w9 center"></td>'
-                    . '<td class="w7-5 center"></td>'
-                    . '<td class="w7-5 center"></td>'
+                    . '<td class="w9 center">N/A</td>'
+                    . '<td class="w7-5 center">N/A</td>'
                     . '<td class="w30"><br><br><br><br></td>'
                     . '</tr>';
                     
@@ -1651,14 +1692,13 @@ class ReportesDao
                     }
                     
                     $proyector ='<tr>'
-                    . '<td class="w7"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
+                    . '<td class="w9"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
                     . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"] ." ". $arregloBd[$posicion]["Modelo"] . '</td>'
                     . '<td class="w6 center"><br><br>N/A</td>'
                     . '<td class="w9 center"><br><br>N/A</td>'
                     . '<td class="w9 center"><br><br>N/A</td>'
-                    . '<td class="w9 center"></td>'
-                    . '<td class="w7-5 center"></td>'
-                    . '<td class="w7-5 center"></td>'
+                    . '<td class="w9 center">N/A</td>'
+                    . '<td class="w7-5 center">N/A</td>'
                     . '<td class="w30"><br><br><br><br></td>'
                     . '</tr>';
 
@@ -1688,15 +1728,14 @@ class ReportesDao
                     }
 
                     $tel='<tr>'
-                    . '<td class="w7"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
+                    . '<td class="w9"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
                     . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"]." ".$arregloBd[$posicion]["Activo_descripcion"]
                     ." ". $arregloBd[$posicion]["Modelo"] . '</td>'
                     . '<td class="w6 center"><br><br>N/A</td>'
                     . '<td class="w9 center"><br><br>N/A</td>'
                     . '<td class="w9 center"><br><br>N/A</td>'
-                    . '<td class="w9 center"></td>'
-                    . '<td class="w7-5 center"></td>'
-                    . '<td class="w7-5 center"></td>'
+                    . '<td class="w9 center">N/A</td>'
+                    . '<td class="w7-5 center">N/A</td>'
                     . '<td class="w30"><br><br><br><br></td>'
                     . '</tr>';
 
@@ -1716,14 +1755,12 @@ class ReportesDao
                     }
                     
                     $moni ='<tr>'
-                    . '<td class="w7"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
-                    . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"]." ".$arregloBd[$posicion]["Activo_descripcion"]
-                    ." ". $arregloBd[$posicion]["Modelo"] . '</td>'
+                    . '<td class="w9"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
+                    . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"]." ".$arregloBd[$posicion]["Activo_descripcion"].'</td>'
                     . '<td class="w6 center"><br><br>N/A</td>'
                     . '<td class="w9 center"><br><br>N/A</td>'
                     . '<td class="w9 center"><br><br>N/A</td>'
-                    . '<td class="w9 center"></td>'
-                    . '<td class="w7-5 center"></td>'
+                    . '<td class="w9 center">'.$arregloBd[$posicion]["Modelo"].'</td>'
                     . '<td class="w7-5 center"></td>'
                     . '<td class="w30"><br><br><br><br></td>'
                     . '</tr>';
