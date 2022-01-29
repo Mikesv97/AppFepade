@@ -49,8 +49,7 @@ class ReportesDao
         }
 
 
-        //obtenemos la maqueta de headers de las tablas para cada tipo de activo
-        //para reporte mantenimiento
+       //creamos variables auxiliares para el array final de mantenimiento y los datos
         $htmlManAdmon = "";
         $htmlManNula = "";
         $htmlManCampLi = "";
@@ -162,7 +161,9 @@ class ReportesDao
         //establecemos la coneccion
         $con = Conexion::conectar();
 
+        //declaramos la variable que contendrá las diferentes consultas
         $sql ="";
+
         if($tipoActivo == 0 && $area == 100){
             //establecemos la consulta
             $sql = "select dbo.Activo_Especificacion.DiscoDuro2, dbo.Activo.Activo_id, dbo.Activo.Estructura1_id, dbo.Activo.Estructura2_id, dbo.Activo.Estructura3_id, dbo.Estructura31.estructura31_nombre, dbo.Activo.Activo_tipo,
@@ -194,7 +195,7 @@ class ReportesDao
             dbo.Activo_Especificacion ON dbo.Activo.Activo_id = dbo.Activo_Especificacion.Activo_id INNER JOIN
             dbo.Estructura31 ON dbo.Activo.Estructura3_id = dbo.Estructura31.estructura31_id INNER JOIN
             dbo.Tipo_Activo ON dbo.Activo.Activo_tipo = dbo.Tipo_Activo.tipo_activo_id
-            where tipo_activo_id = ?
+            where dbo.Tipo_Activo.tipo_activo_id = ?
             ORDER BY dbo.Estructura31.estructura31_nombre";
 
             //preparamos consulta
@@ -249,7 +250,6 @@ class ReportesDao
             //convertimos a un arreglo los datos obtenidos de BD
             $fila =  $respuesta->fetchAll(PDO::FETCH_ASSOC);
 
-            //si los hay
             //recorremos y creamos las respectivas tablas
             for ($i = 0; $i < sizeof($fila); $i++) {
                 $area = trim($fila[$i]["estructura31_nombre"]);
