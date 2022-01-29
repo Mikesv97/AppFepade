@@ -151,9 +151,3 @@ function getArrayCantByActiTipo($rptDao){
 
     return $array;
 }
-
-function getArrayNombreActiTipo(){
-    $array = array("PC","Laptop","Impresor","Proyector","Telefono","Monitor");
-
-    return $array;
-}
