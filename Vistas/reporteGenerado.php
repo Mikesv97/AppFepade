@@ -3,32 +3,27 @@ require dirname(__DIR__, 1) ."/Modelos/conexion.php";
 include_once dirname(__DIR__, 1) . '/Modelos/clases/reportesPlantilla.php';
 include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
 
+//CUANDO SE DA CLICK BOTÓN REPORTE TIPO ACTIVO- ÁREA
 if (isset($_POST["btnRptActArea"])) {
 
     $tipoAct = $_POST["sTipoActivoR"];
     $area=$_POST["sAreaR"];
     $areaNombre= $_POST["hdnNameArea"];
+
     $rpt = new ReportesDao();
 
-    if($tipoAct == 0 && $area != 100){
-
-        $resp = $rpt->getDataRptActivosArea($area, false,1);
-        $rpt->generarRptPdfActArea($resp,$areaNombre);
-
-    }
-    
     if($tipoAct !=0 && $area != 100){
-        $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area);
+        $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area, false, false);
         $rpt->generarRptPdfActArea($resp,$areaNombre);
     }
 
     if($area==100 && $tipoAct==0){
-        $htmlArray = $rpt->getDataRptTipActAreaTodas(0,100);
+        $htmlArray = $rpt->getDataRptTipActAreaTodas(0,100, false, false);
         $rpt->generearRptTipActAreaAll($htmlArray);
     }
 
     if($area==100 && $tipoAct!=0){
-        $htmlArray = $rpt->getDataRptTipActAreaTodas($tipoAct, $area);
+        $htmlArray = $rpt->getDataRptTipActAreaTodas($tipoAct, $area, false, false);
         $rpt->generearRptTipActAreaAll($htmlArray);
     }
 
@@ -37,7 +32,7 @@ if (isset($_POST["btnRptActArea"])) {
 }
 
 
-
+//CUANDO SE HACE CLICK EN BOTÓN REPORTE TIPO ACTIVO
 if (isset($_POST["btnRptActTipoActivo"])) {
 
     $tipoActRpt = $_POST["sTipoActivoR"];
@@ -50,10 +45,12 @@ if (isset($_POST["btnRptActTipoActivo"])) {
 
 
     $resp = $r->getDataRptActivosTipo($tipoActRpt);
-
     $r->generarRptPdfTipAct($resp,$arrayContTAct, $tipoActNombre);
 }
 
+
+
+//CUANDO SE HACE CLICK EN BOTÓN RESUMEN DE ACTIVOS TOTALES
 if(isset($_POST["btnRptResAct"])){
     $rpt = new ReportesDao();
 
@@ -61,6 +58,8 @@ if(isset($_POST["btnRptResAct"])){
     $rpt->generarRptPdfResTipAct($html);
 }
 
+
+//CUANDO SE HACE CLICK EN REPORTE DE TONER
 if(isset($_POST["btnRptCantTon"])){
     $rpt = new ReportesDao();
 
@@ -68,16 +67,37 @@ if(isset($_POST["btnRptCantTon"])){
     $rpt->generarRptPdfResImpToner($html);
 }
 
+
+//CUANDO SE HACE CLICK EN REPORTES ÁREAS
 if(isset($_POST["btnRptAreas"])){
+    $tipoAct = $_POST["sTipoActivoR"];
     $area=$_POST["sAreaR"];
     $areaNombre= $_POST["hdnNameArea"];
+    
     $rpt = new ReportesDao();
-    $resp = $rpt->getDataRptActivosArea($area, true,2);
-    $rpt->generarRptPdfActArea($resp,$areaNombre);
+
+    if($tipoAct !=0 && $area != 100){
+        $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area, true, false);
+        $rpt->generarRptPdfActArea($resp,$areaNombre);
+    }
+
+    if($area==100 && $tipoAct==0){
+        $htmlArray = $rpt->getDataRptTipActAreaTodas(0,100, true, false);
+        $rpt->generearRptTipActAreaAll($htmlArray);
+    }
+
+    if($area==100 && $tipoAct!=0){
+        $htmlArray = $rpt->getDataRptTipActAreaTodas($tipoAct, $area, true, false);
+        $rpt->generearRptTipActAreaAll($htmlArray);
+    }
+
     
     
 }
 
+
+
+//CUANDO SE HACE CLICK EN REPORTE MANTENIMIENTO
 if(isset($_POST["btnRptMant"])){
     $area=$_POST["sAreaR"];
     $areaNombre= $_POST["hdnNameArea"];
@@ -86,12 +106,16 @@ if(isset($_POST["btnRptMant"])){
     $rpt->generarRptPdfMantenimiento($resp,$areaNombre);
 }
 
+
+///SI NO VIENE NADA POR POST REDIRECCIONAMOS A VISTA REPORTES
 if(!$_POST){
 
     header("Location: reportes.php");
 
 }
 
+
+//FUNCIÓN QUE CARGA ARRAY CON TIPO ACTIVO Y SU CANTIDAD TOTAL EN EL SISTEMA
 function getArrayCantByActiTipo($rptDao){
     $array = array();
 

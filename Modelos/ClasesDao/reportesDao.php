@@ -13,22 +13,50 @@ class ReportesDao
     /*   -------    INICIAN FUNCIONES PARA SOLICITAR DATOS A LA BASE DE DATOS -------
      -------         SEGÚN LOS FILTROS SELECCIONADOS POR EL USUARIO       -------         */
 
-    //solicita los datos de la BD para generar tablas sin filtro
-    //retorna el hmtl para la función que genera el reporte
-    public function getDataRptTipActAreaTodas($tipoActivo, $area)
+    //solicita los datos de la BD para generar tablas según tipo activo y áreas
+    public function getDataRptTipActAreaTodas($tipoActivo, $area, $bandGte,$mantenimiento)
     {
         //creamos el objeto de la plantilla html de rpt
         $rpt = new ReportesPlantilla();
 
+        if($mantenimiento){
+
+            //obtenemos la maqueta de headers de las tablas para cada tipo de activo
+            $tablaPC = $rpt->getHeaderTablaMantenimiento();
+            $tablaLaptop =$rpt->getHeaderTablaMantenimiento();
+            $tablaProyector = $rpt->getHeaderTablaMantenimiento();
+            $tablaImp = $rpt->getHeaderTablaMantenimiento();
+            $tablaTel = $rpt->getHeaderTablaMantenimiento();
+            $tablaMonitor = $rpt->getHeaderTablaMantenimiento(); 
+            $estiloTbl = $rpt->getHeaderTablaMantenimiento();
+
+        }else{
+
+            //obtenemos la maqueta de headers de las tablas para cada tipo de activo
+            $tablaPC = $rpt->getHeaderTablaRptPc($bandGte);
+            $tablaLaptop = $rpt->getHeaderTablaRptLap($bandGte);
+            $tablaProyector = $rpt->getHeaderTablaRptProyector($bandGte);
+
+            if($bandGte){
+                $tablaImp = $rpt->getHeaderTablaRptImpresor(2);
+            }else{
+                $tablaImp = $rpt->getHeaderTablaRptImpresor(1);
+            }
+
+            $tablaTel = $rpt->getHeaderTablaRptTelefono($bandGte);
+            $tablaMonitor = $rpt->getHeaderTablaRptMonitor();
+            $estiloTbl = $rpt->getEtiquetaStyleRpt();
+        }
+
+
         //obtenemos la maqueta de headers de las tablas para cada tipo de activo
-        $tablaPC = $rpt->getHeaderTablaRptPc(false);
-        $tablaLaptop = $rpt->getHeaderTablaRptLap(false);
-        $tablaProyector = $rpt->getHeaderTablaRptProyector(false);
-        $tablaImp = $rpt->getHeaderTablaRptImpresor(1);
-        $tablaTel = $rpt->getHeaderTablaRptTelefono(false);
-        $tablaMonitor = $rpt->getHeaderTablaRptMonitor();
-        $estiloTbl = $rpt->getEtiquetaStyleRpt();
-        
+        //para reporte mantenimiento
+        $htmlManAdmon = "";
+        $htmlManNula = "";
+        $htmlManAdmon = "";
+        $htmlManAdmon = "";
+        $htmlManAdmon = "";
+
         //creamos variable para manejar la respuesta
         $respuesta ="";
 
@@ -209,33 +237,33 @@ class ReportesDao
                         $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
 
                         if(strtolower($tipo) == "pc"){
-                            $admonPc .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $admonPc .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contAdmonPc++;
                                     
                         }
 
                         if(strtolower($tipo) == "laptop"){
-                            $admonLap .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $admonLap .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contAdmonLap++;
                         }
 
                         if(strtolower($tipo) == "impresor"){
-                            $admonImp .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $admonImp .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contAdmonImp++;
                         }
 
                         if(strtolower($tipo) == "proyector"){
-                            $admonPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $admonPro .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contAdmonPro++;
                         }
 
                         if(strtolower($tipo) == "telefono"){
-                            $admonTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $admonTel .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contAdmonTel++;
                         }
 
                         if(strtolower($tipo) == "monitor"){
-                            $admonMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $admonMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contAdmonMoni++;
                         }
 
@@ -244,33 +272,33 @@ class ReportesDao
                         $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
 
                         if(strtolower($tipo) == "pc"){
-                            $nulaPc .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $nulaPc .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contNulaPc++;
                         }
 
                         if(strtolower($tipo) == "laptop"){
-                            $nulaLap .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $nulaLap .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contNulaLap++;
                         }
 
                         if(strtolower($tipo) == "impresor"){
-                            $nulaImp .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $nulaImp .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contNulaImp++;
                         }
 
                         if(strtolower($tipo) == "proyector"){
-                            $nulaPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $nulaPro .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contNulaPro++;
                         }
 
                         
                         if(strtolower($tipo) == "telefono"){
-                            $nulaTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $nulaTel .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contNulaTel++;
                         }
 
                         if(strtolower($tipo) == "monitor"){
-                            $nulaMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $nulaMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contNulaMoni++;
                         }
 
@@ -279,33 +307,33 @@ class ReportesDao
                         $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
 
                         if(strtolower($tipo) == "pc"){
-                            $campaPc .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $campaPc .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCampaPc++;
                         }
 
                         if(strtolower($tipo) == "laptop"){
-                            $campaLap .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $campaLap .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCampaLap++;
                         }
 
                         if(strtolower($tipo) == "impresor"){
-                            $campaImp .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $campaImp .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCampaImp++;
                         }
 
                         if(strtolower($tipo) == "proyector"){
-                            $campaPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $campaPro .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCampaPro++;
                         }
 
                         
                         if(strtolower($tipo) == "telefono"){
-                            $campaTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $campaTel .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCampaTel++;
                         }
 
                         if(strtolower($tipo) == "monitor"){
-                            $campaMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $campaMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCampaMoni++;
                         }
 
@@ -314,35 +342,35 @@ class ReportesDao
                         $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
 
                         if(strtolower($tipo) == "pc"){
-                            $capaPc .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $capaPc .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCapaPc++;
                            
                         }
 
                         if(strtolower($tipo) == "laptop"){
-                            $capaLap .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $capaLap .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCapaLap++;
                             
                         }
 
                         if(strtolower($tipo) == "impresor"){
-                            $capaImp .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $capaImp .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCapaImp++;
                         }
 
                         if(strtolower($tipo) == "proyector"){
-                            $capaPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $capaPro .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCapaPro++;
                         }
                         
                         
                         if(strtolower($tipo) == "telefono"){
-                            $capaTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $capaTel .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCapaTel++;
                         }
 
                         if(strtolower($tipo) == "monitor"){
-                            $capaMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $capaMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCapaMoni++;
                         }
                     break;
@@ -350,33 +378,33 @@ class ReportesDao
                         $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
 
                         if(strtolower($tipo) == "pc"){
-                            $compePc .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $compePc .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCompePc++;
                         }
 
                         if(strtolower($tipo) == "laptop"){
-                            $compeLap .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $compeLap .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCompeLap++;
                         }
 
                         if(strtolower($tipo) == "impresor"){
-                            $compeImp .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $compeImp .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCompeImp++;
                         }
 
                         if(strtolower($tipo) == "proyector"){
-                            $compePro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $compePro .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCompePro++;
                         }     
                         
                         
                         if(strtolower($tipo) == "telefono"){
-                            $compeTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $compeTel .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCompeTel++;
                         }
 
                         if(strtolower($tipo) == "monitor"){
-                            $compeMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $compeMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contCompeMoni++;
                         }
                     break;
@@ -384,33 +412,33 @@ class ReportesDao
                         $tipo  = trim($fila[$i]["tipo_activo_nombre"]);
 
                         if(strtolower($tipo) == "pc"){
-                            $comuniPc .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $comuniPc .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contComuniPc++;
                            
                         }
 
                         if(strtolower($tipo) == "laptop"){
-                            $comuniLap .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $comuniLap .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contComuniLap++;
                         }
 
                         if(strtolower($tipo) == "impresor"){
-                            $comuniImp .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $comuniImp .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contComuniImp++;
                         }
 
                         if(strtolower($tipo) == "proyector"){
-                            $comuniPro .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $comuniPro .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contComuniPro++;
                         }
                         
                         if(strtolower($tipo) == "telefono"){
-                            $comuniTel .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $comuniTel .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contComuniTel++;
                         }
 
                         if(strtolower($tipo) == "monitor"){
-                            $comuniMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila);
+                            $comuniMoni .= $this->setHtmlByAreaTip($tipo,$i, $fila, $bandGte, $mantenimiento);
                             $contComuniMoni++;
                         }              
                     break;
@@ -652,8 +680,8 @@ class ReportesDao
         }
     }
 
-    //FUNCION QUE CUENTA LA CANTIDAD TOTAL DE TIPO DE ACTIVO SELECICONADO
-    //retorna el hmtl para la función que genera el reporte
+   
+    //cuenta la cantidad total de tipo de activos seteado como parametro
     public function contTotalTipAct($tipoActivo)
     {
         //establecemos la coneccion
@@ -675,7 +703,6 @@ class ReportesDao
     }
 
     //solicita los datos de la BD para generar tablas filtrado por tipo activo
-    //retorna el hmtl para la función que genera el reporte
     public function getDataRptActivosTipo($tipoActivo)
     {
         //variables auxliares
@@ -985,8 +1012,7 @@ class ReportesDao
         return $html . $rpt->getEtiquetaStyleRpt();
     }
 
-    //solicita los datos de la BD para generar tablas filtrado por impresora
-    //retorna el hmtl para la función que genera el reporte
+    //solicita los datos de la BD para generar tablas para reporte toners
     public function getDataRptTipoActivoImp()
     {
         $tipoActivoD = new tipoActivoDao();
@@ -1040,7 +1066,7 @@ class ReportesDao
 
     //solicita los datos de la BD para generar tablas filtrado por área y tipo activo
     //retorna el hmtl para la función que genera el reporte
-  /*  public function getDataRptMantenimiento($area)
+    public function getDataRptMantenimiento($area)
     {
         $tblaCount=0;
         //creamos el objeto de la plantilla html de rpt
@@ -1128,7 +1154,7 @@ class ReportesDao
         } catch (PDOException $error) {
             echo $error->getMessage();
         }
-    }*/
+    }
 
 
 
@@ -1257,12 +1283,29 @@ class ReportesDao
     //recive el área y el valor de la tabla para ir creando la estructura según el área
     //TIPO ACTIVO = TODOS => AREA = TODAS retorna un array con el area y su html
     // clave - valor
-    public function setHtmlByAreaTip($tipoActivo,$posicion, $arregloBd){        
+    public function setHtmlByAreaTip($tipoActivo,$posicion, $arregloBd, $bandGte, $mantenimiento){        
             //evaluamos que área está de valor pasando a minuscula para evitar Admon != admon
             switch (strtolower($tipoActivo)) {
                 case 'pc':
                     $fpc="";
-                    $fpc.= '<tr>'
+                    if(!$mantenimiento){
+                        if($bandGte){
+                            $fpc.= '<tr>'
+                            . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                            . '<td class="w7 center">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                            . '<td class="w6 center">' . $arregloBd[$posicion]["Procesador"] . '</td>'
+                            . '<td class="w7-5 center">' . $arregloBd[$posicion]["Generacion"] . '</td>'
+                            . '<td class="w5-5 center">' . $arregloBd[$posicion]["Ram"] . '</td>'
+                            . '<td class="w7-5 center">' . $arregloBd[$posicion]["DiscoDuro"] .
+                            "<br>".$arregloBd[$posicion]["DiscoDuro2"]. '</td>'
+                            . '<td class="w6 center">' . $arregloBd[$posicion]["SO"] . '</td>'
+                            . '<td class="w7-5 center">' . $arregloBd[$posicion]["Office"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["numero_serie"] . '</td>'
+                            . '</tr>';
+                        }else{
+                            $fpc.= '<tr>'
                             . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
                             . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
                             . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
@@ -1277,80 +1320,231 @@ class ReportesDao
                             . '<td class="w7-5 center">' . $arregloBd[$posicion]["Office"] . '</td>'
                             . '<td class="w7-5">' . $arregloBd[$posicion]["numero_serie"] . '</td>'
                             . '</tr>';
+                        }
+
+                        return $fpc;
+                    }
+
+                    $fpc ='<tr>'
+                    . '<td class="w7"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
+                    . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"] ." " . $arregloBd[$posicion]["Modelo"] . '</td>'
+                    . '<td class="w6 center"><br><br>' . $arregloBd[$posicion]["Procesador"]." G.".$arregloBd[$posicion]["Generacion"] . '</td>'
+                    . '<td class="w9 center"><br><br>' ."RAM ". $arregloBd[$posicion]["Ram"] . '</td>'
+                    . '<td class="w9 center"><br><br>' .$fila[$i]["DiscoDuro"]." ".$arregloBd[$posicion]["Capacidad_D1"]
+                    ." <br>".$arregloBd[$posicion]["DiscoDuro2"]." ".$arregloBd[$posicion]["Capacidad_D2"]. '</td>'
+                    . '<td class="w9"></td>'
+                    . '<td class="w7-5"></td>'
+                    . '<td class="w7-5"></td>'
+                    . '<td class="w30"><br><br><br><br></td>'
+                    . '</tr>';
 
                  return $fpc;
 
                 break;
                 case 'laptop':
                     $laptop="";
-                    $laptop .= '<tr>'
-                    . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                    . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
-                    . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
-                    . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
-                    . '<td class="w7 center">' . $arregloBd[$posicion]["Modelo"] . '</td>'
-                    . '<td class="w6 center">' . $arregloBd[$posicion]["Procesador"] . '</td>'
-                    . '<td class="w7-5 center">' . $arregloBd[$posicion]["Generacion"] . '</td>'
-                    . '<td class="w5-5 center">' . $arregloBd[$posicion]["Ram"] . '</td>'
-                    . '<td class="w7-5 center">' . $arregloBd[$posicion]["DiscoDuro"] .
-                    "<br>".$arregloBd[$posicion]["DiscoDuro2"]. '</td>'
-                    . '<td class="w6 center">' . $arregloBd[$posicion]["SO"] . '</td>'
-                    . '<td class="w7-5 center">' . $arregloBd[$posicion]["Office"] . '</td>'
-                    . '<td class="w7-5">' . $arregloBd[$posicion]["numero_serie"] . '</td>'
-                    . '</tr>';  
+                    if(!$mantenimiento){
+                        if($bandGte){
+                            $laptop .= '<tr>'
+                            . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                            . '<td class="w7 center">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                            . '<td class="w6 center">' . $arregloBd[$posicion]["Procesador"] . '</td>'
+                            . '<td class="w7-5 center">' . $arregloBd[$posicion]["Generacion"] . '</td>'
+                            . '<td class="w5-5 center">' . $arregloBd[$posicion]["Ram"] . '</td>'
+                            . '<td class="w7-5 center">' . $arregloBd[$posicion]["DiscoDuro"] .
+                            "<br>".$arregloBd[$posicion]["DiscoDuro2"]. '</td>'
+                            . '<td class="w6 center">' . $arregloBd[$posicion]["SO"] . '</td>'
+                            . '<td class="w7-5 center">' . $arregloBd[$posicion]["Office"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["numero_serie"] . '</td>'
+                            . '</tr>';  
+                        }else{
+                            $laptop .= '<tr>'
+                            . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                            . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
+                            . '<td class="w7 center">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                            . '<td class="w6 center">' . $arregloBd[$posicion]["Procesador"] . '</td>'
+                            . '<td class="w7-5 center">' . $arregloBd[$posicion]["Generacion"] . '</td>'
+                            . '<td class="w5-5 center">' . $arregloBd[$posicion]["Ram"] . '</td>'
+                            . '<td class="w7-5 center">' . $arregloBd[$posicion]["DiscoDuro"] .
+                            "<br>".$arregloBd[$posicion]["DiscoDuro2"]. '</td>'
+                            . '<td class="w6 center">' . $arregloBd[$posicion]["SO"] . '</td>'
+                            . '<td class="w7-5 center">' . $arregloBd[$posicion]["Office"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["numero_serie"] . '</td>'
+                            . '</tr>';  
+                        }
+
+                        return $laptop;
+                    }
+
+                    $laptop ='<tr>'
+                    . '<td class="w7"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
+                    . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"] ." " . $arregloBd[$posicion]["Modelo"] . '</td>'
+                    . '<td class="w6 center"><br><br>' . $arregloBd[$posicion]["Procesador"]." G.".$arregloBd[$posicion]["Generacion"] . '</td>'
+                    . '<td class="w9 center"><br><br>' ."RAM ". $arregloBd[$posicion]["Ram"] . '</td>'
+                    . '<td class="w9 center"><br><br>' .$fila[$i]["DiscoDuro"]." ".$arregloBd[$posicion]["Capacidad_D1"]
+                    ." <br>".$arregloBd[$posicion]["DiscoDuro2"]." ".$arregloBd[$posicion]["Capacidad_D2"]. '</td>'
+                    . '<td class="w9"></td>'
+                    . '<td class="w7-5"></td>'
+                    . '<td class="w7-5"></td>'
+                    . '<td class="w30"><br><br><br><br></td>'
+                    . '</tr>';
+
                  return $laptop;               
                 break; 
                 case 'impresor':
                    $impresor ="";
-                   $impresor .= '<tr>'
-                    . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                    . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
-                    . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
-                    . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
-                    . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
-                    . '<td class="w7-5">' . $arregloBd[$posicion]["TonerN"] . '</td>'
-                    . '<td class="w7-5">' . $arregloBd[$posicion]["TonerM"] . '</td>'
-                    . '<td class="w7-5">' . $arregloBd[$posicion]["TonerC"] . '</td>'
-                    . '<td class="w7-5">' . $arregloBd[$posicion]["TonerA"] . '</td>'
+                    if(!$mantenimiento){
+                        if($bandGte){
+                            $impresor .= '<tr>'
+                            . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                            . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["TonerN"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["TonerM"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["TonerC"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["TonerA"] . '</td>'
+                            . '</tr>';
+                           }else{
+                            $impresor .= '<tr>'
+                            . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                            . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
+                            . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["TonerN"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["TonerM"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["TonerC"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["TonerA"] . '</td>'
+                            . '</tr>';
+                           }
+
+                        return $impresor;
+                    }
+
+                    $impresor='<tr>'
+                    . '<td class="w7"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
+                    . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"] ." ". $arregloBd[$posicion]["Modelo"] . '</td>'
+                    . '<td class="w6 center"><br><br>N/A</td>'
+                    . '<td class="w9 center"><br><br>N/A</td>'
+                    . '<td class="w9 center"><br><br>N/A</td>'
+                    . '<td class="w9 center"></td>'
+                    . '<td class="w7-5 center"></td>'
+                    . '<td class="w7-5 center"></td>'
+                    . '<td class="w30"><br><br><br><br></td>'
                     . '</tr>';
                     
                    return $impresor;
                 break;
                 case 'proyector':
                     $proyector="";
-                    $proyector .= '<tr>'
-                    . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                    . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
-                    . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
-                    . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
-                    . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
-                    . '<td class="w7-5">' . $arregloBd[$posicion]["HorasUso"] . '</td>'
-                    . '<td class="w7-5">' . $arregloBd[$posicion]["HoraEco"] . '</td>'
-                    . '</tr>';
+                    if(!$mantenimiento){
+                        if($bandGte){
+                            $proyector .= '<tr>'
+                            . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                            . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["HorasUso"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["HoraEco"] . '</td>'
+                            . '</tr>';
+                        }else{
+                            $proyector .= '<tr>'
+                            . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                            . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
+                            . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["HorasUso"] . '</td>'
+                            . '<td class="w7-5">' . $arregloBd[$posicion]["HoraEco"] . '</td>'
+                            . '</tr>';
+                        }
+                        
+                        return $proyector;
+                    }
                     
+                    $proyector ='<tr>'
+                    . '<td class="w7"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
+                    . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"] ." ". $arregloBd[$posicion]["Modelo"] . '</td>'
+                    . '<td class="w6 center"><br><br>N/A</td>'
+                    . '<td class="w9 center"><br><br>N/A</td>'
+                    . '<td class="w9 center"><br><br>N/A</td>'
+                    . '<td class="w9 center"></td>'
+                    . '<td class="w7-5 center"></td>'
+                    . '<td class="w7-5 center"></td>'
+                    . '<td class="w30"><br><br><br><br></td>'
+                    . '</tr>';
+
                     return $proyector;
                 break;
                 case 'telefono':
                     $tel="";
-                    $tel .= '<tr>'
-                    . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                    . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
-                    . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
-                    . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
-                    . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
+                    if(!$mantenimiento){
+                        if($bandGte){
+                            $tel .= '<tr>'
+                            . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                            . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                            . '</tr>';
+                            
+                        }else{
+                            $tel .= '<tr>'
+                            . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                            . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                            . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                            . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                            . '<td class="w9">' . $arregloBd[$posicion]["IP"] . '</td>'
+                            . '</tr>';    
+                        }
+                        return $tel;
+                    }
+
+                    $tel='<tr>'
+                    . '<td class="w7"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
+                    . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"]." ".$arregloBd[$posicion]["Activo_descripcion"]
+                    ." ". $arregloBd[$posicion]["Modelo"] . '</td>'
+                    . '<td class="w6 center"><br><br>N/A</td>'
+                    . '<td class="w9 center"><br><br>N/A</td>'
+                    . '<td class="w9 center"><br><br>N/A</td>'
+                    . '<td class="w9 center"></td>'
+                    . '<td class="w7-5 center"></td>'
+                    . '<td class="w7-5 center"></td>'
+                    . '<td class="w30"><br><br><br><br></td>'
                     . '</tr>';
-                    
+
                     return $tel;
                 break;
                 case 'monitor':
                     $moni="";
-                    $moni .= '<tr>'
-                    . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
-                    . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
-                    . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
-                    . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
-                    . '</tr>';
+                    if(!$mantenimiento){
+                        $moni .= '<tr>'
+                        . '<td class="w6">' . $arregloBd[$posicion]["Activo_id"] . '</td>'
+                        . '<td class="w15">' . $arregloBd[$posicion]["Activo_descripcion"] .'<br><br><br>Área: '.$arregloBd[$posicion]["estructura31_nombre"]. '</td>'
+                        . '<td class="w12">' . $arregloBd[$posicion]["Nombre_responsable"] . '</td>'
+                        . '<td class="w7">' . $arregloBd[$posicion]["Modelo"] . '</td>'
+                        . '</tr>';
+
+                        return $moni;
+                    }
                     
+                    $moni ='<tr>'
+                    . '<td class="w7"><br><br>' . ($posicion+1)." ".$arregloBd[$posicion]["numero_serie"]. '</td>'
+                    . '<td class="w15"><br><br>'.$arregloBd[$posicion]["tipo_activo_nombre"]." ".$arregloBd[$posicion]["Activo_descripcion"]
+                    ." ". $arregloBd[$posicion]["Modelo"] . '</td>'
+                    . '<td class="w6 center"><br><br>N/A</td>'
+                    . '<td class="w9 center"><br><br>N/A</td>'
+                    . '<td class="w9 center"><br><br>N/A</td>'
+                    . '<td class="w9 center"></td>'
+                    . '<td class="w7-5 center"></td>'
+                    . '<td class="w7-5 center"></td>'
+                    . '<td class="w30"><br><br><br><br></td>'
+                    . '</tr>';
+
                     return $moni;
                 break;
             }       
