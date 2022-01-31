@@ -1,18 +1,33 @@
 <?php
-session_start();
-if(isset($_SESSION["usuario"]["nombre"]) && isset($_SESSION["usuario"]["usuarioNuevo"])){
-  if($_SESSION["usuario"]["usuarioNuevo"] ==0){
+include_once 'Modelos/clasesDao/loginDao.php';
+
+if(isset($_SESSION["usuario"])){
+  if($_SESSION["usuario"]["usuarioNuevo"] == 0){
     header("Location: vistas/home.php");
-  }else{
+  }
+
+  if($_SESSION["usuario"]["usuarioNuevo"] == 1 && !isset($_REQUEST["s"])){
     header("Location: vistas/primerlogin.php");
   }
-}
 
+}
 if(isset($_REQUEST["s"])){
-  if($_REQUEST["s"]){
-    session_destroy();
-    header("Location: index.php");
-  }
+    $usDao = new LoginDao();
+    $nombreUser= $_SESSION["usuario"]["id"];
+  
+    $resp = $usDao->actualizarEstadoUser(0,$nombreUser);
+    if($resp){
+      session_destroy();
+      header("Location: index.php");
+    }else{
+      echo " Swal.fire({
+        title: '!Woops!',
+        text: 'No pudimos actualizar el estado de tu sesión, por favor intenta de nuevo, si el problema persiste'
+        +'informa a tu administrador o personal de IT.\n',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      })";
+    }
 }
 ?>
 
