@@ -18,8 +18,9 @@ if (isset($_POST["btnRptActArea"])) {
 
 //CUANDO SE HACE CLICK EN BOTÓN REPORTE TIPO ACTIVO
 if (isset($_POST["btnRptActTipoActivo"])) {
-
-
+    $tipoAct = $_POST["sTipoActivoR"];
+    $r = new ReportesDao();
+    $r->rptTipoAct($tipoAct, true);
 }
 
 
