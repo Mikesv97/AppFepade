@@ -32,341 +32,69 @@ class ReportesPlantilla extends TCPDF{
         $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
     }
 
-    //crea una variable que contiene la etiquete style para el color de fondo
-    //ancho de la tabla y columnas de las tablas de los rpt
-    //retorna esa variable para ser concatenada con los datos
-    public function getEtiquetaStyleRpt(){
-        $style=" <style>
-            table{
-            white-space:nowrap;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 8px;
-            padding: 1px;
-            
-            }
-            .noBorder{
-                border:none !important;
-            }
-            .center{
-                text-align: center;
-            }
-            .bgDark{
-                background-color: #999999;
-                color: black;
-                text-shadow: 0 0 5px black;
-            }
-
-            .tblResumen{
-                padding: 3px;
-                font-size: 10px !important;
-            }
-
-        td{
-            border: 0.2px dashed gray;
-        
-            
-        }
-
-            th{
-            background-color: #999999;
-            color: black;
-            border: 0.2px dashed gray;
-            
-            }
-        
-            .wt{
-                width: 100%;
-            }
-            
-        .w3{
-            width: 3%;
-            }
-
-            .w6{
-        
-            width: 6%;
-            
-            }
-
-            .w7{
-        
-                width: 7%;
-                
-            }
-        .w15{
-            width: 15%;
-        }
-        
-        .w7-5{
-            width: 7.5%;
-        }
-        .w5-5{
-            width: 5.5%;
-        }
-        .w9{
-            width: 9%;
-        
-        }
-
-        .w7-8{
-            width: 7.8%;
-        }
-        .w12{
-            width: 12%;
-        }
-
-        .w20{
-            width: 20%;
-        }
-
-        
-        .w30{
-            width: 30%;
-            padding: 20px !important;
-            }
-        </style>";
-
-        return $style;
-    }
-
-    //crea una variable que contiene las etiquetas tabla pc y ecabezados de coloumnas
-    //retorna esa variable para ser concatenada con los datos
-    public function  getHeaderTablaRptPc($boolean){
-        
+    public function headerPcLap($pdf, $boolean){
+        $pdf->Ln(2);
+        $pdf->SetFont('helvetica', '', 9);
+        $pdf->Cell(18,2, "Código", 0, 0, "C");
+        $pdf->Cell(44, 2, "Descripción", 0, 0, "C");
+        $pdf->Cell(38, 2, "Responsable", 0, 0, "C");
         if($boolean){
-            $tablaPC ='<h3>PC</h3>
-            <table>
-            <tr>
-                <th class="w6">Código</th>
-                <th class="w15">Descripción</th>
-                <th class="w12">Responsable</th>
-                <th class="w7 center" >Modelo</th>
-                <th class="w6">Procesador</th>
-                <th class="w7-5 center">GEN.</th>
-                <th class="w5-5 center">RAM</th>
-                <th class="w7-5 center">DD</th>
-                <th class="w6 center">SO</th>
-                <th class="w7-5 center">Office</th>
-                <th class="w7-5">No. Series</th>
-            </tr>';
-        }else{
-            $tablaPC ='<h3>PC</h3>
-            <table>
-            <tr>
-                <th class="w6">Código</th>
-                <th class="w15">Descripción</th>
-                <th class="w12">Responsable</th>
-                <th class="w9 center" >IP</th>
-                <th class="w7 center" >Modelo</th>
-                <th class="w6">Procesador</th>
-                <th class="w7-5 center">GEN.</th>
-                <th class="w5-5 center">RAM</th>
-                <th class="w7-5 center">DD</th>
-                <th class="w6 center">SO</th>
-                <th class="w7-5 center">Office</th>
-                <th class="w7-5">No. Series</th>
-            </tr>';
+            $pdf->Cell(26, 2, "IP", 0, 0, "C");
         }
-
-        return $tablaPC;
+        $pdf->Cell(23, 2, "Modelo", 0, 0, "C");
+        $pdf->Cell(20, 2, "Procesador", 0, 0, "C");
+        $pdf->Cell(16, 2, "Gen.", 0, 0, "C");
+        $pdf->Cell(16, 2, "Ram.", 0, 0, "C");
+        $pdf->Cell(16, 2, "DD.", 0, 0, "C");
+        $pdf->Cell(16, 2, "SO.", 0, 0, "C");
+        $pdf->Cell(16, 2, "Office.", 0, 0, "C");
+        $pdf->Cell(28, 2, "No.Serie.", 0, 1, "C");
+        $pdf->writeHTMLCell(270, 0, '', '',"<hr>", 0, 1, 0, true, 'L', true);
     }
 
-    
-    //crea una variable que contiene las etiquetas tabla laptop y ecabezados de coloumnas
-    //retorna esa variable para ser concatenada con los datos
-    public function  getHeaderTablaRptLap($boolean){
+    public function headerImpresor($pdf, $boolean){
+        $pdf->Ln(2);
+        $pdf->SetFont('helvetica', '', 9);
+        $pdf->Cell(18,2, "Código", 0, 0, "C");
+        $pdf->Cell(44, 2, "Descripción", 0, 0, "C");
+        $pdf->Cell(38, 2, "Responsable", 0, 0, "C");
         if($boolean){
-            $tablaPC ='<h3>Laptop</h3>
-            <table>
-            <tr>
-                <th  class="w6">Código</th>
-                <th  class="w15">Descripción</th>
-                <th  class="w12">Responsable</th>
-                <th  class="w7 center">Modelo</th>
-                <th  class="w6">Procesador</th>
-                <th  class="w7-5 center">GEN.</th>
-                <th  class="w5-5 center">RAM</th>
-                <th  class="w7-5 center">DD</th>
-                <th  class="w6 center">SO</th>
-                <th  class="w7-5 center">Office</th>
-                <th  class="w7-5">No. Series</th>
-            </tr>';
-        }else{
-            $tablaPC ='<h3>Laptop</h3>
-            <table>
-            <tr>
-                <th class="w6">Código</th>
-                <th class="w15">Descripción</th>
-                <th class="w12">Responsable</th>
-                <th class="w9 center">IP</th>
-                <th class="w7 center">Modelo</th>
-                <th class="w6">Procesador</th>
-                <th class="w7-5 center">GEN.</th>
-                <th class="w5-5 center">RAM</th>
-                <th class="w7-5 center">DD</th>
-                <th class="w6 center">SO</th>
-                <th class="w7-5 center">Office</th>
-                <th class="w7-5">No. Series</th>
-            </tr>';
+            $pdf->Cell(26, 2, "IP", 0, 0, "C");
         }
-        return $tablaPC;
+        $pdf->Cell(23, 2, "Modelo", 0, 0, "C");
+        $pdf->Cell(20, 2, "Toner N.", 0, 0, "C");
+        $pdf->Cell(16, 2, "Toner M.", 0, 0, "C");
+        $pdf->Cell(16, 2, "Toner C.", 0, 0, "C");
+        $pdf->Cell(16, 2, "Toner A.", 0, 0, "C");
+        $pdf->Cell(28, 2, "No.Serie.", 0, 1, "C");
+        $pdf->writeHTMLCell(270, 0, '', '',"<hr>", 0, 1, 0, true, 'L', true);
     }
 
-    
-    //crea una variable que contiene las etiquetas tabla proyector y ecabezados de coloumnas
-    //retorna esa variable para ser concatenada con los datos
-    public function getHeaderTablaRptProyector($boolean){
-
+    public function headerProyector($pdf, $boolean){
+        $pdf->Ln(2);
+        $pdf->SetFont('helvetica', '', 9);
+        $pdf->Cell(18,2, "Código", 0, 0, "C");
+        $pdf->Cell(44, 2, "Descripción", 0, 0, "C");
+        $pdf->Cell(38, 2, "Responsable", 0, 0, "C");
         if($boolean){
-            $tablaProyector ='<h3>Proyector</h3>
-            <table>
-               <tr>
-                   <th class="w6">Código</th>
-                   <th class="w15">Descripción</th>
-                   <th class="w12">Responsable</th>
-                   <th class="w7 center" >Modelo</th>
-                   <th class="w7-5">Horas Uso</th>
-                   <th class="w7-5">Horas Eco.</th>
-               </tr>';
-        }else{
-            $tablaProyector ='<h3>Proyector</h3>
-            <table>
-               <tr>
-                   <th class="w6">Código</th>
-                   <th class="w15">Descripción</th>
-                   <th class="w12">Responsable</th>
-                   <th class="w9 center" >IP</th>
-                   <th class="w7 center" >Modelo</th>
-                   <th class="w7-5">Horas Uso</th>
-                   <th class="w7-5">Horas Eco.</th>
-               </tr>';
+            $pdf->Cell(26, 2, "IP", 0, 0, "C");
         }
-
-        return $tablaProyector;
+        $pdf->Cell(23, 2, "Modelo", 0, 0, "C");
+        $pdf->Cell(20, 2, "Horas Uso", 0, 0, "C");
+        $pdf->Cell(20, 2, "Horas Eco.", 0, 1, "C");
+        $pdf->writeHTMLCell(270, 0, '', '',"<hr>", 0, 1, 0, true, 'L', true);
     }
 
-
-    //crea una variable que contiene las etiquetas tabla telefono y ecabezados de coloumnas
-    //retorna esa variable para ser concatenada con los datos
-    public function getHeaderTablaRptTelefono($boolean){
-
+    public function headerTelMonitor($pdf, $boolean){
+        $pdf->Ln(2);
+        $pdf->SetFont('helvetica', '', 9);
+        $pdf->Cell(18,2, "Código", 0, 0, "C");
+        $pdf->Cell(44, 2, "Descripción", 0, 0, "C");
+        $pdf->Cell(38, 2, "Responsable", 0, 0, "C");
         if($boolean){
-            $tablaTelefono ='<h3>Teléfono</h3>
-            <table>
-               <tr>
-                   <th class="w6">Código</th>
-                   <th class="w15">Descripción</th>
-                   <th class="w12">Responsable</th>
-                   <th class="w7 center" >Modelo</th>
-               </tr>';
-        }else{
-            $tablaTelefono ='<h3>Teléfono</h3>
-            <table>
-               <tr>
-                   <th class="w6">Código</th>
-                   <th class="w15">Descripción</th>
-                   <th class="w12">Responsable</th>
-                   <th class="w7 center" >Modelo</th>
-                   <th class="w9 center" >IP</th>
-               </tr>';
+            $pdf->Cell(26, 2, "IP", 0, 0, "C");
         }
-
-        return $tablaTelefono;
+        $pdf->Cell(23, 2, "Modelo", 0, 1, "C");
+        $pdf->writeHTMLCell(270, 0, '', '',"<hr>", 0, 1, 0, true, 'L', true);
     }
-
-
-    //crea una variable que contiene las etiquetas tabla monitor y ecabezados de coloumnas
-    //retorna esa variable para ser concatenada con los datos
-    public function getHeaderTablaRptMonitor(){
-
-        $tablaMonitor ='<h3>Monitor</h3>
-        <table>
-            <tr>
-                <th class="w6">Código</th>
-                <th class="w15">Descripción</th>
-                <th class="w12">Responsable</th>
-                <th class="w7 center" >Modelo</th>
-            </tr>';
-
-        return $tablaMonitor;
-    }
-
-    
-    //crea una variable que contiene las etiquetas tabla impresor y ecabezados de coloumnas
-    //retorna esa variable para ser concatenada con los datos
-    public function getHeaderTablaRptImpresor($num){
-        /*
-        0 ---> reporte con cabeceras para reportes de impresoras y toners
-        1 ---> reporte con cabeceras con IP 
-        2 ---> reporte con cabeceras sin IP         
-        */
-        switch($num){
-            case 0:
-                $tablaProyector ='<h3>Impresor</h3>
-                <table>
-                <tr>
-                    <th class="w6 center">Corr</th>
-                    <th class="w15">Descripción</th>
-                    <th class="w6 center">No. IMP</th>
-                    <th class="w7-5 center">Toner N</th>
-                    <th class="w7-5 center">Toner M</th>
-                    <th class="w7-5 center">Toner C</th>
-                    <th class="w7-5 center">Toner A</th>
-                </tr>';
-            break;
-            case 1:
-                $tablaProyector ='<h3>Impresor</h3>
-                <table>
-                <tr>
-                    <th class="w6 center">Código</th>
-                    <th class="w15">Descripción</th>
-                    <th class="w12">Reponsable</th>
-                    <th class="w9 center">IP</th>
-                    <th class="w7 center">Modelo</th>
-                    <th class="w7-5 center">Toner N</th>
-                    <th class="w7-5 center">Toner M</th>
-                    <th class="w7-5 center">Toner C</th>
-                    <th class="w7-5 center">Toner A</th>
-                </tr>';
-            break;
-        
-            case 2:
-            $tablaProyector ='<h3>Impresor</h3>
-            <table>
-            <tr>
-                <th class="w6">Código</th>
-                <th class="w15">Descripción</th>
-                <th class="w12">Reponsable</th>
-                <th class="w7 center">Modelo</th>
-                <th class="w7-5">Toner N</th>
-                <th class="w7-5">Toner M</th>
-                <th class="w7-5">Toner C</th>
-                <th class="w7-5">Toner A</th>
-            </tr>';
-            break;
-        }
-        return $tablaProyector;
-    }
-
-    //crea una variable que contiene las etiquetas tabla y ecabezados de coloumnas para mantenimiento
-    //retorna esa variable para ser concatenada con los datos
-    public function getHeaderTablaMantenimiento(){      
-        
-            $tablaMant ='
-            <table >
-            <tr>
-                <th class="w9">Código</th>
-                <th class="w15">Equipo</th>
-                <th class="w6">Procesador</th>
-                <th class="w9 center">Ram</th>
-                <th class="w9">Discos Duros</th>
-                <th class="w9">Monitor Marca</th>
-                <th class="w7-5">Pulgadas</th>
-                <th class="w30">Observación</th>
-            </tr>';
-    
-        
-        return $tablaMant;
-    }
-
 }

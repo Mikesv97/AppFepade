@@ -5,15 +5,8 @@ include_once dirname(__DIR__, 1) . '/Modelos/clasesDao/reportesDao.php';
 
 //CUANDO SE DA CLICK BOTÓN REPORTE TIPO ACTIVO- ÁREA
 if (isset($_POST["btnRptActArea"])) {
-
-    $tipoAct = $_POST["sTipoActivoR"];
-    $area=$_POST["sAreaR"];
-    $areaNombre= $_POST["hdnNameArea"];
-
-    $rpt = new ReportesDao();
-
-    $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area, false, false);
-    $rpt->generarRptPdfActArea($resp, $area, $areaNombre);
+    $r = new ReportesDao();
+    $r -> rptTipoActArea(true);
 
 
 }
@@ -88,11 +81,11 @@ if(isset($_POST["btnRptMant"])){
 
 
 ///SI NO VIENE NADA POR POST REDIRECCIONAMOS A VISTA REPORTES
-if(!$_POST){
+/*if(!$_POST){
 
     header("Location: reportes.php");
 
-}
+}*/
 
 
 //FUNCIÓN QUE CARGA ARRAY CON TIPO ACTIVO Y SU CANTIDAD TOTAL EN EL SISTEMA

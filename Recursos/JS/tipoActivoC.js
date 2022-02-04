@@ -227,6 +227,12 @@ jQuery(document).ready(function ($) {
                                     icon: 'error',
                                     confirmButtonText: 'Aceptar',
                                 })
+
+                                $("#tipoActivoNombre").val("");
+                                $("#tipoActivoId").val("");
+                                $('#btnInsertar').attr('disabled', false);
+                                $('#btnModificar').attr('disabled', true);
+                                $("#tipoActivoId").prop("readonly", false);
                                 break;
                         }
                     },
