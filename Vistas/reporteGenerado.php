@@ -27,13 +27,15 @@ if (isset($_POST["btnRptActTipoActivo"])) {
 
 //CUANDO SE HACE CLICK EN BOTÓN RESUMEN DE ACTIVOS TOTALES
 if(isset($_POST["btnRptResAct"])){
-
+    $r = new ReportesDao();
+    $r->rptResumenAct();
 }
 
 
 //CUANDO SE HACE CLICK EN REPORTE DE TONER
 if(isset($_POST["btnRptCantTon"])){
-
+    $r = new ReportesDao();
+    $r-> rptResumenToner();
 }
 
 
@@ -53,8 +55,10 @@ if(isset($_POST["btnRptAreas"])){
 
 //CUANDO SE HACE CLICK EN REPORTE MANTENIMIENTO
 if(isset($_POST["btnRptMant"])){
-
-
+    $tipoAct = $_POST["sTipoActivoR"];
+    $area=$_POST["sAreaR"];
+    $r = new ReportesDao();
+    $r-> rptMantenimiento($tipoAct, $area);
 }
 
 
