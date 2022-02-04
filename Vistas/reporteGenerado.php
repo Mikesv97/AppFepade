@@ -19,36 +19,20 @@ if (isset($_POST["btnRptActArea"])) {
 //CUANDO SE HACE CLICK EN BOTÓN REPORTE TIPO ACTIVO
 if (isset($_POST["btnRptActTipoActivo"])) {
 
-    $tipoActRpt = $_POST["sTipoActivoR"];
-    $tipoActNombre=$_POST["hdnNameAct"];
 
-    $r = new ReportesDao();
-
-    //creamos array para manejar la cant de tipo activos
-    $arrayContTAct = getArrayCantByActiTipo($r);
-
-
-    $resp = $r->getDataRptActivosTipo($tipoActRpt);
-    $r->generarRptPdfTipAct($resp,$arrayContTAct, $tipoActNombre);
 }
 
 
 
 //CUANDO SE HACE CLICK EN BOTÓN RESUMEN DE ACTIVOS TOTALES
 if(isset($_POST["btnRptResAct"])){
-    $rpt = new ReportesDao();
 
-    $html = $rpt->getDataRptResTipAct();
-    $rpt->generarRptPdfResTipAct($html);
 }
 
 
 //CUANDO SE HACE CLICK EN REPORTE DE TONER
 if(isset($_POST["btnRptCantTon"])){
-    $rpt = new ReportesDao();
 
-    $html = $rpt->getDataRptTipoActivoImp();
-    $rpt->generarRptPdfResImpToner($html);
 }
 
 
@@ -68,15 +52,7 @@ if(isset($_POST["btnRptAreas"])){
 
 //CUANDO SE HACE CLICK EN REPORTE MANTENIMIENTO
 if(isset($_POST["btnRptMant"])){
-    $tipoAct = $_POST["sTipoActivoR"];
-    $area=$_POST["sAreaR"];
-    $areaNombre = $_POST["hdnNameArea"];
-    $tipoActNombre = $_POST["hdnNameAct"];
 
-    $rpt = new ReportesDao();
-
-    $resp = $rpt->getDataRptTipActAreaTodas($tipoAct,$area, false, true);
-    $rpt->generarRptPdfMantenimiento($resp, $areaNombre);
 
 }
 
@@ -88,19 +64,4 @@ if(isset($_POST["btnRptMant"])){
 
 }*/
 
-
-//FUNCIÓN QUE CARGA ARRAY CON TIPO ACTIVO Y SU CANTIDAD TOTAL EN EL SISTEMA
-function getArrayCantByActiTipo($rptDao){
-    $array = array();
-
-    //1 = pc, 2=laptop, 3= impresor, 4=proyecto, 5=telefono, 6 = monitor
-    $array["PC"] = $rptDao -> contTotalTipAct(1);
-    $array["Laptop"] = $rptDao -> contTotalTipAct(2);
-    $array["Impresor"] = $rptDao -> contTotalTipAct(3);
-    $array["Proyector"] = $rptDao -> contTotalTipAct(4);
-    $array["Telefono"] = $rptDao -> contTotalTipAct(5);
-    $array["Monitor"] = $rptDao -> contTotalTipAct(6);
-
-    return $array;
-}
 
