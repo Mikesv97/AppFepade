@@ -140,7 +140,7 @@ class ReportesDao
                     }
                     $pdf->SetFont('helvetica', '', 9);
                     $pdf->writeHTMLCell(23, 20, '', '',  strtolower($fila[$i]["Modelo"]), 0, 0, 0, true, 'L', true);
-                    //aca espesificacione
+                    $this->getEspefAct($activo, $pdf,$i, $fila);
                     $pdf->Ln(10);
                 }else{
                     
@@ -155,7 +155,7 @@ class ReportesDao
                     $pdf->SetFont('helvetica', '', 9);
                     //$pdf->writeHTMLCell(23, 0, '', '', $fila[$i]["Modelo"], 0, 1, 0, true, 'C', true);
                     $pdf->writeHTMLCell(23, 20, '', '',  strtolower($fila[$i]["Modelo"]), 0, 0, 0, true, 'L', true);
-                    //aca espesificaciones
+                    $this->getEspefAct($activo, $pdf,$i, $fila);
                     $pdf->Ln(10);
                 }
 
@@ -183,7 +183,7 @@ class ReportesDao
                 }
                 $pdf->SetFont('helvetica', '', 9);
                 $pdf->writeHTMLCell(23, 20, '', '',  strtolower($fila[$i]["Modelo"]), 0, 0, 0, true, 'L', true);
-                //aca espesificaciones
+                $this->getEspefAct($activo, $pdf,$i, $fila);
                 $pdf->Ln(8);
 
             }
@@ -281,7 +281,7 @@ class ReportesDao
                 }
                 $pdf->SetFont('helvetica', '', 9);
                 $pdf->writeHTMLCell(23, 20, '', '',  strtolower($fila[$i]["Modelo"]), 0, 0, 0, true, 'L', true);
-                //aca espesificacione
+                $this->getEspefAct($activo, $pdf,$i, $fila);
                 $pdf->Ln(10);
             }else{
                     
@@ -296,7 +296,7 @@ class ReportesDao
                 $pdf->SetFont('helvetica', '', 9);
                 //$pdf->writeHTMLCell(23, 0, '', '', $fila[$i]["Modelo"], 0, 1, 0, true, 'C', true);
                 $pdf->writeHTMLCell(23, 20, '', '',  strtolower($fila[$i]["Modelo"]), 0, 0, 0, true, 'L', true);
-                //aca espesificaciones
+                $this->getEspefAct($activo, $pdf,$i, $fila);
                 $pdf->Ln(10);
             }
 
@@ -398,6 +398,7 @@ class ReportesDao
         $pdf->Output();
 
     }
+
     public function rptMantenimiento($numAct, $numArea){
         //creamos el objeto de reporte  
         
@@ -638,6 +639,42 @@ class ReportesDao
             echo $error->getMessage();
         }
     }
+
+    private function getEspefAct($tipoActivo, $pdf,$i, $fila){
+        switch(strtolower($tipoActivo)){
+            case "pc":
+                $pdf->writeHTMLCell(20, 2, '', '', $fila[$i]["Procesador"], 0,0, 0, true, 'C', true);
+                $pdf->writeHTMLCell(16, 2, '', '', $fila[$i]["Generacion"], 0, 0, 0, true, 'L', true);
+                $pdf->writeHTMLCell(16, 2, '', '', $fila[$i]["Ram"], 0, 0, 0, true, 'L', true);
+                $pdf->writeHTMLCell(16, 2, '', '', $fila[$i]["DiscoDuro"]."<br>".$fila[$i]["DiscoDuro2"], 0,0, 0, true, 'C', true);
+                $pdf->writeHTMLCell(16, 2, '', '',$fila[$i]["SO"], 0, 0, 0, true, 'L', true);
+                $pdf->writeHTMLCell(16, 2, '', '', $fila[$i]["Office"], 0, 0, 0, true, 'L', true);
+                $pdf->writeHTMLCell(28, 2, '', '', $fila[$i]["numero_serie"], 0, 1, 0, true, 'L', true);
+            break;
+            case "laptop":
+                $pdf->writeHTMLCell(20, 2, '', '', $fila[$i]["Procesador"], 0,0, 0, true, 'C', true);
+                $pdf->writeHTMLCell(16, 2, '', '', $fila[$i]["Generacion"], 0, 0, 0, true, 'L', true);
+                $pdf->writeHTMLCell(16, 2, '', '', $fila[$i]["Ram"], 0, 0, 0, true, 'L', true);
+                $pdf->writeHTMLCell(16, 2, '', '', $fila[$i]["DiscoDuro"]."<br>".$fila[$i]["DiscoDuro2"], 0,0, 0, true, 'C', true);
+                $pdf->writeHTMLCell(16, 2, '', '',$fila[$i]["SO"], 0, 0, 0, true, 'L', true);
+                $pdf->writeHTMLCell(16, 2, '', '', $fila[$i]["Office"], 0, 0, 0, true, 'L', true);
+                $pdf->writeHTMLCell(28, 2, '', '', $fila[$i]["numero_serie"], 0, 1, 0, true, 'L', true);
+            break;
+            case "impresor":
+                $pdf->writeHTMLCell(20, 2, '', '', $fila[$i]["TonerN"], 0,0, 0, true, 'C', true);
+                $pdf->writeHTMLCell(16, 2, '', '', $fila[$i]["TonerM"], 0, 0, 0, true, 'L', true);
+                $pdf->writeHTMLCell(16, 2, '', '', $fila[$i]["TonerC"], 0, 0, 0, true, 'L', true);
+                $pdf->writeHTMLCell(16, 2, '', '', $fila[$i]["TonerA"]."<br>".$fila[$i]["DiscoDuro2"], 0,0, 0, true, 'C', true);
+                $pdf->writeHTMLCell(28, 2, '', '', $fila[$i]["numero_serie"], 0, 1, 0, true, 'L', true);
+            break;
+            case "proyector":
+                $pdf->writeHTMLCell(20, 0, '', '', $fila[$i]["HorasUso"], 0,0, 0, true, 'C', true);
+                $pdf->writeHTMLCell(20, 0, '', '', $fila[$i]["HoraEco"], 0, 1, 0, true, 'L', true);
+            break;
+
+        }
+    }
+
 
 }
 
